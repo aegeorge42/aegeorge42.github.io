@@ -3,3 +3,9 @@
   height: 200px;
   border: 1px solid black;
 }
+#character{
+  width: 20px;
+  height: 50px;
+  background-color: red;
+  
+}
