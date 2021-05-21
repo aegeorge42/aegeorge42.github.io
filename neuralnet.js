@@ -11,9 +11,9 @@ class Neuron {
   actFn;
 
   constructor(inputs,weights,bias) {
-		this.inputs = inputs;
-		this.weights = weights;
-    this.bias = bias;
+	  this.inputs = inputs;
+	  this.weights = weights;
+	  this.bias = bias;
     this.setActFn();
 	}
 
@@ -33,8 +33,7 @@ class Neuron {
    var outArray = []; //get outputs from each input * weight
    var outVal = 0; //single output (b4 activation function)
    var out = 0; //final output after activation fn
-
-    var i;
+		var i;
     for(i=0; i<this.inputs.length; i++){
       outArray[i]=(this.inputs[i] * this.weights[i]) + this.bias;
       outVal=outVal+outArray[i];
