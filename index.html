@@ -8,6 +8,18 @@
 <body>
   <h1>Your own neural net</h1>
   <p>Don't mind me while I learn javascript</p>
+  <canvas class="myCanvas">
+  <p>Add suitable fallback here.</p>
+</canvas>
 </body>
-<script src="main.js"></script>
+<script>
+const canvas = document.querySelector('.myCanvas');
+const width = canvas.width = window.innerWidth;
+const height = canvas.height = window.innerHeight;
+const ctx = canvas.getContext('2d');
+  
+ctx.fillStyle = 'rgb(0, 0, 0)';
+ctx.fillRect(0, 0, width, height);
+
+</script>
 </html>
