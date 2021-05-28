@@ -1,40 +1,51 @@
+//TODO
+//adding new neurons/layers then connecting causes old neurons to update weights
+
+//activation functions enum
+const actFns = {
+	LINEAR: "linear", 
+	BINSTEP: "binstep", //binary step
+    SIGMOID: "sigmoid",
+    TANH: "tanh",
+    RELU: "relu", //rectified linear unit
+    LRELU: "lrelu", //leaky relu
+}
 
 class Neuron{
     neuronNumber;
     bias;
     numInputs;
-    inputs;
+    values;
+    weights;
     output_nofn;
     output;
 
     constructor(){
         this.bias = Math.random() * 2 - 1 //bias between -1 and 1
-        this.inputs={
-            values: [],
-            weights: []
-        };
+        this.values = [];
     }
 
     //use during setup
     //weights are random
     setIns_init(v){
-        this.inputs.values=v;
-        var numInputs= this.inputs.values.length;
+        this.values=v;
+        this.weights=[];
+        var numInputs= this.values.length;
         for(var i =0; i<numInputs; i++){
-            this.inputs.weights[i]=Math.floor(Math.random() * (1000 - 100) + 100) / 100; //CHANGE BACK TO SAME AS BIAS
+            this.weights[i]=Math.floor(Math.random() * (1000 - 100) + 100) / 100; //CHANGE BACK TO SAME AS BIAS
         }
     }
 
     setIns(v,w){
-        this.inputs.values=v;
-     //   this.inputs.weights=w;
+        this.values=v;
+        this.weights=w;
     }
 
     calcOut(){
         var outlist = [];
         var out = 0;
-        for(var i = 0; i<this.inputs.weights.length; i++){
-            outlist[i]= this.inputs.values[i]*this.inputs.weights[i];
+        for(var i = 0; i<this.weights.length; i++){
+            outlist[i]= this.values[i]*this.weights[i];
             out=out+outlist[i];
         }
         this.output_nofn = outlist;
@@ -47,10 +58,10 @@ class Neuron{
         var os = "";
         var o = "";
 
-        //for printing 
-        for(var i =0; i<this.inputs.values.length; i++){
-            ins += this.inputs.values[i] + " ";
-            ws += this.inputs.weights[i] + " ";
+        //for printin ugh
+        for(var i =0; i<this.values.length; i++){
+            ins += this.values[i] + " ";
+            ws += this.weights[i] + " ";
             if(this.output_nofn !== undefined){
                 os += this.output_nofn[i] + " ";         
             }
@@ -95,7 +106,10 @@ class Layer{
     //change input params to layer?
     setLayerIns(v){
         this.neurons.forEach(function(neuron) {
-           neuron.setIns_init(v);
+           // console.log(neuron.weights);
+            if(neuron.weights === undefined){
+                neuron.setIns_init(v);
+            } 
         });
     }
 
@@ -133,7 +147,6 @@ class Net{
     }
 
     connect(){
-
         for(var i=0; i<this.layers.length-1; i++){
 
             //get output for each neuron in layer i
@@ -153,12 +166,29 @@ class Net{
         this.getLayer(lastLayer).getLayerOuts();
     }
 
+    update(){
+        console.log("........................");
+        console.log("net has " + this.layers.length + "layers");
+    }
+
     printNet(){
         console.log("Net has " + this.layers.length + " layers")
         this.layers.forEach(function(layer) {
             //console.log(" Layer #"+ layer.layerNumber + " has " + layer.neurons.length + " neurons");
             console.log("----------LAYER " + layer.layerNumber + "----------");
             layer.printLayer();
+        }); 
+    }
+
+    printNet_weights(){
+        console.log("Net has " + this.layers.length + " layers")
+
+        this.layers.forEach(function(layer) {
+            console.log("----------LAYER " + layer.layerNumber + "----------");
+           // layer.printLayer();
+            layer.neurons.forEach(function(neuron) {
+                console.log("w: " +neuron.weights);
+            });
         });
     }
 }
@@ -168,10 +198,25 @@ const staticInput = [1.0, 5.0];
 
 net.getLayer(0).addNeuron();
 net.getLayer(0).setLayerIns(staticInput);
-
-net.addLayer();
-net.getLayer(1).addNeuron();
 net.addLayer();
 net.connect();
-
+console.log("---------------------------ROUND 1-------------------------------")
+net.printNet_weights();
+net.connect();
+console.log("---------------------------ROUND 2-------------------------------")
+net.printNet_weights();
+console.log("---------------------------ROUND 3-------------------------------")
+net.getLayer(1).addNeuron();
+net.connect();
+net.printNet_weights();
+console.log("---------------------------ROUND 4-------------------------------")
+net.addLayer();
+net.connect();
 net.printNet();
+
+
+
+
+
+
+
