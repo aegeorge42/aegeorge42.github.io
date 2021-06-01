@@ -1,5 +1,3 @@
-//TODO
-//adding new neurons/layers then connecting causes old neurons to update weights
 
 //activation functions enum
 const actFns = {
