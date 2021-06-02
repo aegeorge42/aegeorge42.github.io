@@ -191,7 +191,7 @@ class Net{
     }
 }
 
-const net = new Net();
+/*const net = new Net();
 const staticInput = [1.0, 5.0];
 
 net.getLayer(0).addNeuron();
@@ -211,8 +211,9 @@ console.log("---------------------------ROUND 4-------------------------------")
 net.addLayer();
 net.connect();
 net.printNet();
+*/
 
-
+export { actFns, Neuron, Layer, Net};
 
 
 

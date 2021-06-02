@@ -1,3 +1,5 @@
+import { actFns, Neuron, Layer, Net} from './js/net.js';
+
 //Aliases
 let Application = PIXI.Application;
 let loader = PIXI.loader;
@@ -35,17 +37,18 @@ function setup() {
   //TODO: stuff to do before running
   //loading bar?
   //some sort of launch screen
+  let net = new Net();
   run();
 }
 
 function run(){
+  console.log(winWidth+" "+ winHeight);
   addCat();
   setButton();
 }
 
 function addCat(){
   let cat = new Sprite(resources["images/cat.png"].texture);
-
   cat.anchor.set(0.5);
   cat.x = winWidth/2;
   cat.y = winHeight/2;
@@ -55,16 +58,12 @@ function addCat(){
   cat.scale.set(0.5, 0.5);
 }
 
-function randomInt(min, max) {
-  return Math.floor(Math.random() * (winWidth*2));
-}
-
-function addRandomCat(x,y){
+function addRandomCat(){
   let cat = new Sprite(resources["images/cat.png"].texture);
 
   cat.anchor.set(0.5);
-  cat.x = x;
-  cat.y = y;
+  cat.x = Math.floor(Math.random() * (winWidth));
+  cat.y = Math.floor(Math.random() * (winHeight));
   app.stage.addChild(cat);
 
   //note 2 self - use this when weights are changing in backprop
@@ -91,15 +90,12 @@ function setButton(){
     .on('pointerover', onButtonOver)
     .on('pointerout', onButtonOut);
   } 
-
-  var randpos = randomInt(0, winWidth);
-
+  
   function onButtonDown() {
     this.isdown = true;
     this.texture = textureButtonDown;
     this.alpha = 1;
-
-    addRandomCat(Math.floor(Math.random() * (winHeight*2)),Math.floor(Math.random() * (winHeight*2)));
+    addRandomCat();
   }
   
   function onButtonUp() {
