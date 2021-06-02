@@ -1,5 +1,45 @@
-import { actFns, Neuron, Layer, Net} from './js/net.js';
+class View{
 
+  //Aliases
+  Application = PIXI.Application;
+  loader = PIXI.loader;
+  resources = PIXI.loader.resources;
+  Sprite = PIXI.Sprite;
+  texture = PIXI.Texture;
+
+  winWidth = window.innerWidth;
+  winHeight = window.innerHeight;
+
+  constructor(){
+    this.app= new PIXI.Application({
+      width: 800,         // default: 800
+      height: 600,        // default: 600
+      antialias: true,    // default: false
+      transparent: false, // default: false
+      resolution: 1       // default: 1
+    });
+
+    document.body.appendChild(this.app.view);
+
+    this.app.renderer.backgroundColor = 0xDF2E08;
+    this.app.renderer.view.style.position = "absolute";
+    this.app.renderer.view.style.display = "block";
+    this.app.renderer.autoResize = true;
+    this.app.renderer.resize(window.innerWidth, window.innerHeight);
+
+    this.loader
+    .add("images/cat.png")
+    .add("images/button.png")
+    .load(this.setup);
+  }
+
+  setup(){
+    alert("SETUPPPPPPP");
+  }
+}
+
+export {View}
+/*
 //Aliases
 let Application = PIXI.Application;
 let loader = PIXI.loader;
@@ -37,7 +77,7 @@ function setup() {
   //TODO: stuff to do before running
   //loading bar?
   //some sort of launch screen
-  let net = new Net();
+
   run();
 }
 
@@ -122,3 +162,4 @@ function setButton(){
     }
   this.texture = textureButton;
 }
+*/

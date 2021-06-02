@@ -213,7 +213,7 @@ net.connect();
 net.printNet();
 */
 
-export { actFns, Neuron, Layer, Net};
+export {actFns, Neuron, Layer, Net};
 
 
 
