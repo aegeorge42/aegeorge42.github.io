@@ -21,22 +21,24 @@ class View{
 
     document.body.appendChild(this.app.view);
 
-    this.app.renderer.backgroundColor = 0xDF2E08;
+    this.app.renderer.backgroundColor = 0xBDBEFF;
     this.app.renderer.view.style.position = "absolute";
     this.app.renderer.view.style.display = "block";
     this.app.renderer.autoResize = true;
     this.app.renderer.resize(window.innerWidth, window.innerHeight);
 
-    this.loader
-    .add("images/cat.png")
-    .add("images/button.png")
-    .load(this.setup);
+    //this.loader
+    //.add("images/cat.png")
+    //.add("images/button.png")
+    //.load(this.setup);
   }
 
   setup(){
     alert("SETUPPPPPPP");
   }
 }
+
+
 
 export {View}
 /*
@@ -161,5 +163,5 @@ function setButton(){
         return;
     }
   this.texture = textureButton;
-}
+
 */
