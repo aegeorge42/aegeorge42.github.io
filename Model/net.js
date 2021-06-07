@@ -165,8 +165,11 @@ class Net{
     }
 
     update(){
-        console.log("........................");
-        console.log("net has " + this.layers.length + "layers");
+       // console.log("........................");
+       // console.log("net has " + this.layers.length + "layers");
+       console.log("UPDATE");
+       this.connect();
+       this.printNet();
     }
 
     printNet(){

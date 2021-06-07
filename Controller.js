@@ -4,8 +4,19 @@ import {actFns, Neuron, Layer, Net} from "../Model/net.js"
 
 const mode = 0;
 const textureButton = PIXI.Texture.from('images/button.png');
-const textureButtonOver = PIXI.Texture.from('images/button_over.png');
+/*const textureButtonOver = PIXI.Texture.from('images/button_over.png');
 const textureButtonDown = PIXI.Texture.from('images/button_down.png');
+*/
+const textureCat = PIXI.Texture.from('images/cat.png');
+
+const tintNone = 0xFFFFFF;
+const tintOver = 0xFFA500;
+const tintDown = 0x00FF00;
+
+
+const net = new Net();
+const staticInput = [1.0, 5.0];
+net.getLayer(0).setLayerIns(staticInput);
 
 var app = new PIXI.Application({
     width: window.innerWidth,
@@ -20,42 +31,75 @@ app.loader.add('neuron',"images/cat.png")
 function startup(){
 }
 
-const button1 = new Button(textureButton,100,100);
+const buttonAddLayer = new Button(textureButton,100,100);
 
-button1.on('mouseover', function(e){
-    button1.texture=textureButtonOver;
-    console.log("over");
+buttonAddLayer.on('mouseover', function(e){
+    buttonAddLayer.tint=tintOver;
+  //  buttonAddLayer.texture=textureButtonOver;
 })
 
-button1.on('mouseout', function(e){
-    button1.texture=textureButton;
-    console.log("out");
+buttonAddLayer.on('mouseout', function(e){
+    buttonAddLayer.tint=tintNone;
+  //  buttonAddLayer.texture=textureButton;
 })
 
-button1.on('mousedown', function(e){
-    button1.texture=textureButtonDown;
-    console.log("down");
+buttonAddLayer.on('mousedown', function(e){
+    buttonAddLayer.tint=tintDown;
+  //  buttonAddLayer.texture=textureButtonDown;
+
+    //only handle 4 layers rn
+    if(net.layers.length<5){
+        net.addLayer();
+        net.update();
+
+        var n = new PIXI.Sprite(textureCat);
+            n.y= 100
+            n.x= net.layers.length * 100;
+        app.stage.addChild(n);
+    }
+
 })
 
-button1.on('mouseup', function(e){
-    button1.texture=textureButton;
-    console.log("up");
+buttonAddLayer.on('mouseup', function(e){
+    buttonAddLayer.tint=tintOver;
+  //  buttonAddLayer.texture=textureButtonOver;
 })
 
+app.stage.addChild(buttonAddLayer);
 
-
-//button1.texture=textureCat;
-
-app.stage.addChild(button1)
-
-
-/*
-const button1 = new Button(textureButton,{
-    texture: textureButton,
-    width: 200,
-    height: 80,
-    onTap: () => console.log('Play')
+const buttonAddNeuron = new Button(textureButton,100,200);
+buttonAddNeuron.on('mouseover', function(e){
+  //  buttonAddNeuron.texture=textureButtonOver;
+    buttonAddNeuron.tint=tintOver;
 })
-app.stage.addChild(button1)
 
-*/
+buttonAddNeuron.on('mouseout', function(e){
+  //  buttonAddNeuron.texture=textureButton;
+    buttonAddNeuron.tint=tintNone;
+
+})
+
+buttonAddNeuron.on('mousedown', function(e){
+  //  buttonAddNeuron.texture=textureButtonDown;
+    buttonAddNeuron.tint=tintDown;
+
+    net.getLayer(1).addNeuron();
+    net.update();
+   // net.printNet();
+})
+
+buttonAddNeuron.on('mouseup', function(e){
+  //  buttonAddNeuron.texture=textureButtonOver;
+    buttonAddNeuron.tint=tintOver;
+
+})
+
+net.printNet();
+app.stage.addChild(buttonAddNeuron);
+
+/* -------------------- NET STUFF ----------------- */
+
+//net.getLayer(0).setLayerIns(staticInput);
+//net.update();
+//net.printNet();
+//net.addLayer();
