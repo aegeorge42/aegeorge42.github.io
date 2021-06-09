@@ -1,167 +1,183 @@
-class View{
+import {Button} from "./Button.js"
 
-  //Aliases
-  Application = PIXI.Application;
-  loader = PIXI.loader;
-  resources = PIXI.loader.resources;
-  Sprite = PIXI.Sprite;
-  texture = PIXI.Texture;
-
-  winWidth = window.innerWidth;
-  winHeight = window.innerHeight;
+export class View{
+  buttonDrawList = [];  // all buttons to draw
+  neuronDrawList = [];  // all neurons to draw
+  layers2draw = [];
 
   constructor(){
-    this.app= new PIXI.Application({
-      width: 800,         // default: 800
-      height: 600,        // default: 600
-      antialias: true,    // default: false
-      transparent: false, // default: false
-      resolution: 1       // default: 1
+    this.app = new PIXI.Application({
+      width: window.innerWidth,
+      height: window.innerHeight,
+      backgroundColor: 0x6c7f50
     });
-
     document.body.appendChild(this.app.view);
 
-    this.app.renderer.backgroundColor = 0xBDBEFF;
-    this.app.renderer.view.style.position = "absolute";
-    this.app.renderer.view.style.display = "block";
-    this.app.renderer.autoResize = true;
-    this.app.renderer.resize(window.innerWidth, window.innerHeight);
-
-    //this.loader
-    //.add("images/cat.png")
-    //.add("images/button.png")
-    //.load(this.setup);
+    // load all images (it would be cool if this worked)
+    /*
+    PIXI.loader
+    .add([
+      "images/cat.png",
+      "images/button.png",
+      "images/treasure.png",
+      "images/circle.png",
+      "images/button_down.png"
+    ])
+    .load(this.setup);
+    */
   }
 
   setup(){
-    alert("SETUPPPPPPP");
+    console.log("ready 2 go")
   }
-}
 
+  //add initial buttons to screen
+  addButtons(){
+    this.buttonDrawList.push(
+      new Button(PIXI.Texture.from('images/button_layer.png'),100,100)
+    );
 
+    this.buttonDrawList.push(
+      new Button(PIXI.Texture.from('images/button_neuron.png'),100,200)
+    );
 
-export {View}
-/*
-//Aliases
-let Application = PIXI.Application;
-let loader = PIXI.loader;
-let resources = PIXI.loader.resources;
-let Sprite = PIXI.Sprite;
-let texture = PIXI.Texture;
-
-var winWidth = window.innerWidth;
-var winHeight = window.innerHeight;
-
-let app = new PIXI.Application({ 
-  width: 800,         // default: 800
-  height: 600,        // default: 600
-  antialias: true,    // default: false
-  transparent: false, // default: false
-  resolution: 1       // default: 1
+    this.buttonDrawList.push(
+      new Button(PIXI.Texture.from('images/treasure.png'),100,300)
+    );
   }
-);
-document.body.appendChild(app.view);
 
-//resize to fullscreen
-app.renderer.backgroundColor = 0xF3F3F3;
-app.renderer.view.style.position = "absolute";
-app.renderer.view.style.display = "block";
-app.renderer.autoResize = true;
-app.renderer.resize(window.innerWidth, window.innerHeight);
+  //add a single button
+  addButton(textureimg, x, y){
+    this.buttonDrawList.push(
+      new Button(PIXI.Texture.from(textureimg),x,y)
+    );
+  }
 
-loader
-  .add("images/cat.png")
-  .add("images/button.png")
-  .load(setup);
-
-//runs on load
-function setup() {
-  //TODO: stuff to do before running
-  //loading bar?
-  //some sort of launch screen
-
-  run();
-}
-
-function run(){
-  console.log(winWidth+" "+ winHeight);
-  addCat();
-  setButton();
-}
-
-function addCat(){
-  let cat = new Sprite(resources["images/cat.png"].texture);
-  cat.anchor.set(0.5);
-  cat.x = winWidth/2;
-  cat.y = winHeight/2;
-  app.stage.addChild(cat);
-
-  //note 2 self - use this when weights are changing in backprop
-  cat.scale.set(0.5, 0.5);
-}
-
-function addRandomCat(){
-  let cat = new Sprite(resources["images/cat.png"].texture);
-
-  cat.anchor.set(0.5);
-  cat.x = Math.floor(Math.random() * (winWidth));
-  cat.y = Math.floor(Math.random() * (winHeight));
-  app.stage.addChild(cat);
-
-  //note 2 self - use this when weights are changing in backprop
-  cat.scale.set(0.5, 0.5);
-}
-
-const textureButton = PIXI.Texture.from('images/button.png');
-const textureButtonDown = PIXI.Texture.from('images/button_down.png');
-const textureButtonOver = PIXI.Texture.from('images/button_over.png');
-
-function setButton(){
-  let button = new Sprite(resources["images/button.png"].texture);
-  button.x=800;
-  button.y=100;
-  app.stage.addChild(button);
-
-  button.interactive = true;
-  button.buttonMode = true;
-
-  button
-    .on('pointerdown', onButtonDown)
-    .on('pointerup', onButtonUp)
-    .on('pointerupoutside', onButtonUp)
-    .on('pointerover', onButtonOver)
-    .on('pointerout', onButtonOut);
-  } 
   
-  function onButtonDown() {
-    this.isdown = true;
-    this.texture = textureButtonDown;
-    this.alpha = 1;
-    addRandomCat();
-  }
-  
-  function onButtonUp() {
-    this.isdown = false;
-    if (this.isOver) {
-        this.texture = textureButtonOver;
-    } else {
-        this.texture = textureButton;
+  drawButtons(){
+    for(var i =0;i<this.buttonDrawList.length;i++){
+      this.app.stage.addChild(this.buttonDrawList[i]);
     }
   }
-  
-  function onButtonOver() {
-    this.isOver = true;
-    if (this.isdown) {
-      return;
-    }
-    this.texture = textureButtonOver;
-  }
-  
-  function onButtonOut() {
-    this.isOver = false;
-    if (this.isdown) {
-        return;
-    }
-  this.texture = textureButton;
 
-*/
+  draw_layerSetup(net){
+    this.layers2draw = [];
+    for(var i = 0; i<net.layers.length; i++){
+      const layerContainer = new PIXI.Container();
+      this.layers2draw.push(layerContainer);
+    }
+    //console.log("layers: " + net.layers.length);
+    //console.log("layers2draw: " + this.layers2draw.length);
+  }
+
+  //layer2draw[i].addchild
+  drawNeurons(net){
+    // for each layer
+    for(var i = 0; i<net.layers.length; i++){
+      //for each neuron
+      for(var j=0; j<net.getLayer(i).neurons.length; j++){
+        //create a sprite
+        const neuronSprite = new PIXI.Sprite(PIXI.Texture.from('images/cat.png'));
+          neuronSprite.x=(i*100)+150;
+          neuronSprite.y=j*100;
+        //add it to appropriate layer container
+        this.layers2draw[i].addChild(neuronSprite);
+
+        //console.log("LAYER 2draw: " + i + " sprites: " + this.layers2draw[i].length)
+
+      }
+      this.app.stage.addChild(this.layers2draw[i]);
+    }
+  }
+
+
+  /* this.neuronDrawList=[];
+  console.clear();
+  for(var i = 0; i<net.layers.length; i++){
+    for(var j=0; j<net.getLayer(i).neurons.length; j++){
+      console.log("layer: " + i + " neuron: " + j);
+      this.neuronDrawList[i]=new Array([net.getLayer]);
+
+
+
+
+      // const neuronSprite = new PIXI.Sprite(PIXI.Texture.from('images/cat.png'));
+      this.neuronDrawList[i][j]=new PIXI.Sprite(PIXI.Texture.from('images/cat.png'));
+      //this.neuronDrawList[i].push(neuronSprite);
+    }
+  }
+
+
+  /*
+  for(var i =0; i<layer.getNeurons().length; i++){
+    const neuronSprite = new PIXI.Sprite(PIXI.Texture.from('images/cat.png'));
+    console.log("sprite");
+    
+    //this.layers2draw[layer.layerNumber].addChild(neuronSprite);
+  }
+  //console.log(this.layers2draw[layer.layerNumber].length);
+  */
+  
+
+
+
+  drawNet(net){
+    // clear before readding
+    this.layers2draw = [];
+    // create container for each layer
+    for(var i = 0; i<net.layers.length; i++){
+      const layerContainer = new PIXI.Container();
+      this.layers2draw.push(layerContainer);
+    }
+    console.log("layers: " + net.layers.length);
+    console.log("layers2draw: " + this.layers2draw.length);
+  }
+}
+
+
+
+    /*
+    net.layers.forEach(function(layer) {
+      const layerContainer = new PIXI.Container();
+      //console.log("----------LAYER " + layer.layerNumber + "----------");
+      layer.neurons.forEach(function(neuron) {
+          //console.log("w: " +neuron.weights);
+      });
+  });
+
+  thisapp.stage.addChild(layerContainer);
+
+  */
+  
+
+
+    /*
+    for(var i =0; i<layer.getNeurons().length; i++){
+      this.neuronDrawList.push(
+        new PIXI.Sprite(PIXI.Texture.from('images/cat.png'),{x: i*100, y:i*100})
+      )
+    }
+    console.log("ndl:" + this.neuronDrawList.length);
+
+    for(var i =0; i<this.neuronDrawList.length; i++){
+      this.app.stage.addChild(this.neuronDrawList[i]);
+      console.log("neuron" + i + this.neuronDrawList[i].x);
+
+    }
+    */
+
+
+    /*
+    //create sprite and add to draw list
+    for(var i =0; i<layer.getNeurons().length; i++){
+      //this.neuronDrawList.push(
+      //  new Sprite(PIXI.Texture.from('images/cat.png'),{x: i*100, y:i*100})
+      //)
+    }
+
+    //add draw list to stage
+    for(var i =0; i<layer.getNeurons().length; i++){
+      this.app.stage.addChild(this.neuronDrawList[i]);
+    }
+    */
+  

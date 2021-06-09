@@ -1,6 +1,6 @@
 
 //activation functions enum
-const actFns = {
+export const actFns = {
 	LINEAR: "linear", 
 	BINSTEP: "binstep", //binary step
     SIGMOID: "sigmoid",
@@ -9,7 +9,9 @@ const actFns = {
     LRELU: "lrelu", //leaky relu
 }
 
-class Neuron{
+export const staticInput = [1.0, 5.0];
+
+export class Neuron{
     neuronNumber;
     bias;
     numInputs;
@@ -25,7 +27,8 @@ class Neuron{
 
     //use during setup
     //weights are random
-    setIns_init(v){
+    //if neuron is brand new and needs to be added in
+    setIns_init_undef(v){
         this.values=v;
         this.weights=[];
         var numInputs= this.values.length;
@@ -34,9 +37,14 @@ class Neuron{
         }
     }
 
-    setIns(v,w){
+    //if a neuron has some inputs already but needs more
+    //because another neuron was added in the prev layer
+    setIns_init(v){
         this.values=v;
-        this.weights=w;
+
+        for(var i=this.weights.length; i<v.length; i++){
+            this.weights[i]=Math.floor(Math.random() * (1000 - 100) + 100) / 100; //CHANGE BACK TO SAME AS BIAS
+        }
     }
 
     calcOut(){
@@ -73,7 +81,7 @@ class Neuron{
     }
 }
 
-class Layer{
+export class Layer{
     layerNumber;
     neurons; //list of neurons in layer
     layerOutputs; //list of all outputs from neurons in layer
@@ -104,10 +112,12 @@ class Layer{
     //change input params to layer?
     setLayerIns(v){
         this.neurons.forEach(function(neuron) {
-           // console.log(neuron.weights);
             if(neuron.weights === undefined){
+                neuron.setIns_init_undef(v);
+
+            } else if(neuron.weights.length != v.length){
                 neuron.setIns_init(v);
-            } 
+            }
         });
     }
 
@@ -120,15 +130,19 @@ class Layer{
 
         
     }
+
+    getNeurons(){
+        return this.neurons;
+    }
 }
 
-class Net{
+export class Net{
     layers; //list of layers
 
     constructor(){
         this.layers=[];
-        var l = new Layer();
-        this.addLayer(l);
+        this.addLayer();
+        this.getLayer(0).setLayerIns(staticInput);
     }
 
     addLayer(){
@@ -169,15 +183,15 @@ class Net{
        // console.log("net has " + this.layers.length + "layers");
        console.log("UPDATE");
        this.connect();
-       this.printNet();
+    //   this.printNet();
     }
 
     printNet(){
         console.log("Net has " + this.layers.length + " layers")
         this.layers.forEach(function(layer) {
             //console.log(" Layer #"+ layer.layerNumber + " has " + layer.neurons.length + " neurons");
-            console.log("----------LAYER " + layer.layerNumber + "----------");
-            layer.printLayer();
+        //    console.log("----------LAYER " + layer.layerNumber + "----------");
+        //    layer.printLayer();
         }); 
     }
 
@@ -194,6 +208,7 @@ class Net{
     }
 }
 
+
 /*const net = new Net();
 const staticInput = [1.0, 5.0];
 
@@ -201,7 +216,7 @@ net.getLayer(0).addNeuron();
 net.getLayer(0).setLayerIns(staticInput);
 net.addLayer();
 net.connect();
-console.log("---------------------------ROUND 1-------------------------------")
+/*console.log("---------------------------ROUND 1-------------------------------")
 net.printNet_weights();
 net.connect();
 console.log("---------------------------ROUND 2-------------------------------")
@@ -215,10 +230,4 @@ net.addLayer();
 net.connect();
 net.printNet();
 */
-
-export {actFns, Neuron, Layer, Net};
-
-
-
-
 

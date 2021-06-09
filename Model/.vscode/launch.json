@@ -1,0 +1,33 @@
+{
+    "configurations": [
+        
+    {
+        "name": "Launch Program",
+        "program": "${workspaceFolder}/app.js",
+        "request": "launch",
+        "skipFiles": [
+            "<node_internals>/**"
+        ],
+        "type": "pwa-node"
+    },
+        
+
+
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch via NPM",
+            "runtimeExecutable": "npm",
+            "runtimeArgs": [
+                "run-script",
+                "debug"
+            ],
+            "port": 9229,
+            "skipFiles": [
+                "<node_internals>/**"
+            ]
+        },
+
+        
+    ]
+}
