@@ -19,28 +19,27 @@ view.drawNeurons(net);
 //addLayer
 view.buttonDrawList[0].on('click', function(e){ 
   if(net.layers.length<5){
-    console.clear();
+  //  console.clear();
     net.addLayer();
     net.update();
     view.draw_layerSetup(net);
     view.drawNeurons(net);
-
+    //net.printNet();
   }
   //console.log("add Layer");
 })
 
 //addNeuron
 view.buttonDrawList[1].on('click', function(e){ 
-  console.clear();
+//  console.clear();
   net.getLayer(1).addNeuron();
   net.update();
   view.draw_layerSetup(net);
   view.drawNeurons(net);
+  //net.printNet();
+
 })
 
 view.buttonDrawList[2].on('click', function(e){ 
-  view.draw_layerSetup(net);
-
-  //view.drawLayer(net.getLayer(1));
-  //console.log("neurons in layer 1: "+ net.getLayer(1).getNeurons().length);
+  net.printNet();
 })

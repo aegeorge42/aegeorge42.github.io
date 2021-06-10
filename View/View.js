@@ -1,5 +1,17 @@
 import {Button} from "./Button.js"
 
+const formatter = new Intl.NumberFormat('en-US', {
+  minimumFractionDigits: 1,      
+  maximumFractionDigits: 1,
+});
+
+const textStyle = new PIXI.TextStyle({
+  //fill: '#DD3366',
+  fontFamily: 'Open Sans',
+  fontWeight: 300,
+  fontSize: 15
+});
+
 export class View{
   buttonDrawList = [];  // all buttons to draw
   neuronDrawList = [];  // all neurons to draw
@@ -71,17 +83,36 @@ export class View{
   }
 
   //layer2draw[i].addchild
+
+
   drawNeurons(net){
+    //clear old stuff
+    //this.clearContainer(layers2draw);
+    for(var i = 0; i<this.layers2draw.length; i++){
+      this.clearContainer(this.layers2draw[i]);
+    }
+    
     // for each layer
     for(var i = 0; i<net.layers.length; i++){
       //for each neuron
       for(var j=0; j<net.getLayer(i).neurons.length; j++){
         //create a sprite
-        const neuronSprite = new PIXI.Sprite(PIXI.Texture.from('images/cat.png'));
-          neuronSprite.x=(i*100)+150;
-          neuronSprite.y=j*100;
+        console.log("layer: " + i + " neuron: " +j+ " weights " + net.getLayer(i).neurons[j].weights)
+        const neuronSprite = new PIXI.Sprite(PIXI.Texture.from('images/neuron.png'));
+          neuronSprite.x=(i*120)+150;
+          neuronSprite.y=j*120;
+
+        const text = new PIXI.Text(
+          "i: " + net.getLayer(i).neurons[j].values + '\n'
+         + "w: " + net.getLayer(i).neurons[j].weights+ '\n'
+         + formatter.format(net.getLayer(i).neurons[j].output),textStyle)
+          text.x=(i*120)+150 + 20;
+          text.y=j*120 + 20;
+        
+        console 
         //add it to appropriate layer container
         this.layers2draw[i].addChild(neuronSprite);
+        this.layers2draw[i].addChild(text);
 
         //console.log("LAYER 2draw: " + i + " sprites: " + this.layers2draw[i].length)
 
@@ -90,6 +121,14 @@ export class View{
     }
   }
 
+  drawVals(net){}
+
+  //THIS DOESNT WORK!!!!!!!!!!!!
+  clearContainer(container){
+    for(var i = 0; i<container.length; i++){
+      container.removeChild(container[i]);
+    }
+  }
 
   /* this.neuronDrawList=[];
   console.clear();
@@ -120,11 +159,13 @@ export class View{
   
 
 
-
+  /*
   drawNet(net){
     // clear before readding
-    this.layers2draw = [];
+    //this.layers2draw = [];
     // create container for each layer
+
+    this.clearContainer(net);
     for(var i = 0; i<net.layers.length; i++){
       const layerContainer = new PIXI.Container();
       this.layers2draw.push(layerContainer);
@@ -132,6 +173,7 @@ export class View{
     console.log("layers: " + net.layers.length);
     console.log("layers2draw: " + this.layers2draw.length);
   }
+  */
 }
 
 

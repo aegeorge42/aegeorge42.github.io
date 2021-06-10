@@ -189,9 +189,9 @@ export class Net{
     printNet(){
         console.log("Net has " + this.layers.length + " layers")
         this.layers.forEach(function(layer) {
-            //console.log(" Layer #"+ layer.layerNumber + " has " + layer.neurons.length + " neurons");
-        //    console.log("----------LAYER " + layer.layerNumber + "----------");
-        //    layer.printLayer();
+            console.log(" Layer #"+ layer.layerNumber + " has " + layer.neurons.length + " neurons");
+            console.log("----------LAYER " + layer.layerNumber + "----------");
+            layer.printLayer();
         }); 
     }
 
