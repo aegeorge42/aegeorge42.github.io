@@ -9,53 +9,80 @@ export const actFns = {
     LRELU: "lrelu", //leaky relu
 }
 
-export const staticInput = [1.0, 5.0];
+export const staticInput = [1.0, 2.0];
 
 export class Neuron{
     neuronNumber;
     bias;
-    numInputs;
-    values;
+    inputs;
     weights;
     output_nofn;
     output;
+    actFun;
 
     constructor(){
         this.bias = Math.random() * 2 - 1 //bias between -1 and 1
-        this.values = [];
+        this.inputs = [];
+        this.actFun = [];
+        this.setActFn(actFns.BINSTEP);
     }
+
+    setActFn(actfn){
+        this.actFun=actfn;
+    }
+
+
+    //TODO:THIS IS SO UGLY
 
     //use during setup
     //weights are random
     //if neuron is brand new and needs to be added in
     setIns_init_undef(v){
-        this.values=v;
+        this.inputs=v;
         this.weights=[];
-        var numInputs= this.values.length;
-        for(var i =0; i<numInputs; i++){
-            this.weights[i]=Math.floor(Math.random() * (1000 - 100) + 100) / 100; //CHANGE BACK TO SAME AS BIAS
+        for(var i =0; i<this.inputs.length; i++){
+            this.weights[i]= Math.random() * 2 - 1; //Math.floor(Math.random() * (1000 - 100) + 100) / 100; //CHANGE BACK TO SAME AS BIAS
         }
     }
 
     //if a neuron has some inputs already but needs more
     //because another neuron was added in the prev layer
     setIns_init(v){
-        this.values=v;
+        this.inputs=v;
 
         for(var i=this.weights.length; i<v.length; i++){
-            this.weights[i]=Math.floor(Math.random() * (1000 - 100) + 100) / 100; //CHANGE BACK TO SAME AS BIAS
+            this.weights[i]=this.weights[i]= Math.random() * 2 - 1;//Math.floor(Math.random() * (1000 - 100) + 100) / 100; //CHANGE BACK TO SAME AS BIAS
         }
     }
+
+    setIns(v){
+        this.inputs=v;
+    }
+
 
     calcOut(){
         var outlist = [];
         var out = 0;
         for(var i = 0; i<this.weights.length; i++){
-            outlist[i]= this.values[i]*this.weights[i];
+            outlist[i]= this.inputs[i]*this.weights[i];
             out=out+outlist[i];
         }
-        this.output_nofn = outlist;
-        this.output = out;
+        this.output_nofn = out;
+
+
+        switch(this.actFun){
+            case(actFns.LINEAR):
+                this.output = out;
+            break;
+            case(actFns.BINSTEP):
+
+                if(out <= 0){
+                    this.output = 0;
+                } else{
+                    this.output= 1;
+                }
+            break;
+        }
     }
 
     printNeuron(){
@@ -65,8 +92,8 @@ export class Neuron{
         var o = "";
 
         //for printin ugh
-        for(var i =0; i<this.values.length; i++){
-            ins += this.values[i] + " ";
+        for(var i =0; i<this.inputs.length; i++){
+            ins += this.inputs[i] + " ";
             ws += this.weights[i] + " ";
             if(this.output_nofn !== undefined){
                 os += this.output_nofn[i] + " ";         
@@ -117,6 +144,8 @@ export class Layer{
 
             } else if(neuron.weights.length != v.length){
                 neuron.setIns_init(v);
+            } else {
+                neuron.setIns(v);
             }
         });
     }
@@ -138,12 +167,20 @@ export class Layer{
 
 export class Net{
     layers; //list of layers
+    netInput; //input to layer 0
 
     constructor(){
         this.layers=[];
         this.addLayer();
-        this.getLayer(0).setLayerIns(staticInput);
+    //    this.getLayer(0).setLayerIns(staticInput);
+    //    this.setNetInput(staticInput);
+        this.connect();
     }
+
+    setNetInput(data){
+        this.netInput=data;
+    }
+
 
     addLayer(){
         var l = new Layer();
@@ -159,6 +196,9 @@ export class Net{
     }
 
     connect(){
+
+        this.getLayer(0).setLayerIns(staticInput);
+
         for(var i=0; i<this.layers.length-1; i++){
 
             //get output for each neuron in layer i

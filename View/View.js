@@ -1,8 +1,8 @@
 import {Button} from "./Button.js"
 
 const formatter = new Intl.NumberFormat('en-US', {
-  minimumFractionDigits: 1,      
-  maximumFractionDigits: 1,
+  minimumFractionDigits: 2,      
+  maximumFractionDigits: 2,
 });
 
 const textStyle = new PIXI.TextStyle({
@@ -45,24 +45,33 @@ export class View{
 
   //add initial buttons to screen
   addButtons(){
+    //add layer
     this.buttonDrawList.push(
       new Button(PIXI.Texture.from('images/button_layer.png'),100,100)
     );
 
+    //add neuron
     this.buttonDrawList.push(
-      new Button(PIXI.Texture.from('images/button_neuron.png'),100,200)
+      new Button(PIXI.Texture.from('images/button_neuron.png'),300,100)
     );
 
     this.buttonDrawList.push(
-      new Button(PIXI.Texture.from('images/treasure.png'),100,300)
+      new Button(PIXI.Texture.from('images/button_neuron.png'),420,100)
+    );
+
+    this.buttonDrawList.push(
+      new Button(PIXI.Texture.from('images/button_neuron.png'),540,100)
     );
   }
 
   //add a single button
   addButton(textureimg, x, y){
+    var b = new Button(PIXI.Texture.from(textureimg),x,y)
     this.buttonDrawList.push(
-      new Button(PIXI.Texture.from(textureimg),x,y)
+      b
+     // new Button(PIXI.Texture.from(textureimg),x,y)
     );
+    this.app.stage.addChild(b);
   }
 
   
@@ -82,8 +91,16 @@ export class View{
     //console.log("layers2draw: " + this.layers2draw.length);
   }
 
-  //layer2draw[i].addchild
+// dont work
+  formatList(list){
+    var nums2print =[];
+    for(var n=0; n<list.length; n++){
+      nums2print.push(formatter.format(list[n]));
 
+    }
+  //  console.log("NUMS 2 PRINT: " + nums2print);
+    return nums2print;
+  }
 
   drawNeurons(net){
     //clear old stuff
@@ -99,15 +116,17 @@ export class View{
         //create a sprite
         console.log("layer: " + i + " neuron: " +j+ " weights " + net.getLayer(i).neurons[j].weights)
         const neuronSprite = new PIXI.Sprite(PIXI.Texture.from('images/neuron.png'));
-          neuronSprite.x=(i*120)+150;
-          neuronSprite.y=j*120;
+          neuronSprite.x=(i*120)+250;
+          neuronSprite.y=j*120+150;
 
         const text = new PIXI.Text(
-          "i: " + net.getLayer(i).neurons[j].values + '\n'
-         + "w: " + net.getLayer(i).neurons[j].weights+ '\n'
-         + formatter.format(net.getLayer(i).neurons[j].output),textStyle)
-          text.x=(i*120)+150 + 20;
-          text.y=j*120 + 20;
+          "i: " + this.formatList(net.getLayer(i).neurons[j].inputs) + '\n'
+         + "w: " + this.formatList(net.getLayer(i).neurons[j].weights) + '\n'
+         + "o: " + formatter.format(net.getLayer(i).neurons[j].output_nofn) + '\n'
+         + formatter.format(net.getLayer(i).neurons[j].output),
+          textStyle)
+          text.x=(i*120)+250 + 20;
+          text.y=j*120 + 150 + 20;
         
         console 
         //add it to appropriate layer container
@@ -123,7 +142,7 @@ export class View{
 
   drawVals(net){}
 
-  //THIS DOESNT WORK!!!!!!!!!!!!
+
   clearContainer(container){
     for(var i = 0; i<container.length; i++){
       container.removeChild(container[i]);
