@@ -15,9 +15,15 @@ view.drawButtons();
 view.draw_layerSetup(net);
 view.drawNeurons(net);
 
-//console.log("FARTTTTT" + staticInput);
 view.drawInputs(staticInput);
 
+//console.log("LAST LAYER" + net.getLayer(net.layers.length-1).getLayerOuts());
+
+//net.getLayer().addNeuron();
+
+
+net.update();
+view.drawNeurons(net);
 
 //TODO - give buttons IDs for easier access + knowing what they do
 //this works for now tho
@@ -26,14 +32,16 @@ view.drawInputs(staticInput);
 view.buttonDrawList[2].visible= false;
 view.buttonDrawList[3].visible = false;
 
+var finalAdded=0;
+
 //addLayer
 view.buttonDrawList[0].on('click', function(e){ 
-  if(net.layers.length<maxLayers){
+  if(net.layers.length<maxLayers && finalAdded==0){
     net.addLayer();
     net.update();
     view.draw_layerSetup(net);
     view.drawNeurons(net);
-  }
+  
 
   //make next layer "add neuron" button visible
   if(view.buttonDrawList[2].visible == false){
@@ -41,21 +49,20 @@ view.buttonDrawList[0].on('click', function(e){
   } else if (view.buttonDrawList[2].visible == true && view.buttonDrawList[3].visible == false){
     view.buttonDrawList[3].visible = true;
   }
-
+  }
 })
 
 //addNeuron
 view.buttonDrawList[1].on('click', function(e){ 
-  if(net.getLayer(0).neurons.length<maxNeurons){
+  if(net.getLayer(0).neurons.length<maxNeurons && finalAdded==0){
     net.getLayer(0).addNeuron();
     net.update();
-    view.draw_layerSetup(net);
     view.drawNeurons(net);
   }
 })
 
 view.buttonDrawList[2].on('click', function(e){ 
-  if(net.getLayer(1).neurons.length<maxNeurons){
+  if(net.getLayer(1).neurons.length<maxNeurons && finalAdded==0){
     net.getLayer(1).addNeuron();
     net.update();
     view.drawNeurons(net);
@@ -66,7 +73,22 @@ view.buttonDrawList[3].on('click', function(e){
   if(net.getLayer(2).neurons.length<maxNeurons){
     net.getLayer(2).addNeuron();
     net.update();
-    view.draw_layerSetup(net);
     view.drawNeurons(net);
+  }
+})
+
+//ready to train!
+//add in one final neuron to get single output - maybe toggle on and off?
+//kind of an ugly solution. sleep on it.
+
+//we need this to get single output for our training data answers
+view.buttonDrawList[4].on('click', function(e){ 
+  if(finalAdded==0){
+  finalAdded=1;
+  net.addLayer();
+  net.update();
+  view.draw_layerSetup(net);
+  view.drawNeurons(net);
+  console.log(finalAdded);
   }
 })

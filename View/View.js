@@ -63,6 +63,11 @@ export class View{
     this.buttonDrawList.push(
       new Button(PIXI.Texture.from('images/button_neuron.png'),540,100)
     );
+
+    //add final neuron
+    this.buttonDrawList.push(
+      new Button(PIXI.Texture.from('images/cat.png'),100,200)
+    );
   }
 
   //add a single button
