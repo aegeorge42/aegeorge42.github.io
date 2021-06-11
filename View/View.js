@@ -13,6 +13,7 @@ const textStyle = new PIXI.TextStyle({
 });
 
 export class View{
+  input2draw = [];
   buttonDrawList = [];  // all buttons to draw
   neuronDrawList = [];  // all neurons to draw
   layers2draw = [];
@@ -91,15 +92,31 @@ export class View{
     //console.log("layers2draw: " + this.layers2draw.length);
   }
 
-// dont work
+  //check if this rounds
   formatList(list){
     var nums2print =[];
     for(var n=0; n<list.length; n++){
       nums2print.push(formatter.format(list[n]));
-
     }
-  //  console.log("NUMS 2 PRINT: " + nums2print);
     return nums2print;
+  }
+
+  //TODO this should be in a container
+  drawInputs(inputs){
+    for(var i = 0; i<inputs.length; i++){
+      const inputSprite = new PIXI.Sprite(PIXI.Texture.from('images/input.png'));
+      //inputSprite.scale.x=0.75;
+      //inputSprite.scale.y=0.75;
+
+      inputSprite.x=160;
+      inputSprite.y=i*120 + 200;
+      this.app.stage.addChild(inputSprite);
+
+      const inputSpriteText = new PIXI.Text(inputs[i]);
+    inputSpriteText.x=160 + 10;
+    inputSpriteText.y=i*120 + 200 + 10;
+    this.app.stage.addChild(inputSpriteText);
+    }
   }
 
   drawNeurons(net){

@@ -1,7 +1,7 @@
 //import {Button, textureButton, onButtonDown, getDown} from "./View/Button.js"
 import {Button} from "./View/Button.js"
 import {View} from "./View/View.js"
-import {actFns, Neuron, Layer, Net} from "./Model/net.js"
+import {actFns, staticInput, Neuron, Layer, Net} from "./Model/net.js"
 
 const view = new View();
 const net = new Net();
@@ -14,6 +14,9 @@ view.drawButtons();
 
 view.draw_layerSetup(net);
 view.drawNeurons(net);
+
+//console.log("FARTTTTT" + staticInput);
+view.drawInputs(staticInput);
 
 
 //TODO - give buttons IDs for easier access + knowing what they do
