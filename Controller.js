@@ -15,6 +15,14 @@ view.drawButtons();
 view.draw_layerSetup(net);
 view.drawNeurons(net);
 
+
+//TODO - give buttons IDs for easier access + knowing what they do
+//this works for now tho
+//view.buttonDrawList[2].alpha = 0;
+//view.buttonDrawList[2].interactive = false;
+view.buttonDrawList[2].visible= false;
+view.buttonDrawList[3].visible = false;
+
 //addLayer
 view.buttonDrawList[0].on('click', function(e){ 
   if(net.layers.length<maxLayers){
@@ -23,6 +31,14 @@ view.buttonDrawList[0].on('click', function(e){
     view.draw_layerSetup(net);
     view.drawNeurons(net);
   }
+
+  //make next layer "add neuron" button visible
+  if(view.buttonDrawList[2].visible == false){
+    view.buttonDrawList[2].visible = true;
+  } else if (view.buttonDrawList[2].visible == true && view.buttonDrawList[3].visible == false){
+    view.buttonDrawList[3].visible = true;
+  }
+
 })
 
 //addNeuron
