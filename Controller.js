@@ -6,7 +6,7 @@ import {actFns, staticInput, Neuron, Layer, Net} from "./Model/net.js"
 const view = new View();
 const net = new Net();
 
-const maxLayers = 3;
+const maxLayers = 2;
 const maxNeurons = 3;
 
 view.addButtons();
@@ -49,9 +49,9 @@ view.buttonDrawList[0].on('click', function(e){
   } else if (view.buttonDrawList[2].visible == true && view.buttonDrawList[3].visible == false){
     view.buttonDrawList[3].visible = true;
   }
-  }
 
   net.printNet();
+  }
 })
 
 //addNeuron

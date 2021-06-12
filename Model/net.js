@@ -31,36 +31,24 @@ export class Neuron{
         this.actFun=actfn;
     }
 
-
-    //TODO:THIS IS SO UGLY
-
-    //use during setup
-    //weights are random
-    //if neuron is brand new and needs to be added in
-    setIns_init_undef(v){
-        this.inputs=v;
-        this.weights=[];
-        for(var i =0; i<this.inputs.length; i++){
-            this.weights[i]= Math.random() * 2 - 1; //Math.floor(Math.random() * (1000 - 100) + 100) / 100; //CHANGE BACK TO SAME AS BIAS
-        }
-    }
-
-    //if a neuron has some inputs already but needs more
-    //because another neuron was added in the prev layer
-    setIns_init(v){
-        this.inputs=v;
-
-        for(var i=this.weights.length; i<v.length; i++){
-            this.weights[i]=Math.random() * 2 - 1;//Math.floor(Math.random() * (1000 - 100) + 100) / 100; //CHANGE BACK TO SAME AS BIAS
-        }
-    }
-
-    setIns(v){
-        this.inputs=v;
-    }
-
     setInputs(v){
-        
+        this.inputs=v;
+
+        //if neuron is brand new and needs to be added in
+        if(this.weights === undefined){
+            this.weights=[];
+            for(var i =0; i<this.inputs.length; i++){
+            this.weights[i]= Math.random() * 2 - 1; 
+           }
+        }
+
+        //if a neuron has some inputs already but needs more
+        //because another neuron was added in the prev layer
+        if(this.weights.length != v.length){
+            for(var i=this.weights.length; i<v.length; i++){
+                this.weights[i]=Math.random() * 2 - 1;
+            }
+        }
     }
 
     calcOut(){
@@ -94,7 +82,6 @@ export class Neuron{
         var os = ""; 
         var o = "";
 
-        console.log("printneuron");
         for(var i =0; i<this.inputs.length; i++){
             ins += this.inputs[i].toFixed(2) + " ";
             ws += this.weights[i].toFixed(2) + " "; 
@@ -124,6 +111,7 @@ export class Layer{
         n.neuronNumber=this.neurons.length-1;
     }
 
+    //get output from each neuron in layer
     getLayerOuts(){
         var lo=[];
         this.neurons.forEach(function(neuron) {
@@ -137,14 +125,7 @@ export class Layer{
     //change input params to layer?
     setLayerIns(v){
         this.neurons.forEach(function(neuron) {
-            if(neuron.weights === undefined){
-                neuron.setIns_init_undef(v);
-
-            } else if(neuron.weights.length != v.length){
-                neuron.setIns_init(v);
-            } else {
-                neuron.setIns(v);
-            }
+            neuron.setInputs(v);
         });
     }
 
