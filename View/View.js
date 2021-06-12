@@ -56,12 +56,12 @@ export class View{
 
   //add buttons to list
   addButtons(){
-    var button_input = new Button("b_in",PIXI.Texture.from('images/button_setin.png'),200,100);
-    var button_addlayer = new Button("b_addlayer",PIXI.Texture.from('images/button_layer.png'),100,100);
-    var button_addn0 = new Button("b_addn0",PIXI.Texture.from('images/button_neuron.png'),300,100);
-    var button_addn1 = new Button("b_addn1",PIXI.Texture.from('images/button_neuron.png'),420,100);
-    var button_addn2 = new Button("b_addn2",PIXI.Texture.from('images/button_neuron.png'),540,100)
-    var button_addf = new Button("b_addf",PIXI.Texture.from('images/nextbutton.png'),100,200)
+    var button_input = new Button("b_in",PIXI.Texture.from('images/buttons/button_setin.png'),200,100);
+    var button_addlayer = new Button("b_addlayer",PIXI.Texture.from('images/buttons/button_layer.png'),100,100);
+    var button_addn0 = new Button("b_addn0",PIXI.Texture.from('images/buttons/button_neuron.png'),300,100);
+    var button_addn1 = new Button("b_addn1",PIXI.Texture.from('images/buttons/button_neuron.png'),420,100);
+    var button_addn2 = new Button("b_addn2",PIXI.Texture.from('images/buttons/button_neuron.png'),540,100)
+    var button_addf = new Button("b_addf",PIXI.Texture.from('images/buttons/nextbutton.png'),100,200)
   
     this.buttonContainer.addChild(button_input, button_addlayer, button_addn0,button_addn1,button_addn2,button_addf);
   }
