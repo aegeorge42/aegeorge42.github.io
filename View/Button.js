@@ -1,11 +1,12 @@
 export class Button extends PIXI.Sprite{
 
-    constructor(texture,x,y){
+    constructor(name,texture,x,y){
         super(texture)
-        this.tint=tintNone;
-        this.anchor.set(0.5);
+        this.name=name;
         this.x=x;
         this.y=y;
+        this.tint=tintNone;
+        this.anchor.set(0.5);
         this.interactive=true;
         this.buttonMode=true;
 
