@@ -1,4 +1,4 @@
-import { staticInput } from "../Model/net.js";
+import { defaultInput } from "../Model/net.js";
 import {Button} from "./Button.js"
 
 const formatter = new Intl.NumberFormat('en-US', {
@@ -49,22 +49,21 @@ export class View{
   }
   */
 
-  setup(){
+  setup_buttons(){
     this.addButtons();
     this.drawButtons();
-    this.addInputs(staticInput); //fix this
-    this.drawInputs();
   }
 
   //add buttons to list
   addButtons(){
+    var button_input = new Button("b_in",PIXI.Texture.from('images/button_setin.png'),200,100);
     var button_addlayer = new Button("b_addlayer",PIXI.Texture.from('images/button_layer.png'),100,100);
     var button_addn0 = new Button("b_addn0",PIXI.Texture.from('images/button_neuron.png'),300,100);
     var button_addn1 = new Button("b_addn1",PIXI.Texture.from('images/button_neuron.png'),420,100);
     var button_addn2 = new Button("b_addn2",PIXI.Texture.from('images/button_neuron.png'),540,100)
     var button_addf = new Button("b_addf",PIXI.Texture.from('images/nextbutton.png'),100,200)
   
-    this.buttonContainer.addChild(button_addlayer, button_addn0,button_addn1,button_addn2,button_addf);
+    this.buttonContainer.addChild(button_input, button_addlayer, button_addn0,button_addn1,button_addn2,button_addf);
   }
 
   //add a single button
@@ -99,6 +98,7 @@ export class View{
   }
 
   addInputs(inputs){
+    this.inputContainer.removeChildren();
     for(var i = 0; i<inputs.length; i++){
       var inputSprite = new PIXI.Sprite(PIXI.Texture.from('images/input.png'));
         inputSprite.x=160;

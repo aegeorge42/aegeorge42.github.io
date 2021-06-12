@@ -1,7 +1,7 @@
 //import {Button, textureButton, onButtonDown, getDown} from "./View/Button.js"
 import {Button} from "./View/Button.js"
 import {View} from "./View/View.js"
-import {actFns, staticInput, Neuron, Layer, Net} from "./Model/net.js"
+import {actFns, defaultInput, Neuron, Layer, Net} from "./Model/net.js"
 
 const view = new View();
 const net = new Net();
@@ -9,7 +9,9 @@ const net = new Net();
 const maxLayers = 2;
 const maxNeurons = 3;
 
-view.setup();
+const userInputs= [3,4];
+
+view.setup_buttons();
 view.draw_layerSetup(net);
 view.drawNeurons(net);
 
@@ -74,4 +76,14 @@ view.buttonContainer.getChildByName("b_addf").on('click', function(e){
     view.drawNeurons(net);
     net.printNet();
   }
+})
+
+view.buttonContainer.getChildByName("b_in").on('click', function(e){ 
+  net.setNetInput(userInputs);
+  view.addInputs(userInputs);
+  view.drawInputs();
+  console.log("fart")
+  net.update();
+  view.drawNeurons(net);
+
 })

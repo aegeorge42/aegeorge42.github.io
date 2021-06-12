@@ -10,7 +10,7 @@ export const actFns = {
 }
 
 //stuff to set in controller w user input
-export const staticInput = [1.0, 2.0];
+export const defaultInput = [0,0];
 export const userActFun = actFns.LINEAR;
 
 export class Neuron{
@@ -152,7 +152,7 @@ export class Net{
     netInput; //input to layer 0
 
     constructor(){
-        this.setNetInput(staticInput);
+        this.setNetInput(defaultInput);
         this.layers=[];
         this.addLayer();
         this.update();
