@@ -50,6 +50,8 @@ view.buttonDrawList[0].on('click', function(e){
     view.buttonDrawList[3].visible = true;
   }
   }
+
+  net.printNet();
 })
 
 //addNeuron
@@ -58,6 +60,7 @@ view.buttonDrawList[1].on('click', function(e){
     net.getLayer(0).addNeuron();
     net.update();
     view.drawNeurons(net);
+    net.printNet();
   }
 })
 
@@ -65,15 +68,17 @@ view.buttonDrawList[2].on('click', function(e){
   if(net.getLayer(1).neurons.length<maxNeurons && finalAdded==0){
     net.getLayer(1).addNeuron();
     net.update();
-    view.drawNeurons(net);
+    view.drawNeurons(net);    
+    net.printNet();
   }
 })
 
 view.buttonDrawList[3].on('click', function(e){ 
-  if(net.getLayer(2).neurons.length<maxNeurons){
+  if(net.getLayer(2).neurons.length<maxNeurons && finalAdded==0){
     net.getLayer(2).addNeuron();
     net.update();
     view.drawNeurons(net);
+    net.printNet();
   }
 })
 
@@ -84,11 +89,11 @@ view.buttonDrawList[3].on('click', function(e){
 //we need this to get single output for our training data answers
 view.buttonDrawList[4].on('click', function(e){ 
   if(finalAdded==0){
-  finalAdded=1;
-  net.addLayer();
-  net.update();
-  view.draw_layerSetup(net);
-  view.drawNeurons(net);
-  console.log(finalAdded);
+    finalAdded=1;
+    net.addLayer();
+    net.update();
+    view.draw_layerSetup(net);
+    view.drawNeurons(net);
+    net.printNet();
   }
 })

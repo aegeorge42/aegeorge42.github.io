@@ -22,7 +22,7 @@ export class View{
     this.app = new PIXI.Application({
       width: window.innerWidth,
       height: window.innerHeight,
-      backgroundColor: 0x6c7f50
+      backgroundColor: 0xFFE180
     });
     document.body.appendChild(this.app.view);
 
@@ -66,7 +66,7 @@ export class View{
 
     //add final neuron
     this.buttonDrawList.push(
-      new Button(PIXI.Texture.from('images/cat.png'),100,200)
+      new Button(PIXI.Texture.from('images/nextbutton.png'),100,200)
     );
   }
 
@@ -136,7 +136,7 @@ export class View{
       //for each neuron
       for(var j=0; j<net.getLayer(i).neurons.length; j++){
         //create a sprite
-        console.log("layer: " + i + " neuron: " +j+ " weights " + net.getLayer(i).neurons[j].weights)
+      //  console.log("layer: " + i + " neuron: " +j+ " weights " + net.getLayer(i).neurons[j].weights)
         const neuronSprite = new PIXI.Sprite(PIXI.Texture.from('images/neuron.png'));
           neuronSprite.x=(i*120)+250;
           neuronSprite.y=j*120+150;
@@ -150,7 +150,6 @@ export class View{
           text.x=(i*120)+250 + 20;
           text.y=j*120 + 150 + 20;
         
-        console 
         //add it to appropriate layer container
         this.layers2draw[i].addChild(neuronSprite);
         this.layers2draw[i].addChild(text);

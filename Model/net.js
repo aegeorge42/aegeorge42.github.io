@@ -24,7 +24,7 @@ export class Neuron{
         this.bias = Math.random() * 2 - 1 //bias between -1 and 1
         this.inputs = [];
         this.actFun = [];
-        this.setActFn(actFns.BINSTEP);
+        this.setActFn(actFns.LINEAR);
     }
 
     setActFn(actfn){
@@ -51,7 +51,7 @@ export class Neuron{
         this.inputs=v;
 
         for(var i=this.weights.length; i<v.length; i++){
-            this.weights[i]=this.weights[i]= Math.random() * 2 - 1;//Math.floor(Math.random() * (1000 - 100) + 100) / 100; //CHANGE BACK TO SAME AS BIAS
+            this.weights[i]=Math.random() * 2 - 1;//Math.floor(Math.random() * (1000 - 100) + 100) / 100; //CHANGE BACK TO SAME AS BIAS
         }
     }
 
@@ -59,24 +59,27 @@ export class Neuron{
         this.inputs=v;
     }
 
+    setInputs(v){
+        
+    }
 
     calcOut(){
         var outlist = [];
-        var out = 0;
+        var outsum = 0;
         for(var i = 0; i<this.weights.length; i++){
             outlist[i]= this.inputs[i]*this.weights[i];
-            out=out+outlist[i];
+            outsum=outsum+outlist[i];
         }
-        this.output_nofn = out;
+        this.output_nofn = outsum;
 
 
         switch(this.actFun){
             case(actFns.LINEAR):
-                this.output = out;
+                this.output = outsum;
             break;
             case(actFns.BINSTEP):
 
-                if(out <= 0){
+                if(outsum <= 0){
                     this.output = 0;
                 } else{
                     this.output= 1;
@@ -88,23 +91,18 @@ export class Neuron{
     printNeuron(){
         var ins = "";
         var ws = "";
-        var os = "";
+        var os = ""; 
         var o = "";
 
-        //for printin ugh
+        console.log("printneuron");
         for(var i =0; i<this.inputs.length; i++){
-            ins += this.inputs[i] + " ";
-            ws += this.weights[i] + " ";
-            if(this.output_nofn !== undefined){
-                os += this.output_nofn[i] + " ";         
-            }
+            ins += this.inputs[i].toFixed(2) + " ";
+            ws += this.weights[i].toFixed(2) + " "; 
         }
 
-        if(this.output !== undefined){
-            o=this.output;
-        }
-
-        console.log("    inputs: " + ins + " weights: " + ws + "outputs: " + os + "out: " +o);
+        os = this.output_nofn.toFixed(2) + " ";
+        o = this.output.toFixed(2) + " ";
+        console.log("inputs " + ins + "weights " + ws + "outsum: " + os + "out: " + o);
     }
 }
 
@@ -221,7 +219,7 @@ export class Net{
     update(){
        // console.log("........................");
        // console.log("net has " + this.layers.length + "layers");
-       console.log("UPDATE");
+    //   console.log("UPDATE");
        this.connect();
     //   this.printNet();
     }
@@ -229,6 +227,7 @@ export class Net{
     printNet(){
         console.log("Net has " + this.layers.length + " layers")
         this.layers.forEach(function(layer) {
+            console.log('\n');
             console.log(" Layer #"+ layer.layerNumber + " has " + layer.neurons.length + " neurons");
             console.log("----------LAYER " + layer.layerNumber + "----------");
             layer.printLayer();
