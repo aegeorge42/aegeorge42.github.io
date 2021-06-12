@@ -9,22 +9,24 @@ export const actFns = {
     LRELU: "lrelu", //leaky relu
 }
 
+//stuff to set in controller w user input
 export const staticInput = [1.0, 2.0];
+export const userActFun = actFns.LINEAR;
 
 export class Neuron{
     neuronNumber;
     bias;
     inputs;
     weights;
-    output_nofn;
-    output;
+    output_nofn; //output before activation fn (same as using linear)
+    output; // output after activation fn
     actFun;
 
     constructor(){
         this.bias = Math.random() * 2 - 1 //bias between -1 and 1
         this.inputs = [];
         this.actFun = [];
-        this.setActFn(actFns.LINEAR);
+        this.setActFn(userActFun);
     }
 
     setActFn(actfn){
@@ -66,13 +68,16 @@ export class Neuron{
                 this.output = outsum;
             break;
             case(actFns.BINSTEP):
-
                 if(outsum <= 0){
                     this.output = 0;
                 } else{
                     this.output= 1;
                 }
             break;
+            case(actFns.SIGMOID):
+                this.output=1/(1+(Math.E ** -outsum));
+                break;
+
         }
     }
 
@@ -96,6 +101,7 @@ export class Neuron{
 export class Layer{
     layerNumber;
     neurons; //list of neurons in layer
+    layerInputs = [];  //list of inputs to all neurons in layer
     layerOutputs; //list of all outputs from neurons in layer
 
     //no such thing as an empty layer
@@ -122,7 +128,6 @@ export class Layer{
     }
 
     //for each neuron in layer, set same inputs
-    //change input params to layer?
     setLayerIns(v){
         this.neurons.forEach(function(neuron) {
             neuron.setInputs(v);
@@ -135,8 +140,6 @@ export class Layer{
             neuron.printNeuron();
         });
         console.log("Layer " + this.layerNumber + " outs: " + this.layerOutputs);
-
-        
     }
 
     getNeurons(){
@@ -149,11 +152,10 @@ export class Net{
     netInput; //input to layer 0
 
     constructor(){
+        this.setNetInput(staticInput);
         this.layers=[];
         this.addLayer();
-    //    this.getLayer(0).setLayerIns(staticInput);
-    //    this.setNetInput(staticInput);
-        this.connect();
+        this.update();
     }
 
     setNetInput(data){
@@ -174,9 +176,8 @@ export class Net{
         return gotLayer;
     }
 
-    connect(){
-
-        this.getLayer(0).setLayerIns(staticInput);
+    update(){
+        this.getLayer(0).setLayerIns(this.netInput);
 
         for(var i=0; i<this.layers.length-1; i++){
 
@@ -197,13 +198,13 @@ export class Net{
         this.getLayer(lastLayer).getLayerOuts();
     }
 
-    update(){
+    //update(){
        // console.log("........................");
        // console.log("net has " + this.layers.length + "layers");
     //   console.log("UPDATE");
-       this.connect();
+     //  this.connect();
     //   this.printNet();
-    }
+    //}
 
     printNet(){
         console.log("Net has " + this.layers.length + " layers")

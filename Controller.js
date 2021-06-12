@@ -15,27 +15,18 @@ view.drawButtons();
 view.draw_layerSetup(net);
 view.drawNeurons(net);
 
-view.drawInputs(staticInput);
-
-//console.log("LAST LAYER" + net.getLayer(net.layers.length-1).getLayerOuts());
-
-//net.getLayer().addNeuron();
-
+view.addInputs(staticInput);
+view.drawInputs();
 
 net.update();
 view.drawNeurons(net);
 
-//TODO - give buttons IDs for easier access + knowing what they do
-//this works for now tho
-//view.buttonDrawList[2].alpha = 0;
-//view.buttonDrawList[2].interactive = false;
-view.buttonDrawList[2].visible= false;
-view.buttonDrawList[3].visible = false;
 
+view.buttonContainer.getChildByName("b_addn1").visible = false;
+view.buttonContainer.getChildByName("b_addn2").visible = false;
 var finalAdded=0;
 
-//addLayer
-view.buttonDrawList[0].on('click', function(e){ 
+view.buttonContainer.getChildByName("b_addlayer").on('click', function(e){
   if(net.layers.length<maxLayers && finalAdded==0){
     net.addLayer();
     net.update();
@@ -43,19 +34,20 @@ view.buttonDrawList[0].on('click', function(e){
     view.drawNeurons(net);
   
 
-  //make next layer "add neuron" button visible
-  if(view.buttonDrawList[2].visible == false){
-    view.buttonDrawList[2].visible = true;
-  } else if (view.buttonDrawList[2].visible == true && view.buttonDrawList[3].visible == false){
-    view.buttonDrawList[3].visible = true;
-  }
+    //make next layer "add neuron" button visible
+    if(view.buttonContainer.getChildByName("b_addn1").visible == false){
+      console.log("bn1 invisible :0")
+      view.buttonContainer.getChildByName("b_addn1").visible = true;
+    } else if (view.buttonContainer.getChildByName("b_addn1").visible == true
+        && view.buttonContainer.getChildByName("b_addn2").visible == false){
+        view.buttonContainer.getChildByName("b_addn2").visible = true;
+    }
 
   net.printNet();
   }
 })
 
-//addNeuron
-view.buttonDrawList[1].on('click', function(e){ 
+view.buttonContainer.getChildByName("b_addn0").on('click', function(e){ 
   if(net.getLayer(0).neurons.length<maxNeurons && finalAdded==0){
     net.getLayer(0).addNeuron();
     net.update();
@@ -64,16 +56,16 @@ view.buttonDrawList[1].on('click', function(e){
   }
 })
 
-view.buttonDrawList[2].on('click', function(e){ 
+view.buttonContainer.getChildByName("b_addn1").on('click', function(e){ 
   if(net.getLayer(1).neurons.length<maxNeurons && finalAdded==0){
     net.getLayer(1).addNeuron();
     net.update();
-    view.drawNeurons(net);    
+    view.drawNeurons(net);
     net.printNet();
   }
 })
 
-view.buttonDrawList[3].on('click', function(e){ 
+view.buttonContainer.getChildByName("b_addn2").on('click', function(e){ 
   if(net.getLayer(2).neurons.length<maxNeurons && finalAdded==0){
     net.getLayer(2).addNeuron();
     net.update();
@@ -82,12 +74,7 @@ view.buttonDrawList[3].on('click', function(e){
   }
 })
 
-//ready to train!
-//add in one final neuron to get single output - maybe toggle on and off?
-//kind of an ugly solution. sleep on it.
-
-//we need this to get single output for our training data answers
-view.buttonDrawList[4].on('click', function(e){ 
+view.buttonContainer.getChildByName("b_addf").on('click', function(e){ 
   if(finalAdded==0){
     finalAdded=1;
     net.addLayer();
