@@ -9,18 +9,9 @@ const net = new Net();
 const maxLayers = 2;
 const maxNeurons = 3;
 
-view.addButtons();
-view.drawButtons();
-
+view.setup();
 view.draw_layerSetup(net);
 view.drawNeurons(net);
-
-view.addInputs(staticInput);
-view.drawInputs();
-
-net.update();
-view.drawNeurons(net);
-
 
 view.buttonContainer.getChildByName("b_addn1").visible = false;
 view.buttonContainer.getChildByName("b_addn2").visible = false;

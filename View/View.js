@@ -1,3 +1,4 @@
+import { staticInput } from "../Model/net.js";
 import {Button} from "./Button.js"
 
 const formatter = new Intl.NumberFormat('en-US', {
@@ -12,7 +13,6 @@ const textStyle = new PIXI.TextStyle({
 });
 
 export class View{
-  input2draw = [];
   inputContainer; // inputs to draw
   buttonContainer; // all buttons to draw
 
@@ -30,7 +30,7 @@ export class View{
 
     this.buttonContainer = new PIXI.Container();
     this.inputContainer = new PIXI.Container();
-
+  }
     // load all images (it would be cool if this worked)
     /*
     PIXI.loader
@@ -41,12 +41,19 @@ export class View{
       "images/circle.png",
       "images/button_down.png"
     ])
-    .load(this.setup);
-    */
+    .load(this.pixisetup);
   }
 
-  setup(){
+  pixisetup(){
     console.log("ready 2 go")
+  }
+  */
+
+  setup(){
+    this.addButtons();
+    this.drawButtons();
+    this.addInputs(staticInput); //fix this
+    this.drawInputs();
   }
 
   //add buttons to list
@@ -67,7 +74,8 @@ export class View{
     this.app.stage.addChild(newb);
   }
 
-  drawButtons(){
+  drawButtons(){    
+    this.app.stage.removeChild(this.buttonContainer);
     this.app.stage.addChild(this.buttonContainer);
   }
 
@@ -105,6 +113,7 @@ export class View{
   }
 
   drawInputs(){
+    this.app.stage.removeChild(this.inputContainer);
     this.app.stage.addChild(this.inputContainer);
   }
 
