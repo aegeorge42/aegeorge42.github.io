@@ -6,10 +6,11 @@ import {actFns, defaultInput, Neuron, Layer, Net} from "./Model/net.js"
 const view = new View();
 const net = new Net();
 
-const maxLayers = 2;
+const maxLayers = 3;
 const maxNeurons = 3;
 
-const userInputs= [3,4];
+const userInputs= [3,4,5];
+const userActFun="";
 
 view.setup_buttons();
 view.draw_layerSetup(net);
@@ -29,14 +30,14 @@ view.buttonContainer.getChildByName("b_addlayer").on('click', function(e){
 
     //make next layer "add neuron" button visible
     if(view.buttonContainer.getChildByName("b_addn1").visible == false){
-      console.log("bn1 invisible :0")
+
       view.buttonContainer.getChildByName("b_addn1").visible = true;
     } else if (view.buttonContainer.getChildByName("b_addn1").visible == true
         && view.buttonContainer.getChildByName("b_addn2").visible == false){
         view.buttonContainer.getChildByName("b_addn2").visible = true;
     }
 
-  net.printNet();
+//  net.printNet();
   }
 })
 
@@ -45,7 +46,7 @@ view.buttonContainer.getChildByName("b_addn0").on('click', function(e){
     net.getLayer(0).addNeuron();
     net.update();
     view.drawNeurons(net);
-    net.printNet();
+//    net.printNet();
   }
 })
 
@@ -54,7 +55,7 @@ view.buttonContainer.getChildByName("b_addn1").on('click', function(e){
     net.getLayer(1).addNeuron();
     net.update();
     view.drawNeurons(net);
-    net.printNet();
+//    net.printNet();
   }
 })
 
@@ -63,7 +64,7 @@ view.buttonContainer.getChildByName("b_addn2").on('click', function(e){
     net.getLayer(2).addNeuron();
     net.update();
     view.drawNeurons(net);
-    net.printNet();
+//    net.printNet();
   }
 })
 
@@ -74,7 +75,7 @@ view.buttonContainer.getChildByName("b_addf").on('click', function(e){
     net.update();
     view.draw_layerSetup(net);
     view.drawNeurons(net);
-    net.printNet();
+//    net.printNet();
   }
 })
 
@@ -82,7 +83,21 @@ view.buttonContainer.getChildByName("b_in").on('click', function(e){
   net.setNetInput(userInputs);
   view.addInputs(userInputs);
   view.drawInputs();
-  console.log("fart")
+  net.update();
+  view.drawNeurons(net);
+
+})
+
+view.buttonContainer.getChildByName("b_actfn_linear").on('click', function(e){ 
+  console.log("linear")
+  net.setNetActFn(actFns.LINEAR);
+  net.update();
+  view.drawNeurons(net);
+})
+
+view.buttonContainer.getChildByName("b_actfn_binstep").on('click', function(e){ 
+  console.log("binstep")
+  net.setNetActFn(actFns.BINSTEP);
   net.update();
   view.drawNeurons(net);
 

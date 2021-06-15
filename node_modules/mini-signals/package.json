@@ -1,0 +1,57 @@
+{
+  "name": "mini-signals",
+  "version": "1.2.0",
+  "description": "signals, in JavaScript, fast",
+  "main": "lib/mini-signals.js",
+  "jsnext:main": "src/mini-signals.js",
+  "types": "typings/mini-signals.d.ts",
+  "scripts": {
+    "test": "npm run mocha",
+    "test:fast": "mocha --compilers js:babel/register ./test/mini-signals-spec.js",
+    "test:deopt": "node --trace_opt --trace_deopt ./bench/test-deopt.js | grep \"disabled optimization\" || true",
+    "lint": "semistandard src/*.js test/*.js",
+    "check": "npm run lint",
+    "build": "npm run rollup && npm run browserify && npm run uglify && npm run jsdoc2md",
+    "rollup": "rollup ./src/index.js | babel -o ./lib/mini-signals.js --no-comments",
+    "browserify": "browserify ./lib/mini-signals.js -o browser.js -s MiniSignal",
+    "uglify": "uglifyjs browser.js -o browser.min.js",
+    "coverage": "istanbul cover -- ./node_modules/mocha/bin/_mocha --compilers js:babel/register ./test/mini-signals-*.js",
+    "mocha": "mocha --compilers js:babel/register",
+    "bench": "babel-node ./bench/emit.js && babel-node ./bench/emit-context.js",
+    "_prepublish": "npm run build && npm test",
+    "jsdoc2md": "jsdoc-parse ./src/mini-signals.js | dmd > API.md",
+    "version": "chg release -y && git add -A CHANGELOG.md",
+    "np": "npm run build && np"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Hypercubed/mini-signals.git"
+  },
+  "keywords": [
+    "events",
+    "signals",
+    "fast"
+  ],
+  "author": "J. Harshbarger",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Hypercubed/mini-signals/issues"
+  },
+  "homepage": "https://github.com/Hypercubed/mini-signals",
+  "devDependencies": {
+    "assume": "^1.4.1",
+    "babel": "^5.8.23",
+    "benchmark": "^1.0.0",
+    "browserify": "^11.2.0",
+    "dmd": "^1.2.0",
+    "eventemitter3": "^1.1.1",
+    "istanbul": "^0.3.19",
+    "jsdoc-parse": "^1.1.0",
+    "mocha": "^2.2.5",
+    "np": "^2.16.0",
+    "rollup": "^0.16.4",
+    "semistandard": "^7.0.5",
+    "signals": "^1.0.0",
+    "uglifyjs": "^2.4.10"
+  }
+}

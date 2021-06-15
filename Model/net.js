@@ -11,7 +11,7 @@ export const actFns = {
 
 //stuff to set in controller w user input
 export const defaultInput = [0,0];
-export const userActFun = actFns.LINEAR;
+export const defaultActFn = actFns.LINEAR;
 
 export class Neuron{
     neuronNumber;
@@ -26,7 +26,7 @@ export class Neuron{
         this.bias = Math.random() * 2 - 1 //bias between -1 and 1
         this.inputs = [];
         this.actFun = [];
-        this.setActFn(userActFun);
+        this.setActFn(defaultActFn);
     }
 
     setActFn(actfn){
@@ -150,8 +150,10 @@ export class Layer{
 export class Net{
     layers; //list of layers
     netInput; //input to layer 0
+    netActFn; //activation function
 
     constructor(){
+        this.setNetActFn(defaultActFn);
         this.setNetInput(defaultInput);
         this.layers=[];
         this.addLayer();
@@ -162,6 +164,9 @@ export class Net{
         this.netInput=data;
     }
 
+    setNetActFn(actfn){
+        this.netActFn=actfn;
+    }
 
     addLayer(){
         var l = new Layer();
@@ -178,11 +183,22 @@ export class Net{
 
     update(){
         this.getLayer(0).setLayerIns(this.netInput);
+        var netfn = this.netActFn;
 
         for(var i=0; i<this.layers.length-1; i++){
+            console.log("net actfn: "+ this.netActFn);
 
+            //update act fn for each neuron to user input
             //get output for each neuron in layer i
             this.getLayer(i).neurons.forEach(function(neuron){
+                if(neuron.actFun != netfn){
+                    neuron.actFun = netfn;
+                }
+                console.log("neuron actfn: " + neuron.actFun);
+                console.log("net actfn in loop: " + netfn);
+
+                console.log();
+
                 neuron.calcOut();
             });
 
