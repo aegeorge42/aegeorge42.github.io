@@ -2,6 +2,8 @@
 import {Button} from "./View/Button.js"
 import {View} from "./View/View.js"
 import {actFns, defaultInput, Neuron, Layer, Net} from "./Model/net.js"
+import {TextInput} from "./PIXI.TextInput.js"
+
 
 const view = new View();
 const net = new Net();
@@ -100,5 +102,28 @@ view.buttonContainer.getChildByName("b_actfn_binstep").on('click', function(e){
   net.setNetActFn(actFns.BINSTEP);
   net.update();
   view.drawNeurons(net);
-
 })
+
+/*
+var input = new TextInput({
+  input: {
+    fontSize: '36px',
+    padding: '12px',
+    width: '500px',
+    color: '#26272E'
+  },
+  box: {
+    default: {fill: 0xE8E9F3, rounded: 12, stroke: {color: 0xCBCEE0, width: 3}},
+    focused: {fill: 0xE1E3EE, rounded: 12, stroke: {color: 0xABAFC6, width: 3}},
+    disabled: {fill: 0xDBDBDB, rounded: 12}
+  }
+})
+
+input.placeholder = 'Enter your Text...'
+input.x = 500
+input.y = 300
+input.pivot.x = input.width/2
+input.pivot.y = input.height/2
+view.app.stage.addChild(input)
+console.log(input.text);
+*/

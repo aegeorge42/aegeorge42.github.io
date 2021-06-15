@@ -1,8 +1,5 @@
-(function (pkg){
 
-const PIXI = pkg.PIXI
-
-class TextInput extends PIXI.Container{
+export class TextInput extends PIXI.Container{
   constructor(styles){
     super()
     this._input_style = Object.assign(
@@ -681,15 +678,3 @@ function DefaultBoxGenerator(styles){
     return box
   }
 }
-
-pkg.exportTo[0][pkg.exportTo[1]] = TextInput
-
-})(
-  typeof PIXI === 'object'
-  ? { PIXI: PIXI, exportTo: [PIXI,'TextInput'] }
-  : (
-    typeof module === 'object'
-    ? { PIXI: require('pixi.js'), exportTo: [module,'exports'] }
-    : console.warn('[PIXI.TextInput] could not attach to PIXI namespace. Make sure to include this plugin after pixi.js') || {}
-  )
-)
