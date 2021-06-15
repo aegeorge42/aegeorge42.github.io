@@ -117,6 +117,10 @@ export class Layer{
         n.neuronNumber=this.neurons.length-1;
     }
 
+    removeNeuron(){
+        this.neurons.pop();
+    }
+
     //get output from each neuron in layer
     getLayerOuts(){
         var lo=[];
@@ -197,8 +201,6 @@ export class Net{
                 console.log("neuron actfn: " + neuron.actFun);
                 console.log("net actfn in loop: " + netfn);
 
-                console.log();
-
                 neuron.calcOut();
             });
 
@@ -209,6 +211,9 @@ export class Net{
         //need this to get final outputs
         var lastLayer = this.layers.length-1;
         this.getLayer(lastLayer).neurons.forEach(function(neuron){
+            if(neuron.actFun != netfn){
+                neuron.actFun = netfn;
+            }
             neuron.calcOut();
         });
         this.getLayer(lastLayer).getLayerOuts();

@@ -50,6 +50,17 @@ view.buttonContainer.getChildByName("b_addn0").on('click', function(e){
   }
 })
 
+//TODO - COME BACK TO THIS - DOESn"T WORK
+view.buttonContainer.getChildByName("b_remn0").on('click', function(e){ 
+  if(net.getLayer(0).neurons.length<maxNeurons && finalAdded==0){
+    console.log("REMOVE ME");
+    net.getLayer(0).removeNeuron();
+    net.update();
+    view.drawNeurons(net);
+    net.printNet();
+  }
+})
+
 view.buttonContainer.getChildByName("b_addn1").on('click', function(e){ 
   if(net.getLayer(1).neurons.length<maxNeurons && finalAdded==0){
     net.getLayer(1).addNeuron();

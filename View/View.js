@@ -60,15 +60,17 @@ export class View{
     //make all the buttons
     var button_input = new Button("b_in",PIXI.Texture.from('images/buttons/button_setin.png'),200,100);
     var button_addlayer = new Button("b_addlayer",PIXI.Texture.from('images/buttons/button_layer.png'),100,100);
-    var button_addn0 = new Button("b_addn0",PIXI.Texture.from('images/buttons/button_neuron.png'),300,100);
-    var button_addn1 = new Button("b_addn1",PIXI.Texture.from('images/buttons/button_neuron.png'),420,100);
-    var button_addn2 = new Button("b_addn2",PIXI.Texture.from('images/buttons/button_neuron.png'),540,100)
+    var button_addn0 = new Button("b_addn0",PIXI.Texture.from('images/buttons/button_addneuron.png'),300,50);
+    var button_remn0 = new Button("b_remn0",PIXI.Texture.from('images/buttons/button_removeneuron.png'),300,100);
+    var button_addn1 = new Button("b_addn1",PIXI.Texture.from('images/buttons/button_addneuron.png'),420,50);
+    var button_addn2 = new Button("b_addn2",PIXI.Texture.from('images/buttons/button_addneuron.png'),540,50)
     var button_addf = new Button("b_addf",PIXI.Texture.from('images/buttons/button_next.png'),100,200)
     var button_actfn_linear= new Button("b_actfn_linear",PIXI.Texture.from('images/buttons/button_linear.png'),100,250)
     var button_actfn_binstep= new Button("b_actfn_binstep",PIXI.Texture.from('images/buttons/button_binstep.png'),100,300)
 
     //add all the buttons
-    this.buttonContainer.addChild(button_input, button_addlayer, button_addn0,button_addn1,button_addn2,button_addf,button_actfn_binstep,button_actfn_linear);
+    this.buttonContainer.addChild(button_input, button_addlayer, 
+      button_addn0, button_remn0, button_addn1, button_addn2,button_addf,button_actfn_binstep,button_actfn_linear);
   }
 
   //add a single button
@@ -133,26 +135,96 @@ export class View{
     for(var i = 0; i<net.layers.length; i++){
       //for each neuron
       for(var j=0; j<net.getLayer(i).neurons.length; j++){
-        
-        //create a neuron sprite
-        var neuronSprite = new PIXI.Sprite(PIXI.Texture.from('images/neuron.png'));
-          neuronSprite.x=(i*120)+250;
-          neuronSprite.y=j*120+150;
 
-        //convert neuron values to text
-        var text = new PIXI.Text(
+        //each neuron is container for drawing attributes
+        var neuronContainer = new PIXI.Container();
+          neuronContainer.x=(i*120)+250;
+          neuronContainer.y=j*120+150;
+
+        var neuronBase = new PIXI.Sprite(PIXI.Texture.from('images/neuron.png'));
+        
+        var innerText = new PIXI.Text(
           "i: " + this.formatList(net.getLayer(i).neurons[j].inputs) + '\n'
          + "w: " + this.formatList(net.getLayer(i).neurons[j].weights) + '\n'
          + "o: " + formatter.format(net.getLayer(i).neurons[j].output_nofn) + '\n'
          + formatter.format(net.getLayer(i).neurons[j].output),
           textStyle)
-          text.x=(i*120)+250 + 20;
-          text.y=j*120 + 150 + 20;
 
+        var outText = new PIXI.Text(formatter.format(net.getLayer(i).neurons[j].output));
+          outText.x=25;
+          outText.y=25;
+
+        var overNeuron = new PIXI.Sprite(PIXI.Texture.from('images/neuron.png'));
+          overNeuron.tint=0x7a03ad;
+          overNeuron.interactive=true;
+
+          overNeuron.addChild(outText);
+
+          overNeuron.on('mouseover', function(e){
+            this.alpha=0;
+          })
+
+          overNeuron.on('mouseout', function(e){
+            this.alpha=1;
+          })
+
+        neuronContainer.addChild(neuronBase);
+        neuronContainer.addChild(innerText);
+        neuronContainer.addChild(overNeuron);
+
+
+        this.layers2draw[i].addChild(neuronContainer);
+
+
+        /*
+        var neuronContainer = new PIXI.Container();
+
+        //create a neuron sprite
+        var neuronBase = new PIXI.Sprite(PIXI.Texture.from('images/neuron.png'));
+          neuronBase.x=(i*120)+250;
+          neuronBase.y=j*120+150;
+
+        //convert neuron values to text
+        var innards = new PIXI.Text(
+          "i: " + this.formatList(net.getLayer(i).neurons[j].inputs) + '\n'
+         + "w: " + this.formatList(net.getLayer(i).neurons[j].weights) + '\n'
+         + "o: " + formatter.format(net.getLayer(i).neurons[j].output_nofn) + '\n'
+         + formatter.format(net.getLayer(i).neurons[j].output),
+          textStyle)
+          innards.x=(i*120)+250 + 20;
+          innards.y=j*120 + 150 + 20;
+        
+
+        var overneuron= new PIXI.Sprite(PIXI.Texture.from('images/neuron.png'));
+          overneuron.x=(i*120)+250;
+          overneuron.y=j*120+150;
+          overneuron.tint=0x7a03ad;
+          overneuron.interactive=true;
+          
+        var outputText= new PIXI.Text(formatter.format(net.getLayer(i).neurons[j].output))
+          outputText.x=(i*120)+250 + 20;
+          outputText.y=j*120 + 150 + 20;
+          //overneuron.addChild(new PIXI.Sprite(PIXI.Texture.from('images/neuron.png')));
+          
+
+          overneuron.on('mouseover', function(e){
+            console.log(this.children.x)
+            //this.alpha=0;
+            //this.outputText.alpha=0;
+          })
+
+          overneuron.on('mouseout', function(e){
+           // this.alpha=1;
+          //  outputText.alpha=1;
+          })
+        
         //add it all to appropriate layer container
-        this.layers2draw[i].addChild(neuronSprite);
-        this.layers2draw[i].addChild(text);
-       // this.layers2draw[i].addChild(innards);
+        //this order is important
+        this.layers2draw[i].addChild(neuronBase);
+        this.layers2draw[i].addChild(innards);
+        this.layers2draw[i].addChild(overneuron);
+        //this.layers2draw[i].addChild(outputText);
+        */
       }
       this.app.stage.addChild(this.layers2draw[i]);
     }
