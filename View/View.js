@@ -72,8 +72,8 @@ export class View{
   }
 
   //add a single button
-  addButton(id,textureimg, x, y){
-    var newb = new Button(id,PIXI.Texture.from(textureimg),x,y)
+  addButton(name,textureimg, x, y){
+    var newb = new Button(name,PIXI.Texture.from(textureimg),x,y)
     this.buttonContainer.addChild(newb);
     this.app.stage.addChild(newb);
   }
@@ -148,11 +148,11 @@ export class View{
           textStyle)
           text.x=(i*120)+250 + 20;
           text.y=j*120 + 150 + 20;
-        
+
         //add it all to appropriate layer container
         this.layers2draw[i].addChild(neuronSprite);
         this.layers2draw[i].addChild(text);
-
+       // this.layers2draw[i].addChild(innards);
       }
       this.app.stage.addChild(this.layers2draw[i]);
     }

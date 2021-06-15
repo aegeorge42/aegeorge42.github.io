@@ -102,3 +102,4 @@ view.buttonContainer.getChildByName("b_actfn_binstep").on('click', function(e){
   view.drawNeurons(net);
 
 })
+
