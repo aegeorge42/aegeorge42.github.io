@@ -46,11 +46,17 @@ export class Neuron{
 
         //if a neuron has some inputs already but needs more
         //because another neuron was added in the prev layer
-        if(this.weights.length != v.length){
+        if(this.weights.length < v.length){
             for(var i=this.weights.length; i<v.length; i++){
                 this.weights[i]=Math.random() * 2 - 1;
             }
         }
+
+        if(this.weights.length > v.length){
+            this.weights.pop();
+        }
+
+        
     }
 
     calcOut(){
@@ -58,6 +64,7 @@ export class Neuron{
         var outsum = 0;
         for(var i = 0; i<this.weights.length; i++){
             outlist[i]= this.inputs[i]*this.weights[i];
+            
             outsum=outsum+outlist[i];
         }
         this.output_nofn = outsum;

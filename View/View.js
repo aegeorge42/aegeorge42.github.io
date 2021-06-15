@@ -52,6 +52,10 @@ export class View{
   setup_buttons(){
     this.addButtons();
     this.drawButtons();
+    this.buttonContainer.getChildByName("b_addn1").visible = false;
+    this.buttonContainer.getChildByName("b_remn1").visible = false;
+    this.buttonContainer.getChildByName("b_addn2").visible = false;
+    this.buttonContainer.getChildByName("b_remn2").visible = false;
   }
 
   //add buttons to list
@@ -60,17 +64,26 @@ export class View{
     //make all the buttons
     var button_input = new Button("b_in",PIXI.Texture.from('images/buttons/button_setin.png'),200,100);
     var button_addlayer = new Button("b_addlayer",PIXI.Texture.from('images/buttons/button_layer.png'),100,100);
+
     var button_addn0 = new Button("b_addn0",PIXI.Texture.from('images/buttons/button_addneuron.png'),300,50);
     var button_remn0 = new Button("b_remn0",PIXI.Texture.from('images/buttons/button_removeneuron.png'),300,100);
+
     var button_addn1 = new Button("b_addn1",PIXI.Texture.from('images/buttons/button_addneuron.png'),420,50);
-    var button_addn2 = new Button("b_addn2",PIXI.Texture.from('images/buttons/button_addneuron.png'),540,50)
-    var button_addf = new Button("b_addf",PIXI.Texture.from('images/buttons/button_next.png'),100,200)
+    var button_remn1 = new Button("b_remn1",PIXI.Texture.from('images/buttons/button_removeneuron.png'),420,100);
+
+    var button_addn2 = new Button("b_addn2",PIXI.Texture.from('images/buttons/button_addneuron.png'),540,50);
+    var button_remn2 = new Button("b_remn2",PIXI.Texture.from('images/buttons/button_removeneuron.png'),540,100);
+
+    var button_addf = new Button("b_addf",PIXI.Texture.from('images/buttons/button_next.png'),100,175);
     var button_actfn_linear= new Button("b_actfn_linear",PIXI.Texture.from('images/buttons/button_linear.png'),100,250)
     var button_actfn_binstep= new Button("b_actfn_binstep",PIXI.Texture.from('images/buttons/button_binstep.png'),100,300)
 
     //add all the buttons
     this.buttonContainer.addChild(button_input, button_addlayer, 
-      button_addn0, button_remn0, button_addn1, button_addn2,button_addf,button_actfn_binstep,button_actfn_linear);
+      button_addn0, button_remn0,
+      button_addn1, button_remn1,
+      button_addn2, button_remn2,
+      button_addf,button_actfn_binstep,button_actfn_linear);
   }
 
   //add a single button
@@ -105,25 +118,30 @@ export class View{
   }
 
   addInputs(inputs){
+
+    this.inputContainer.x=160;
+    this.inputContainer.y=150;
+
     this.inputContainer.removeChildren();
     for(var i = 0; i<inputs.length; i++){
       var inputSprite = new PIXI.Sprite(PIXI.Texture.from('images/input.png'));
-        inputSprite.x=160;
-        inputSprite.y=i*120 + 200;
+      //  inputSprite.x=160;
+        inputSprite.y=i*100;
 
       var inputSpriteText = new PIXI.Text(inputs[i]);
-        inputSpriteText.x=160 + 10;
-        inputSpriteText.y=i*120 + 200 + 10;
+        inputSpriteText.x=20;
+        inputSpriteText.y=i*100 +20;
 
       this.inputContainer.addChild(inputSprite,inputSpriteText);
+      this.app.stage.addChild(this.inputContainer);
     }
   }
 
-  drawInputs(){
-    
-    this.app.stage.removeChild(this.inputContainer);
-    this.app.stage.addChild(this.inputContainer);
-  }
+  //Do i need this?
+ // drawInputs(){ 
+ //   this.app.stage.removeChild(this.inputContainer);
+ //   this.app.stage.addChild(this.inputContainer);
+ // }
 
   drawNeurons(net){
     //clear old stuff
@@ -149,11 +167,15 @@ export class View{
          + "o: " + formatter.format(net.getLayer(i).neurons[j].output_nofn) + '\n'
          + formatter.format(net.getLayer(i).neurons[j].output),
           textStyle)
+          innerText.x=15;
+          innerText.y=15;
+
 
         var outText = new PIXI.Text(formatter.format(net.getLayer(i).neurons[j].output));
           outText.x=25;
           outText.y=25;
 
+          //overneuron has to be the interactive since it's on top
         var overNeuron = new PIXI.Sprite(PIXI.Texture.from('images/neuron.png'));
           overNeuron.tint=0x7a03ad;
           overNeuron.interactive=true;
@@ -176,55 +198,6 @@ export class View{
         this.layers2draw[i].addChild(neuronContainer);
 
 
-        /*
-        var neuronContainer = new PIXI.Container();
-
-        //create a neuron sprite
-        var neuronBase = new PIXI.Sprite(PIXI.Texture.from('images/neuron.png'));
-          neuronBase.x=(i*120)+250;
-          neuronBase.y=j*120+150;
-
-        //convert neuron values to text
-        var innards = new PIXI.Text(
-          "i: " + this.formatList(net.getLayer(i).neurons[j].inputs) + '\n'
-         + "w: " + this.formatList(net.getLayer(i).neurons[j].weights) + '\n'
-         + "o: " + formatter.format(net.getLayer(i).neurons[j].output_nofn) + '\n'
-         + formatter.format(net.getLayer(i).neurons[j].output),
-          textStyle)
-          innards.x=(i*120)+250 + 20;
-          innards.y=j*120 + 150 + 20;
-        
-
-        var overneuron= new PIXI.Sprite(PIXI.Texture.from('images/neuron.png'));
-          overneuron.x=(i*120)+250;
-          overneuron.y=j*120+150;
-          overneuron.tint=0x7a03ad;
-          overneuron.interactive=true;
-          
-        var outputText= new PIXI.Text(formatter.format(net.getLayer(i).neurons[j].output))
-          outputText.x=(i*120)+250 + 20;
-          outputText.y=j*120 + 150 + 20;
-          //overneuron.addChild(new PIXI.Sprite(PIXI.Texture.from('images/neuron.png')));
-          
-
-          overneuron.on('mouseover', function(e){
-            console.log(this.children.x)
-            //this.alpha=0;
-            //this.outputText.alpha=0;
-          })
-
-          overneuron.on('mouseout', function(e){
-           // this.alpha=1;
-          //  outputText.alpha=1;
-          })
-        
-        //add it all to appropriate layer container
-        //this order is important
-        this.layers2draw[i].addChild(neuronBase);
-        this.layers2draw[i].addChild(innards);
-        this.layers2draw[i].addChild(overneuron);
-        //this.layers2draw[i].addChild(outputText);
-        */
       }
       this.app.stage.addChild(this.layers2draw[i]);
     }
