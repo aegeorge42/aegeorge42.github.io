@@ -18,7 +18,7 @@ export class View{
 
   //list of containers
   //each container holds all neurons for that layer
-  layers2draw = []; 
+  layers2draw;
 
   constructor(){
     this.app = new PIXI.Application({
@@ -63,7 +63,8 @@ export class View{
 
     //make all the buttons
     var button_input = new Button("b_in",PIXI.Texture.from('images/buttons/button_setin.png'),200,100);
-    var button_addlayer = new Button("b_addlayer",PIXI.Texture.from('images/buttons/button_layer.png'),100,100);
+    var button_addlayer = new Button("b_addlayer",PIXI.Texture.from('images/buttons/button_layer.png'),100,50);
+    var button_removelayer = new Button("b_remlayer",PIXI.Texture.from('images/buttons/button_removelayer.png'),100,110);
 
     var button_addn0 = new Button("b_addn0",PIXI.Texture.from('images/buttons/button_addneuron.png'),300,50);
     var button_remn0 = new Button("b_remn0",PIXI.Texture.from('images/buttons/button_removeneuron.png'),300,100);
@@ -79,7 +80,7 @@ export class View{
     var button_actfn_binstep= new Button("b_actfn_binstep",PIXI.Texture.from('images/buttons/button_binstep.png'),100,300)
 
     //add all the buttons
-    this.buttonContainer.addChild(button_input, button_addlayer, 
+    this.buttonContainer.addChild(button_input, button_addlayer, button_removelayer,
       button_addn0, button_remn0,
       button_addn1, button_remn1,
       button_addn2, button_remn2,
@@ -146,14 +147,21 @@ export class View{
   drawNeurons(net){
     //clear old stuff
     for(var i = 0; i<this.layers2draw.length; i++){
+      console.log("LAYER " + i + " HAS " + this.layers2draw[i].children.length + " CHILDREN")
       this.layers2draw[i].removeChildren();
     }
-    
+    this.layers2draw=[];
+    console.log(this.layers2draw.length)
+
     // for each layer
     for(var i = 0; i<net.layers.length; i++){
+
+      var layerContainer = new PIXI.Container();
+      this.layers2draw.push(layerContainer);
+
       //for each neuron
       for(var j=0; j<net.getLayer(i).neurons.length; j++){
-
+        
         //each neuron is container for drawing attributes
         var neuronContainer = new PIXI.Container();
           neuronContainer.x=(i*120)+250;
@@ -201,5 +209,6 @@ export class View{
       }
       this.app.stage.addChild(this.layers2draw[i]);
     }
+    
   }
 }

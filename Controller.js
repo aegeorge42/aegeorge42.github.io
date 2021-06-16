@@ -27,7 +27,7 @@ view.buttonContainer.getChildByName("b_addlayer").on('click', function(e){
   if(net.layers.length<maxLayers && finalAdded==0){
     net.addLayer();
     net.update();
-    view.draw_layerSetup(net);
+//    view.draw_layerSetup(net);
     view.drawNeurons(net);
   
 
@@ -45,9 +45,17 @@ view.buttonContainer.getChildByName("b_addlayer").on('click', function(e){
 
     }
 
-  net.printNet();
+//  net.printNet();
   }
 })
+
+view.buttonContainer.getChildByName("b_remlayer").on('click', function(e){
+//  if(net.layers.length>maxLayers && finalAdded==0){
+    net.removeLayer();
+    net.update();
+    view.drawNeurons(net);
+
+});
 
 //TODO: add and remove neurons (not layer) after adding final layer
 //bug: addlayer then remove neuron from prev layer doesnt work
@@ -57,7 +65,7 @@ view.buttonContainer.getChildByName("b_addn0").on('click', function(e){
     net.getLayer(0).addNeuron();
     net.update();
     view.drawNeurons(net);
-    net.printNet();
+//    net.printNet();
   }
 })
 
@@ -66,7 +74,7 @@ view.buttonContainer.getChildByName("b_remn0").on('click', function(e){
     net.getLayer(0).removeNeuron();
     net.update();
     view.drawNeurons(net);
-    net.printNet();
+//    net.printNet();
   }
 })
 
@@ -75,7 +83,7 @@ view.buttonContainer.getChildByName("b_addn1").on('click', function(e){
     net.getLayer(1).addNeuron();
     net.update();
     view.drawNeurons(net);
-    net.printNet();
+//    net.printNet();
   }
 })
 
@@ -84,7 +92,7 @@ view.buttonContainer.getChildByName("b_remn1").on('click', function(e){
     net.getLayer(1).removeNeuron();
     net.update();
     view.drawNeurons(net);
-    net.printNet();
+//    net.printNet();
   }
 })
 
@@ -102,7 +110,7 @@ view.buttonContainer.getChildByName("b_remn2").on('click', function(e){
     net.getLayer(2).removeNeuron();
     net.update();
     view.drawNeurons(net);
-    net.printNet();
+//    net.printNet();
   }
 })
 
@@ -111,7 +119,6 @@ view.buttonContainer.getChildByName("b_addf").on('click', function(e){
 //    finalAdded=1;
     net.addLayer();
     net.update();
-    view.draw_layerSetup(net);
     view.drawNeurons(net);
 //    net.printNet();
 //  }
@@ -127,14 +134,14 @@ view.buttonContainer.getChildByName("b_in").on('click', function(e){
 })
 
 view.buttonContainer.getChildByName("b_actfn_linear").on('click', function(e){ 
-  console.log("linear")
+//  console.log("linear")
   net.setNetActFn(actFns.LINEAR);
   net.update();
   view.drawNeurons(net);
 })
 
 view.buttonContainer.getChildByName("b_actfn_binstep").on('click', function(e){ 
-  console.log("binstep")
+//  console.log("binstep")
   net.setNetActFn(actFns.BINSTEP);
   net.update();
   view.drawNeurons(net);

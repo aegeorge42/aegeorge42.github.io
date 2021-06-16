@@ -185,6 +185,10 @@ export class Net{
         l.layerNumber=this.layers.length-1;
     }
 
+    removeLayer(){
+        this.layers.pop();
+    }
+
     //need a way to access layers in order to add a neuron
     //remember layer numbers start at 0
     getLayer(layerNum){
@@ -197,7 +201,7 @@ export class Net{
         var netfn = this.netActFn;
 
         for(var i=0; i<this.layers.length-1; i++){
-            console.log("net actfn: "+ this.netActFn);
+        //    console.log("net actfn: "+ this.netActFn);
 
             //update act fn for each neuron to user input
             //get output for each neuron in layer i
@@ -205,8 +209,8 @@ export class Net{
                 if(neuron.actFun != netfn){
                     neuron.actFun = netfn;
                 }
-                console.log("neuron actfn: " + neuron.actFun);
-                console.log("net actfn in loop: " + netfn);
+            //    console.log("neuron actfn: " + neuron.actFun);
+             //   console.log("net actfn in loop: " + netfn);
 
                 neuron.calcOut();
             });
