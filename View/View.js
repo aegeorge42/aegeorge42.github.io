@@ -12,13 +12,29 @@ const textStyle = new PIXI.TextStyle({
   fontSize: 15
 });
 
+/*{
+ ___________    _______________________________________________________
+|button     |  | netContainer                                          |
+|  Container|  |  ______________   ________________   ______________   |
+|  ______   |  | |layerContainer| | weightCont    |  |layerContainer|  |                                                     |
+| |Button|  |  | |  __________  | |  __________   |  |  __________  |  |                                       
+| |______|  |  | | |neuronCont| | | |weight    |  |  | |neuronCont| |  |
+|___________|  | | |__________| | | |__________|  |  | |__________| |  |                                           
+ ___________   | |  __________  | |  __________   |  |              |  |
+|input      |  | | |neuronCont| | | |weight    |  |  |              |  |
+| Container |  | | |__________| | | |__________|  |  |              |  |  
+|  ______   |  | |______________| |_______________|  |______________|  |
+| |input |  |  |                                                       |
+| |______|  |  |                                                       |
+|___________|  |_______________________________________________________|         
+
+}
+*/
+
 export class View{
   inputContainer; // inputs to draw
   buttonContainer; // all buttons to draw
-
-  //list of containers
-  //each container holds all neurons for that layer
-  layers2draw;
+  netContainer; //container of layercontainer (of neuroncontainer)
 
   constructor(){
     this.app = new PIXI.Application({
@@ -30,6 +46,8 @@ export class View{
 
     this.buttonContainer = new PIXI.Container();
     this.inputContainer = new PIXI.Container();
+    this.netContainer = new PIXI.Container();
+
   }
     // load all images (it would be cool if this worked)
     /*
@@ -49,18 +67,8 @@ export class View{
   }
   */
 
-  setup_buttons(){
-    this.addButtons();
-    this.drawButtons();
-    this.buttonContainer.getChildByName("b_addn1").visible = false;
-    this.buttonContainer.getChildByName("b_remn1").visible = false;
-    this.buttonContainer.getChildByName("b_addn2").visible = false;
-    this.buttonContainer.getChildByName("b_remn2").visible = false;
-  }
-
   //add buttons to list
   addButtons(){
-
     //make all the buttons
     var button_input = new Button("b_in",PIXI.Texture.from('images/buttons/button_setin.png'),200,100);
     var button_addlayer = new Button("b_addlayer",PIXI.Texture.from('images/buttons/button_layer.png'),100,50);
@@ -87,6 +95,15 @@ export class View{
       button_addf,button_actfn_binstep,button_actfn_linear);
   }
 
+  setup_buttons(){
+    this.addButtons();
+    this.drawButtons();
+    this.buttonContainer.getChildByName("b_addn1").visible = false;
+    this.buttonContainer.getChildByName("b_remn1").visible = false;
+    this.buttonContainer.getChildByName("b_addn2").visible = false;
+    this.buttonContainer.getChildByName("b_remn2").visible = false;
+  }
+
   //add a single button
   addButton(name,textureimg, x, y){
     var newb = new Button(name,PIXI.Texture.from(textureimg),x,y)
@@ -99,14 +116,73 @@ export class View{
     this.app.stage.addChild(this.buttonContainer);
   }
 
-  //create new layer container
-  //call when new layer is added
-  draw_layerSetup(net){
-    this.layers2draw = [];
+  draw(net){
+    //clear the old stuff
+    this.netContainer.removeChildren();
+    
+    //for each layer
     for(var i = 0; i<net.layers.length; i++){
+
+      //create layercontainer + add to netcontainer
       var layerContainer = new PIXI.Container();
-      this.layers2draw.push(layerContainer);
+      this.netContainer.addChild(layerContainer);
+
+      //for each neuron
+      for(var j = 0; j<net.getLayer(i).neurons.length; j++){
+
+        //create neuroncontainer (+neuroncontainer stuff) + add to layercontainer
+        var neuronContainer = new PIXI.Container();
+          neuronContainer.x=(i*120)+250;
+          neuronContainer.y=j*120+150;
+
+        var neuronBase = new PIXI.Sprite(PIXI.Texture.from('images/neuron.png'));
+          neuronBase.tint = 0xa8ff05;
+
+        var innerText = new PIXI.Text(
+          "i: " + this.formatList(net.getLayer(i).neurons[j].inputs) + '\n'
+         + "w: " + this.formatList(net.getLayer(i).neurons[j].weights) + '\n'
+         + "o: " + formatter.format(net.getLayer(i).neurons[j].output_nofn) + '\n'
+         + formatter.format(net.getLayer(i).neurons[j].output),
+          textStyle)
+          innerText.x=15;
+          innerText.y=15;
+
+        var outText = new PIXI.Text(formatter.format(net.getLayer(i).neurons[j].output));
+          outText.x=25;
+          outText.y=25;
+
+        //overneuron has to be the interactive since it's on top
+        //also layerwise:  neuroncontainer [ [neuronBase] [innerText] [overneuron [outtext]] ]
+        var overNeuron = new PIXI.Sprite(PIXI.Texture.from('images/neuron.png'));
+          overNeuron.tint=0x2003fc;
+          overNeuron.interactive=true;
+
+          overNeuron.on('mouseover', function(e){
+            this.alpha=0;
+          })
+
+          overNeuron.on('mouseout', function(e){
+            this.alpha=1;
+          })
+
+        overNeuron.addChild(outText);
+        
+        neuronContainer.addChild(neuronBase);
+        neuronContainer.addChild(innerText);
+        neuronContainer.addChild(overNeuron);
+
+        //add neurons to layer
+        layerContainer.addChild(neuronContainer);
+      }
+
     }
+
+    //add net to screen
+    this.app.stage.addChild(this.netContainer);
+  }
+
+  clear(net){
+    this.app.stage.removeChild(this.netContainer);
   }
 
   //rounds number to 2 decimal places
@@ -119,14 +195,12 @@ export class View{
   }
 
   addInputs(inputs){
-
     this.inputContainer.x=160;
     this.inputContainer.y=150;
 
     this.inputContainer.removeChildren();
     for(var i = 0; i<inputs.length; i++){
       var inputSprite = new PIXI.Sprite(PIXI.Texture.from('images/input.png'));
-      //  inputSprite.x=160;
         inputSprite.y=i*100;
 
       var inputSpriteText = new PIXI.Text(inputs[i]);
@@ -136,79 +210,5 @@ export class View{
       this.inputContainer.addChild(inputSprite,inputSpriteText);
       this.app.stage.addChild(this.inputContainer);
     }
-  }
-
-  //Do i need this?
- // drawInputs(){ 
- //   this.app.stage.removeChild(this.inputContainer);
- //   this.app.stage.addChild(this.inputContainer);
- // }
-
-  drawNeurons(net){
-    //clear old stuff
-    for(var i = 0; i<this.layers2draw.length; i++){
-      console.log("LAYER " + i + " HAS " + this.layers2draw[i].children.length + " CHILDREN")
-      this.layers2draw[i].removeChildren();
-    }
-    this.layers2draw=[];
-    console.log(this.layers2draw.length)
-
-    // for each layer
-    for(var i = 0; i<net.layers.length; i++){
-
-      var layerContainer = new PIXI.Container();
-      this.layers2draw.push(layerContainer);
-
-      //for each neuron
-      for(var j=0; j<net.getLayer(i).neurons.length; j++){
-        
-        //each neuron is container for drawing attributes
-        var neuronContainer = new PIXI.Container();
-          neuronContainer.x=(i*120)+250;
-          neuronContainer.y=j*120+150;
-
-        var neuronBase = new PIXI.Sprite(PIXI.Texture.from('images/neuron.png'));
-        
-        var innerText = new PIXI.Text(
-          "i: " + this.formatList(net.getLayer(i).neurons[j].inputs) + '\n'
-         + "w: " + this.formatList(net.getLayer(i).neurons[j].weights) + '\n'
-         + "o: " + formatter.format(net.getLayer(i).neurons[j].output_nofn) + '\n'
-         + formatter.format(net.getLayer(i).neurons[j].output),
-          textStyle)
-          innerText.x=15;
-          innerText.y=15;
-
-
-        var outText = new PIXI.Text(formatter.format(net.getLayer(i).neurons[j].output));
-          outText.x=25;
-          outText.y=25;
-
-          //overneuron has to be the interactive since it's on top
-        var overNeuron = new PIXI.Sprite(PIXI.Texture.from('images/neuron.png'));
-          overNeuron.tint=0x7a03ad;
-          overNeuron.interactive=true;
-
-          overNeuron.addChild(outText);
-
-          overNeuron.on('mouseover', function(e){
-            this.alpha=0;
-          })
-
-          overNeuron.on('mouseout', function(e){
-            this.alpha=1;
-          })
-
-        neuronContainer.addChild(neuronBase);
-        neuronContainer.addChild(innerText);
-        neuronContainer.addChild(overNeuron);
-
-
-        this.layers2draw[i].addChild(neuronContainer);
-
-
-      }
-      this.app.stage.addChild(this.layers2draw[i]);
-    }
-    
   }
 }
