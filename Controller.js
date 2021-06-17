@@ -9,7 +9,17 @@ const net = new Net();
 const maxLayers = 3;
 const maxNeurons = 4;
 
-const userInputs= [3,4,5];
+//const userInputs= [1,1,0,1]; //pig
+const userInputs = {
+  inputs: [1,1,0,1],
+  expected: 1,
+  expected_text: "Pig"
+};
+//const userInputs= [1,1,1,0]; //not pig
+//const userInputs= [1,1,0,1]; //pig
+//const userInputs= [1,1,1,1]; //pig
+
+
 const userActFun="";
 
 view.setup_buttons();
@@ -103,14 +113,18 @@ view.buttonContainer.getChildByName("b_addf").on('click', function(e){
     net.addLayer();
     net.update();
     view.draw(net);
+    console.log("FINAL OUT: " + net.finalOut);
+    console.log("ERROR:" + net.error);
+
   }
 })
 
 view.buttonContainer.getChildByName("b_in").on('click', function(e){ 
-  net.setNetInput(userInputs);
-  view.addInputs(userInputs);
+  net.setNetInput(userInputs.inputs,userInputs.expected);
+  view.addInputs(userInputs.inputs, userInputs.expected, userInputs.expected_text);
   net.update();
   view.draw(net);
+  console.log("EXPECTED OUT: "+net.expectedOut);
 })
 
 view.buttonContainer.getChildByName("b_actfn_linear").on('click', function(e){ 

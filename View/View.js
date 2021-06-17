@@ -194,21 +194,29 @@ export class View{
     return nums2print;
   }
 
-  addInputs(inputs){
+  addInputs(inputs, expected, expectedText){
     this.inputContainer.x=160;
     this.inputContainer.y=150;
 
     this.inputContainer.removeChildren();
+
     for(var i = 0; i<inputs.length; i++){
       var inputSprite = new PIXI.Sprite(PIXI.Texture.from('images/input.png'));
-        inputSprite.y=i*100;
+        inputSprite.y=i*80;
 
       var inputSpriteText = new PIXI.Text(inputs[i]);
         inputSpriteText.x=20;
-        inputSpriteText.y=i*100 +20;
+        inputSpriteText.y=i*80 +20;
 
-      this.inputContainer.addChild(inputSprite,inputSpriteText);
-      this.app.stage.addChild(this.inputContainer);
+      this.inputContainer.addChild(inputSprite,inputSpriteText)
+
     }
+    var expectedText = new PIXI.Text(expected + " " + expectedText)
+        expectedText.x=20;
+        expectedText.y=inputSpriteText.y+50;
+
+    this.inputContainer.addChild(expectedText);
+
+    this.app.stage.addChild(this.inputContainer);
   }
 }

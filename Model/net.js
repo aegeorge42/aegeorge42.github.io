@@ -40,7 +40,9 @@ export class Neuron{
         if(this.weights === undefined){
             this.weights=[];
             for(var i =0; i<this.inputs.length; i++){
-            this.weights[i]= Math.random() * 2 - 1; 
+            this.weights[i]= Math.random() * 2 - 1;
+//            this.weights[i]= 0; 
+
            }
         }
 
@@ -48,7 +50,8 @@ export class Neuron{
         //because another neuron was added in the prev layer
         if(this.weights.length < v.length){
             for(var i=this.weights.length; i<v.length; i++){
-                this.weights[i]=Math.random() * 2 - 1;
+              this.weights[i]=Math.random() * 2 - 1;
+//                this.weights[i]= 0; 
             }
         }
 
@@ -162,6 +165,10 @@ export class Net{
     layers; //list of layers
     netInput; //input to layer 0
     netActFn; //activation function
+    expectedOut;
+    finalOut;
+    error;
+    error_squared;
 
     constructor(){
         this.setNetActFn(defaultActFn);
@@ -171,8 +178,9 @@ export class Net{
         this.update();
     }
 
-    setNetInput(data){
+    setNetInput(data,expected){
         this.netInput=data;
+        this.expectedOut=expected;
     }
 
     setNetActFn(actfn){
@@ -228,15 +236,15 @@ export class Net{
             neuron.calcOut();
         });
         this.getLayer(lastLayer).getLayerOuts();
-    }
+        this.finalOut=this.getLayer(lastLayer).getLayerOuts();
 
-    //update(){
-       // console.log("........................");
-       // console.log("net has " + this.layers.length + "layers");
-    //   console.log("UPDATE");
-     //  this.connect();
-    //   this.printNet();
-    //}
+        this.calcError();
+        }
+
+    calcError(){
+        this.error = this.expectedOut-this.finalOut;
+
+    }
 
     printNet(){
         console.log("Net has " + this.layers.length + " layers")
@@ -259,6 +267,7 @@ export class Net{
             });
         });
     }
+    
 }
 
 
