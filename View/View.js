@@ -1,4 +1,4 @@
-import { defaultInput } from "../Model/net.js";
+//import { defaultInput } from "../Model/net.js";
 import {Button} from "./Button.js"
 
 const formatter = new Intl.NumberFormat('en-US', {

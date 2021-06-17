@@ -1,7 +1,9 @@
 //import {Button, textureButton, onButtonDown, getDown} from "./View/Button.js"
 import {Button} from "./View/Button.js"
 import {View} from "./View/View.js"
-import {actFns, defaultInput, Neuron, Layer, Net} from "./Model/net.js"
+import {Neuron, actFns} from "./Model/neuron.js"
+
+import {Layer, Net} from "./Model/net.js"
 
 const view = new View();
 const net = new Net();
