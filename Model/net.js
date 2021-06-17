@@ -11,7 +11,7 @@ export const actFns = {
 
 //stuff to set in controller w user input
 export const defaultInput = [0,0];
-export const defaultActFn = actFns.LINEAR;
+export const defaultActFn = actFns.SIGMOID;
 
 export class Neuron{
     neuronNumber;
@@ -165,10 +165,10 @@ export class Net{
     layers; //list of layers
     netInput; //input to layer 0
     netActFn; //activation function
-    expectedOut;
-    finalOut;
+    target;
+    netOut;
     error;
-    error_squared;
+    error_tot;
 
     constructor(){
         this.setNetActFn(defaultActFn);
@@ -178,9 +178,9 @@ export class Net{
         this.update();
     }
 
-    setNetInput(data,expected){
+    setNetInput(data,target){
         this.netInput=data;
-        this.expectedOut=expected;
+        this.target=target;
     }
 
     setNetActFn(actfn){
@@ -235,15 +235,37 @@ export class Net{
             }
             neuron.calcOut();
         });
-        this.getLayer(lastLayer).getLayerOuts();
-        this.finalOut=this.getLayer(lastLayer).getLayerOuts();
+        this.netOut=this.getLayer(lastLayer).getLayerOuts();
 
         this.calcError();
         }
 
     calcError(){
-        this.error = this.expectedOut-this.finalOut;
+        this.error = this.target-this.netOut;
+        this.error_tot = (this.error ** 2) * 0.5;
+    }
 
+    backProp(){
+        var lastLayer = this.layers.length-1;
+
+        //currently pretending net has 1 input, 1 hidden, 1 output
+
+        //how much does the total error change with respect to the output?
+        var graderr_wrtout = -this.target - this.netOut; // ∂error_tot/∂out
+        console.log("graderr_wrtout " + graderr_wrtout);
+     /*   error_tot  = 1/2(target-out)^2
+          ∂error_tot/∂out = 2 * 0.5(target-out)^(2-1) * -1 + 0
+          ∂error_tot/∂out = -(target-out) 
+     */  
+
+        //how much does the net output change with respect to net input
+        //need to get derivative of actfn
+        // right now using default sigmoid
+        var gradout_wrtin = this.netOut * (1-this.netOut);
+       
+        var gradnet_wrtweight =  this.getLayer(lastLayer-1).getLayerOuts();
+
+        var gradetot_wrtweight = graderr_wrtout * gradout_wrtin * gradnet_wrtweight;
     }
 
     printNet(){

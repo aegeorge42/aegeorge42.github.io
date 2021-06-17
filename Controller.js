@@ -9,8 +9,8 @@ const net = new Net();
 const maxLayers = 3;
 const maxNeurons = 4;
 
-//const userInputs= [1,1,0,1]; //pig
-const userInputs = {
+//from ppt
+/*const userInputs = {
   inputs: [1,1,0,1],
   expected: 1,
   expected_text: "Pig"
@@ -18,7 +18,14 @@ const userInputs = {
 //const userInputs= [1,1,1,0]; //not pig
 //const userInputs= [1,1,0,1]; //pig
 //const userInputs= [1,1,1,1]; //pig
+*/
 
+//for backprop
+const userInput = {
+  input: [0.1],
+  expected: -0.01,
+  expected_text: ""
+};
 
 const userActFun="";
 
@@ -113,25 +120,26 @@ view.buttonContainer.getChildByName("b_addf").on('click', function(e){
     net.addLayer();
     net.update();
     view.draw(net);
-    console.log("FINAL OUT: " + net.finalOut);
-    console.log("ERROR:" + net.error);
 
   }
+  console.log("FINAL OUT: " + net.netOut);
+  console.log("ERROR:" + net.error);
+  console.log("TOTAL ERROR:" + net.error_tot);
+
 })
 
 view.buttonContainer.getChildByName("b_in").on('click', function(e){ 
-  net.setNetInput(userInputs.inputs,userInputs.expected);
-  view.addInputs(userInputs.inputs, userInputs.expected, userInputs.expected_text);
+  net.setNetInput(userInput.input,userInput.expected);
+  view.addInputs(userInput.input, userInput.expected, userInput.expected_text);
   net.update();
   view.draw(net);
-  console.log("EXPECTED OUT: "+net.expectedOut);
+  console.log("EXPECTED OUT: "+net.target);
 })
 
 view.buttonContainer.getChildByName("b_actfn_linear").on('click', function(e){ 
   net.setNetActFn(actFns.LINEAR);
   net.update();
   view.draw(net);
-
 })
 
 view.buttonContainer.getChildByName("b_actfn_binstep").on('click', function(e){ 
@@ -140,3 +148,10 @@ view.buttonContainer.getChildByName("b_actfn_binstep").on('click', function(e){
   view.draw(net);
 })
 
+
+var button_backprop = new Button("b_bp",PIXI.Texture.from('images/buttons/treasure.png'),500,500);
+view.buttonContainer.addChild(button_backprop);
+
+view.buttonContainer.getChildByName("b_bp").on('click', function(e){ 
+  net.backProp();
+})
