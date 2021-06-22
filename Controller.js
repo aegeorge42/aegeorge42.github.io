@@ -1,15 +1,25 @@
 //import {Button, textureButton, onButtonDown, getDown} from "./View/Button.js"
 import {Button} from "./View/Button.js"
 import {View} from "./View/View.js"
-import {Neuron, actFns} from "./Model/neuron.js"
+//import {Neuron, actFns} from "./Model/neuron.js"
+//import {Layer} from "./Model/layer.js"
 
-import {Layer, Net} from "./Model/net.js"
+import {Net} from "./Model/net.js"
+import {actFns} from "./Model/actfns.js"
+
 
 const view = new View();
 const net = new Net();
 
 const maxLayers = 3;
 const maxNeurons = 4;
+
+const userInput = {
+  input: [0.05, 0.1],
+  expected: [0.01,0.99],
+  expected_text: ""
+};
+
 
 //from ppt
 /*const userInputs = {
@@ -22,12 +32,39 @@ const maxNeurons = 4;
 //const userInputs= [1,1,1,1]; //pig
 */
 
-//for backprop
-const userInput = {
-  input: [0.1],
-  expected: -0.01,
-  expected_text: ""
-};
+/******** FOR TESTING *******/
+
+
+net.getLayer(0).addNeuron();
+net.update();
+net.getLayer(0).getNeuron(0).setWeight(0,0.15);
+net.getLayer(0).getNeuron(0).setWeight(1,0.20);
+net.getLayer(0).getNeuron(1).setWeight(0,0.25);
+net.getLayer(0).getNeuron(1).setWeight(1,0.30);
+
+net.addLayer();
+net.getLayer(1).addNeuron();
+net.update();
+
+net.getLayer(1).getNeuron(0).setWeight(0,0.40);
+net.getLayer(1).getNeuron(0).setWeight(1,0.45);
+net.getLayer(1).getNeuron(1).setWeight(0,0.50);
+net.getLayer(1).getNeuron(1).setWeight(1,0.55);
+
+net.setNetInput(userInput.input,userInput.expected);
+  view.addInputs(userInput.input, userInput.expected, userInput.expected_text);
+  net.update();
+  view.draw(net);
+
+console.log("EXPECTED OUT: "+net.target);
+
+net.getLayer(0).setLayerBias(0.35)
+net.getLayer(1).setLayerBias(0.6)
+
+net.update();
+view.draw(net);
+
+/***************************/
 
 const userActFun="";
 
@@ -151,9 +188,17 @@ view.buttonContainer.getChildByName("b_actfn_binstep").on('click', function(e){
 })
 
 
-var button_backprop = new Button("b_bp",PIXI.Texture.from('images/buttons/treasure.png'),500,500);
+var button_backprop = new Button("b_bp",PIXI.Texture.from('images/buttons/treasure.png'),100,450);
 view.buttonContainer.addChild(button_backprop);
 
 view.buttonContainer.getChildByName("b_bp").on('click', function(e){ 
-  net.backProp();
+//  net.backProp();
+net.calcError();
+})
+
+var button_print = new Button("bp",PIXI.Texture.from('images/buttons/cat.png'),100,380);
+view.buttonContainer.addChild(button_print);
+
+view.buttonContainer.getChildByName("bp").on('click', function(e){ 
+  net.printNet();
 })

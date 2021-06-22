@@ -1,69 +1,8 @@
-import {Neuron} from "../Model/neuron.js"
+import {Layer} from "../Model/layer.js"
+import {actFns} from "../Model/actfns.js"
+
 export const defaultInput = [0,0];
-
-export const actFns = {
-	LINEAR: "linear", 
-	BINSTEP: "binstep", //binary step
-    SIGMOID: "sigmoid",
-    TANH: "tanh",
-    RELU: "relu", //rectified linear unit
-    LRELU: "lrelu", //leaky relu
-}
-
 export const defaultActFn = actFns.SIGMOID;
-
-export class Layer{
-    layerNumber;
-    neurons; //list of neurons in layer
-    layerInputs = [];  //list of inputs to all neurons in layer
-    layerOutputs; //list of all outputs from neurons in layer
-
-    //no such thing as an empty layer
-    constructor(){
-        this.neurons=[];
-        var n = new Neuron();
-        this.addNeuron(n);
-    }
-
-    addNeuron(){
-        var n = new Neuron();
-        this.neurons.push(n);
-        n.neuronNumber=this.neurons.length-1;
-    }
-
-    removeNeuron(){
-        this.neurons.pop();
-    }
-
-    //get output from each neuron in layer
-    getLayerOuts(){
-        var lo=[];
-        this.neurons.forEach(function(neuron) {
-            lo.push(neuron.output);
-        });
-        this.layerOutputs=lo;
-        return this.layerOutputs; 
-    }
-
-    //for each neuron in layer, set same inputs
-    setLayerIns(v){
-        this.neurons.forEach(function(neuron) {
-            neuron.setInputs(v);
-        });
-    }
-
-    printLayer(){
-        this.neurons.forEach(function(neuron) {
-            console.log("  neuron #"+neuron.neuronNumber);
-            neuron.printNeuron();
-        });
-        console.log("Layer " + this.layerNumber + " outs: " + this.layerOutputs);
-    }
-
-    getNeurons(){
-        return this.neurons;
-    }
-}
 
 export class Net{
     layers; //list of layers
@@ -72,12 +11,13 @@ export class Net{
     target;
     netOut;
     error;
-    error_tot;
+    eTot;
 
     constructor(){
         this.setNetActFn(defaultActFn);
         this.setNetInput(defaultInput);
         this.layers=[];
+        this.error=[];
         this.addLayer();
         this.update();
     }
@@ -108,12 +48,21 @@ export class Net{
         return gotLayer;
     }
 
+    setAllLayerBias(b){
+        this.layers.forEach(function(layer) {
+            if(layer.layerBias === undefined){
+                layer.setLayerBias(b);
+            }
+        });
+    }
+
     update(){
         this.getLayer(0).setLayerIns(this.netInput);
         var netfn = this.netActFn;
 
         for(var i=0; i<this.layers.length-1; i++){
         //    console.log("net actfn: "+ this.netActFn);
+        console.log(this.layers[i].layerBias);
 
             //update act fn for each neuron to user input
             //get output for each neuron in layer i
@@ -142,11 +91,29 @@ export class Net{
         this.netOut=this.getLayer(lastLayer).getLayerOuts();
 
         this.calcError();
-        }
+
+        
+    }
 
     calcError(){
-        this.error = this.target-this.netOut;
-        this.error_tot = (this.error ** 2) * 0.5;
+        this.eTot=0;
+        if (this.target !== undefined){
+            for( var i = 0; i<this.target.length; i++){
+                this.error[i]=0.5 * (this.target[i]-this.netOut[i]) ** 2;
+                this.eTot=this.eTot+this.error[i];
+                console.log("target: " + this.target[i]+ " net: " +this.netOut[i]+ " error: "+this.error[i]);
+
+            }
+            console.log("Error total: " + this.eTot);
+        }
+
+
+       //     this.error=this.target-this.netOut;
+
+     //   this.error = this.target-this.netOut;
+     //   this.error_tot = (this.error ** 2) * 0.5;
+        //Etot = 1/2 (target-output)^2
+        
     }
 
     backProp(){

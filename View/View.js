@@ -6,11 +6,18 @@ const formatter = new Intl.NumberFormat('en-US', {
   maximumFractionDigits: 2,
 });
 
+const formatter_long = new Intl.NumberFormat('en-US', {
+  minimumFractionDigits: 2,      
+  maximumFractionDigits: 6,
+});
+
 const textStyle = new PIXI.TextStyle({
   fontFamily: 'Open Sans',
   fontWeight: 300,
   fontSize: 15
 });
+
+
 
 /*{
  ___________    _______________________________________________________
@@ -122,10 +129,16 @@ export class View{
     
     //for each layer
     for(var i = 0; i<net.layers.length; i++){
-
+  
       //create layercontainer + add to netcontainer
       var layerContainer = new PIXI.Container();
       this.netContainer.addChild(layerContainer);
+
+      var biasSprite = new PIXI.Text(formatter.format(net.getLayer(i).layerBias));
+        biasSprite.x=(i*120)+250;
+        biasSprite.y=120;
+
+      layerContainer.addChild(biasSprite);
 
       //for each neuron
       for(var j = 0; j<net.getLayer(i).neurons.length; j++){
@@ -136,20 +149,21 @@ export class View{
           neuronContainer.y=j*120+150;
 
         var neuronBase = new PIXI.Sprite(PIXI.Texture.from('images/neuron.png'));
-          neuronBase.tint = 0xa8ff05;
+          //neuronBase.tint = 0xa8ff05;
 
         var innerText = new PIXI.Text(
           "i: " + this.formatList(net.getLayer(i).neurons[j].inputs) + '\n'
          + "w: " + this.formatList(net.getLayer(i).neurons[j].weights) + '\n'
-         + "o: " + formatter.format(net.getLayer(i).neurons[j].output_nofn) + '\n'
-         + formatter.format(net.getLayer(i).neurons[j].output),
+         + "b: " + formatter_long.format(net.getLayer(i).layerBias) +'\n'
+         + "o: " + formatter_long.format(net.getLayer(i).neurons[j].output_nofn) + '\n'
+         + formatter_long.format(net.getLayer(i).neurons[j].output) + '\n',
           textStyle)
           innerText.x=15;
-          innerText.y=15;
+          innerText.y=0;
 
-        var outText = new PIXI.Text(formatter.format(net.getLayer(i).neurons[j].output));
-          outText.x=25;
-          outText.y=25;
+        var neuronOutText = new PIXI.Text(formatter.format(net.getLayer(i).neurons[j].output));
+          neuronOutText.x=25;
+          neuronOutText.y=25;
 
         //overneuron has to be the interactive since it's on top
         //also layerwise:  neuroncontainer [ [neuronBase] [innerText] [overneuron [outtext]] ]
@@ -165,16 +179,40 @@ export class View{
             this.alpha=1;
           })
 
-        overNeuron.addChild(outText);
+        overNeuron.addChild(neuronOutText);
         
         neuronContainer.addChild(neuronBase);
         neuronContainer.addChild(innerText);
-        neuronContainer.addChild(overNeuron);
+//        neuronContainer.addChild(overNeuron);     // PUT ME BACK LATER
 
         //add neurons to layer
         layerContainer.addChild(neuronContainer);
       }
 
+    var outputContainer = new PIXI.Container();
+    this.netContainer.addChild(outputContainer);
+
+    //TARGETS
+    var outText = new PIXI.Text("target         out          error", textStyle)
+      outText.x=170;
+      outText.y=380;
+    outputContainer.addChild(outText);
+
+    //errors
+    for(var k=0; k<net.target.length; k++){
+      var outText = new PIXI.Text(net.target[k] + "     " 
+      + formatter_long.format(net.netOut[k]) + "    "
+      + formatter_long.format(net.error[k]), textStyle)
+        outText.x=175;
+        outText.y=15*k +400;
+      outputContainer.addChild(outText);
+    }
+
+    //total error
+    var outText = new PIXI.Text("Etot"+' \n' + formatter_long.format(net.eTot), textStyle)
+      outText.x=200;
+      outText.y=440;
+    outputContainer.addChild(outText);
     }
 
     //add net to screen
@@ -189,12 +227,12 @@ export class View{
   formatList(list){
     var nums2print =[];
     for(var n=0; n<list.length; n++){
-      nums2print.push(formatter.format(list[n]));
+      nums2print.push(formatter_long.format(list[n]));
     }
     return nums2print;
   }
 
-  addInputs(inputs, expected, expectedText){
+  addInputs(inputs){
     this.inputContainer.x=160;
     this.inputContainer.y=150;
 
@@ -211,12 +249,7 @@ export class View{
       this.inputContainer.addChild(inputSprite,inputSpriteText)
 
     }
-    var expectedText = new PIXI.Text(expected + " " + expectedText)
-        expectedText.x=20;
-        expectedText.y=inputSpriteText.y+50;
-
-    this.inputContainer.addChild(expectedText);
-
     this.app.stage.addChild(this.inputContainer);
   }
 }
+

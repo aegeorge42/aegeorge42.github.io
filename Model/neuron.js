@@ -15,7 +15,7 @@ export const defaultActFn = actFns.SIGMOID;
 
 export class Neuron{
     neuronNumber;
-    bias;
+    bias;   //dont forget each layer has same bias
     inputs;
     weights;
     output_nofn; //output before activation fn (same as using linear)
@@ -23,10 +23,15 @@ export class Neuron{
     actFun;
 
     constructor(){
-        this.bias = Math.random() * 2 - 1 //bias between -1 and 1
+        this.bias = 0;
+    //    this.bias = Math.random() * 2 - 1 //bias between -1 and 1
         this.inputs = [];
         this.actFun = [];
         this.setActFn(defaultActFn);
+    }
+
+    setBias(b){
+        this.bias = b;
     }
 
     setActFn(actfn){
@@ -62,14 +67,20 @@ export class Neuron{
         
     }
 
+    setWeight(weightNum, w){
+        this.weights[weightNum]=w;
+    }
+
+
     calcOut(){
         var outlist = [];
         var outsum = 0;
         for(var i = 0; i<this.weights.length; i++){
-            outlist[i]= this.inputs[i]*this.weights[i];
+            outlist[i]= this.inputs[i]*this.weights[i] /*+ this.bias*/;
             
             outsum=outsum+outlist[i];
         }
+        outsum = outsum + this.bias;
         this.output_nofn = outsum;
 
 
@@ -98,12 +109,12 @@ export class Neuron{
         var o = "";
 
         for(var i =0; i<this.inputs.length; i++){
-            ins += this.inputs[i].toFixed(2) + " ";
-            ws += this.weights[i].toFixed(2) + " "; 
+            ins += this.inputs[i].toFixed(5) + " ";
+            ws += this.weights[i].toFixed(5) + " "; 
         }
 
-        os = this.output_nofn.toFixed(2) + " ";
-        o = this.output.toFixed(2) + " ";
+        os = this.output_nofn.toFixed(5) + " ";
+        o = this.output.toFixed(5) + " ";
         console.log("inputs " + ins + "weights " + ws + "outsum: " + os + "out: " + o);
     }
 }
