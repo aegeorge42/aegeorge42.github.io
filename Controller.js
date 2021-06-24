@@ -15,10 +15,12 @@ const maxLayers = 3;
 const maxNeurons = 4;
 
 const userInput = {
-  input: [0.05, 0.1],
-  expected: [0.01,0.99],
+  input: [2, 3],
+  expected: [1],
   expected_text: ""
 };
+net.setNetInput(userInput.input,userInput.expected);
+view.addInputs(userInput.input, userInput.expected, userInput.expected_text);
 
 
 //from ppt
@@ -33,10 +35,7 @@ const userInput = {
 */
 
 /******** FOR TESTING *******/
-
-
-net.getLayer(0).addNeuron();
-net.update();
+/*
 net.getLayer(0).getNeuron(0).setWeight(0,0.15);
 net.getLayer(0).getNeuron(0).setWeight(1,0.20);
 net.getLayer(0).getNeuron(1).setWeight(0,0.25);
@@ -63,8 +62,27 @@ net.getLayer(1).setLayerBias(0.6)
 
 net.update();
 view.draw(net);
-
 /***************************/
+
+/* DIFFERENT TESTING */
+net.setNetActFn(actFns.LINEAR);
+net.update();
+net.getLayer(0).addNeuron();
+net.update();
+net.getLayer(0).getNeuron(0).setWeight(0,0.11);
+net.getLayer(0).getNeuron(0).setWeight(1,0.21);
+
+net.addLayer();
+net.update();
+
+net.getLayer(0).getNeuron(1).setWeight(0,0.12);
+net.getLayer(0).getNeuron(1).setWeight(1,0.08);
+net.update();
+net.getLayer(1).getNeuron(0).setWeight(0,0.14);
+net.getLayer(1).getNeuron(0).setWeight(1,0.15);
+net.update();
+net.backProp_long();
+/*******/
 
 const userActFun="";
 

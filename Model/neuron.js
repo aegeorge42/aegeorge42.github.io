@@ -27,7 +27,7 @@ export class Neuron{
     //    this.bias = Math.random() * 2 - 1 //bias between -1 and 1
         this.inputs = [];
         this.actFun = [];
-        this.setActFn(defaultActFn);
+//        this.setActFn(defaultActFn);
     }
 
     setBias(b){
@@ -76,11 +76,11 @@ export class Neuron{
         var outlist = [];
         var outsum = 0;
         for(var i = 0; i<this.weights.length; i++){
-            outlist[i]= this.inputs[i]*this.weights[i] /*+ this.bias*/;
+            outlist[i]= this.inputs[i]*this.weights[i];
             
             outsum=outsum+outlist[i];
         }
-        outsum = outsum + this.bias;
+        outsum = outsum +this.bias;
         this.output_nofn = outsum;
 
 

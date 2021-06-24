@@ -193,25 +193,27 @@ export class View{
     this.netContainer.addChild(outputContainer);
 
     //TARGETS
-    var outText = new PIXI.Text("target         out          error", textStyle)
+    var outText = new PIXI.Text("target"+'\n'+"out"+'\n'+ "error"+'\n'+"delta", textStyle)
       outText.x=170;
       outText.y=380;
     outputContainer.addChild(outText);
 
     //errors
     for(var k=0; k<net.target.length; k++){
-      var outText = new PIXI.Text(net.target[k] + "     " 
-      + formatter_long.format(net.netOut[k]) + "    "
-      + formatter_long.format(net.error[k]), textStyle)
-        outText.x=175;
-        outText.y=15*k +400;
+      var outText = new PIXI.Text(net.target[k] + '\n'
+      + formatter_long.format(net.netOut[k]) + '\n'
+      + formatter_long.format(net.error[k]) + '\n'
+      + formatter_long.format(net.delta[k]), textStyle)
+        outText.x=250;
+        outText.y=380;
+//        outText.y=15*k +400;
       outputContainer.addChild(outText);
     }
 
     //total error
     var outText = new PIXI.Text("Etot"+' \n' + formatter_long.format(net.eTot), textStyle)
       outText.x=200;
-      outText.y=440;
+      outText.y=460;
     outputContainer.addChild(outText);
     }
 
