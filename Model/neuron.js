@@ -18,6 +18,7 @@ export class Neuron{
     bias;   //dont forget each layer has same bias
     inputs;
     weights;
+    weights_new; //used in backprop
     output_nofn; //output before activation fn (same as using linear)
     output; // output after activation fn
     actFun;
@@ -27,6 +28,8 @@ export class Neuron{
     //    this.bias = Math.random() * 2 - 1 //bias between -1 and 1
         this.inputs = [];
         this.actFun = [];
+        this.weights=[];
+        this.weights_new=[];
 //        this.setActFn(defaultActFn);
     }
 
@@ -64,7 +67,8 @@ export class Neuron{
             this.weights.pop();
         }
 
-        
+    //this.weights_new=this.weights;
+
     }
 
     setWeight(weightNum, w){
@@ -96,7 +100,7 @@ export class Neuron{
                 }
             break;
             case(actFns.SIGMOID):
-                this.output=1/(1+(Math.E ** -outsum));
+//                this.output=1/(1+(Math.E ** -outsum));
                 break;
 
         }

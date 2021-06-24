@@ -81,7 +81,9 @@ net.update();
 net.getLayer(1).getNeuron(0).setWeight(0,0.14);
 net.getLayer(1).getNeuron(0).setWeight(1,0.15);
 net.update();
-net.backProp_long();
+//net.backProp_long();
+net.backProp();
+
 /*******/
 
 const userActFun="";

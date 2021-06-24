@@ -73,5 +73,6 @@ export class Layer{
         this.forEach(function(neuron) {
             this.layerWeights.push(neuron.weights);
         });
+        return this.layerWeights;
     }
 }

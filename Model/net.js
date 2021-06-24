@@ -141,7 +141,7 @@ export class Net{
     }
 
     backProp_long(){
-        console.log('\n' + "--BACKPROP--");
+        console.log('\n' + "--BACKPROP LONG--");
         switch(this.netActFn){
             case(actFns.LINEAR):
         
@@ -175,6 +175,45 @@ export class Net{
             break;
         }
     }
+
+    backProp(){
+    console.log('\n' + "--BACKPROP--");
+
+        switch(this.netActFn){
+            case(actFns.LINEAR):
+                var lr = this.learnRate;
+                var etot = this.eTot;
+                var dlta = this.delta;
+
+                //for each layer, starting at final
+                for(var layeri = this.layers.length-1; layeri>-1; layeri--){
+                    //for each neuron
+                    for(var neuroni =0; neuroni< this.getLayer(layeri).neurons.length; neuroni++){
+                        console.log("layer" +layeri +" neuron" + neuroni+ " "+this.getLayer(layeri).getNeuron(neuroni).weights);
+                        //for each WEIGHT
+                        for(var weighti =0; weighti< this.getLayer(layeri).neurons[neuroni].weights.length; weighti++){
+                            //for final layer
+                            if(layeri-1>=0){
+                                //weights_new = oldweights-(learnrate)(delta)(output from previous layer)
+                                this.getLayer(layeri).getNeuron(neuroni).weights_new[weighti]=
+                                    this.getLayer(layeri).getNeuron(neuroni).weights[weighti]-lr*dlta*
+                                        this.getLayer(layeri-1).layerOutputs[weighti]
+                            //so close...
+                            }else{
+                            this.getLayer(layeri).getNeuron(neuroni).weights_new[weighti]=
+                                    this.getLayer(layeri).getNeuron(neuroni).weights[weighti]-lr*dlta*
+                                        this.netInput[weighti] /* *this.getLayer(layeri+1).getNeuron(neuroni).weights[weighti];*/
+                            }
+
+                        }
+                        console.log("NEW layer" +layeri +" neuron" + neuroni+ " "+this.getLayer(layeri).getNeuron(neuroni).weights_new);
+                    }   
+                }
+            break;
+        }
+    }
+
+
 
 /*   backProp(){
      I honestly forget what I was going for here
