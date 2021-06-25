@@ -42,6 +42,8 @@ export class View{
   inputContainer; // inputs to draw
   buttonContainer; // all buttons to draw
   netContainer; //container of layercontainer (of neuroncontainer)
+  slideContainer; //container of slides
+  currentSlide;
 
   constructor(){
     this.app = new PIXI.Application({

@@ -1,13 +1,35 @@
 //import {Button, textureButton, onButtonDown, getDown} from "./View/Button.js"
 import {Button} from "./View/Button.js"
 import {View} from "./View/View.js"
+import {ViewSlideTest} from "./View/ViewSlideTest.js"
+import {Slide} from "./View/Slide.js"
+
+import {Slide0} from "./View/Slides/Slide0.js"
+
+
+
 //import {Neuron, actFns} from "./Model/neuron.js"
 //import {Layer} from "./Model/layer.js"
 
 import {Net} from "./Model/net.js"
 import {actFns} from "./Model/actfns.js"
 
+const slidetest=1;
 
+if(slidetest==1){
+  const viewst = new ViewSlideTest();
+
+//  viewst.draw();
+}
+
+
+
+
+
+
+
+
+if (slidetest==0){
 const view = new View();
 const net = new Net();
 
@@ -222,3 +244,4 @@ view.buttonContainer.addChild(button_print);
 view.buttonContainer.getChildByName("bp").on('click', function(e){ 
   net.printNet();
 })
+}
