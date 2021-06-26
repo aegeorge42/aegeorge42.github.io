@@ -22,6 +22,8 @@ net.getLayer(0).addNeuron();
 net.update();
 net.addLayer();
 net.update();
+net.addLayer();
+net.update();
 
 //Slide0.drawNet(net);
 Slide0.draw(net);

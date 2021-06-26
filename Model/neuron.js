@@ -48,8 +48,8 @@ export class Neuron{
         if(this.weights === undefined){
             this.weights=[];
             for(var i =0; i<this.inputs.length; i++){
-//            this.weights[i]= Math.random() * 2 - 1;
-            this.weights[i]= 0; 
+            this.weights[i]= Math.random() * 2 - 1;
+ //           this.weights[i]= 0; 
 
            }
         }
@@ -58,8 +58,8 @@ export class Neuron{
         //because another neuron was added in the prev layer
         if(this.weights.length < v.length){
             for(var i=this.weights.length; i<v.length; i++){
-//              this.weights[i]=Math.random() * 2 - 1;
-                this.weights[i]= 0; 
+              this.weights[i]=Math.random() * 2 - 1;
+//                this.weights[i]= 0; 
             }
         }
 
