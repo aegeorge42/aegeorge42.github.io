@@ -125,7 +125,17 @@ export class View{
     this.app.stage.addChild(this.buttonContainer);
   }
 
+  //used for weights
+  //doesnt work, come back to it
+  drawLine(graphic, color, thickness, start_x, start_y, end_x, end_y){
+    graphic.lineStyle(thickness, color);
+    graphic.moveTo(start_x,start_y);
+    graphic.lineTo(end_x,end_y)
+  }
+
   draw(net){
+    var weightContainer=new PIXI.Container();
+
     //clear the old stuff
     this.netContainer.removeChildren();
     
@@ -137,18 +147,28 @@ export class View{
       this.netContainer.addChild(layerContainer);
 
       var biasSprite = new PIXI.Text(formatter.format(net.getLayer(i).layerBias));
-        biasSprite.x=(i*120)+250;
+        biasSprite.x=(i*200)+350;
         biasSprite.y=120;
 
       layerContainer.addChild(biasSprite);
+
+      //how many neurons in each layer
+      //neuronsinlayer=[];
+
 
       //for each neuron
       for(var j = 0; j<net.getLayer(i).neurons.length; j++){
 
         //create neuroncontainer (+neuroncontainer stuff) + add to layercontainer
         var neuronContainer = new PIXI.Container();
-          neuronContainer.x=(i*120)+250;
+          neuronContainer.x=(i*200)+350;
           neuronContainer.y=j*120+150;
+
+        var weightSprite=new PIXI.Graphics();
+          weightSprite.lineStyle(10, 0x000000)
+          weightSprite.moveTo(neuronContainer.x+100,neuronContainer.y+50)
+          weightSprite.lineTo(550,150)
+          weightContainer.addChild(weightSprite);
 
         var neuronBase = new PIXI.Sprite(PIXI.Texture.from('images/neuron.png'));
           //neuronBase.tint = 0xa8ff05;
@@ -166,6 +186,7 @@ export class View{
         var neuronOutText = new PIXI.Text(formatter.format(net.getLayer(i).neurons[j].output));
           neuronOutText.x=25;
           neuronOutText.y=25;
+
 
         //overneuron has to be the interactive since it's on top
         //also layerwise:  neuroncontainer [ [neuronBase] [innerText] [overneuron [outtext]] ]
@@ -189,6 +210,7 @@ export class View{
 
         //add neurons to layer
         layerContainer.addChild(neuronContainer);
+        layerContainer.addChild(weightContainer);
       }
 
     var outputContainer = new PIXI.Container();

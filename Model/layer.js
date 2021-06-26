@@ -15,12 +15,12 @@ export class Layer{
         this.addNeuron(n);
 //      this.setLayerBias(Math.random() * 2 - 1);
         this.setLayerBias(0);
-        console.log("LAYER BIAS" + this.layerBias)
+//        console.log("LAYER BIAS" + this.layerBias)
     }
 
     setLayerBias(b){
         this.layerBias=b;
-        console.log(this.neurons);
+//        console.log(this.neurons);
         this.neurons.forEach(function(neuron) {
             neuron.setBias(b);
         });

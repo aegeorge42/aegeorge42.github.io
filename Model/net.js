@@ -78,7 +78,7 @@ export class Net{
     }
 
     update(){
-        console.log("LR: " + this.learnRate);
+//        console.log("LR: " + this.learnRate);
         this.getLayer(0).setLayerIns(this.netInput);
         var netfn = this.netActFn;
 

@@ -18,8 +18,6 @@ const slidetest=1;
 
 if(slidetest==1){
   const viewst = new ViewSlideTest();
-
-//  viewst.draw();
 }
 
 
