@@ -1,8 +1,8 @@
 import {Layer} from "../Model/layer.js"
 import {actFns} from "../Model/actfns.js"
 
-export const defaultInput = [0,0];
-export const defaultActFn = actFns.SIGMOID;
+export const defaultInput = [];
+export const defaultActFn = actFns.LINEAR;
 
 /* for each neuron in each layer
 this.layers.forEach(function(layer) {
@@ -26,8 +26,9 @@ export class Net{
     oldweightf; //TO DELETE
 
     constructor(){
-        this.setNetActFn(defaultActFn);
+//        this.setNetActFn(defaultActFn);
         this.setNetInput(defaultInput);
+        this.netActFn=actFns.LINEAR;
         this.layers=[];
         this.error=[];
         this.delta=[];

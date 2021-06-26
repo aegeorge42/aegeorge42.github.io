@@ -68,10 +68,25 @@ export class Slide{
         this.drawWeights(net);
     }
 
+    drawBig(net){
+      this.drawInputs(net);
+      this.drawNeurons(net);
+      this.drawWeights(net);
+      
+      //scale up
+      for(var i = 0; i<this.netContainer.children.length; i++){
+        
+        //layer
+        for(var k = 0; k<this.netContainer.getChildAt(i).children.length; k++){
+          this.netContainer.getChildAt(i).getChildAt(k).scale.set(3,3);
+        }
+    }
+  }
+
     drawInputs(net){
         for(var i = 0; i<net.netInput.length; i++){
             //var inputSprite = new PIXI.Sprite(PIXI.loader.resources["images/button_over.png"].texture)
-            var inputSprite = new PIXI.Sprite(PIXI.Texture.from('images/button_over.png'));
+            var inputSprite = new PIXI.Sprite(PIXI.Texture.from('images/input.png'));
 
                 inputSprite.y=i*80;
         
