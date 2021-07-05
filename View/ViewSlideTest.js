@@ -22,7 +22,7 @@ export class ViewSlideTest{
         this.currentSlide=0;
 
         //next, prev slide buttons never move
-        var button_nextslide = new Button("button_nextslide",PIXI.Texture.from('images/buttons/button_nextslide.png'),80,40)
+        var button_nextslide = new Button("button_nextslide",PIXI.Texture.from('images/buttons/button_nextslide.png'),80,40,true)
         this.app.stage.addChild(button_nextslide);
  //           console.log("children " +this.app.stage.children.length);
             var vst = this;
@@ -37,7 +37,7 @@ export class ViewSlideTest{
                 }
             })
 
-        var button_prevslide = new Button("button_prevslide",PIXI.Texture.from('images/buttons/button_prevslide.png'),80,80)
+        var button_prevslide = new Button("button_prevslide",PIXI.Texture.from('images/buttons/button_prevslide.png'),80,80,true)
             this.app.stage.addChild(button_prevslide);
 //            console.log("children " +this.app.stage.children.length);
             var vst = this;
@@ -57,9 +57,10 @@ export class ViewSlideTest{
     //I know it's ugly but it works
     drawSlide(){
         try{
-            this.app.stage.removeChildAt(2);
+            this.app.stage.removeChildAt(2); //childAt(0)=next slide button; childAt(1)=prev slide button
         } catch {}
    
         this.app.stage.addChild(this.slideList[this.currentSlide].slideContainer);
     }
+
 }

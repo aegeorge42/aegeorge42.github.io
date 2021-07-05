@@ -26,13 +26,30 @@ var inputHeight=100;
 var neuronWidth=100;
 var neuronHeight=100;
 
-var weightsWidth = 230; //random
+var weightsWidth = 180; //random
 var buffer= 50;
 var upperlim = 100;
-var leftlim = 200;
+var leftlim = 150;
 
-var postraise = 0; //move weightline up a smidge
+var postraise = -50; //move weightline up a smidge
 var postgap = 20; //separate out weightlines a smidge
+
+export const layout = {
+  INPUT_WIDTH: 100,
+  INPUT_HEIGHT: 100,
+  
+  NEURON_WIDTH: 100,
+  NEURON_HEIGHT: 100,
+  
+  WEIGHTS_WIDTH: 180, //random
+  BUFFER: 50,
+  UPPERLIM: 100,
+  LEFTLIM: 200,
+  
+  WEIGHT_RAISE: -40, //move weightline up a smidge
+  WEIGHT_GAP: 20 //separate out weightlines a smidge
+
+}
 
 /*************/
 
@@ -63,9 +80,37 @@ export class Slide{
       return nums2print;
   }
 
-  addButton(name, textureimg, x, y){
-      var newb = new Button(name,PIXI.Texture.from(textureimg),x,y)
+  addButton(name, textureimg, x, y, vis){
+      var newb = new Button(name,PIXI.Texture.from(textureimg),x,y,vis)
       this.buttonContainer.addChild(newb);
+  }
+
+  isVis(name){
+    return this.buttonContainer.getChildByName(name).visible;
+  }
+
+  setVis(name,bool){
+    if(bool==false){this.buttonContainer.getChildByName(name).visible=false;}
+    else if(bool==true){this.buttonContainer.getChildByName(name).visible=true;}
+  }
+
+//  Slide0.buttonContainer.getChildByName("btest").on('click', function(e){
+//    net.getLayer(0).addNeuron();
+//    net.update();
+//    Slide0.draw(net);
+//  });
+  onClick(buttonname,thisnet,funct){
+    var slide = this;
+    slide.buttonContainer.getChildByName(buttonname).on('click', function(e){
+    //  thisnet.getLayer(0).addNeuron();
+      thisnet.update();
+      slide.draw(thisnet);
+    });
+  }
+
+  updateDraw(net){
+    net.update();
+    this.draw(net);
   }
 
   clearButtons(){}
@@ -99,7 +144,7 @@ export class Slide{
       for(var i = 0; i<net.netInput.length; i++){
           var inputSprite = new PIXI.Sprite(PIXI.Texture.from('images/input.png'));
               inputSprite.x=leftlim;
-              inputSprite.y=(i*(inputHeight+buffer))+upperlim;
+              inputSprite.y=(i*(inputHeight+buffer))+upperlim+buffer;
               console.log("IS " + "[" + inputSprite.x + "," + inputSprite.y +"]")
       
           var inputSpriteText = new PIXI.Text(net.netInput[i]);
@@ -132,10 +177,10 @@ export class Slide{
                     }
 
                     weightSprite.lineStyle(thickness, color);
-                    weightSprite.moveTo(leftlim+inputWidth+(i*weightsWidth-neuronWidth)+weightsWidth,
-                       (j*neuronHeight*1.5+buffer)+upperlim + (k*postgap) -postraise);
+                    weightSprite.moveTo(leftlim+inputWidth+(i*layout.WEIGHTS_WIDTH -neuronWidth)+ layout.WEIGHTS_WIDTH,
+                       (j*neuronHeight*1.5+buffer)+upperlim + (k*postgap) - layout.WEIGHT_RAISE);
 
-                    weightSprite.lineTo(leftlim+inputWidth+(i*weightsWidth), upperlim+buffer+(k*(neuronHeight+buffer)) );
+                    weightSprite.lineTo(leftlim+inputWidth+(i*layout.WEIGHTS_WIDTH), upperlim+buffer+(k*(neuronHeight+buffer)) - layout.WEIGHT_RAISE);
                     
                   this.weightsContainer.addChild(weightSprite);
 
@@ -153,6 +198,10 @@ export class Slide{
 
   drawNeurons(net){
 
+      //clear old stuff first
+      this.netContainer.removeChildren();
+      this.weightsContainer.removeChildren();
+
       //for each layer
       for(var i = 0; i<net.layers.length; i++){
 
@@ -162,8 +211,8 @@ export class Slide{
           //for each neuron
           for(var j = 0; j<net.getLayer(i).neurons.length; j++){
               var neuronContainer = new PIXI.Container();
-               neuronContainer.x = leftlim+(i*weightsWidth)+weightsWidth;
-               neuronContainer.y = (j*(inputHeight+buffer))+upperlim ;
+               neuronContainer.x = leftlim+(i*layout.WEIGHTS_WIDTH)+ layout.WEIGHTS_WIDTH;
+               neuronContainer.y = (j*(inputHeight+buffer))+upperlim +buffer;
 
                console.log("N " + "[" + neuronContainer.x + "," + neuronContainer.y +"]")
 
