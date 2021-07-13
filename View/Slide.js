@@ -31,7 +31,7 @@ var upperlim = 100;
 var leftlim = 150;
 
 var postraise = -50; //move weightline up a smidge
-var postgap = 20; //separate out weightlines a smidge
+var postgap = 20 ; //separate out weightlines a smidge
 
 export const layout = {
   INPUT_WIDTH: 50,
@@ -45,8 +45,8 @@ export const layout = {
   UPPERLIM: 100,
   LEFTLIM: 200,
   
-  WEIGHT_RAISE: -20, //move weightline up a smidge
-  WEIGHT_GAP: 20 //separate out weightlines a smidge
+  WEIGHT_RAISE: -25, //move weightline up a smidge
+  WEIGHT_GAP: 100 //separate out weightlines a smidge
 
 }
 
@@ -67,7 +67,7 @@ export class Slide{
       this.netContainer = new PIXI.Container();
       this.weightsContainer = new PIXI.Container();
       this.slideContainer=new PIXI.Container();
-      this.slideContainer.addChild(this.buttonContainer,this.inputContainer,this.netContainer,this.weightsContainer);
+      this.slideContainer.addChild(this.buttonContainer,this.inputContainer,this.weightsContainer,this.netContainer);
   }
 
   //helper function
@@ -122,6 +122,7 @@ export class Slide{
       this.drawInputs(net);
       this.drawNeurons(net);
       this.drawWeights(net);
+
   }
 
   drawBig(net){
@@ -155,6 +156,7 @@ export class Slide{
   }
 
   drawWeights(net){
+
       for(var i = 0; i<net.layers.length; i++){
           for(var j = 0; j<net.getLayer(i).neurons.length; j++){
               for(var k = 0; k<net.getLayer(i).neurons[j].weights.length; k++){
@@ -252,7 +254,7 @@ export class Slide{
                     + "   " + formatter.format(net.getLayer(i).neurons[j].output) + '\n',
                   textStyle)
                 overText.anchor.set(.5);
-                overText.x=neuronWidth/2;
+                overText.x=neuronWidth/2 + 20;
                 overText.y=neuronHeight/2 +7; //lil nudge
               
               
