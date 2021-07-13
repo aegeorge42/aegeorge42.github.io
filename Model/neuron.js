@@ -24,8 +24,7 @@ export class Neuron{
     actFun;
 
     constructor(){
-        this.bias = 0;
-    //    this.bias = Math.random() * 2 - 1 //bias between -1 and 1
+        this.bias = Math.random() * 2 - 1 //bias between -1 and 1
         this.inputs = [];
         this.actFun = [];
         this.weights=[];
@@ -100,7 +99,7 @@ export class Neuron{
                 }
             break;
             case(actFns.SIGMOID):
-//                this.output=1/(1+(Math.E ** -outsum));
+                this.output=1/(1+(Math.E ** -outsum));
                 break;
 
         }

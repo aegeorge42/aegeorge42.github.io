@@ -5,7 +5,7 @@ export class Layer{
     neurons; //list of neurons in layer
     layerInputs = [];  //list of inputs to all neurons in layer
     layerOutputs; //list of all outputs from neurons in layer
-    layerBias = 0;  //each layer has the same bias
+//    layerBias = 0;  //each layer has the same bias
     layerWeights = [];
 
     //no such thing as an empty layer
@@ -14,16 +14,16 @@ export class Layer{
         var n = new Neuron();
         this.addNeuron(n);
 //      this.setLayerBias(Math.random() * 2 - 1);
-        this.setLayerBias(0);
+//        this.setLayerBias(0);
 //        console.log("LAYER BIAS" + this.layerBias)
     }
 
     setLayerBias(b){
-        this.layerBias=b;
+ //       this.layerBias=b;
 //        console.log(this.neurons);
-        this.neurons.forEach(function(neuron) {
-            neuron.setBias(b);
-        });
+ //       this.neurons.forEach(function(neuron) {
+ //           neuron.setBias(b);
+  //      });
     }
 
     addNeuron(){

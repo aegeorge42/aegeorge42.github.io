@@ -7,15 +7,16 @@ export const net = new Net();
 
 const testInput = {
     input: [5, 10],
-    expected: [1],
-    expected_text: ""
+    expected: [1, 2],
+    expected_text: ["text1","text2"]
 };
 
 const maxLayers = 3;
 const maxNeurons = 4;
 
-net.setNetInput(testInput.input,testInput.expected);
-net.setNetActFn(actFns.LINEAR);
+net.setNetInput(testInput.input,testInput.expected,testInput.expected_text);
+net.setNetActFn(actFns.SIGMOID);
+net.setOutLayer();
 
 /*net.getLayer(0).addNeuron();
 

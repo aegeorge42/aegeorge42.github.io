@@ -2,6 +2,9 @@ import {Layer} from "../Model/layer.js"
 import {actFns} from "../Model/actfns.js"
 
 export const defaultInput = [];
+const defaultTarget =[];
+const defaultTargetText =[];
+
 export const defaultActFn = actFns.LINEAR;
 
 /* for each neuron in each layer
@@ -15,31 +18,47 @@ this.layers.forEach(function(layer) {
 export class Net{
     layers; //list of layers
     lastLayer; //makes my life easier
+    outLayer_temp;
     netInput; //input to layer 0
     netActFn; //activation function
     target;
+    targetText;
     netOut;
-    error;
-    eTot;
-    learnRate;
-    delta;
-    oldweightf; //TO DELETE
+    cost;
+    costTot;
+//    error;
+//    eTot;
+//    learnRate;
+//    delta;
+//    oldweightf; //TO DELETE
 
     constructor(){
 //        this.setNetActFn(defaultActFn);
-        this.setNetInput(defaultInput);
+        this.setNetInput(defaultInput,defaultTarget,defaultTargetText);
         this.netActFn=actFns.LINEAR;
         this.layers=[];
-        this.error=[];
+        this.cost=[];
         this.delta=[];
         this.addLayer();
         this.update();
+        this.addLayer();
+        this.update();
+
         this.setLearnRate(0.05);
     }
 
-    setNetInput(data,target){
+    setOutLayer(){
+        this.outLayer_temp=new Layer();
+        for(var i=0;i<this.target.length-1;i++){
+            this.outLayer_temp.addNeuron();
+        }
+        this.layers.push(this.outLayer_temp);
+    }
+
+    setNetInput(data,target,targetText){
         this.netInput=data;
         this.target=target;
+        this.targetText=targetText;
     }
 
     setNetActFn(actfn){
@@ -70,14 +89,6 @@ export class Net{
         return gotLayer;
     }
 
-    setAllLayerBias(b){
-        this.layers.forEach(function(layer) {
-            if(layer.layerBias === undefined){
-                layer.setLayerBias(b);
-            }
-        });
-    }
-
     update(){
 //        console.log("LR: " + this.learnRate);
         this.getLayer(0).setLayerIns(this.netInput);
@@ -85,7 +96,7 @@ export class Net{
 
         for(var i=0; i<this.layers.length-1; i++){
         //    console.log("net actfn: "+ this.netActFn);
-        console.log(this.layers[i].layerBias);
+//        console.log(this.layers[i].layerBias);
 
             //update act fn for each neuron to user input
             //get output for each neuron in layer i
@@ -94,8 +105,8 @@ export class Net{
                     neuron.actFun = netfn;
                     console.log("IF neuron actfn: " + neuron.actFun);
                 }
-                console.log("neuron actfn: " + neuron.actFun);
-                console.log("net actfn in loop: " + netfn);
+//                console.log("neuron actfn: " + neuron.actFun);
+//                console.log("net actfn in loop: " + netfn);
 
                 neuron.calcOut();
             });
@@ -114,12 +125,69 @@ export class Net{
         });
         this.netOut=this.lastLayer.getLayerOuts();
 
-        this.calcError();
-
+        this.calcCost();
+        this.backProp_finalLayer();
         
     }
 
-    calcError(){
+    //each neuron in the final layer will have a cost
+    calcCost(){
+        this.costTot=0;
+        if (this.target !== undefined){
+            for( var i = 0; i<this.target.length; i++){
+                if(this.netOut[i] !== undefined){
+                    this.cost[i]=0.5 * (this.target[i]-this.netOut[i]) ** 2;
+                    this.costTot=this.costTot+this.cost[i];
+                    console.log(
+                    "neuron " + i +'\n'
+                    + "expected: " + this.target[i]+'\n'
+                    + "actual: " + this.netOut[i] +'\n'
+                    + "cost: " + this.cost[i] +'\n'); 
+                }
+            }
+            console.log(" total cost: " + this.costTot);
+        } 
+    }
+
+    backProp_finalLayer(){
+        //z = output_nofn
+
+        //if I only have one output
+        var dc_dw=[]; //partial derivative of cost wrt weight (layer l)
+      
+        var dz_dw=[]; //partial derivative of (stuff inside actfn - aka "z") (weight*a^(l-1) + bias) wrt weight (layer l)
+        var da_dz=[]; //partial derivative of neuron output (layer l) wrt z
+        var dc_da=[]; //partial derivative of cost wrt neuron output (layer l-1)
+
+        if (this.target !== undefined){
+            for(var i=0; i<this.lastLayer.neurons.length; i++){
+                
+                //dc_da
+                dc_da[i]=(this.target[i]-this.netOut[i]);
+                console.log("neuron "+ i +" dc_da: " + dc_da[i])
+             
+            
+                //da_dz
+                switch(this.netActFn){
+                    case(actFns.LINEAR):
+                        da_dz[i]=1;
+                    break;
+                    case(actFns.SIGMOID):
+                        da_dz[i]= this.netOut[i]*(1-(this.netOut[i]))
+                    break;    
+                }
+               
+                console.log("neuron " + i +" da_dz: " + da_dz[i]);
+
+                //chain rule to get partial derivative of cost wrt weight (layer l)
+                dc_dw = dz_dw * da_dz * dc_da; 
+            }
+        }
+    }
+
+
+    // might come back to this...
+/*    calcError_old(){
         this.eTot=0;
         if (this.target !== undefined){
             for( var i = 0; i<this.target.length; i++){
@@ -140,7 +208,7 @@ export class Net{
         //Etot = 1/2 (target-output)^2
         
     }
-
+*/
     backProp_long(){
         console.log('\n' + "--BACKPROP LONG--");
         switch(this.netActFn){
