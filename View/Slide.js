@@ -184,28 +184,40 @@ export class Slide{
 
                   weightSprite.lineStyle(thickness, color);
                   weightSprite.drawPolygon(350 + (i*150), 150 + (j*150),350 + (i*150) - 150 , 150 + (k*150));
+                  
+                  /* use to view weight hitbox
                   var f=new PIXI.Graphics();
                   f.lineStyle(3, 0x000000);
+                  f.drawPolygon( 350 + (i*150), 150 + (j*150) +10, 
+                  350 + (i*150) - 150 , 150 + (k*150) +10,
+                  350 + (i*150) - 150 , 150 + (k*150) -10,
+                  350 + (i*150), 150 + (j*150) -10);
+                  this.weightsContainer.addChild(f);
 
-                  //make these polyogns, not lines
-                  f.drawPolygon(350 + (i*150), 150 + (j*150),350 + (i*150) - 150 , 150 + (k*150));
+                  */
 
-                  //weightSprite.moveTo(350 + (i*150), 150 + (j*150));
-                  //weightSprite.lineTo(350 + (i*150) - 150 ,150 + (k*150));
+                  weightSprite.hitArea = new PIXI.Polygon(
+                                 350 + (i*150), 150 + (j*150) +10, 
+                                 350 + (i*150) - 150 , 150 + (k*150) +10,
+                                 350 + (i*150) - 150 , 150 + (k*150) -10,
+                                 350 + (i*150), 150 + (j*150) -10
+                                 );
+                  
+
+
                   
                   weightSprite.interactive=true;
 
-                  weightSprite.buttonmode=true;
+                  //weightSprite.buttonmode=true;
 
                   weightSprite.on('mouseover', function(e){
-                    this.alpha=1;
-                    console.log("HIT")
+                    this.alpha=0;
                   });
         
                   weightSprite.on('mouseout', function(e){
-                    this.alpha=0;
+                    this.alpha=1;
                   });
-                this.weightsContainer.addChild(weightSprite,f);
+                this.weightsContainer.addChild(weightSprite);
                   
 
                 //cpme back to this
