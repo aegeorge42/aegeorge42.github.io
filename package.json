@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@pixi/canvas-graphics": "^6.0.4"
+  }
+}

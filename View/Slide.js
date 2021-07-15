@@ -1,5 +1,6 @@
 import {Button} from "./Button.js"
 
+
 const formatter = new Intl.NumberFormat('en-US', {
     minimumFractionDigits: 2,      
     maximumFractionDigits: 2,
@@ -42,7 +43,7 @@ export const layout = {
   
   WEIGHTS_WIDTH: 150, //random
   BUFFER: 20,
-  UPPERLIM: 100,
+  UPPERLIM: 80,
   LEFTLIM: 200,
   
   WEIGHT_RAISE: -25, //move weightline up a smidge
@@ -65,9 +66,11 @@ export class Slide{
       this.buttonContainer = new PIXI.Container();
       this.inputContainer = new PIXI.Container();
       this.netContainer = new PIXI.Container();
+        this.neuronOverContainer = new PIXI.Container();
+        this.neuronSensorContainer = new PIXI.Container();
       this.weightsContainer = new PIXI.Container();
       this.slideContainer=new PIXI.Container();
-      this.slideContainer.addChild(this.buttonContainer,this.inputContainer,this.weightsContainer,this.netContainer);
+      this.slideContainer.addChild(this.buttonContainer,this.weightsContainer,this.inputContainer,this.netContainer);
   }
 
   //helper function
@@ -143,148 +146,185 @@ export class Slide{
   drawInputs(net){
       for(var i = 0; i<net.netInput.length; i++){
           var inputSprite = new PIXI.Sprite(PIXI.Texture.from('images/input.png'));
-              inputSprite.x=leftlim;
-              inputSprite.y=(i*(inputHeight+buffer))+upperlim+buffer;
+              inputSprite.anchor.set(0.5);
+              inputSprite.x= 200;//leftlim;
+              inputSprite.y= (i*150) +150;//(i*(inputHeight+buffer))+upperlim+buffer;
       
           var inputSpriteText = new PIXI.Text(net.netInput[i]);
               inputSpriteText.anchor.set(0.5);
-              inputSpriteText.x= leftlim+ (inputWidth/2);
-              inputSpriteText.y = inputSprite.y + inputHeight/2;
+
       
-          this.inputContainer.addChild(inputSprite,inputSpriteText)
+          inputSprite.addChild(inputSpriteText);
+          this.inputContainer.addChild(inputSprite);
       }
   }
 
   drawWeights(net){
 
-      for(var i = 0; i<net.layers.length; i++){
-          for(var j = 0; j<net.getLayer(i).neurons.length; j++){
-              for(var k = 0; k<net.getLayer(i).neurons[j].weights.length; k++){
-                  var weightSprite=new PIXI.Graphics();
+    for(var i = 0; i<net.layers.length; i++){
+        for(var j = 0; j<net.getLayer(i).neurons.length; j++){
+            for(var k = 0; k<net.getLayer(i).neurons[j].weights.length; k++){
+                var weightSprite=new PIXI.Graphics();
+                
+                //weightSprite.hitArea = new PIXI.Rectangle(0, 0, 100, 100);
 
-                    //magnitude of weight determines thickness
-                    var thickness = Math.abs(net.getLayer(i).neurons[j].weights[k] * 10);
-                      if(thickness<1){ var thickness =3 }
-                    var color = 0x000000;
+                  //magnitude of weight determines thickness
+                  var thickness = Math.abs(net.getLayer(i).neurons[j].weights[k] * 10);
+                    if(thickness<1){ var thickness =3 }
+                  var color = 0x000000;
 
-                    //positive weight = blue, neagtive = orange
-                    if(net.getLayer(i).neurons[j].weights[k] < 0){
-                      color = 0xFF5733;
-                    }else if(net.getLayer(i).neurons[j].weights[k] > 0){
-                      color = 0x344EE8;
-                    } else if(net.getLayer(i).neurons[j].weights[k] == 0){
-                      color = 0xAAADB3;
-                    }
+                  //positive weight = blue, neagtive = orange
+                  if(net.getLayer(i).neurons[j].weights[k] < 0){
+                    color = 0xFF5733;
+                  }else if(net.getLayer(i).neurons[j].weights[k] > 0){
+                    color = 0x344EE8;
+                  } else if(net.getLayer(i).neurons[j].weights[k] == 0){
+                    color = 0xAAADB3;
+                  }
 
-                    weightSprite.lineStyle(thickness, color);
-                    weightSprite.moveTo(leftlim+inputWidth+(i*layout.WEIGHTS_WIDTH -neuronWidth)+ layout.WEIGHTS_WIDTH,
-                       (j*neuronHeight*1.5+buffer)+upperlim + (k*postgap) - layout.WEIGHT_RAISE);
+                  weightSprite.lineStyle(thickness, color);
+                  weightSprite.drawPolygon(350 + (i*150), 150 + (j*150),350 + (i*150) - 150 , 150 + (k*150));
+                  var f=new PIXI.Graphics();
+                  f.lineStyle(3, 0x000000);
 
-                    weightSprite.lineTo(leftlim+inputWidth+(i*layout.WEIGHTS_WIDTH), upperlim+buffer+(k*(neuronHeight+buffer)) - layout.WEIGHT_RAISE);
-                    
-                  this.weightsContainer.addChild(weightSprite);
+                  //make these polyogns, not lines
+                  f.drawPolygon(350 + (i*150), 150 + (j*150),350 + (i*150) - 150 , 150 + (k*150));
 
-                  //cpme back to this
-                  var weightSpriteText=new PIXI.Text(formatter.format(net.getLayer(i).neurons[j].weights[k]), textStyle);
-                    weightSpriteText.x= ((i*200)+350 + (i*200)+150 +100)/2 -50;
-                    weightSpriteText.y= (j*120+150 +50 -5 + i+300+k*100 -100)/2;
-                  //   weightSpriteText.rotation=rotate;
-                  //  console.log("rotate"+rotate)
-                    this.weightsContainer.addChild(weightSpriteText);
-              }
-          }
-      }
-  }
+                  //weightSprite.moveTo(350 + (i*150), 150 + (j*150));
+                  //weightSprite.lineTo(350 + (i*150) - 150 ,150 + (k*150));
+                  
+                  weightSprite.interactive=true;
+
+                  weightSprite.buttonmode=true;
+
+                  weightSprite.on('mouseover', function(e){
+                    this.alpha=1;
+                    console.log("HIT")
+                  });
+        
+                  weightSprite.on('mouseout', function(e){
+                    this.alpha=0;
+                  });
+                this.weightsContainer.addChild(weightSprite,f);
+                  
+
+                //cpme back to this
+                var weightSpriteText=new PIXI.Text(formatter.format(net.getLayer(i).neurons[j].weights[k]), textStyle);
+                  weightSpriteText.x= ((i*200)+350 + (i*200)+150 +100)/2 -50;
+                  weightSpriteText.y= (j*120+150 +50 -5 + i+300+k*100 -100)/2;
+                //   weightSpriteText.rotation=rotate;
+                //  console.log("rotate"+rotate)
+                //  this.weightsContainer.addChild(weightSpriteText);
+            }
+        }
+    }
+}
 
   drawNeurons(net){
 
-      //clear old stuff first
-      this.netContainer.removeChildren();
-      this.weightsContainer.removeChildren();
+  //clear old stuff first
+  this.netContainer.removeChildren();
+  this.weightsContainer.removeChildren();
 
-      //for each layer
-      for(var i = 0; i<net.layers.length; i++){
+  //for each layer
+  for(var i = 0; i<net.layers.length; i++){
+    var layerContainer = new PIXI.Container();
+    this.netContainer.addChild(layerContainer);
 
-          var layerContainer = new PIXI.Container();
-          this.netContainer.addChild(layerContainer);
+      //for each neuron
+    for(var j = 0; j<net.getLayer(i).neurons.length; j++){
 
-          //for each neuron
-          for(var j = 0; j<net.getLayer(i).neurons.length; j++){
-              var neuronContainer = new PIXI.Container();
-               neuronContainer.x = leftlim+(i*layout.WEIGHTS_WIDTH)+ layout.WEIGHTS_WIDTH;
-               neuronContainer.y = (j*(inputHeight+buffer))+upperlim +buffer;
-
-              var neuronBase = new PIXI.Sprite(PIXI.Texture.from('images/neuron.png'));
-              neuronBase.x=50;
-              //set tint depending on how much neuron is activated
-              var finout = net.getLayer(i).neurons[j].output;
-              if(finout>=0.9){
-                neuronBase.tint= 0xFFF000
-              } else if (finout>=0.8){
-                neuronBase.tint= 0xFFF223
-              } else if (finout>=0.7){
-                neuronBase.tint= 0xFFF443
-              } else if (finout>=0.6){
-                neuronBase.tint= 0xFFF65F
-              } else if (finout>=0.5){
-                neuronBase.tint= 0xFFF87C
-              } else if (finout>=0.4){
-                neuronBase.tint= 0xFFFA98
-              } else if (finout>=0.3){
-                neuronBase.tint= 0xFFFBAF
-              } else if (finout>=0.2){
-                neuronBase.tint= 0xFFFCC8
-              } else if (finout>=0.1){
-                neuronBase.tint= 0xFFFEE9
-              }
-
-
-              var neuronMainText = new PIXI.Text(formatter.format(net.getLayer(i).neurons[j].output));
-                neuronBase.addChild(neuronMainText);
-                neuronMainText.scale.set(0.8);
-                neuronMainText.anchor.set(0.5);
-                neuronMainText.x=25;
-                neuronMainText.y=25;
-
-              var overText = new PIXI.Text(
-                  "i: " + this.formatList(net.getLayer(i).neurons[j].inputs) + '\n'
-                    + "w: " + this.formatList(net.getLayer(i).neurons[j].weights) + '\n'
-                    + "b: " + formatter.format(net.getLayer(i).neurons[j].bias) +'\n'
-                    + "o: " + formatter.format(net.getLayer(i).neurons[j].output_nofn) + '\n'
-                    + "   " + formatter.format(net.getLayer(i).neurons[j].output) + '\n',
-                  textStyle)
-                overText.anchor.set(.5);
-                overText.x=neuronWidth/2 + 20;
-                overText.y=neuronHeight/2 +7; //lil nudge
-              
-              
-              var overNeuron = new PIXI.Sprite(PIXI.Texture.from('images/overneuron.png'));
-                overNeuron.alpha=0;
-                overNeuron.addChild(overText);
-                overNeuron.interactive=true;
-
-                overNeuron.on('mouseover', function(e){
-                  this.alpha=1;
-                })
-
-                overNeuron.on('mouseout', function(e){
-                 this.alpha=0;
-                })
+        var neuronBase = new PIXI.Sprite(PIXI.Texture.from('images/neuron.png'));
+        neuronBase.anchor.set(0.5);
+        neuronBase.x=350+ (i*150);
+        neuronBase.y=150 + (j*150);
+          
+        //set tint depending on how much neuron is activated
+        var finout = net.getLayer(i).neurons[j].output;
+        if(finout>=0.9){
+          neuronBase.tint= 0xFFF000
+        } else if (finout>=0.8){
+          neuronBase.tint= 0xFFF223
+        } else if (finout>=0.7){
+          neuronBase.tint= 0xFFF443
+        } else if (finout>=0.6){
+          neuronBase.tint= 0xFFF65F
+        } else if (finout>=0.5){
+          neuronBase.tint= 0xFFF87C
+        } else if (finout>=0.4){
+          neuronBase.tint= 0xFFFA98
+        } else if (finout>=0.3){
+          neuronBase.tint= 0xFFFBAF
+        } else if (finout>=0.2){
+          neuronBase.tint= 0xFFFCC8
+        } else if (finout>=0.1){
+          neuronBase.tint= 0xFFFEE9
+        }
 
 
-                neuronContainer.addChild(neuronBase);
-                neuronContainer.addChild(overNeuron);
-              layerContainer.addChild(neuronContainer);
-          }
+        var neuronMainText = new PIXI.Text(formatter.format(net.getLayer(i).neurons[j].output));
+          neuronMainText.scale.set(0.8);
+          neuronMainText.anchor.set(0.5);
+          neuronBase.addChild(neuronMainText);
 
+
+        var overText = new PIXI.Text(
+            "i: " + this.formatList(net.getLayer(i).neurons[j].inputs) + '\n'
+              + "w: " + this.formatList(net.getLayer(i).neurons[j].weights) + '\n'
+              + "b: " + formatter.format(net.getLayer(i).neurons[j].bias) +'\n'
+              + "o: " + formatter.format(net.getLayer(i).neurons[j].output_nofn) + '\n'
+              + "   " + formatter.format(net.getLayer(i).neurons[j].output) + '\n',
+            textStyle)
+          overText.anchor.set(.5);
+          
+        var overNeuron = new PIXI.Sprite(PIXI.Texture.from('images/overneuron.png'));
+          overNeuron.anchor.set(0.5);
+          overNeuron.x=neuronBase.x;
+          overNeuron.y=neuronBase.y;
+          overNeuron.idx= [i,j];
+          overNeuron.alpha=0;
+          overNeuron.addChild(overText);
+
+        //detection for showing overneuron
+        var sensor= new PIXI.Sprite(PIXI.Texture.from('images/neuron.png'));
+          sensor.anchor.set(0.5);
+          sensor.x=neuronBase.x;
+          sensor.y=neuronBase.y;
+          sensor.tint=0xFFA500;
+          sensor.alpha=0;
+          sensor.interactive=true;
+
+          var self = this;
+          sensor.on('mouseover', function(e){
+            self.neuronOverContainer.getChildAt(this.parent.getChildIndex(this)).alpha=1;
+          });
+
+          sensor.on('mouseout', function(e){
+            self.neuronOverContainer.getChildAt(this.parent.getChildIndex(this)).alpha=0;
+          });
+
+        this.neuronOverContainer.addChild(overNeuron);
+        this.neuronSensorContainer.addChild(sensor);
+
+            
+        //neuronContainer.addChild(neuronBase);
+        // neuronContainer.addChild(overNeuron);
+        //neuronContainer.addChild(sensor);
+        layerContainer.addChild(neuronBase);
+        
       }
-      //add text after final layer
-      for(var i = 0; i<net.targetText.length; i++){
-       var targetTextText = new PIXI.Text(net.targetText[i]);
-        targetTextText.x=leftlim+(net.layers.length*layout.WEIGHTS_WIDTH)+ layout.WEIGHTS_WIDTH;
-        targetTextText.y=(i*(inputHeight+buffer))+upperlim +buffer;
-      
+    }
+
+    this.netContainer.addChild(this.neuronOverContainer, this.neuronSensorContainer)
+
+    //add text after final layer
+    for(var i = 0; i<net.targetText.length; i++){
+      var targetTextText = new PIXI.Text(net.targetText[i]);
+      targetTextText.x=leftlim+(net.layers.length*layout.WEIGHTS_WIDTH)+ layout.WEIGHTS_WIDTH;
+      targetTextText.y=(i*(inputHeight+buffer))+upperlim +buffer;
+
       this.netContainer.addChild(targetTextText);
-      }
-    }      
+    }
+
+  }      
 }
