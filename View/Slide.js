@@ -61,6 +61,8 @@ export class Slide{
   buttonContainer; // all buttons to draw
   netContainer; // net to draw 
   weightsContainer; //weight graphics to draw
+  neuronOverContainer;
+  neuronSensorContainer;
 
   constructor(){
       this.buttonContainer = new PIXI.Container();
@@ -148,7 +150,7 @@ export class Slide{
           var inputSprite = new PIXI.Sprite(PIXI.Texture.from('images/input.png'));
               inputSprite.anchor.set(0.5);
               inputSprite.x= 200;//leftlim;
-              inputSprite.y= (i*150) +150;//(i*(inputHeight+buffer))+upperlim+buffer;
+              inputSprite.y= (i*100) +200;//(i*(inputHeight+buffer))+upperlim+buffer;
       
           var inputSpriteText = new PIXI.Text(net.netInput[i]);
               inputSpriteText.anchor.set(0.5);
@@ -183,27 +185,50 @@ export class Slide{
                   }
 
                   weightSprite.lineStyle(thickness, color);
-                  weightSprite.drawPolygon(350 + (i*150), 150 + (j*150),350 + (i*150) - 150 , 150 + (k*150));
+                  var startx = 350 + (i*150);
+                  var starty = 150 + (j*100);
+                  var endx = 350 + (i*150) - 150;
+                  var endy0 = 200 + (k*100);
+                  var endy =  150 + (k*100);
+
+                  if (i==0){
+                    weightSprite.drawPolygon(startx, starty, 
+                                             endx, endy0);
+                  } else {
+                    weightSprite.drawPolygon(startx, starty, 
+                                             endx, endy);
+                  }
                   
-                  /* use to view weight hitbox
+                  // use to view weight hitbox
                   var f=new PIXI.Graphics();
                   f.lineStyle(3, 0x000000);
-                  f.drawPolygon( 350 + (i*150), 150 + (j*150) +10, 
-                  350 + (i*150) - 150 , 150 + (k*150) +10,
-                  350 + (i*150) - 150 , 150 + (k*150) -10,
-                  350 + (i*150), 150 + (j*150) -10);
-                  this.weightsContainer.addChild(f);
+                  if (i==0){
+                    f.drawPolygon(startx, starty +10, 
+                      endx, endy0 +10,
+                      endx, endy0 -10,
+                      startx, starty -10);
+                  } else {
+                    f.drawPolygon(startx, starty +10, 
+                                  endx, endy +10,
+                                  endx, endy -10,
+                                  startx, starty -10);
+                  }
 
-                  */
+                  if(i==0){
+                    //TODO: FIX THIS
+                    weightSprite.hitArea = new PIXI.Polygon(
+                      startx, starty +10, 
+                      endx, endy0 +10,
+                      endx, endy0 -10,
+                      startx, starty -10);
+                  } else {
 
-                  weightSprite.hitArea = new PIXI.Polygon(
-                                 350 + (i*150), 150 + (j*150) +10, 
-                                 350 + (i*150) - 150 , 150 + (k*150) +10,
-                                 350 + (i*150) - 150 , 150 + (k*150) -10,
-                                 350 + (i*150), 150 + (j*150) -10
-                                 );
+                    weightSprite.hitArea = new PIXI.Polygon(startx, starty +10, 
+                      endx, endy +10,
+                      endx, endy -10,
+                      startx, starty -10);
                   
-
+                  }
 
                   
                   weightSprite.interactive=true;
@@ -218,6 +243,8 @@ export class Slide{
                     this.alpha=1;
                   });
                 this.weightsContainer.addChild(weightSprite);
+                //this.weightsContainer.addChild(f);
+
                   
 
                 //cpme back to this
@@ -237,6 +264,8 @@ export class Slide{
   //clear old stuff first
   this.netContainer.removeChildren();
   this.weightsContainer.removeChildren();
+  this.neuronOverContainer.removeChildren();
+  this.neuronSensorContainer.removeChildren();
 
   //for each layer
   for(var i = 0; i<net.layers.length; i++){
@@ -249,7 +278,7 @@ export class Slide{
         var neuronBase = new PIXI.Sprite(PIXI.Texture.from('images/neuron.png'));
         neuronBase.anchor.set(0.5);
         neuronBase.x=350+ (i*150);
-        neuronBase.y=150 + (j*150);
+        neuronBase.y=150 + (j*100);
           
         //set tint depending on how much neuron is activated
         var finout = net.getLayer(i).neurons[j].output;
