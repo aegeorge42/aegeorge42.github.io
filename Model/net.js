@@ -41,8 +41,6 @@ export class Net{
         this.delta=[];
         this.addLayer();
         this.update();
-        this.addLayer();
-        this.update();
 
         this.setLearnRate(0.05);
     }
@@ -74,12 +72,18 @@ export class Net{
 
     addLayer(){
         var l = new Layer();
-        this.layers.push(l);
-        l.layerNumber=this.layers.length-1;
+        if(this.layers.length ==0){
+            this.layers.push(l);
+            l.layerNumber=this.layers.length-1;
+        }
+        else {
+            this.layers.splice(this.layers.length-1,0,l);
+        }
     }
 
     removeLayer(){
-        this.layers.pop();
+        this.layers.splice(this.layers.length-2,1);
+       // this.layers.pop();
     }
 
     //need a way to access layers in order to add a neuron
@@ -103,7 +107,6 @@ export class Net{
             this.getLayer(i).neurons.forEach(function(neuron){
                 if(neuron.actFun != netfn){
                     neuron.actFun = netfn;
-                    console.log("IF neuron actfn: " + neuron.actFun);
                 }
 //                console.log("neuron actfn: " + neuron.actFun);
 //                console.log("net actfn in loop: " + netfn);

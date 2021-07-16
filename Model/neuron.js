@@ -63,7 +63,7 @@ export class Neuron{
         }
 
         if(this.weights.length > v.length){
-            this.weights.pop();
+            this.weights.splice(v.length, this.weights.length - v.length);
         }
 
     //this.weights_new=this.weights;
