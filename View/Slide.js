@@ -63,6 +63,7 @@ export class Slide{
   weightsContainer; //weight graphics to draw
   neuronOverContainer;
   neuronSensorContainer;
+  labelsContainer; 
 
   constructor(){
       this.buttonContainer = new PIXI.Container();
@@ -71,8 +72,9 @@ export class Slide{
         this.neuronOverContainer = new PIXI.Container();
         this.neuronSensorContainer = new PIXI.Container();
       this.weightsContainer = new PIXI.Container();
+      this.labelsContainer = new PIXI.Container();
       this.slideContainer=new PIXI.Container();
-      this.slideContainer.addChild(this.buttonContainer,this.weightsContainer,this.inputContainer,this.netContainer);
+      this.slideContainer.addChild(this.buttonContainer,this.weightsContainer,this.inputContainer,this.netContainer, this.labelsContainer);
   }
 
   //helper function
@@ -84,6 +86,10 @@ export class Slide{
       return nums2print;
   }
 
+  addButtontemp(button){
+    this.buttonContainer.addChild(button);
+  }
+  
   addButton(name, textureimg, x, y, vis){
       var newb = new Button(name,PIXI.Texture.from(textureimg),x,y,vis)
       this.buttonContainer.addChild(newb);
@@ -140,7 +146,7 @@ export class Slide{
       
       //get neurons
       for(var k = 0; k<this.netContainer.getChildAt(i).children.length; k++){
-        this.netContainer.getChildAt(i).getChildAt(k).scale.set(3,3);
+        this.netContainer.getChildAt(i).getChildAt(k).scale.set(2);
       }
     }
   }
@@ -234,10 +240,14 @@ export class Slide{
                   weightSprite.interactive=true;
 
                   //weightSprite.buttonmode=true;
-
+                  var self=this;
                   weightSprite.on('mouseover', function(e){
                     this.alpha=0;
+                    console.log(this.currentPath.points);
+                    //come back to this
+                //    var temp = new PIXI.Polygon(this.currentPath.points[0]+20,this.currentPath.points[1]+20,this.currentPath.points[2]+20,this.currentPath.points[3]+20);
                   });
+                  
         
                   weightSprite.on('mouseout', function(e){
                     this.alpha=1;
@@ -364,7 +374,7 @@ export class Slide{
       targetTextText.x=leftlim+(net.layers.length*layout.WEIGHTS_WIDTH)+ layout.WEIGHTS_WIDTH;
       targetTextText.y=(i*(inputHeight+buffer))+upperlim +buffer;
 
-      this.netContainer.addChild(targetTextText);
+      this.labelsContainer.addChild(targetTextText);
     }
 
   }      

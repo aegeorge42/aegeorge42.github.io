@@ -1,7 +1,7 @@
 import {Slide, layout} from "../Slide.js"
 import { Net } from "../../Model/net.js";
 import {actFns} from "../../Model/actfns.js"
-
+import {Button} from "../../View/Button.js"
 export const Slide0 = new Slide();
 export const net = new Net();
 
@@ -30,10 +30,19 @@ console.log("LAYER LENGTH:" + net.layers.length)
 
 
 /** ADD ALL THE BUTTONS **/ 
-
+// create all the buttons
+var addlayer= new Button("addlayer",PIXI.Texture.from('images/buttons/button_layer.png'), 80,layout.UPPERLIM +50,true);
+Slide0.addButtontemp(addlayer);
+var remlayer=new Button("remlayer",PIXI.Texture.from('images/buttons/button_removelayer.png'), 80,layout.UPPERLIM +100 +20,true);
+Slide0.addButtontemp(remlayer);
 //ADD LAYER
-Slide0.addButton("addlayer",PIXI.Texture.from('images/buttons/button_layer.png'), 80,layout.UPPERLIM +50,true);
-Slide0.addButton("remlayer",PIXI.Texture.from('images/buttons/button_removelayer.png'), 80,layout.UPPERLIM +100 +20,true);
+//Slide0.addButton("addlayer",PIXI.Texture.from('images/buttons/button_layer.png'), 80,layout.UPPERLIM +50,true);
+//Slide0.addButton("remlayer",PIXI.Texture.from('images/buttons/button_removelayer.png'), 80,layout.UPPERLIM +100 +20,true);
+
+//add/remove neurons
+
+
+
 Slide0.addButton("addn0",PIXI.Texture.from('images/buttons/button_addneuron.png'),layout.LEFTLIM + layout.WEIGHTS_WIDTH, layout.UPPERLIM, false);
 Slide0.addButton("remn0",PIXI.Texture.from('images/buttons/button_removeneuron.png'),layout.LEFTLIM + layout.WEIGHTS_WIDTH, layout.UPPERLIM+20,false);
 Slide0.addButton("addn1",PIXI.Texture.from('images/buttons/button_addneuron.png'),layout.LEFTLIM + layout.WEIGHTS_WIDTH*2, layout.UPPERLIM,false);
@@ -128,3 +137,5 @@ Slide0.buttonContainer.getChildByName("remn2").on('click', function(e){
 for (var i=0; i<net.layers.length; i++){
     Slide0.buttonContainer.children[i+2].visible=true
  }
+
+export const buttons2keep = Slide0.buttonContainer;
