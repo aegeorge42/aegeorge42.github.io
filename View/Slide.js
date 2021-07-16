@@ -58,7 +58,12 @@ export const layout = {
 export class Slide{
   slideContainer; // holds it ALL
   inputContainer; // inputs to draw
-  buttonContainer; // all buttons to draw
+  buttonContainer; // all buttons to draw -to delete?
+  buttonLayerContainer;
+  buttonNeuronAddContainer;
+  buttonNeuronRemContainer;
+
+    
   netContainer; // net to draw 
   weightsContainer; //weight graphics to draw
   neuronOverContainer;
@@ -67,6 +72,10 @@ export class Slide{
 
   constructor(){
       this.buttonContainer = new PIXI.Container();
+        this.buttonLayerContainer  = new PIXI.Container();
+        this.buttonNeuronAddContainer = new PIXI.Container();
+        this.buttonNeuronRemContainer = new PIXI.Container();
+//      this.buttonContainer.addChild(this.buttonLayerContainer);   maybe do this
       this.inputContainer = new PIXI.Container();
       this.netContainer = new PIXI.Container();
         this.neuronOverContainer = new PIXI.Container();
@@ -74,8 +83,10 @@ export class Slide{
       this.weightsContainer = new PIXI.Container();
       this.labelsContainer = new PIXI.Container();
       this.slideContainer=new PIXI.Container();
-      this.slideContainer.addChild(this.buttonContainer,this.weightsContainer,this.inputContainer,this.netContainer, this.labelsContainer);
+      this.slideContainer.addChild(this.buttonLayerContainer,this.buttonNeuronAddContainer,this.buttonNeuronRemContainer,this.weightsContainer,this.inputContainer,this.netContainer, this.labelsContainer);
   }
+
+
 
   //helper function
   formatList(list){
@@ -89,10 +100,18 @@ export class Slide{
   addButtontemp(button){
     this.buttonContainer.addChild(button);
   }
-  
+
   addButton(name, textureimg, x, y, vis){
       var newb = new Button(name,PIXI.Texture.from(textureimg),x,y,vis)
       this.buttonContainer.addChild(newb);
+  }
+
+  
+  addButtons(buttonlist){
+    for(var i =0; i<buttonlist.length; i++){
+      this.buttonContainer.addChild(buttonlist[i]);
+    }
+    
   }
 
   isVis(name){

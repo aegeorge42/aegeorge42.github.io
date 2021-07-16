@@ -2,6 +2,8 @@ import {Slide, layout} from "../Slide.js"
 import { Net } from "../../Model/net.js";
 import {actFns} from "../../Model/actfns.js"
 import {Button} from "../../View/Button.js"
+import {layerbuttons,neuronbuttons_add,neuronbuttons_rem,setButtonFunctions} from "../../View/Buttons.js"
+
 export const Slide0 = new Slide();
 export const net = new Net();
 
@@ -28,13 +30,26 @@ net.addLayer();
 Slide0.updateDraw(net);
 console.log("LAYER LENGTH:" + net.layers.length)
 
+Slide0.buttonLayerContainer.addChild(layerbuttons[0]);
+Slide0.buttonLayerContainer.addChild(layerbuttons[1]);
+
+setButtonFunctions(Slide0,net);
+
 
 /** ADD ALL THE BUTTONS **/ 
 // create all the buttons
+//Slide0.addButtons(layerbuttons);
+//Slide0.addButtons(neuronbuttons_add);
+//Slide0.addButtons(neuronbuttons_rem);
+
+/*
 var addlayer= new Button("addlayer",PIXI.Texture.from('images/buttons/button_layer.png'), 80,layout.UPPERLIM +50,true);
 Slide0.addButtontemp(addlayer);
 var remlayer=new Button("remlayer",PIXI.Texture.from('images/buttons/button_removelayer.png'), 80,layout.UPPERLIM +100 +20,true);
 Slide0.addButtontemp(remlayer);
+*/
+
+
 //ADD LAYER
 //Slide0.addButton("addlayer",PIXI.Texture.from('images/buttons/button_layer.png'), 80,layout.UPPERLIM +50,true);
 //Slide0.addButton("remlayer",PIXI.Texture.from('images/buttons/button_removelayer.png'), 80,layout.UPPERLIM +100 +20,true);
@@ -42,18 +57,20 @@ Slide0.addButtontemp(remlayer);
 //add/remove neurons
 
 
-
-Slide0.addButton("addn0",PIXI.Texture.from('images/buttons/button_addneuron.png'),layout.LEFTLIM + layout.WEIGHTS_WIDTH, layout.UPPERLIM, false);
+/*
+//Slide0.addButton("addn0",PIXI.Texture.from('images/buttons/button_addneuron.png'),layout.LEFTLIM + layout.WEIGHTS_WIDTH, layout.UPPERLIM, false);
 Slide0.addButton("remn0",PIXI.Texture.from('images/buttons/button_removeneuron.png'),layout.LEFTLIM + layout.WEIGHTS_WIDTH, layout.UPPERLIM+20,false);
 Slide0.addButton("addn1",PIXI.Texture.from('images/buttons/button_addneuron.png'),layout.LEFTLIM + layout.WEIGHTS_WIDTH*2, layout.UPPERLIM,false);
 Slide0.addButton("remn1",PIXI.Texture.from('images/buttons/button_removeneuron.png'),layout.LEFTLIM + layout.WEIGHTS_WIDTH*2, layout.UPPERLIM +20,false);
 Slide0.addButton("addn2",PIXI.Texture.from('images/buttons/button_addneuron.png'),layout.LEFTLIM + layout.WEIGHTS_WIDTH*3, layout.UPPERLIM);
 Slide0.addButton("remn2",PIXI.Texture.from('images/buttons/button_removeneuron.png'),layout.LEFTLIM + layout.WEIGHTS_WIDTH*3, layout.UPPERLIM+20);
-
+*/
+/*
 for (var i=0; i<Slide0.buttonContainer.children.length; i++){
     console.log("IDX" + i+"NAME:"+Slide0.buttonContainer.children[i].name);
 }
 
+console.log(Slide0.buttonContainer)
 Slide0.buttonContainer.getChildByName("addlayer").on('click', function(e){
     if(net.layers.length<maxLayers){
         net.addLayer();
@@ -88,7 +105,8 @@ Slide0.buttonContainer.getChildByName("remlayer").on('click', function(e){
 });
 
 //LAYER 0
-Slide0.buttonContainer.getChildByName("addn0").on('click', function(e){
+/*
+Slide0.buttonContainer.getChildAt(2).on('click', function(e){
     net.getLayer(0).addNeuron();
     Slide0.updateDraw(net);
 });
@@ -133,9 +151,9 @@ Slide0.buttonContainer.getChildByName("remn2").on('click', function(e){
         Slide0.updateDraw(net);
     }
 });
-
+*/
 for (var i=0; i<net.layers.length; i++){
-    Slide0.buttonContainer.children[i+2].visible=true
+//    Slide0.buttonContainer.children[i+2].visible=true
  }
 
 export const buttons2keep = Slide0.buttonContainer;
