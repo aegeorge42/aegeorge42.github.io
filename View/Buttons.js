@@ -1,7 +1,7 @@
 //import {Button} from "./Button.js"
 import {layout} from "../View/Slide.js"
 import {Button} from "../View/Button.js"
-
+/*
 export const layerbuttons = [];
 layerbuttons[0] = new Button("addlayer",PIXI.Texture.from('images/buttons/button_layer.png'), 80,layout.UPPERLIM +50,true);
 layerbuttons[1] = new Button("remlayer",PIXI.Texture.from('images/buttons/button_removelayer.png'), 80,layout.UPPERLIM +120,true);
@@ -31,3 +31,4 @@ export function setButtonFunctions(slide,net){
     
 
 }
+*/

@@ -29,8 +29,15 @@ export class ViewSlideTest{
             
             this.app.stage.getChildByName("button_nextslide").on('click', function(e){ 
                 if(vst.currentSlide+1<vst.slideList.length){
+                    console.log("CURRENT: "+ vst.slideList[vst.currentSlide].slideNet);
                     vst.currentSlide=vst.currentSlide+1;
+                    console.log("AFTERR SWITCH: "+ vst.slideList[vst.currentSlide].slideNet);
+
+                    //vst.slideList[vst.currentSlide].updateDraw(vst.slideList[vst.currentSlide].slideNet);
                     vst.drawSlide();
+                    vst.slideList[vst.currentSlide].updateDraw(vst.slideList[vst.currentSlide].slideNet);
+
+
 //                    console.log("slds" +vst.slideList.length);
 //                    console.log("current: " +vst.currentSlide);
 //                } else console.log("FINAL SLIDE");
@@ -46,6 +53,8 @@ export class ViewSlideTest{
                 if(vst.currentSlide>0){
                 vst.currentSlide=vst.currentSlide-1;
                 vst.drawSlide();
+                vst.slideList[vst.currentSlide].updateDraw(vst.slideList[vst.currentSlide].slideNet);
+
                 }
 //                } else console.log("1st SLIDE");
             })

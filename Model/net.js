@@ -141,14 +141,14 @@ export class Net{
                 if(this.netOut[i] !== undefined){
                     this.cost[i]=0.5 * (this.target[i]-this.netOut[i]) ** 2;
                     this.costTot=this.costTot+this.cost[i];
-                    console.log(
-                    "neuron " + i +'\n'
-                    + "expected: " + this.target[i]+'\n'
-                    + "actual: " + this.netOut[i] +'\n'
-                    + "cost: " + this.cost[i] +'\n'); 
+//                    console.log(
+//                    "neuron " + i +'\n'
+//                    + "expected: " + this.target[i]+'\n'
+//                    + "actual: " + this.netOut[i] +'\n'
+//                    + "cost: " + this.cost[i] +'\n'); 
                 }
             }
-            console.log(" total cost: " + this.costTot);
+//            console.log(" total cost: " + this.costTot);
         } 
     }
 
@@ -167,7 +167,7 @@ export class Net{
                 
                 //dc_da
                 dc_da[i]=(this.target[i]-this.netOut[i]);
-                console.log("neuron "+ i +" dc_da: " + dc_da[i])
+//                console.log("neuron "+ i +" dc_da: " + dc_da[i])
              
             
                 //da_dz
@@ -180,7 +180,7 @@ export class Net{
                     break;    
                 }
                
-                console.log("neuron " + i +" da_dz: " + da_dz[i]);
+//                console.log("neuron " + i +" da_dz: " + da_dz[i]);
 
                 //chain rule to get partial derivative of cost wrt weight (layer l)
                 dc_dw = dz_dw * da_dz * dc_da; 

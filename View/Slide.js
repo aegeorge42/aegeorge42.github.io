@@ -56,6 +56,8 @@ export const layout = {
 
 //type of controller
 export class Slide{
+  slideNet;
+
   slideContainer; // holds it ALL
   inputContainer; // inputs to draw
   buttonContainer; // all buttons to draw -to delete?
@@ -69,6 +71,8 @@ export class Slide{
   neuronOverContainer;
   neuronSensorContainer;
   labelsContainer; 
+
+  saveNet = 0; // if using the same net on the next slide
 
   constructor(){
       this.buttonContainer = new PIXI.Container();
@@ -96,6 +100,46 @@ export class Slide{
       }
       return nums2print;
   }
+
+  drawButtons(net){
+    var slide = this;
+    
+    this.buttonLayerContainer.addChild(new Button("addlayer",PIXI.Texture.from('images/buttons/button_layer.png'), 100,140,true));
+    
+    this.buttonLayerContainer.getChildByName("addlayer").on('click', function(e){
+      net.addLayer();
+      slide.updateDraw(net);
+    });
+    
+    this.buttonLayerContainer.addChild(new Button("remlayer",PIXI.Texture.from('images/buttons/button_removelayer.png'), 100,200,true));
+    this.buttonLayerContainer.getChildByName("remlayer").on('click', function(e){
+   //   if(net.layers.length>1){
+        this.tintDefault();
+        net.removeLayer();
+        slide.updateDraw(net);
+   //   }
+  });
+
+  /*
+ var neuronbuttons_add= [];
+  //for (var i =0; i<maxLayers; i++){
+  neuronbuttons_add[i] = new Button("addneuron",PIXI.Texture.from('images/buttons/button_addneuron.png'),layout.LEFTLIM + (layout.WEIGHTS_WIDTH*(i+1)), layout.UPPERLIM, true);
+  //}
+
+  var neuronbuttons_rem = [];
+ // for (var i =0; i<maxLayers; i++){
+    neuronbuttons_rem[i] = new Button("remneuron",PIXI.Texture.from('images/buttons/button_removeneuron.png'),layout.LEFTLIM + (layout.WEIGHTS_WIDTH*(i+1)), layout.UPPERLIM+20, true);
+ // }
+*/
+
+
+
+  }
+
+
+
+
+
 
   addButtontemp(button){
     this.buttonContainer.addChild(button);
@@ -135,6 +179,10 @@ export class Slide{
       thisnet.update();
       slide.draw(thisnet);
     });
+  }
+
+  getNet(){
+    return this.net;
   }
 
   updateDraw(net){

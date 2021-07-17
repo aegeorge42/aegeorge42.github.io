@@ -2,10 +2,11 @@ import {Slide, layout} from "../Slide.js"
 import { Net } from "../../Model/net.js";
 import {actFns} from "../../Model/actfns.js"
 import {Button} from "../../View/Button.js"
-import {layerbuttons,neuronbuttons_add,neuronbuttons_rem,setButtonFunctions} from "../../View/Buttons.js"
+//import {layerbuttons,neuronbuttons_add,neuronbuttons_rem,setButtonFunctions} from "../../View/Buttons.js"
 
 export const Slide0 = new Slide();
-export const net = new Net();
+var net = new Net();
+Slide0.slideNet=net;
 
 const testInput = {
     input: [5, 10],
@@ -19,7 +20,14 @@ const maxNeurons = 10;
 net.setNetInput(testInput.input,testInput.expected,testInput.expected_text);
 net.setNetActFn(actFns.SIGMOID);
 net.setOutLayer();
+Slide0.drawButtons(net);
 
+var slidetext = new PIXI.Text("Slide 0");
+slidetext.x=160;
+slidetext.y=50;
+Slide0.inputContainer.addChild(slidetext);
+
+Slide0.saveNet=1;
 /*net.getLayer(0).addNeuron();
 
 net.update();
@@ -29,11 +37,13 @@ net.addLayer();
 */
 Slide0.updateDraw(net);
 console.log("LAYER LENGTH:" + net.layers.length)
+Slide0.net2save=net;
+console.log("SLIDE 0 net:" + Slide0.net2save);
 
-Slide0.buttonLayerContainer.addChild(layerbuttons[0]);
-Slide0.buttonLayerContainer.addChild(layerbuttons[1]);
+//Slide0.buttonLayerContainer.addChild(layerbuttons[0]);
+//Slide0.buttonLayerContainer.addChild(layerbuttons[1]);
 
-setButtonFunctions(Slide0,net);
+//setButtonFunctions(Slide0,net);
 
 
 /** ADD ALL THE BUTTONS **/ 
@@ -156,4 +166,8 @@ for (var i=0; i<net.layers.length; i++){
 //    Slide0.buttonContainer.children[i+2].visible=true
  }
 
+
 export const buttons2keep = Slide0.buttonContainer;
+export {net};
+
+Slide0.net2save=net;
