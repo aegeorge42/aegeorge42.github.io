@@ -1,6 +1,7 @@
 import {Button} from "./Button.js"
 
 
+
 const formatter = new Intl.NumberFormat('en-US', {
     minimumFractionDigits: 2,      
     maximumFractionDigits: 2,
@@ -16,6 +17,8 @@ const textStyle = new PIXI.TextStyle({
     fontWeight: 300,
     fontSize: 13
 });
+
+
 
 /**MAGIC NUMBERS**/
 
@@ -51,12 +54,13 @@ export const layout = {
 
 }
 
-/*************/
-
-
 //type of controller
 export class Slide{
-  slideNet;
+  
+  slideNet; // bind working net to slide
+  maxLayers = 4; //needed for buttons
+  maxNeurons = 4; //needed for buttons
+
 
   slideContainer; // holds it ALL
   inputContainer; // inputs to draw
@@ -67,12 +71,10 @@ export class Slide{
 
     
   netContainer; // net to draw 
-  weightsContainer; //weight graphics to draw
+  weightsContainer; // weight graphics to draw
   neuronOverContainer;
   neuronSensorContainer;
   labelsContainer; 
-
-  saveNet = 0; // if using the same net on the next slide
 
   constructor(){
       this.buttonContainer = new PIXI.Container();
@@ -106,37 +108,49 @@ export class Slide{
     
     this.buttonLayerContainer.addChild(new Button("addlayer",PIXI.Texture.from('images/buttons/button_layer.png'), 100,140,true));
     
-    this.buttonLayerContainer.getChildByName("addlayer").on('click', function(e){
-      net.addLayer();
-      slide.updateDraw(net);
+    this.buttonLayerContainer.getChildAt(0).on('click', function(e){
+      if(net.layers.length<slide.maxLayers){
+        net.addLayer();
+        slide.updateDraw(net);
+      }
     });
     
     this.buttonLayerContainer.addChild(new Button("remlayer",PIXI.Texture.from('images/buttons/button_removelayer.png'), 100,200,true));
-    this.buttonLayerContainer.getChildByName("remlayer").on('click', function(e){
-   //   if(net.layers.length>1){
-        this.tintDefault();
+    
+    this.buttonLayerContainer.getChildAt(1).on('click', function(e){
+      if(net.layers.length>1){
         net.removeLayer();
         slide.updateDraw(net);
-   //   }
-  });
+      }
+    });
 
-  /*
- var neuronbuttons_add= [];
-  //for (var i =0; i<maxLayers; i++){
-  neuronbuttons_add[i] = new Button("addneuron",PIXI.Texture.from('images/buttons/button_addneuron.png'),layout.LEFTLIM + (layout.WEIGHTS_WIDTH*(i+1)), layout.UPPERLIM, true);
-  //}
+    for (var i =0; i<this.maxLayers; i++){
+      this.buttonNeuronAddContainer.addChild(new Button("addneuron",PIXI.Texture.from('images/buttons/button_addneuron.png'),350+ (i*150),80, false));
+      this.buttonNeuronRemContainer.addChild(new Button("remneuron",PIXI.Texture.from('images/buttons/button_removeneuron.png'),350+ (i*150),105, false));
+      this.setNeuronButtons(net,i);
+    }
 
-  var neuronbuttons_rem = [];
- // for (var i =0; i<maxLayers; i++){
-    neuronbuttons_rem[i] = new Button("remneuron",PIXI.Texture.from('images/buttons/button_removeneuron.png'),layout.LEFTLIM + (layout.WEIGHTS_WIDTH*(i+1)), layout.UPPERLIM+20, true);
- // }
-*/
-
-
-
+//    this.setVis(this.buttonNeuronAddContainer,0,true);
+//    this.setVis(this.buttonNeuronRemContainer,0,true);
+   
   }
 
+  setNeuronButtons(net,layernum){
+    var slide = this;
 
+    this.buttonNeuronAddContainer.getChildAt(layernum).on('click', function(e){
+      if(net.getLayer(layernum).neurons.length<slide.maxNeurons){
+        net.getLayer(layernum).addNeuron();
+        slide.updateDraw(net);
+      }
+    });
+
+    this.buttonNeuronRemContainer.getChildAt(layernum).on('click', function(e){
+      net.getLayer(layernum).removeNeuron();
+      slide.updateDraw(net);
+    });
+
+  }
 
 
 
@@ -162,9 +176,14 @@ export class Slide{
     return this.buttonContainer.getChildByName(name).visible;
   }
 
-  setVis(name,bool){
+  /*setVis(name,bool){
     if(bool==false){this.buttonContainer.getChildByName(name).visible=false;}
     else if(bool==true){this.buttonContainer.getChildByName(name).visible=true;}
+  }*/
+
+  setVis(container,idx,bool){
+    if(bool==false){container.getChildAt(idx).visible=false;}
+    else if(bool==true){container.getChildAt(idx).visible=true;}
   }
 
 //  Slide0.buttonContainer.getChildByName("btest").on('click', function(e){
@@ -188,6 +207,14 @@ export class Slide{
   updateDraw(net){
     net.update();
     this.draw(net);
+
+    if(net.layers.length>1){
+      this.setVis(this.buttonNeuronAddContainer,net.layers.length-2,true);
+      this.setVis(this.buttonNeuronRemContainer,net.layers.length-2,true);
+    }
+
+    this.setVis(this.buttonNeuronAddContainer,net.layers.length-1,false);
+    this.setVis(this.buttonNeuronRemContainer,net.layers.length-1,false);
   }
 
   clearButtons(){}
@@ -340,6 +367,7 @@ export class Slide{
 
   //clear old stuff first
   this.netContainer.removeChildren();
+  this.labelsContainer.removeChildren();
   this.weightsContainer.removeChildren();
   this.neuronOverContainer.removeChildren();
   this.neuronSensorContainer.removeChildren();
@@ -438,8 +466,8 @@ export class Slide{
     //add text after final layer
     for(var i = 0; i<net.targetText.length; i++){
       var targetTextText = new PIXI.Text(net.targetText[i]);
-      targetTextText.x=leftlim+(net.layers.length*layout.WEIGHTS_WIDTH)+ layout.WEIGHTS_WIDTH;
-      targetTextText.y=(i*(inputHeight+buffer))+upperlim +buffer;
+      targetTextText.x=380+((net.layers.length-1)*150);
+      targetTextText.y=135+(i*100);
 
       this.labelsContainer.addChild(targetTextText);
     }

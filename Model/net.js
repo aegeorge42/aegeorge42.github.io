@@ -15,6 +15,8 @@ this.layers.forEach(function(layer) {
 });
 */
 
+//TODO - Clone net function
+
 export class Net{
     layers; //list of layers
     lastLayer; //makes my life easier
@@ -153,6 +155,8 @@ export class Net{
     }
 
     backProp_finalLayer(){
+        this.cost[i]=0.5 * (this.target[i]-this.netOut[i]) ** 2;
+
         //z = output_nofn
 
         //if I only have one output
@@ -161,13 +165,13 @@ export class Net{
         var dz_dw=[]; //partial derivative of (stuff inside actfn - aka "z") (weight*a^(l-1) + bias) wrt weight (layer l)
         var da_dz=[]; //partial derivative of neuron output (layer l) wrt z
         var dc_da=[]; //partial derivative of cost wrt neuron output (layer l-1)
+        
 
         if (this.target !== undefined){
             for(var i=0; i<this.lastLayer.neurons.length; i++){
                 
                 //dc_da
                 dc_da[i]=(this.target[i]-this.netOut[i]);
-//                console.log("neuron "+ i +" dc_da: " + dc_da[i])
              
             
                 //da_dz
@@ -179,11 +183,21 @@ export class Net{
                         da_dz[i]= this.netOut[i]*(1-(this.netOut[i]))
                     break;    
                 }
-               
-//                console.log("neuron " + i +" da_dz: " + da_dz[i]);
+
+                //dz_dw - TODO
+                //not true
+                dz_dw[i]=1;
 
                 //chain rule to get partial derivative of cost wrt weight (layer l)
-                dc_dw = dz_dw * da_dz * dc_da; 
+                dc_dw[i] = dz_dw[i] * da_dz[i] * dc_da[i]; 
+
+                console.log("neuron " + i + '\n'
+                 + "    cost:  " + this.cost[i] + '\n'
+                 + "    dc_da: " + dc_da[i] + '\n'
+                 + "    da_dz: " + da_dz[i] + '\n' 
+                 + "    dz_dw: " + dz_dw[i] + '\n' 
+                 + "    dc_dw: " + dc_dw[i]);
+
             }
         }
     }

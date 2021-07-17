@@ -29,18 +29,11 @@ export class ViewSlideTest{
             
             this.app.stage.getChildByName("button_nextslide").on('click', function(e){ 
                 if(vst.currentSlide+1<vst.slideList.length){
-                    console.log("CURRENT: "+ vst.slideList[vst.currentSlide].slideNet);
                     vst.currentSlide=vst.currentSlide+1;
-                    console.log("AFTERR SWITCH: "+ vst.slideList[vst.currentSlide].slideNet);
-
-                    //vst.slideList[vst.currentSlide].updateDraw(vst.slideList[vst.currentSlide].slideNet);
                     vst.drawSlide();
+
+                    // gotta update net at switch over
                     vst.slideList[vst.currentSlide].updateDraw(vst.slideList[vst.currentSlide].slideNet);
-
-
-//                    console.log("slds" +vst.slideList.length);
-//                    console.log("current: " +vst.currentSlide);
-//                } else console.log("FINAL SLIDE");
                 }
             })
 
