@@ -90,11 +90,11 @@ export class Slide{
       this.labelsContainer = new PIXI.Container();
       this.slideContainer=new PIXI.Container();
       this.slideContainer.addChild(this.buttonLayerContainer,this.buttonNeuronAddContainer,this.buttonNeuronRemContainer,this.weightsContainer,this.inputContainer,this.netContainer, this.labelsContainer);
-  }
+    }
 
 
 
-  //helper function
+  /**** helper functions ****/
   formatList(list){
       var nums2print =[];
       for(var n=0; n<list.length; n++){
@@ -102,6 +102,12 @@ export class Slide{
       }
       return nums2print;
   }
+
+  sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+  /**** *************** ****/
+
 
   drawButtons(net){
     var slide = this;
@@ -130,9 +136,29 @@ export class Slide{
       this.setNeuronButtons(net,i);
     }
 
-//    this.setVis(this.buttonNeuronAddContainer,0,true);
-//    this.setVis(this.buttonNeuronRemContainer,0,true);
-   
+    this.buttonLayerContainer.addChild(new Button("learn_step",PIXI.Texture.from('images/buttons/button_learnstep.png'), 100,275,true));
+    
+    this.buttonLayerContainer.getChildAt(2).on('click', function(e){
+      net.learn();
+      slide.updateDraw(net);
+    });
+
+    this.buttonLayerContainer.addChild(new Button("learn",PIXI.Texture.from('images/buttons/button_learn.png'), 100,350,true));
+    
+    this.buttonLayerContainer.getChildAt(3).on('click', async function(e){
+      var loopcount = 0;
+      while(loopcount<500){
+        net.learn();
+        slide.updateDraw(net);
+        await slide.sleep(10); //pause to see updates
+        loopcount=loopcount+1;
+        console.log(loopcount);
+
+      }
+
+      
+    });
+
   }
 
   setNeuronButtons(net,layernum){
@@ -315,7 +341,6 @@ export class Slide{
                   }
 
                   if(i==0){
-                    //TODO: FIX THIS
                     weightSprite.hitArea = new PIXI.Polygon(
                       startx, starty +10, 
                       endx, endy0 +10,
@@ -337,7 +362,7 @@ export class Slide{
                   var self=this;
                   weightSprite.on('mouseover', function(e){
                     this.alpha=0;
-                    console.log(this.currentPath.points);
+//                    console.log(this.currentPath.points);
                     //come back to this
                 //    var temp = new PIXI.Polygon(this.currentPath.points[0]+20,this.currentPath.points[1]+20,this.currentPath.points[2]+20,this.currentPath.points[3]+20);
                   });
@@ -353,11 +378,11 @@ export class Slide{
 
                 //cpme back to this
                 var weightSpriteText=new PIXI.Text(formatter.format(net.getLayer(i).neurons[j].weights[k]), textStyle);
-                  weightSpriteText.x= ((i*200)+350 + (i*200)+150 +100)/2 -50;
-                  weightSpriteText.y= (j*120+150 +50 -5 + i+300+k*100 -100)/2;
+                  weightSpriteText.x= startx-50 //weightSprite.x// ((i*200)+350 + (i*200)+150 +100)/2 -50;
+                  weightSpriteText.y= starty + (k*10)// (j*120+150 +50 -5 + i+300+k*100 -100)/2-50;
                 //   weightSpriteText.rotation=rotate;
                 //  console.log("rotate"+rotate)
-                //  this.weightsContainer.addChild(weightSpriteText);
+                 this.weightsContainer.addChild(weightSpriteText);
             }
         }
     }

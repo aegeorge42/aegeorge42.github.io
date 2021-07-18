@@ -27,7 +27,7 @@ export class Neuron{
         this.bias = Math.random() * 2 - 1 //bias between -1 and 1
         this.inputs = [];
         this.actFun = [];
-        this.weights=[];
+        this.weights = [];
         this.weights_new=[];
 //        this.setActFn(defaultActFn);
     }

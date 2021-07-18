@@ -6,6 +6,13 @@ import {Slide, layout} from "../Slide.js"
 import { Slide0} from "./Slide0.js"
 
 export const Slide1 = new Slide();
+export const net1= new Net();
+Slide1.slideNet=net1;
+Slide1.drawButtons(Slide1.slideNet);
+
+Slide1.updateDraw(net1);
+
+
 /*Slide1.slideNet=Slide0.slideNet;
 Slide1.drawButtons(Slide1.slideNet);
 
