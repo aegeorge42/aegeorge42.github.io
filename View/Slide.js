@@ -361,15 +361,20 @@ export class Slide{
                   //weightSprite.buttonmode=true;
                   var self=this;
                   weightSprite.on('mouseover', function(e){
-                    this.alpha=0;
-//                    console.log(this.currentPath.points);
+                  //  this.alpha=0;
+                  //  this.getChildAt(0).alpha=0;
+                    this.getChildAt(0).scale.set(1.5);
                     //come back to this
                 //    var temp = new PIXI.Polygon(this.currentPath.points[0]+20,this.currentPath.points[1]+20,this.currentPath.points[2]+20,this.currentPath.points[3]+20);
                   });
                   
         
                   weightSprite.on('mouseout', function(e){
-                    this.alpha=1;
+                  //  this.alpha=1;
+                  
+                  this.getChildAt(0).scale.set(1);
+                  
+
                   });
                 this.weightsContainer.addChild(weightSprite);
                 //this.weightsContainer.addChild(f);
@@ -378,11 +383,13 @@ export class Slide{
 
                 //cpme back to this
                 var weightSpriteText=new PIXI.Text(formatter.format(net.getLayer(i).neurons[j].weights[k]), textStyle);
-                  weightSpriteText.x= startx-50 //weightSprite.x// ((i*200)+350 + (i*200)+150 +100)/2 -50;
-                  weightSpriteText.y= starty + (k*10)// (j*120+150 +50 -5 + i+300+k*100 -100)/2-50;
-                //   weightSpriteText.rotation=rotate;
+                weightSpriteText.anchor.set(0.5)
+                 weightSpriteText.x= startx-50 //weightSprite.x// ((i*200)+350 + (i*200)+150 +100)/2 -50;
+                  weightSpriteText.y= starty-10 + (k*20) - (j*10)// (j*120+150 +50 -5 + i+300+k*100 -100)/2-50;
+
+                  //   weightSpriteText.rotation=rotate;
                 //  console.log("rotate"+rotate)
-                 this.weightsContainer.addChild(weightSpriteText);
+                 weightSprite.addChild(weightSpriteText);
             }
         }
     }
@@ -413,25 +420,26 @@ export class Slide{
         //set tint depending on how much neuron is activated
         var finout = net.getLayer(i).neurons[j].output;
         if(finout>=0.9){
-          neuronBase.tint= 0xFFF000
+          neuronBase.tint= 0xfff000
         } else if (finout>=0.8){
-          neuronBase.tint= 0xFFF223
+          neuronBase.tint= 0xfdee3b
         } else if (finout>=0.7){
-          neuronBase.tint= 0xFFF443
+          neuronBase.tint= 0xfbeb56
         } else if (finout>=0.6){
-          neuronBase.tint= 0xFFF65F
+          neuronBase.tint= 0xf9e96d
         } else if (finout>=0.5){
-          neuronBase.tint= 0xFFF87C
+          neuronBase.tint= 0xf6e781
         } else if (finout>=0.4){
-          neuronBase.tint= 0xFFFA98
+          neuronBase.tint= 0xf2e494
         } else if (finout>=0.3){
-          neuronBase.tint= 0xFFFBAF
+          neuronBase.tint= 0xeee2a7
         } else if (finout>=0.2){
-          neuronBase.tint= 0xFFFCC8
+          neuronBase.tint= 0xe9e0b9
         } else if (finout>=0.1){
-          neuronBase.tint= 0xFFFEE9
+          neuronBase.tint= 0xe3deca
+        }  else if (finout>=0.0){
+          neuronBase.tint= 0xdcdcdc
         }
-
 
         var neuronMainText = new PIXI.Text(formatter.format(net.getLayer(i).neurons[j].output));
           neuronMainText.scale.set(0.8);

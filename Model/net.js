@@ -167,6 +167,7 @@ export class Net{
         var dc_dw=[]; //partial derivative of cost wrt weight (layer l)
       
         var dz_dw=[]; //partial derivative of (stuff inside actfn - aka "z") (weight*a^(l-1) + bias) wrt weight (layer l)
+        var dz_dwtest=[];
         var da_dz=[]; //partial derivative of neuron output (layer l) wrt z
         var dc_da=[]; //partial derivative of cost wrt neuron output (layer l-1)
         // var delta=[]; this works but probably won't use
@@ -177,7 +178,7 @@ export class Net{
 
         if (this.target !== undefined){
             for(var i=0; i<this.lastLayer.neurons.length; i++){
-                
+                for(var j=0; j<this.lastLayer.neurons[i].weights.length; j++){
                 //dc_da
                 dc_da[i]=(this.netOut[i]-this.target[i]);
              
@@ -193,37 +194,38 @@ export class Net{
                 }
 
                 //dz_dw
-                dz_dw[i]=this.getLayer(this.layers.length-2).getLayerOuts();
-
+            //    dz_dw[i]=this.getLayer(this.layers.length-2).getLayerOuts();
+                dz_dwtest[i]=this.getLayer(this.layers.length-2).neurons[j].output;
                 //chain rule to get partial derivative of cost wrt weight (layer l)
-                dc_dw[i] = dz_dw[i] * da_dz[i] * dc_da[i]; 
+                dc_dw[i] = dz_dwtest[i] * da_dz[i] * dc_da[i]; 
                 
-                
+//                console.log(this.getLayer(this.layers.length-2).neurons[j].output)
                 // delta[i] = -(this.target[i] - this.netOut[i]) * ( (this.netOut[i])*(1-this.netOut[i]));   
                 // dtest[i] = -(delta[i]*dz_dw[i]);
-                w_old[i]=this.getLayer(this.layers.length-1).neurons[i].weights;
+                w_old[i]=this.getLayer(this.layers.length-1).neurons[i].weights[j];
                 w_new[i]=w_old[i]-(this.learnRate*(dc_dw[i]));
 
-                console.log("neuron " + i + '\n'
+                console.log("neuron " + i //+ " = " +this.getLayer(this.layers.length-1).neurons[j].output +'\n'
+                 + "weight " + j + " = " + this.getLayer(this.layers.length-1).neurons[i].weights[j] +'\n'
+
                  + "    cost:  " + this.cost[i] + '\n'
                  + "    costTot:  " + this.costTot + '\n'
                  + "    dc_da: " + dc_da[i] + '\n'
                  + "    da_dz: " + da_dz[i] + '\n' 
-                 + "    dz_dw: " + dz_dw[i] + '\n' 
+              //   + "    dz_dw: " + dz_dw[i] + '\n' 
+                 + "    dz_dwtest: " + dz_dwtest[i] + '\n' 
+
                  + "    dc_dw: " + dc_dw[i] + '\n'
                  + "    weights_old: " + w_old[i] + '\n'
                  + "    weights_new: " + w_new[i]
-
-
-                 
                  );
 
                  w_old[i]=w_new[i];
-                 this.getLayer(this.layers.length-1).neurons[i].setWeight(0,w_old[i]);
+                 this.getLayer(this.layers.length-1).neurons[i].setWeight(j,w_old[i]);
                  //this.getLayer(this.layers.length-1).neurons[i].setWeight(i,w_old[i]);
-                 console.log("new old" + w_old[i]);
+            
 
-                 
+                }
             }
         }
     }
