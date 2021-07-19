@@ -56,6 +56,7 @@ export const layout = {
 
 //type of controller
 export class Slide{
+  data; // dataset to use
   
   slideNet; // bind working net to slide
   maxLayers = 4; //needed for buttons
@@ -77,6 +78,7 @@ export class Slide{
   labelsContainer; 
 
   constructor(){
+    this.data=[];
       this.buttonContainer = new PIXI.Container();
         this.buttonLayerContainer  = new PIXI.Container();
         this.buttonNeuronAddContainer = new PIXI.Container();
@@ -108,6 +110,10 @@ export class Slide{
   }
   /**** *************** ****/
 
+
+  setData(){
+
+  }
 
   drawButtons(net){
     var slide = this;
@@ -147,17 +153,22 @@ export class Slide{
     
     this.buttonLayerContainer.getChildAt(3).on('click', async function(e){
       var loopcount = 0;
-      while(loopcount<500){
+      pauselearn=0;
+      while(loopcount<500 && pauselearn==0){
         net.learn();
         slide.updateDraw(net);
-        await slide.sleep(10); //pause to see updates
+        await slide.sleep(10); //pause to see updates - 100 seems good
         loopcount=loopcount+1;
         console.log(loopcount);
-
       }
-
-      
     });
+
+    this.buttonLayerContainer.addChild(new Button("pause",PIXI.Texture.from('images/buttons/treasure.png'), 100,400,true));
+      var pauselearn=0;
+    this.buttonLayerContainer.getChildAt(4).on('click', function(e){
+      pauselearn=1;
+    });
+
 
   }
 
@@ -272,6 +283,8 @@ export class Slide{
   }
 
   drawInputs(net){
+      this.inputContainer.removeChildren();
+    
       for(var i = 0; i<net.netInput.length; i++){
           var inputSprite = new PIXI.Sprite(PIXI.Texture.from('images/input.png'));
               inputSprite.anchor.set(0.5);
@@ -398,6 +411,7 @@ export class Slide{
   drawNeurons(net){
 
   //clear old stuff first
+  //this.inputContainer.removeChildren();
   this.netContainer.removeChildren();
   this.labelsContainer.removeChildren();
   this.weightsContainer.removeChildren();

@@ -1,9 +1,15 @@
 import {Layer} from "../Model/layer.js"
 import {actFns} from "../Model/actfns.js"
 
-export const defaultInput = [];
-const defaultTarget =[];
-const defaultTargetText =[];
+//export const defaultInput = [];
+//const defaultTarget =[];
+//const defaultTargetText =[];
+
+export const defaultInput = {
+    input: [],
+    expected: [],
+    expected_text: []
+};
 
 export const defaultActFn = actFns.LINEAR;
 
@@ -19,6 +25,7 @@ this.layers.forEach(function(layer) {
 
 export class Net{
     data; //list of entire data set
+    dataIdx; //current data point
 
     layers; //list of layers
     lastLayer; //makes my life easier
@@ -38,8 +45,10 @@ export class Net{
     w_old;
 
     constructor(){
+        this.data=[];
 //        this.setNetActFn(defaultActFn);
-        this.setNetInput(defaultInput,defaultTarget,defaultTargetText);
+        this.dataIdx=0;
+        this.setNetInput(defaultInput);
         this.netActFn=actFns.LINEAR;
         this.layers=[];
         this.cost=[];
@@ -59,10 +68,14 @@ export class Net{
         this.layers.push(this.outLayer_temp);
     }
 
-    setNetInput(data,target,targetText){
-        this.netInput=data;
-        this.target=target;
-        this.targetText=targetText;
+    setNetData(data){
+        this.data=data;
+    }
+
+    setNetInput(datapoint){
+        this.netInput=datapoint.input;
+        this.target=datapoint.expected;
+        this.targetText=datapoint.expected_text;
     }
 
     setNetActFn(actfn){
@@ -139,6 +152,10 @@ export class Net{
     learn(){
         this.calcCost();
         this.backProp_finalLayer();
+
+        //iterate thru dataset
+        this.dataIdx=(this.dataIdx+1)%this.data.length;
+        this.setNetInput(this.data[this.dataIdx]);
     }
 
     //each neuron in the final layer will have a cost
@@ -161,6 +178,7 @@ export class Net{
     }
 
     backProp_finalLayer(){
+
         this.cost[i]=0.5 * (this.target[i]-this.netOut[i]) ** 2;
 
         //z = output_nofn
@@ -211,7 +229,7 @@ export class Net{
                 w_old[i]=this.getLayer(this.layers.length-1).neurons[i].weights[j];
                 w_new[i]=w_old[i]-(this.learnRate*(dc_dw[i]));
 
-                console.log("neuron " + i //+ " = " +this.getLayer(this.layers.length-1).neurons[j].output +'\n'
+                console.log("neuron " + i +'\n' //+ " = " +this.getLayer(this.layers.length-1).neurons[j].output +'\n'
                  + "weight " + j + " = " + this.getLayer(this.layers.length-1).neurons[i].weights[j] +'\n'
 
                  + "    cost:  " + this.cost[i] + '\n'
