@@ -18,6 +18,8 @@ this.layers.forEach(function(layer) {
 //TODO - Clone net function
 
 export class Net{
+    data; //list of entire data set
+
     layers; //list of layers
     lastLayer; //makes my life easier
     outLayer_temp;
@@ -195,9 +197,13 @@ export class Net{
 
                 //dz_dw
             //    dz_dw[i]=this.getLayer(this.layers.length-2).getLayerOuts();
-                dz_dwtest[i]=this.getLayer(this.layers.length-2).neurons[j].output;
+                if(this.layers.length >1){
+                dz_dw[i]=this.getLayer(this.layers.length-2).neurons[j].output;
+                } else {
+                dz_dw[i]=this.netInput[j];
+                }
                 //chain rule to get partial derivative of cost wrt weight (layer l)
-                dc_dw[i] = dz_dwtest[i] * da_dz[i] * dc_da[i]; 
+                dc_dw[i] = dz_dw[i] * da_dz[i] * dc_da[i]; 
                 
 //                console.log(this.getLayer(this.layers.length-2).neurons[j].output)
                 // delta[i] = -(this.target[i] - this.netOut[i]) * ( (this.netOut[i])*(1-this.netOut[i]));   
@@ -213,7 +219,7 @@ export class Net{
                  + "    dc_da: " + dc_da[i] + '\n'
                  + "    da_dz: " + da_dz[i] + '\n' 
               //   + "    dz_dw: " + dz_dw[i] + '\n' 
-                 + "    dz_dwtest: " + dz_dwtest[i] + '\n' 
+                 + "    dz_dw: " + dz_dw[i] + '\n' 
 
                  + "    dc_dw: " + dc_dw[i] + '\n'
                  + "    weights_old: " + w_old[i] + '\n'

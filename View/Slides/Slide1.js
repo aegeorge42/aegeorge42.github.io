@@ -10,7 +10,14 @@ export const net1= new Net();
 Slide1.slideNet=net1;
 Slide1.drawButtons(Slide1.slideNet);
 
+var slidetext = new PIXI.Text("Slide 1");
+slidetext.x=160;
+slidetext.y=50;
+Slide1.inputContainer.addChild(slidetext);
+
 Slide1.updateDraw(net1);
+
+
 
 
 /*Slide1.slideNet=Slide0.slideNet;

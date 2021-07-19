@@ -14,12 +14,23 @@ const testInput1 = {
     expected_text: ["1"]
 };
 
-const testInput2 = {
-    input: [5],
+const testInput21 = {
+    input: [1],
     expected: [1,0],
     expected_text: ["1","0"]
 };
 
+const testInput22 = {
+    input: [0.2],
+    expected: [0,1],
+    expected_text: ["0","1"]
+};
+
+const testInput3 = {
+    input: [5],
+    expected: [1,0,0],
+    expected_text: ["1","0","0"]
+};
 //const maxLayers = 4;
 //const maxNeurons = 10;
 
@@ -50,7 +61,7 @@ if (test == 1){
 }
 
 if (test == 2){
-    net.setNetInput(testInput2.input,testInput2.expected,testInput2.expected_text);
+    net.setNetInput(testInput21.input,testInput21.expected,testInput21.expected_text);
     net.setNetActFn(actFns.SIGMOID);
     net.setOutLayer();
     Slide0.drawButtons(net);
@@ -69,7 +80,7 @@ if (test == 2){
 }
 
 if (test == 3){
-    net.setNetInput(testInput2.input,testInput2.expected,testInput2.expected_text);
+    net.setNetInput(testInput21.input,testInput21.expected,testInput21.expected_text);
     net.setNetActFn(actFns.SIGMOID);
     net.setOutLayer();
     Slide0.drawButtons(net);
@@ -94,4 +105,16 @@ if (test == 3){
 
 
     Slide0.updateDraw(Slide0.slideNet);
+
+    net.setNetInput(testInput22.input,testInput22.expected,testInput22.expected_text);
+
+}
+
+if (test == 4){
+    net.setNetInput(testInput3.input,testInput3.expected,testInput3.expected_text);
+    net.setNetActFn(actFns.SIGMOID);
+    net.setOutLayer();
+    Slide0.drawButtons(net);
+    Slide0.updateDraw(Slide0.slideNet);
+
 }
