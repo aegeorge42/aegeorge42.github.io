@@ -44,9 +44,15 @@ const input2 = {
         expected_text: ["1","0"]
     };
 
+const input4 = {
+    input: [0.9],
+    expected: [1,0],
+    expected_text: ["1","0"]
+};
+
 
 const data3 = [input31,input32,input33,input34];
-
+const data4 = [input4, input31,input32,input33,input34];
 //const maxLayers = 4;
 //const maxNeurons = 10;
 
@@ -55,7 +61,7 @@ slidetext.x=160;
 slidetext.y=50;
 Slide0.inputContainer.addChild(slidetext);
 
-var test = 3;
+var test = 4;
 
 if (test == 1){
     net.setNetInput(input1);
@@ -117,83 +123,22 @@ if (test == 3){
     Slide0.updateDraw(Slide0.slideNet);
 }
 
-
-
-
-/*
-if (test == 1){
-    net.setNetInput(testInput1);
-    net.setNetActFn(actFns.SIGMOID);
-    net.setOutLayer();
-    Slide0.drawButtons(net);
-    
-    Slide0.slideNet.getLayer(0).getNeuron(0).setBias(0);
-    
-    Slide0.slideNet.getLayer(1).getNeuron(0).setBias(0);
-    
-    
-    Slide0.slideNet.getLayer(0).getNeuron(0).setWeight(0,0.5);
-    Slide0.slideNet.getLayer(1).getNeuron(0).setWeight(0,0.4);
-    
-    Slide0.updateDraw(Slide0.slideNet);
-}
-
-if (test == 2){
-    net.setNetInput(testInput21.input,testInput21.expected,testInput21.expected_text);
-    net.setNetActFn(actFns.SIGMOID);
-    net.setOutLayer();
-    Slide0.drawButtons(net);
-
-    Slide0.slideNet.getLayer(0).getNeuron(0).setBias(0);
-    
-    Slide0.slideNet.getLayer(1).getNeuron(0).setBias(0);
-    Slide0.slideNet.getLayer(1).getNeuron(1).setBias(0);
-
-
-    Slide0.slideNet.getLayer(0).getNeuron(0).setWeight(0,0.5);
-    Slide0.slideNet.getLayer(1).getNeuron(0).setWeight(0,-0.4);
-    Slide0.slideNet.getLayer(1).getNeuron(1).setWeight(0,0.9);
-
-    Slide0.updateDraw(Slide0.slideNet);
-}
-
-if (test == 3){
-    net.setNetInput(testInput21);
-    net.setNetActFn(actFns.SIGMOID);
-    net.setOutLayer();
-    Slide0.drawButtons(net);
-
-    Slide0.slideNet.getLayer(0).addNeuron();
-    Slide0.slideNet.getLayer(0).getNeuron(0).setBias(0);
-    Slide0.slideNet.getLayer(0).getNeuron(1).setBias(0);
-
-    Slide0.slideNet.getLayer(1).getNeuron(0).setBias(0);
-    Slide0.slideNet.getLayer(1).getNeuron(1).setBias(0);
-
-
-    Slide0.slideNet.getLayer(0).getNeuron(0).setWeight(0,0.5);
-    Slide0.slideNet.getLayer(0).getNeuron(1).setWeight(0,-0.2);
-
-    
-    Slide0.slideNet.getLayer(1).getNeuron(0).setWeight(0,-0.4);
-    Slide0.slideNet.getLayer(1).getNeuron(0).setWeight(1,0.8);
-
-    Slide0.slideNet.getLayer(1).getNeuron(1).setWeight(0,0.9);
-    Slide0.slideNet.getLayer(1).getNeuron(1).setWeight(1,-0.3);
-
-
-    Slide0.updateDraw(Slide0.slideNet);
-
-    net.setNetInput(testInput22.input,testInput22.expected,testInput22.expected_text);
-
-}
-
 if (test == 4){
-    net.setNetInput(testInput3.input,testInput3.expected,testInput3.expected_text);
+    net.setNetData(data4);
+    net.setNetInput(data4[0]);
     net.setNetActFn(actFns.SIGMOID);
     net.setOutLayer();
     Slide0.drawButtons(net);
-    Slide0.updateDraw(Slide0.slideNet);
+    
+    Slide0.slideNet.getLayer(0).getNeuron(0).setBias(0);
+    Slide0.slideNet.getLayer(1).getNeuron(0).setBias(0);
+    Slide0.slideNet.getLayer(1).getNeuron(1).setBias(0);
 
+ 
+    Slide0.slideNet.getLayer(0).getNeuron(0).setWeight(0,0.5);
+    Slide0.slideNet.getLayer(1).getNeuron(0).setWeight(0,-0.4);
+    Slide0.slideNet.getLayer(1).getNeuron(1).setWeight(0,0.9);
+
+    
+    Slide0.updateDraw(Slide0.slideNet);
 }
-*/

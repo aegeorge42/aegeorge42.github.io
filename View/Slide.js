@@ -301,6 +301,8 @@ export class Slide{
   }
 
   drawWeights(net){
+    this.weightsContainer.removeChildren();
+
 
     for(var i = 0; i<net.layers.length; i++){
         for(var j = 0; j<net.getLayer(i).neurons.length; j++){
@@ -396,12 +398,13 @@ export class Slide{
 
                 //cpme back to this
                 var weightSpriteText=new PIXI.Text(formatter.format(net.getLayer(i).neurons[j].weights[k]), textStyle);
-                weightSpriteText.anchor.set(0.5)
+              //  weightSpriteText.anchor.set(0.5)
                  weightSpriteText.x= startx-50 //weightSprite.x// ((i*200)+350 + (i*200)+150 +100)/2 -50;
                   weightSpriteText.y= starty-10 + (k*20) - (j*10)// (j*120+150 +50 -5 + i+300+k*100 -100)/2-50;
 
-                  //   weightSpriteText.rotation=rotate;
-                //  console.log("rotate"+rotate)
+                  var slope = (endy-starty)/(endx-startx);
+                //    weightSpriteText.rotation=Math.atan(slope);
+                //  console.log("slope"+slope)
                  weightSprite.addChild(weightSpriteText);
             }
         }
@@ -414,7 +417,6 @@ export class Slide{
   //this.inputContainer.removeChildren();
   this.netContainer.removeChildren();
   this.labelsContainer.removeChildren();
-  this.weightsContainer.removeChildren();
   this.neuronOverContainer.removeChildren();
   this.neuronSensorContainer.removeChildren();
 
@@ -472,6 +474,8 @@ export class Slide{
           
         var overNeuron = new PIXI.Sprite(PIXI.Texture.from('images/overneuron.png'));
           overNeuron.anchor.set(0.5);
+          overNeuron.scale.set(1.5);
+
           overNeuron.x=neuronBase.x;
           overNeuron.y=neuronBase.y;
           overNeuron.idx= [i,j];

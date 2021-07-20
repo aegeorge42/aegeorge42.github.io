@@ -10,6 +10,7 @@ export class Layer{
 
     //no such thing as an empty layer
     constructor(){
+        this.layerNumber=0;
         this.neurons=[];
         var n = new Neuron();
         this.addNeuron(n);
