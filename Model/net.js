@@ -29,7 +29,7 @@ export class Net{
 
     layers; //list of layers
     lastLayer; //makes my life easier
-    outLayer_temp;
+//    outLayer_temp;
     netInput; //input to layer 0
     netActFn; //activation function
     target;
@@ -61,11 +61,13 @@ export class Net{
     }
 
     setOutLayer(){
-        this.outLayer_temp=new Layer();
+        var outLayer_temp=new Layer();
+        outLayer_temp.layerNumber=0;
         for(var i=0;i<this.target.length-1;i++){
-            this.outLayer_temp.addNeuron();
+            outLayer_temp.addNeuron();
         }
-        this.layers.push(this.outLayer_temp);
+        this.layers.push(outLayer_temp);
+        
     }
 
     setNetData(data){
@@ -98,15 +100,16 @@ export class Net{
             
         }
         else {
-            this.layers.splice(this.layers.length-1,0,l);
+            this.layers.splice((this.layers.length-1),0,l);
             l.layerNumber=this.layers.length-2;
 
 
         }
-        console.log(l.layerNumber);
+        console.log("LAYERS " + this.layers.length);
 
-        this.lastLayer = this.getLayer(this.layers.length-1);
-        this.lastLayer.layerNumber=this.layers.length-1;
+        //this.lastLayer = this.getLayer(this.layers.length-1);
+      //  this.lastLayer.layerNumber=this.layers.length-1;
+       // console.log("LASTLAYER = "+this.lastLayer.layerNumber);
 
     }
 
@@ -123,6 +126,10 @@ export class Net{
     }
 
     update(){
+
+        this.lastLayer = this.getLayer(this.layers.length-1);
+        this.lastLayer.layerNumber=this.layers.length-1;
+        
 //        console.log("LR: " + this.learnRate);
         this.getLayer(0).setLayerIns(this.netInput);
         var netfn = this.netActFn;
@@ -148,7 +155,6 @@ export class Net{
         }
 
         //need this to get final outputs
-        this.lastLayer = this.getLayer(this.layers.length-1);
         this.lastLayer.neurons.forEach(function(neuron){
             if(neuron.actFun != netfn){
                 neuron.actFun = netfn;
@@ -156,6 +162,9 @@ export class Net{
             neuron.calcOut();
         });
         this.netOut=this.lastLayer.getLayerOuts();
+
+        console.log(".................................")
+       this.printNet();
         
     }
 
