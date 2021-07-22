@@ -191,7 +191,7 @@ export class Net{
 
     backProp_finalLayer(){
 
-        this.cost[i]=0.5 * (this.target[i]-this.netOut[i]) ** 2;
+       // this.cost[i]=0.5 * (this.target[i]-this.netOut[i]) ** 2;
 
         //z = output_nofn
 
@@ -363,7 +363,7 @@ export class Net{
     }
 
     backprop(){
-        this.cost[i]=0.5 * (this.target[i]-this.netOut[i]) ** 2;
+       // this.cost[i]=0.5 * (this.target[i]-this.netOut[i]) ** 2;
         //z = output_nofn
 
         var dc_dw=[]; //partial derivative of cost wrt weight (layer l)
@@ -377,21 +377,46 @@ export class Net{
         var layerIdx=1;
         var currentLayer=this.getLayer(this.layers.length-layerIdx);
 
-        for(var layeri=0; layeri<this.layers.length-1; layeri--){
-            var currentLayer=this.getLayer(this.layers.length-layeri);
-            console.log("current" + currentLayer.layerNumber)
+        for(var i=this.layers.length-1; i>-1; i--){
+            var currentLayer=this.getLayer(i);
+            for(var j=0; j<currentLayer.neurons.length; j++){
+                for(var k=0; k<currentLayer.neurons[j].weights.length; k++){
 
-        }
-
-            for(var i=0; i<currentLayer.neurons.length; i++){
-                for(var j=0; j<currentLayer.neurons[i].weights.length; j++){
-                
+                    //dc_da
                     if(currentLayer.layerNumber==this.layers.length-1){
-                        dc_da[i]=(this.netOut[i]-this.target[i]);
+                        dc_da[j]=(this.netOut[j]-this.target[j]);
+                    } else {
+                        //TODO
+                        dc_da[j]=0;
                     }
+
+                    //da_dz
+                    switch(this.netActFn){
+                        case(actFns.LINEAR):
+                            da_dz[j]=1;
+                        break;
+                        case(actFns.SIGMOID):
+                        console.log(this.output);
+                           da_dz[j]= (currentLayer.neurons[j].output)*(1-currentLayer.neurons[j].output)
+                        break;    
+                    }
+                    console.log("layer " + i + '\n'
+                                + "neuron " + j +'\n'
+                                + "weight " + k + " = " + currentLayer.neurons[j].weights[k] +'\n'
+                                + "    cost:  " + this.cost[j] + '\n'
+                                + "    costTot:  " + this.costTot + '\n'
+                                + "    dc_da: " + dc_da + '\n'
+                                + "    da_dz: " + da_dz[j] + '\n' 
+                                + "    dz_dw: " + dz_dw[j] + '\n' 
+
+                                + "    dc_dw: " + dc_dw[j] + '\n'
+                                + "    weights_old: " + w_old[j] + '\n'
+                                + "    weights_new: " + w_new[j]
+                 );
+
                 }
-             }
-        
+            }
+        }
     }
     
 
