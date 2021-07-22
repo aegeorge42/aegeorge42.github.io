@@ -50,9 +50,23 @@ const input4 = {
     expected_text: ["1","0"]
 };
 
+const input5 = {
+    input: [0.9],
+    expected: [1,0],
+    expected_text: ["1","0"]
+};
+
+const input6 = {
+    input: [0.9],
+    expected: [1],
+    expected_text: ["1"]
+}
 
 const data3 = [input31,input32,input33,input34];
 const data4 = [input4, input31,input32,input33,input34];
+const data5 = [input5];
+const data6 = [input6];
+
 //const maxLayers = 4;
 //const maxNeurons = 10;
 
@@ -61,7 +75,7 @@ slidetext.x=160;
 slidetext.y=50;
 Slide0.inputContainer.addChild(slidetext);
 
-var test = 4;
+var test = 6;
 
 if (test == 1){
     net.setNetInput(input1);
@@ -141,4 +155,56 @@ if (test == 4){
 
     
     Slide0.updateDraw(Slide0.slideNet);
+}
+
+if (test == 5){
+    net.setNetData(data5);
+    net.setNetInput(data5[0]);
+    net.setNetActFn(actFns.SIGMOID);
+    net.setOutLayer();
+
+    Slide0.slideNet.getLayer(0).addNeuron();
+    Slide0.drawButtons(net);
+    
+    Slide0.slideNet.getLayer(0).getNeuron(0).setBias(0);
+    Slide0.slideNet.getLayer(0).getNeuron(1).setBias(0);
+    Slide0.slideNet.getLayer(1).getNeuron(0).setBias(0);
+    Slide0.slideNet.getLayer(1).getNeuron(1).setBias(0);
+
+    //layer 0
+    Slide0.slideNet.getLayer(0).getNeuron(0).setWeight(0,0.5);
+    Slide0.slideNet.getLayer(0).getNeuron(1).setWeight(0,-0.2);
+
+    //layer 1
+    Slide0.slideNet.getLayer(1).getNeuron(0).setWeight(0,-0.4);
+    Slide0.slideNet.getLayer(1).getNeuron(0).setWeight(1,0.6);
+    Slide0.slideNet.getLayer(1).getNeuron(1).setWeight(0,0.9);
+    Slide0.slideNet.getLayer(1).getNeuron(1).setWeight(1,-0.3);
+
+
+    
+    Slide0.updateDraw(Slide0.slideNet);
+}
+
+if (test == 6){
+    net.setNetData(data6);
+    net.setNetInput(data6[0]);
+    net.setNetActFn(actFns.SIGMOID);
+    net.setOutLayer();
+    Slide0.drawButtons(net);
+    Slide0.updateDraw(Slide0.slideNet);
+
+    Slide0.slideNet.addLayer();
+    Slide0.slideNet.getLayer(0).getNeuron(0).setBias(0);
+    Slide0.slideNet.getLayer(1).getNeuron(0).setBias(0);
+    Slide0.slideNet.getLayer(2).getNeuron(0).setBias(0);
+
+
+    Slide0.slideNet.getLayer(0).getNeuron(0).setWeight(0,-0.2);
+    Slide0.slideNet.getLayer(1).getNeuron(0).setWeight(0,0.5);
+    Slide0.slideNet.getLayer(2).getNeuron(0).setWeight(0,-0.4);
+
+    
+    Slide0.updateDraw(Slide0.slideNet);
+    Slide0.slideNet.printNet();
 }

@@ -105,12 +105,6 @@ export class Net{
 
 
         }
-        console.log("LAYERS " + this.layers.length);
-
-        //this.lastLayer = this.getLayer(this.layers.length-1);
-      //  this.lastLayer.layerNumber=this.layers.length-1;
-       // console.log("LASTLAYER = "+this.lastLayer.layerNumber);
-
     }
 
     removeLayer(){
@@ -129,7 +123,7 @@ export class Net{
 
         this.lastLayer = this.getLayer(this.layers.length-1);
         this.lastLayer.layerNumber=this.layers.length-1;
-        
+
 //        console.log("LR: " + this.learnRate);
         this.getLayer(0).setLayerIns(this.netInput);
         var netfn = this.netActFn;
@@ -163,18 +157,16 @@ export class Net{
         });
         this.netOut=this.lastLayer.getLayerOuts();
 
-        console.log(".................................")
-       this.printNet();
-        
     }
 
     learn(){
         this.calcCost();
-        this.backProp_finalLayer();
-        this.backProp_hiddenLayer();
+        this.backprop();
+    //    this.backProp_finalLayer();
+   //     this.backProp_hiddenLayer();
         //iterate thru dataset
-        this.dataIdx=(this.dataIdx+1)%this.data.length;
-   //    this.dataIdx=0;  // use for testing one data point
+    //    this.dataIdx=(this.dataIdx+1)%this.data.length;
+       this.dataIdx=0;  // use for testing one data point
        this.setNetInput(this.data[this.dataIdx]);
     }
 
@@ -370,129 +362,39 @@ export class Net{
         }
     }
 
-    // might come back to this...
-/*    calcError_old(){
-        this.eTot=0;
-        if (this.target !== undefined){
-            for( var i = 0; i<this.target.length; i++){
-                this.error[i]=0.5 * (this.target[i]-this.netOut[i]) ** 2;
-                this.eTot=this.eTot+this.error[i];
-                this.delta[i]=this.netOut[i]-this.target[i];
-                console.log("target: " + this.target[i]+ " net: " +this.netOut[i]+ " error: "+this.error[i]);
+    backprop(){
+        this.cost[i]=0.5 * (this.target[i]-this.netOut[i]) ** 2;
+        //z = output_nofn
 
-            }
-            console.log("Error total: " + this.eTot);
+        var dc_dw=[]; //partial derivative of cost wrt weight (layer l)
+        var dz_dw=[]; //partial derivative of stuff inside actfn - aka "z" (weight*a^(l-1) + bias) wrt weight (layer l)
+        var da_dz=[]; //partial derivative of neuron output (layer l) wrt z
+        var dc_da=[]; //partial derivative of cost wrt neuron output (layer l-1)
+
+        var w_old= [];
+        var w_new= [];
+
+        var layerIdx=1;
+        var currentLayer=this.getLayer(this.layers.length-layerIdx);
+
+        for(var layeri=0; layeri<this.layers.length-1; layeri--){
+            var currentLayer=this.getLayer(this.layers.length-layeri);
+            console.log("current" + currentLayer.layerNumber)
+
         }
 
-
-       //     this.error=this.target-this.netOut;
-
-     //   this.error = this.target-this.netOut;
-     //   this.error_tot = (this.error ** 2) * 0.5;
-        //Etot = 1/2 (target-output)^2
-        
-    }
-
-    backProp_long(){
-        console.log('\n' + "--BACKPROP LONG--");
-        switch(this.netActFn){
-            case(actFns.LINEAR):
-        
-                var lr = this.learnRate;
-                var etot = this.eTot;
-                var dlta = this.delta;
+            for(var i=0; i<currentLayer.neurons.length; i++){
+                for(var j=0; j<currentLayer.neurons[i].weights.length; j++){
                 
-                for(var i =0; i<this.lastLayer.neurons.length; i++){
-                    var oldweightf=[];
-                    oldweightf = this.lastLayer.neurons[i].weights;
-                    console.log("OLDF: "+ oldweightf)
-                    
-                    var newweightf = [];
-                    newweightf[0] = oldweightf[0] - lr*dlta*this.lastLayer.neurons[i].inputs[0];
-                    newweightf[1] = oldweightf[1] - lr*dlta*this.lastLayer.neurons[i].inputs[1];
-                    console.log("NEWF: "+newweightf)
-                    this.oldweightf=oldweightf;
+                    if(currentLayer.layerNumber==this.layers.length-1){
+                        dc_da[i]=(this.netOut[i]-this.target[i]);
+                    }
                 }
-
-                for(var i =0; i<this.getLayer(0).neurons.length; i++){
-                    var oldweighth=[];
-                    oldweighth = this.getLayer(0).neurons[i].weights;
-                    console.log("OLDH: "+ oldweighth)
-                    
-                    var newweighth = [];
-                    newweighth[0] = oldweighth[0]-lr*dlta*this.getLayer(0).neurons[i].inputs[0]*this.oldweightf[0];
-                    newweighth[1] = oldweighth[1]-lr*dlta*this.getLayer(0).neurons[i].inputs[1]*this.oldweightf[1];
-                    console.log("NEWH: "+ newweighth)
-
-                }
-            break;
-        }
+             }
+        
     }
+    
 
-    backProp(){
-    console.log('\n' + "--BACKPROP--");
-
-        switch(this.netActFn){
-            case(actFns.LINEAR):
-                var lr = this.learnRate;
-                var etot = this.eTot;
-                var dlta = this.delta;
-
-                //for each layer, starting at final
-                for(var layeri = this.layers.length-1; layeri>-1; layeri--){
-                    //for each neuron
-                    for(var neuroni =0; neuroni< this.getLayer(layeri).neurons.length; neuroni++){
-                        console.log("layer" +layeri +" neuron" + neuroni+ " "+this.getLayer(layeri).getNeuron(neuroni).weights);
-                        //for each WEIGHT
-                        for(var weighti =0; weighti< this.getLayer(layeri).neurons[neuroni].weights.length; weighti++){
-                            //for final layer
-                            if(layeri-1>=0){
-                                //weights_new = oldweights-(learnrate)(delta)(output from previous layer)
-                                this.getLayer(layeri).getNeuron(neuroni).weights_new[weighti]=
-                                    this.getLayer(layeri).getNeuron(neuroni).weights[weighti]-lr*dlta*
-                                        this.getLayer(layeri-1).layerOutputs[weighti]
-                            //so close...
-                            }else{
-                            this.getLayer(layeri).getNeuron(neuroni).weights_new[weighti]=
-                                    this.getLayer(layeri).getNeuron(neuroni).weights[weighti]-lr*dlta*
-                                        this.netInput[weighti] /* *this.getLayer(layeri+1).getNeuron(neuroni).weights[weighti];
-                            }
-
-                        }
-                        console.log("NEW layer" +layeri +" neuron" + neuroni+ " "+this.getLayer(layeri).getNeuron(neuroni).weights_new);
-                    }   
-                }
-            break;
-        }
-    }
-
-
-
-   backProp(){
-     I honestly forget what I was going for here
-       var lastLayer = this.layers.length-1;
-
-        //currently pretending net has 1 input, 1 hidden, 1 output
-
-        //how much does the total error change with respect to the output?
-        var graderr_wrtout = -this.target - this.netOut; // ∂error_tot/∂out
-        console.log("graderr_wrtout " + graderr_wrtout);
-          error_tot  = 1/2(target-out)^2
-          ∂error_tot/∂out = 2 * 0.5(target-out)^(2-1) * -1 + 0
-          ∂error_tot/∂out = -(target-out) 
-      
-
-        //how much does the net output change with respect to net input
-        //need to get derivative of actfn
-        // right now using default sigmoid
-        var gradout_wrtin = this.netOut * (1-this.netOut);
-       
-        var gradnet_wrtweight =  this.getLayer(lastLayer-1).getLayerOuts();
-
-        var gradetot_wrtweight = graderr_wrtout * gradout_wrtin * gradnet_wrtweight;
-
-    }
-*/
     printNet(){
         console.log("Net has " + this.layers.length + " layers")
         this.layers.forEach(function(layer) {
