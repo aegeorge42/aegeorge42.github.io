@@ -64,21 +64,21 @@ const input6 = {
 
     const input71 = {
         input: [0.99,0.99],
-        expected: [1],
-        expected_text: ["1"]
+        expected: [1,0],
+        expected_text: ["1", "0"]
     }
 
     const input72 = {
         input: [0.01,0.01],
-        expected: [0],
+        expected: [0,1],
         expected_text: ["0"]
     }
 
-const data3 = [input31,input32,input33,input34];
+const data3 = [input31/*,input32,input33,input34*/];
 const data4 = [input4, input31,input32,input33,input34];
 const data5 = [input5];
 const data6 = [input6];
-const data7 = [input71, input72];
+const data7 = [input71];
 
 //const maxLayers = 4;
 //const maxNeurons = 10;
@@ -88,7 +88,7 @@ slidetext.x=160;
 slidetext.y=50;
 Slide0.inputContainer.addChild(slidetext);
 
-var test = 4;
+var test = 7;
 
 if (test == 1){
     net.setNetInput(input1);
@@ -196,7 +196,7 @@ if (test == 5){
     Slide0.slideNet.getLayer(1).getNeuron(1).setWeight(1,-0.3);
 
 
-    net.setLearnRate(0.05);
+    net.setLearnRate(0.5);
 
     Slide0.updateDraw(Slide0.slideNet);
 }
@@ -229,7 +229,7 @@ if (test == 7){
     net.setNetInput(data7[0]);
     net.setNetActFn(actFns.SIGMOID);
     net.setOutLayer();
-    net.setLearnRate(0.5);
+    net.setLearnRate(0.05);
 
 
     Slide0.drawButtons(net);

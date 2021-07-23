@@ -203,16 +203,6 @@ export class Net{
                     var currentWeight= currentNeuron.getWeight(k);
                     //console.log(" weight "+currentWeight);
 
-                    //dc_da
-                    if(currentLayer.layerNumber==this.layers.length-1){
-                        currentNeuron.dc_da[k]=currentNeuron.output-this.target[j];
-                    } else {
-                        //idxes prob wrong
-                        currentNeuron.dc_da[k] = 
-                        (this.getLayer(currentLayer.layerNumber+1).getNeuron(k).da_dz
-                         * this.getLayer(currentLayer.layerNumber+1).getNeuron(k).dc_da[k]
-                         * this.getLayer(currentLayer.layerNumber+1).getNeuron(k).weights[k]);
-                    }
 
                     //dz_dw
                     if(currentLayer.layerNumber==0){
@@ -232,9 +222,34 @@ export class Net{
                         break;    
                     }
 
+                    //dc_da
+
+                    if(currentLayer.layerNumber==this.layers.length-1){
+                        currentNeuron.dc_da[k]=currentNeuron.output-this.target[j];
+                    } else {
+
+                          // dear god
+                        for(var m = 0; m<this.getLayer(currentLayer.layerNumber+1).getNeuron(k).weights.length; m++){
+                            currentNeuron.dc_da[k]=this.getLayer(currentLayer.layerNumber+1).getNeuron(k).weights[m];
+                        }
+
+
+                        //currentNeuron.dc_da[k]=this.getLayer(currentLayer.layerNumber+1).getNeuron(k).weights[k];
+                        console.log(this.getLayer(currentLayer.layerNumber+1).getNeuron(k));
+
+                        //    currentNeuron.dc_da[k] = this.getLayer(currentLayer.layerNumber+1).getNeuron(j).dc_da[j]
+                    //    * this.getLayer(currentLayer.layerNumber+1).getNeuron(k).da_dz;
+                    //console.log(this.getLayer(currentLayer.layerNumber+1));
+                    //console.log(this.getLayer(currentLayer.layerNumber+1).getNeuron(j));
+
+                        //    (this.getLayer(currentLayer.layerNumber+1).getNeuron(k).da_dz
+                    //     * this.getLayer(currentLayer.layerNumber+1).getNeuron(k).dc_da[k]
+                    //     * this.getLayer(currentLayer.layerNumber+1).getNeuron(k).weights[k]);
+                    }
+
                     currentNeuron.dc_dw[k]= currentNeuron.dc_da[k]*currentNeuron.da_dz*currentNeuron.dz_dw[k];
                     //console.log(currentNeuron.dc_da[k]*currentNeuron.da_dz*currentNeuron.dz_dw[k])
-                    console.log("dc_da"+currentNeuron.dc_da[k])
+                //    console.log("dc_da"+currentNeuron.dc_da[k])
 
                 }
                 
@@ -322,8 +337,8 @@ export class Net{
                     
                     var grad = -1*this.learnRate*(currentNeuron.dc_dw[k]);
                 //    console.log(""+grad)
-                    currentNeuron.w_new[k]= currentWeight+grad;
-                    currentNeuron.setWeight(k,currentNeuron.w_new[k]);
+                //    currentNeuron.w_new[k]= currentWeight+grad;
+                //    currentNeuron.setWeight(k,currentNeuron.w_new[k]);
                 }
                 console.log("layer " + currentLayer.layerNumber + '\n'
                             + "neuron " + currentNeuron.neuronNumber + '\n'
