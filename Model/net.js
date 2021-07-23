@@ -337,8 +337,8 @@ export class Net{
                     
                     var grad = -1*this.learnRate*(currentNeuron.dc_dw[k]);
                 //    console.log(""+grad)
-                //    currentNeuron.w_new[k]= currentWeight+grad;
-                //    currentNeuron.setWeight(k,currentNeuron.w_new[k]);
+                    currentNeuron.w_new[k]= currentWeight+grad;
+                    currentNeuron.setWeight(k,currentNeuron.w_new[k]);
                 }
                 console.log("layer " + currentLayer.layerNumber + '\n'
                             + "neuron " + currentNeuron.neuronNumber + '\n'
