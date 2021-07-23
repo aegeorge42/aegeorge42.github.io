@@ -23,13 +23,23 @@ export class Neuron{
     output; // output after activation fn
     actFun;
 
+
+
     constructor(){
         this.bias = Math.random() * 2 - 1 //bias between -1 and 1
         this.inputs = [];
         this.actFun = [];
         this.weights = [];
         this.weights_new=[];
-//        this.setActFn(defaultActFn);
+
+        //for backpropgation
+        this.dc_dw=[]; //partial derivative of cost wrt weight (layer l)
+        this.dz_dw=[]; //partial derivative of stuff inside actfn - aka "z" (weight*a^(l-1) + bias) wrt weight (layer l)
+        this.da_dz=[]; //partial derivative of neuron output (layer l) wrt z
+        this.dc_da=[]; //partial derivative of cost wrt neuron output (layer l-1)
+
+        this.w_old= [];
+        this.w_new= [];
     }
 
     setBias(b){
@@ -68,6 +78,10 @@ export class Neuron{
 
     //this.weights_new=this.weights;
 
+    }
+
+    getWeight(weightNum){
+        return this.weights[weightNum];
     }
 
     setWeight(weightNum, w){

@@ -75,7 +75,7 @@ slidetext.x=160;
 slidetext.y=50;
 Slide0.inputContainer.addChild(slidetext);
 
-var test = 6;
+var test = 7;
 
 if (test == 1){
     net.setNetInput(input1);
@@ -203,6 +203,28 @@ if (test == 6){
     Slide0.slideNet.getLayer(0).getNeuron(0).setWeight(0,-0.2);
     Slide0.slideNet.getLayer(1).getNeuron(0).setWeight(0,0.5);
     Slide0.slideNet.getLayer(2).getNeuron(0).setWeight(0,-0.4);
+
+    
+    Slide0.updateDraw(Slide0.slideNet);
+    Slide0.slideNet.printNet();
+}
+
+if (test == 7){
+    net.setNetData(data6);
+    net.setNetInput(data6[0]);
+    net.setNetActFn(actFns.SIGMOID);
+    net.setOutLayer();
+    Slide0.drawButtons(net);
+    Slide0.updateDraw(Slide0.slideNet);
+
+    Slide0.slideNet.getLayer(0).getNeuron(0).setBias(0);
+    Slide0.slideNet.getLayer(1).getNeuron(0).setBias(0);
+   
+
+
+    Slide0.slideNet.getLayer(0).getNeuron(0).setWeight(0,-0.2);
+    Slide0.slideNet.getLayer(1).getNeuron(0).setWeight(0,0.5);
+
 
     
     Slide0.updateDraw(Slide0.slideNet);

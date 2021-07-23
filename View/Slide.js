@@ -159,7 +159,7 @@ export class Slide{
         slide.updateDraw(net);
         await slide.sleep(10); //pause to see updates - 100 seems good
         loopcount=loopcount+1;
-        console.log(loopcount);
+        //console.log(loopcount);
       }
     });
 
