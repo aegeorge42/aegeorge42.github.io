@@ -75,7 +75,9 @@ export class Slide{
   weightsContainer; // weight graphics to draw
   neuronOverContainer;
   neuronSensorContainer;
-  labelsContainer; 
+  labelsContainer;
+  
+  textContainer;
 
   constructor(){
     this.data=[];
@@ -90,8 +92,10 @@ export class Slide{
         this.neuronSensorContainer = new PIXI.Container();
       this.weightsContainer = new PIXI.Container();
       this.labelsContainer = new PIXI.Container();
+      this.textContainer = new PIXI.Container();
+
       this.slideContainer=new PIXI.Container();
-      this.slideContainer.addChild(this.buttonLayerContainer,this.buttonNeuronAddContainer,this.buttonNeuronRemContainer,this.weightsContainer,this.inputContainer,this.netContainer, this.labelsContainer);
+      this.slideContainer.addChild(this.buttonLayerContainer,this.buttonNeuronAddContainer,this.buttonNeuronRemContainer,this.weightsContainer,this.inputContainer,this.netContainer, this.labelsContainer, this.textContainer);
     }
 
 
@@ -311,7 +315,7 @@ export class Slide{
                 //weightSprite.hitArea = new PIXI.Rectangle(0, 0, 100, 100);
 
                   //magnitude of weight determines thickness
-                  var thickness = Math.abs(net.getLayer(i).neurons[j].weights[k] * 10);
+                  var thickness = Math.abs(net.getLayer(i).neurons[j].weights[k] * 10) + 1;
                 //    if(thickness<1){ var thickness =3 }
                   var color = 0x000000;
 
@@ -519,8 +523,20 @@ export class Slide{
       targetTextText.x=380+((net.layers.length-1)*150);
       targetTextText.y=135+(i*100);
 
+      // is this worth keeping?
+      /* var costText = new PIXI.Text("cost"+'\n'+formatter_long.format(net.cost[i]),textStyle);
+      /costText.x=targetTextText.x+50; readd later
+      costText.x=100;
+      costText.y=300;
+      */
+
       this.labelsContainer.addChild(targetTextText);
+
     }
 
+    var costTotText = new PIXI.Text("cost" + '\n' +formatter_long.format(net.costTot));
+    costTotText.x=50;
+    costTotText.y=450;
+    this.labelsContainer.addChild(costTotText);
   }      
 }

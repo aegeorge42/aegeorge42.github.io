@@ -214,6 +214,8 @@ if (test == 7){
     net.setNetInput(data6[0]);
     net.setNetActFn(actFns.SIGMOID);
     net.setOutLayer();
+    net.calcCost();
+
     Slide0.drawButtons(net);
     Slide0.updateDraw(Slide0.slideNet);
 
@@ -228,5 +230,4 @@ if (test == 7){
 
     
     Slide0.updateDraw(Slide0.slideNet);
-    Slide0.slideNet.printNet();
 }

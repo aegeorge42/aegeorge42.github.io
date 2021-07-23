@@ -55,6 +55,7 @@ export class Net{
         this.delta=[];
         this.w_old=[];
         this.addLayer();
+        this.calcCost();
         this.update();
 
         this.setLearnRate(0.05);
@@ -160,14 +161,11 @@ export class Net{
     }
 
     learn(){
-    //    this.calcCost();
         this.backprop();
         this.updateWeights();
-    //    this.backprop();
-    //    this.backProp_finalLayer();
-   //     this.backProp_hiddenLayer();
+
         //iterate thru dataset
-    //    this.dataIdx=(this.dataIdx+1)%this.data.length;
+        //this.dataIdx=(this.dataIdx+1)%this.data.length;
        this.dataIdx=0;  // use for testing one data point
        this.setNetInput(this.data[this.dataIdx]);
     }
@@ -180,11 +178,6 @@ export class Net{
                 if(this.netOut[i] !== undefined){
                     this.cost[i]=0.5 * (this.target[i]-this.netOut[i]) ** 2;
                     this.costTot=this.costTot+this.cost[i];
-//                    console.log(
-//                    "neuron " + i +'\n'
-//                    + "expected: " + this.target[i]+'\n'
-//                    + "actual: " + this.netOut[i] +'\n'
-//                    + "cost: " + this.cost[i] +'\n'); 
                 }
             }
 //            console.log(" total cost: " + this.costTot);
@@ -239,7 +232,7 @@ export class Net{
 
                     //dz_dw
                     if(currentLayer.layerNumber==0){
-                        currentNeuron.dz_dw=this.netInput[k];
+                        currentNeuron.dz_dw[k]=this.netInput[k];
                     } else {
                         currentNeuron.dz_dw=this.getLayer(currentLayer.layerNumber-1).getNeuron(k).output;
                     }
@@ -248,11 +241,7 @@ export class Net{
                     currentNeuron.dc_dw[k]= currentNeuron.dc_da[k]*currentNeuron.da_dz*currentNeuron.dz_dw;
                     //console.log(currentNeuron);
 
-//                    var grad = -1*this.learnRate*(currentNeuron.dc_dw);
-//                    currentNeuron.w_new[k]=currentWeight-(this.learnRate*(currentNeuron.dc_dw));
-//                    currentNeuron.setWeight(k,currentNeuron.w_new[k]);
-
-/*                    console.log("layer " + currentLayer.layerNumber + '\n'
+                    console.log("layer " + currentLayer.layerNumber + '\n'
                             + "neuron " + currentNeuron.neuronNumber + '\n'
                             + "  weight " + k + " = " + currentWeight + '\n'
                             + "     dc_da = " + currentNeuron.dc_da + '\n'
@@ -260,12 +249,9 @@ export class Net{
                             + "     dz_dw = " + currentNeuron.dz_dw + '\n' + '\n'
                             + "     dc_dw = " + currentNeuron.dc_dw + '\n' + '\n'
 
-                            + "     w_old = " + currentWeight+ '\n'
-                            + "     grad  = " + grad + '\n'
-                            + "     w_new = " + currentNeuron.w_new[k]
 
                             );
-*/                            
+                            
                    //  currentNeuron.w_new[k]=currentWeight-(this.learnRate*(currentNeuron.dc_dw));
                     // currentNeuron.setWeight(k,currentNeuron.w_new[k]);
                 
