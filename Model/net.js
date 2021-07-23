@@ -157,16 +157,20 @@ export class Net{
             neuron.calcOut();
         });
         this.netOut=this.lastLayer.getLayerOuts();
+        this.calcCost();
 
     }
 
     learn(){
-        this.backprop();
-        this.updateWeights();
+    //    this.backprop();
+        this.backprop_test();
+
+        this.calcCost();
+        this.updateWeights_test();
 
         //iterate thru dataset
-        //this.dataIdx=(this.dataIdx+1)%this.data.length;
-       this.dataIdx=0;  // use for testing one data point
+        this.dataIdx=(this.dataIdx+1)%this.data.length;
+       //this.dataIdx=0;  // use for testing one data point
        this.setNetInput(this.data[this.dataIdx]);
     }
 
@@ -184,19 +188,62 @@ export class Net{
         } 
     }
 
-    
-    backprop(){
-//        console.log("----------");
-        this.costTot=0;
-        for( var i = 0; i<this.target.length; i++){
-            if(this.netOut[i] !== undefined){
+    //multiple neurons per layer
+    backprop_test(){
+    //    console.log("-------------")
+        for(var i=this.layers.length-1; i>-1; i--){
+            var currentLayer=this.getLayer(i);
+            //console.log(" layer " +currentLayer.layerNumber);
+
+            for(var j=0; j<currentLayer.neurons.length; j++){
+                var currentNeuron = currentLayer.getNeuron(j);
+                //console.log(" neuron "+ currentNeuron);
+
+                for(var k=0; k<currentNeuron.weights.length; k++){
+                    var currentWeight= currentNeuron.getWeight(k);
+                    //console.log(" weight "+currentWeight);
+
+                    //dc_da
+                    if(currentLayer.layerNumber==this.layers.length-1){
+                        currentNeuron.dc_da[k]=currentNeuron.output-this.target[j];
+                    } else {
+                        //idxes prob wrong
+                        currentNeuron.dc_da[k] = 
+                        (this.getLayer(currentLayer.layerNumber+1).getNeuron(k).da_dz
+                         * this.getLayer(currentLayer.layerNumber+1).getNeuron(k).dc_da[k]
+                         * this.getLayer(currentLayer.layerNumber+1).getNeuron(k).weights[k]);
+                    }
+
+                    //dz_dw
+                    if(currentLayer.layerNumber==0){
+                        currentNeuron.dz_dw[k]=this.netInput[k];
+                    } else {
+                        currentNeuron.dz_dw[k]=this.getLayer(currentLayer.layerNumber-1).getNeuron(k).output;
+                    }
+                    
+
+                    //da_dz
+                    switch(this.netActFn){
+                        case(actFns.LINEAR):
+                            currentNeuron.da_dz=1;
+                        break;
+                        case(actFns.SIGMOID):
+                            currentNeuron.da_dz=(currentNeuron.output)*(1-currentNeuron.output);
+                        break;    
+                    }
+
+                    currentNeuron.dc_dw[k]= currentNeuron.dc_da[k]*currentNeuron.da_dz*currentNeuron.dz_dw[k];
+                    //console.log(currentNeuron.dc_da[k]*currentNeuron.da_dz*currentNeuron.dz_dw[k])
+                    console.log("dc_da"+currentNeuron.dc_da[k])
+
+                }
                 
-                this.cost[i]=0.5 * (this.netOut[i]-this.target[i]) ** 2;
-//                console.log(this.cost);
-                this.costTot=this.costTot+this.cost[i];
             }
         }
-
+    }
+    
+    backprop(){
+/*
         for(var i=this.layers.length-1; i>-1; i--){
             var currentLayer=this.getLayer(i);
             //console.log(" layer " +currentLayer.layerNumber);
@@ -234,11 +281,11 @@ export class Net{
                     if(currentLayer.layerNumber==0){
                         currentNeuron.dz_dw[k]=this.netInput[k];
                     } else {
-                        currentNeuron.dz_dw=this.getLayer(currentLayer.layerNumber-1).getNeuron(k).output;
+                        currentNeuron.dz_dw[k]=this.getLayer(currentLayer.layerNumber-1).getNeuron(k).output;
                     }
 
                     //dc_dw
-                    currentNeuron.dc_dw[k]= currentNeuron.dc_da[k]*currentNeuron.da_dz*currentNeuron.dz_dw;
+                    currentNeuron.dc_dw[k]= currentNeuron.dc_da[k]*currentNeuron.da_dz*currentNeuron.dz_dw[k];
                     //console.log(currentNeuron);
 
                     console.log("layer " + currentLayer.layerNumber + '\n'
@@ -259,10 +306,39 @@ export class Net{
             }
 
         }
+*/
+    }
 
+    updateWeights_test(){
+        console.log("...............................")
+        for(var i=this.layers.length-1; i>-1; i--){
+            var currentLayer=this.getLayer(i);
+
+            for(var j=0; j<currentLayer.neurons.length; j++){
+                var currentNeuron = currentLayer.getNeuron(j);
+
+                for(var k=0; k<currentNeuron.weights.length; k++){
+                    var currentWeight= currentNeuron.getWeight(k);
+                    
+                    var grad = -1*this.learnRate*(currentNeuron.dc_dw[k]);
+                //    console.log(""+grad)
+                    currentNeuron.w_new[k]= currentWeight+grad;
+                    currentNeuron.setWeight(k,currentNeuron.w_new[k]);
+                }
+                console.log("layer " + currentLayer.layerNumber + '\n'
+                            + "neuron " + currentNeuron.neuronNumber + '\n'
+                            + "  weights " + currentNeuron.weights + '\n'
+                            + "     dc_da = " + currentNeuron.dc_da + '\n'
+                            + "     da_dz = " + currentNeuron.da_dz + '\n'
+                            + "     dz_dw = " + currentNeuron.dz_dw + '\n' + '\n'
+                            + "     dc_dw = " + currentNeuron.dc_dw + '\n');
+                
+            }
+        }
     }
 
     updateWeights(){
+        /*
         for(var i=this.layers.length-1; i>-1; i--){
             var currentLayer=this.getLayer(i);
 
@@ -278,6 +354,7 @@ export class Net{
                 }
             }
         }
+        */
     }
 
     printNet(){

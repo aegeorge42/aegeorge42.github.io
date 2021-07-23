@@ -167,7 +167,7 @@ export class Slide{
       }
     });
 
-    this.buttonLayerContainer.addChild(new Button("pause",PIXI.Texture.from('images/buttons/treasure.png'), 100,400,true));
+    this.buttonLayerContainer.addChild(new Button("pause",PIXI.Texture.from('images/buttons/button_pause.png'), 100,400,true));
       var pauselearn=0;
     this.buttonLayerContainer.getChildAt(4).on('click', function(e){
       pauselearn=1;
