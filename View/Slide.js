@@ -303,7 +303,6 @@ export class Slide{
   drawWeights(net){
     this.weightsContainer.removeChildren();
 
-
     for(var i = 0; i<net.layers.length; i++){
         for(var j = 0; j<net.getLayer(i).neurons.length; j++){
             for(var k = 0; k<net.getLayer(i).neurons[j].weights.length; k++){
@@ -313,7 +312,7 @@ export class Slide{
 
                   //magnitude of weight determines thickness
                   var thickness = Math.abs(net.getLayer(i).neurons[j].weights[k] * 10);
-                    if(thickness<1){ var thickness =3 }
+                //    if(thickness<1){ var thickness =3 }
                   var color = 0x000000;
 
                   //positive weight = blue, neagtive = orange
