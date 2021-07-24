@@ -11,6 +11,12 @@ export const defaultInput = {
     expected_text: []
 };
 
+export const defaultData = {
+    inputs: [],
+    input_labels: [],
+    type: []
+};
+
 export const defaultActFn = actFns.LINEAR;
 
 /* for each neuron in each layer
@@ -73,6 +79,7 @@ export class Net{
 
     setNetData(data){
         this.data=data;
+        this.setNetInput(data.inputs[0]);
     }
 
     setNetInput(datapoint){
@@ -158,9 +165,9 @@ export class Net{
         this.update_backprop();
 
         //iterate thru dataset
-        this.dataIdx=(this.dataIdx+1)%this.data.length;
+        this.dataIdx=(this.dataIdx+1)%this.data.inputs.length;
        //this.dataIdx=0;  // use for testing one data point
-       this.setNetInput(this.data[this.dataIdx]);
+       this.setNetInput(this.data.inputs[this.dataIdx]);
     }
 
     //each neuron in the final layer will have a cost

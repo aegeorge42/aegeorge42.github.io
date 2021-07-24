@@ -18,7 +18,11 @@ const textStyle = new PIXI.TextStyle({
     fontSize: 13
 });
 
-
+const medium = new PIXI.TextStyle({
+  fontFamily: 'Open Sans',
+  fontWeight: 300,
+  fontSize: 20
+});
 
 /**MAGIC NUMBERS**/
 
@@ -122,7 +126,7 @@ export class Slide{
   drawButtons(net){
     var slide = this;
     
-    this.buttonLayerContainer.addChild(new Button("addlayer",PIXI.Texture.from('images/buttons/button_layer.png'), 100,140,true));
+    this.buttonLayerContainer.addChild(new Button("addlayer",PIXI.Texture.from('images/buttons/button_layer.png'), 80,140,true));
     
     this.buttonLayerContainer.getChildAt(0).on('click', function(e){
       if(net.layers.length<slide.maxLayers){
@@ -131,7 +135,7 @@ export class Slide{
       }
     });
     
-    this.buttonLayerContainer.addChild(new Button("remlayer",PIXI.Texture.from('images/buttons/button_removelayer.png'), 100,200,true));
+    this.buttonLayerContainer.addChild(new Button("remlayer",PIXI.Texture.from('images/buttons/button_removelayer.png'), 80,200,true));
     
     this.buttonLayerContainer.getChildAt(1).on('click', function(e){
       if(net.layers.length>1){
@@ -146,14 +150,14 @@ export class Slide{
       this.setNeuronButtons(net,i);
     }
 
-    this.buttonLayerContainer.addChild(new Button("learn_step",PIXI.Texture.from('images/buttons/button_learnstep.png'), 100,275,true));
+    this.buttonLayerContainer.addChild(new Button("learn_step",PIXI.Texture.from('images/buttons/button_learnstep.png'), 80,275,true));
     
     this.buttonLayerContainer.getChildAt(2).on('click', function(e){
       net.learn();
       slide.updateDraw(net);
     });
 
-    this.buttonLayerContainer.addChild(new Button("learn",PIXI.Texture.from('images/buttons/button_learn.png'), 100,350,true));
+    this.buttonLayerContainer.addChild(new Button("learn",PIXI.Texture.from('images/buttons/button_learn.png'), 80,350,true));
     
     this.buttonLayerContainer.getChildAt(3).on('click', async function(e){
       var loopcount = 0;
@@ -167,7 +171,7 @@ export class Slide{
       }
     });
 
-    this.buttonLayerContainer.addChild(new Button("pause",PIXI.Texture.from('images/buttons/button_pause.png'), 100,400,true));
+    this.buttonLayerContainer.addChild(new Button("pause",PIXI.Texture.from('images/buttons/button_pause.png'), 80,400,true));
       var pauselearn=0;
     this.buttonLayerContainer.getChildAt(4).on('click', function(e){
       pauselearn=1;
@@ -517,26 +521,34 @@ export class Slide{
 
     this.netContainer.addChild(this.neuronOverContainer, this.neuronSensorContainer)
 
-    //add text after final layer
-    for(var i = 0; i<net.targetText.length; i++){
-      var targetTextText = new PIXI.Text(net.targetText[i]);
-      targetTextText.x=380+((net.layers.length-1)*150);
-      targetTextText.y=135+(i*100);
-
-      // is this worth keeping?
-      /* var costText = new PIXI.Text("cost"+'\n'+formatter_long.format(net.cost[i]),textStyle);
-      /costText.x=targetTextText.x+50; readd later
-      costText.x=100;
-      costText.y=300;
-      */
-
-      this.labelsContainer.addChild(targetTextText);
+    console.log(net.data.input_labels);
+    for(var i = 0; i<net.data.type.length; i++){
+      var typeLabel = new PIXI.Text(net.data.type[i],medium);
+      typeLabel.x=380+((net.layers.length-1)*150);
+      typeLabel.y=135+(i*100);
+      this.labelsContainer.addChild(typeLabel);
 
     }
 
-    var costTotText = new PIXI.Text("cost" + '\n' +formatter_long.format(net.costTot));
-    costTotText.x=50;
-    costTotText.y=450;
-    this.labelsContainer.addChild(costTotText);
+    for(var i = 0; i<net.data.input_labels.length; i++){
+      var inputLabel = new PIXI.Text(net.data.input_labels[i],medium);
+      inputLabel.anchor.set(0.5);
+      inputLabel.x=200
+      inputLabel.y=240+(i*100)
+      this.labelsContainer.addChild(inputLabel);
+    }
+
+
+
+    var targetLabel = new PIXI.Text(net.targetText);
+      targetLabel.anchor.set(0.5);
+      targetLabel.x=200;
+      targetLabel.y=140;
+      this.labelsContainer.addChild(targetLabel);
+
+    var costTotLabel = new PIXI.Text("cost" + '\n' +formatter_long.format(net.costTot));
+      costTotLabel.x=50;
+      costTotLabel.y=450;
+      this.labelsContainer.addChild(costTotLabel);
   }      
 }
