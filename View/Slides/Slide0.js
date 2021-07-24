@@ -72,7 +72,7 @@ const input6 = {
     const input72 = {
         input: [0.01,0.01],
         expected: [0,1],
-        expected_text: ["0"]
+        expected_text: ["0","1"]
     }
 
     const input73 = {
@@ -84,7 +84,7 @@ const input6 = {
     const input74 = {
         input: [0.001,0.001],
         expected: [0,1],
-        expected_text: ["0"]
+        expected_text: ["0","1"]
     }
 const data3 = [input31/*,input32,input33,input34*/];
 const data4 = [input4, input31,input32,input33,input34];

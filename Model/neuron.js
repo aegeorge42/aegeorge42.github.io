@@ -40,6 +40,8 @@ export class Neuron{
 
         this.w_old= [];
         this.w_new= [];
+
+        this.grad=[];
     }
 
     setBias(b){

@@ -96,21 +96,16 @@ export class Net{
         var l = new Layer();
         if(this.layers.length ==0){
             this.layers.push(l);
-            l.layerNumber=this.layers.length-1;
-
-            
+            l.layerNumber=this.layers.length-1;    
         }
         else {
             this.layers.splice((this.layers.length-1),0,l);
             l.layerNumber=this.layers.length-2;
-
-
         }
     }
 
     removeLayer(){
         this.layers.splice(this.layers.length-2,1);
-       // this.layers.pop();
     }
 
     //need a way to access layers in order to add a neuron
@@ -125,13 +120,10 @@ export class Net{
         this.lastLayer = this.getLayer(this.layers.length-1);
         this.lastLayer.layerNumber=this.layers.length-1;
 
-//        console.log("LR: " + this.learnRate);
         this.getLayer(0).setLayerIns(this.netInput);
         var netfn = this.netActFn;
 
         for(var i=0; i<this.layers.length-1; i++){
-        //    console.log("net actfn: "+ this.netActFn);
-//        console.log(this.layers[i].layerBias);
 
             //update act fn for each neuron to user input
             //get output for each neuron in layer i
@@ -139,8 +131,6 @@ export class Net{
                 if(neuron.actFun != netfn){
                     neuron.actFun = netfn;
                 }
-//                console.log("neuron actfn: " + neuron.actFun);
-//                console.log("net actfn in loop: " + netfn);
 
                 neuron.calcOut();
             });
@@ -149,24 +139,23 @@ export class Net{
             this.getLayer(i+1).setLayerIns(this.getLayer(i).getLayerOuts());
         }
 
-        //need this to get final outputs
+        // get outputs from last layer
         this.lastLayer.neurons.forEach(function(neuron){
             if(neuron.actFun != netfn){
                 neuron.actFun = netfn;
             }
             neuron.calcOut();
         });
+
         this.netOut=this.lastLayer.getLayerOuts();
         this.calcCost();
-
     }
 
     learn(){
-    //    this.backprop();
-        this.backprop_test();
+        this.backprop();
 
         this.calcCost();
-        this.updateWeights_test();
+        this.update_backprop();
 
         //iterate thru dataset
         this.dataIdx=(this.dataIdx+1)%this.data.length;
@@ -184,22 +173,24 @@ export class Net{
                     this.costTot=this.costTot+this.cost[i];
                 }
             }
-//            console.log(" total cost: " + this.costTot);
         } 
     }
 
-    //multiple neurons per layer
-    backprop_test(){
-    //    console.log("-------------")
+    // where the action happens
+    backprop(){
+        // for each layer
         for(var i=this.layers.length-1; i>-1; i--){
             var currentLayer=this.getLayer(i);
-            //console.log(" layer " +currentLayer.layerNumber);
+            var nextLayer=this.getLayer(currentLayer.layerNumber+1);
 
+
+            //for each neuron
             for(var j=0; j<currentLayer.neurons.length; j++){
                 var currentNeuron = currentLayer.getNeuron(j);
-                //console.log(" neuron "+ currentNeuron);
 
-                //da_dz
+                // derivative of output (da) with respect to (inputs * weights + bias)
+                // z is the value that goes inside the activation function
+                // a is the neuron output after the activation funtion
                 switch(this.netActFn){
                     case(actFns.LINEAR):
                         currentNeuron.da_dz=1;
@@ -209,174 +200,56 @@ export class Net{
                     break;    
                 }
 
-                  
-
+                //for each weight
                 for(var k=0; k<currentNeuron.weights.length; k++){
-                    //var currentWeight= currentNeuron.getWeight(k);
-                    //console.log(" weight "+currentWeight);
-
-                    //dc_da
-
+                
+                    // derivative of cost (dc) with respect to current output
+                    // hidden layers influence cost thru multiple channels
                   if(currentLayer.layerNumber==this.layers.length-1){
                     currentNeuron.dc_da=currentNeuron.output-this.target[j];
                     } else {
                         var dc_da_weightlist=[];
                         var dc_da_templist=[];
                         var dc_da_temp =0;
-                       // currentNeuron.dc_da=1;
-                        //console.log("current" +currentLayer.layerNumber + " next" + this.getLayer(currentLayer.layerNumber+1).layerNumber + " neurons" + this.getLayer(currentLayer.layerNumber+1).neurons.length);
-                    
-                        for(var m=0; m<this.getLayer(currentLayer.layerNumber+1).neurons.length; m++){
-                           // console.log(this.getLayer(currentLayer.layerNumber+1).neurons[m]);
-                        //  console.log("weight2calc: " + currentNeuron.weights[k] + '\n'
-                        //  + "needed: " + this.getLayer(currentLayer.layerNumber+1).neurons[m].weights[j]);
-                          dc_da_weightlist[m]= this.getLayer(currentLayer.layerNumber+1).neurons[m].weights[j];
+    
+                        for(var m=0; m<nextLayer.neurons.length; m++){
+                            dc_da_weightlist[m]= nextLayer.neurons[m].weights[j];
                          
                           console.log("weight2calc: " + currentNeuron.weights[k] + '\n'
                           + "needed: " + dc_da_weightlist[m] +'\n'
-                          + "da_dz: "+ this.getLayer(currentLayer.layerNumber+1).neurons[m].da_dz +'\n'
-                          + "dc_da: "+ this.getLayer(currentLayer.layerNumber+1).neurons[m].dc_da);
+                          + "da_dz: "+ nextLayer.neurons[m].da_dz +'\n'
+                          + "dc_da: "+ nextLayer.neurons[m].dc_da);
 
                           dc_da_templist[m]= dc_da_weightlist[m]
-                                            *this.getLayer(currentLayer.layerNumber+1).neurons[m].da_dz
-                                            *this.getLayer(currentLayer.layerNumber+1).neurons[m].dc_da;
-                         // console.log(""+dc_da_templist[m] + currentLayer.neurons[j].da_dz);
-                        //  console.log(dc_da_templist);
-                           //             + "     needed: "+ this.getLayer(currentLayer.layerNumber+1).neurons[m].weights);
-                           dc_da_temp=dc_da_temp+dc_da_templist[m];
-                          // currentNeuron.dc_da=dc_da_temp;
+                                            *nextLayer.neurons[m].da_dz
+                                            *nextLayer.neurons[m].dc_da;
+                                               dc_da_temp=dc_da_temp+dc_da_templist[m];
                         }
-                        currentNeuron.dc_da=dc_da_temp;
-                       // console.log(dc_da_templist);
-
-                     //   console.log(dc_da_temp);
-
-            //            console.log("weight 2 calc: " + currentNeuron.weights[k] + '\n'
-            //                        + "needed");
-                    //    for(var m=0; m<this.getLayer(currentLayer.layerNumber+1).neurons.length; m++){
-                    //        console.log("cn:" + currentNeuron.weights+ 
-                    //        '\n'+"weights needed: "+this.getLayer(currentLayer.layerNumber+1).neurons[m].weights);
-                    //    }
-                    
+                        currentNeuron.dc_da=dc_da_temp;  
                     }
 
-                    //dz_dw
                     if(currentLayer.layerNumber==0){
                         currentNeuron.dz_dw[k]=this.netInput[k];
                     } else {
                         currentNeuron.dz_dw[k]=this.getLayer(currentLayer.layerNumber-1).getNeuron(k).output;
-                    }
-                    
+                    }         
 
-                    
-
-                  
-                        //this.getLayer(currentLayer.layerNumber+1).neurons.length)
-                        //    console.log(this.getLayer(currentLayer.layerNumber+1).getNeuron(k).weights.length)
-                       
-                    /*    for(var m = 0; m<this.getLayer(currentLayer.layerNumber+1).neurons.length; m++){
-                            dc_da_templist[m]= this.getLayer(currentLayer.layerNumber+1).getNeuron(j).da_dz
-                                            * this.getLayer(currentLayer.layerNumber+1).getNeuron(j).dc_da
-                                            * this.getLayer(currentLayer.layerNumber+1).getNeuron(j).weights[m];
-                            dc_da_temp=dc_da_temp+dc_da_templist[m];
-                        }
-                        currentNeuron.dc_da=dc_da_temp;
-                      // console.log(dc_da_temp);
-                        */
-
-
-                        //currentNeuron.dc_da[k]=this.getLayer(currentLayer.layerNumber+1).getNeuron(k).weights[k];
-                        //console.log(this.getLayer(currentLayer.layerNumber+1).getNeuron(k));
-
-                        //    currentNeuron.dc_da[k] = this.getLayer(currentLayer.layerNumber+1).getNeuron(j).dc_da[j]
-                    //    * this.getLayer(currentLayer.layerNumber+1).getNeuron(k).da_dz;
-                    //console.log(this.getLayer(currentLayer.layerNumber+1));
-                    //console.log(this.getLayer(currentLayer.layerNumber+1).getNeuron(j));
-
-                        //    (this.getLayer(currentLayer.layerNumber+1).getNeuron(k).da_dz
-                    //     * this.getLayer(currentLayer.layerNumber+1).getNeuron(k).dc_da[k]
-                    //     * this.getLayer(currentLayer.layerNumber+1).getNeuron(k).weights[k]);
-                    
-
+                    // derivative of cost (dc) wrt to current weight
+                    // finally - how much this individual weight affects the overall cost
                     currentNeuron.dc_dw[k]= currentNeuron.dc_da*currentNeuron.da_dz*currentNeuron.dz_dw[k];
-                    //console.log(currentNeuron.dc_da[k]*currentNeuron.da_dz*currentNeuron.dz_dw[k])
-                //    console.log("dc_da"+currentNeuron.dc_da[k])
-
+                    
+                    // how much to change each weight in order to decrease the cost
+                    //IMPORTANT - I pull out the negative sign here 
+                    currentNeuron.grad[k] = -1*this.learnRate*(currentNeuron.dc_dw[k]);
                 }
                 
             }
         }
     }
-    
-    backprop(){
-/*
-        for(var i=this.layers.length-1; i>-1; i--){
-            var currentLayer=this.getLayer(i);
-            //console.log(" layer " +currentLayer.layerNumber);
 
-            for(var j=0; j<currentLayer.neurons.length; j++){
-                var currentNeuron = currentLayer.getNeuron(j);
-                //console.log(" neuron "+ currentNeuron);
-
-                for(var k=0; k<currentNeuron.weights.length; k++){
-                    var currentWeight= currentNeuron.getWeight(k);
-                    //console.log(" weight "+currentWeight);
-
-                    //dc_da 
-                    if(currentLayer.layerNumber==this.layers.length-1){
-                        currentNeuron.dc_da[j]=currentNeuron.output-this.target[j];
-                    } else {
-                        //idxes prob wrong
-                        currentNeuron.dc_da[k] = 
-                        (this.getLayer(currentLayer.layerNumber+1).getNeuron(j).da_dz
-                         * this.getLayer(currentLayer.layerNumber+1).getNeuron(j).dc_da
-                         * this.getLayer(currentLayer.layerNumber+1).getNeuron(j).weights[k]);
-                    }
-
-                    //da_dz
-                    switch(this.netActFn){
-                        case(actFns.LINEAR):
-                            currentNeuron.da_dz=1;
-                        break;
-                        case(actFns.SIGMOID):
-                            currentNeuron.da_dz=(currentNeuron.output)*(1-currentNeuron.output);
-                        break;    
-                    }
-
-                    //dz_dw
-                    if(currentLayer.layerNumber==0){
-                        currentNeuron.dz_dw[k]=this.netInput[k];
-                    } else {
-                        currentNeuron.dz_dw[k]=this.getLayer(currentLayer.layerNumber-1).getNeuron(k).output;
-                    }
-
-                    //dc_dw
-                    currentNeuron.dc_dw[k]= currentNeuron.dc_da[k]*currentNeuron.da_dz*currentNeuron.dz_dw[k];
-                    //console.log(currentNeuron);
-
-                    console.log("layer " + currentLayer.layerNumber + '\n'
-                            + "neuron " + currentNeuron.neuronNumber + '\n'
-                            + "  weight " + k + " = " + currentWeight + '\n'
-                            + "     dc_da = " + currentNeuron.dc_da + '\n'
-                            + "     da_dz = " + currentNeuron.da_dz + '\n'
-                            + "     dz_dw = " + currentNeuron.dz_dw + '\n' + '\n'
-                            + "     dc_dw = " + currentNeuron.dc_dw + '\n' + '\n'
-
-
-                            );
-                            
-                   //  currentNeuron.w_new[k]=currentWeight-(this.learnRate*(currentNeuron.dc_dw));
-                    // currentNeuron.setWeight(k,currentNeuron.w_new[k]);
-                
-                }
-            }
-
-        }
-*/
-    }
-
-    updateWeights_test(){
-        console.log("...............................")
+    //reset all weights and biases after calculating gradient
+    update_backprop(){
+//        console.log("...............................")
         for(var i=this.layers.length-1; i>-1; i--){
             var currentLayer=this.getLayer(i);
 
@@ -386,12 +259,15 @@ export class Net{
                 for(var k=0; k<currentNeuron.weights.length; k++){
                     var currentWeight= currentNeuron.getWeight(k);
                     
-                    var grad = -1*this.learnRate*(currentNeuron.dc_dw[k]);
-                //    console.log(""+grad)
-                    currentNeuron.w_new[k]= currentWeight+grad;
+//                    var grad = -1*this.learnRate*(currentNeuron.dc_dw[k]);
+//                    console.log(grad);
+//                    console.log(currentNeuron.grad[k]);
+
+                    currentNeuron.w_new[k]= currentWeight+currentNeuron.grad[k];
                     currentNeuron.setWeight(k,currentNeuron.w_new[k]);
                 }
-                console.log("layer " + currentLayer.layerNumber + '\n'
+
+/*                console.log("layer " + currentLayer.layerNumber + '\n'
                             + "neuron " + currentNeuron.neuronNumber + '\n'
                             + "  weights " + currentNeuron.weights + '\n'
                             + "     dc_da = " + currentNeuron.dc_da + '\n'
@@ -399,29 +275,12 @@ export class Net{
                             + "     dz_dw = " + currentNeuron.dz_dw + '\n' + '\n'
                             + "     dc_dw = " + currentNeuron.dc_dw + '\n');
                 
+*/
             }
         }
     }
 
-    updateWeights(){
-        /*
-        for(var i=this.layers.length-1; i>-1; i--){
-            var currentLayer=this.getLayer(i);
-
-            for(var j=0; j<currentLayer.neurons.length; j++){
-                var currentNeuron = currentLayer.getNeuron(j);
-
-                for(var k=0; k<currentNeuron.weights.length; k++){
-                    var currentWeight= currentNeuron.getWeight(k);
-
-                    var grad = -1*this.learnRate*(currentNeuron.dc_dw);
-                    currentNeuron.w_new[k]= currentWeight+grad;
-                    currentNeuron.setWeight(k,currentNeuron.w_new[k]);
-                }
-            }
-        }
-        */
-    }
+   
 
     printNet(){
         console.log("Net has " + this.layers.length + " layers")
@@ -450,27 +309,3 @@ export class Net{
     }
     
 }
-
-
-/*const net = new Net();
-const staticInput = [1.0, 5.0];
-
-net.getLayer(0).addNeuron();
-net.getLayer(0).setLayerIns(staticInput);
-net.addLayer();
-net.connect();
-/*console.log("---------------------------ROUND 1-------------------------------")
-net.printNet_weights();
-net.connect();
-console.log("---------------------------ROUND 2-------------------------------")
-net.printNet_weights();
-console.log("---------------------------ROUND 3-------------------------------")
-net.getLayer(1).addNeuron();f
-net.connect();
-net.printNet_weights();
-console.log("---------------------------ROUND 4-------------------------------")
-net.addLayer();
-net.connect();
-net.printNet();
-*/
-
