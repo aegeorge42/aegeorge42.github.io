@@ -35,7 +35,7 @@ export class Net{
 
     layers; //list of layers
     lastLayer; //makes my life easier
-//    outLayer_temp;
+
     netInput; //input to layer 0
     netActFn; //activation function
     target;
@@ -43,11 +43,9 @@ export class Net{
     netOut;
     cost;
     costTot;
-//    error;
-//    eTot;
+
    learnRate;
-//    delta;
-//    oldweightf; //TO DELETE
+
     w_old;
 
     constructor(){
