@@ -2,6 +2,7 @@ import {Slide, layout} from "../Slide.js"
 import { Net } from "../../Model/net.js";
 import {actFns} from "../../Model/actfns.js"
 import {Button} from "../../View/Button.js"
+import { Neuron } from "../../Model/neuron.js";
 
 export const Slide0 = new Slide();
 
@@ -74,11 +75,22 @@ const input6 = {
         expected_text: ["0"]
     }
 
+    const input73 = {
+        input: [0.9,0.9],
+        expected: [1,0],
+        expected_text: ["1", "0"]
+    }
+
+    const input74 = {
+        input: [0.001,0.001],
+        expected: [0,1],
+        expected_text: ["0"]
+    }
 const data3 = [input31/*,input32,input33,input34*/];
 const data4 = [input4, input31,input32,input33,input34];
 const data5 = [input5];
 const data6 = [input6];
-const data7 = [input71];
+const data7 = [input71,input72,input73,input74];
 
 //const maxLayers = 4;
 //const maxNeurons = 10;
@@ -229,10 +241,13 @@ if (test == 7){
     net.setNetInput(data7[0]);
     net.setNetActFn(actFns.SIGMOID);
     net.setOutLayer();
-    net.setLearnRate(0.05);
-
-
     Slide0.drawButtons(net);
+    net.setLearnRate(0.05);
+    net.getLayer(0).addNeuron();
+    Slide0.updateDraw(Slide0.slideNet);
+
+    net.addLayer();
+    net.setLearnRate(0.5);
 
     Slide0.updateDraw(Slide0.slideNet);
 
