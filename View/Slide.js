@@ -162,10 +162,10 @@ export class Slide{
     this.buttonLayerContainer.getChildAt(3).on('click', async function(e){
       var loopcount = 0;
       pauselearn=0;
-      while(loopcount<500 && pauselearn==0){
+      while(loopcount<1000 && pauselearn==0){
         net.learn();
         slide.updateDraw(net);
-        await slide.sleep(10); //pause to see updates - 100 seems good
+        await slide.sleep(100); //pause to see updates - 100 seems good
         loopcount=loopcount+1;
         //console.log(loopcount);
       }
