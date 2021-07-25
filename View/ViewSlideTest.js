@@ -4,6 +4,7 @@ import {Slide0} from "./Slides/Slide0.js"
 import {Slide1} from "./Slides/Slide1.js"
 
 
+
 export class ViewSlideTest{
     slideList;
     currentSlide;
@@ -15,7 +16,9 @@ export class ViewSlideTest{
           backgroundColor: 0xFFBDD4
         });
         document.body.appendChild(this.app.view);
-       
+
+
+
         //add premade slides
         this.slideList = [];
         this.slideList.push(Slide0,Slide1);
@@ -55,6 +58,7 @@ export class ViewSlideTest{
         this.drawSlide();
     }
 
+
     //remove slide, leave buttons
     //I know it's ugly but it works
     drawSlide(){
@@ -64,5 +68,4 @@ export class ViewSlideTest{
    
         this.app.stage.addChild(this.slideList[this.currentSlide].slideContainer);
     }
-
 }

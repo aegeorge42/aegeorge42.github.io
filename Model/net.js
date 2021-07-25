@@ -46,7 +46,7 @@ export class Net{
 
    learnRate;
 
-    w_old;
+    //w_old;
 
     constructor(){
         this.data=[];
@@ -57,7 +57,8 @@ export class Net{
         this.layers=[];
         this.cost=[];
         this.delta=[];
-        this.w_old=[];
+        //this.w_old=[];
+        this.b_old=[];
         this.addLayer();
         this.calcCost();
         this.update();
@@ -183,6 +184,10 @@ export class Net{
 
     // where the action happens
     backprop(){
+
+        /**UPDATE WEIGHTS */
+        //dc_dw = dc_da * da_dz * dz_dw
+
         // for each layer
         for(var i=this.layers.length-1; i>-1; i--){
             var currentLayer=this.getLayer(i);
@@ -220,11 +225,11 @@ export class Net{
                         for(var m=0; m<nextLayer.neurons.length; m++){
                             dc_da_weightlist[m]= nextLayer.neurons[m].weights[j];
                          
-                          console.log("weight2calc: " + currentNeuron.weights[k] + '\n'
+                        /*  console.log("weight2calc: " + currentNeuron.weights[k] + '\n'
                           + "needed: " + dc_da_weightlist[m] +'\n'
                           + "da_dz: "+ nextLayer.neurons[m].da_dz +'\n'
                           + "dc_da: "+ nextLayer.neurons[m].dc_da);
-
+                        */
                           dc_da_templist[m]= dc_da_weightlist[m]
                                             *nextLayer.neurons[m].da_dz
                                             *nextLayer.neurons[m].dc_da;
@@ -245,9 +250,18 @@ export class Net{
                     
                     // how much to change each weight in order to decrease the cost
                     //IMPORTANT - I pull out the negative sign here 
-                    currentNeuron.grad[k] = -1*this.learnRate*(currentNeuron.dc_dw[k]);
+                    currentNeuron.wgrad[k] = -1*this.learnRate*(currentNeuron.dc_dw[k]);
                 }
-                
+
+                /**** UPDATE BIAS *****/
+                // dc_db = dc_da * da_dz * dz_db
+                // but dz_db always = 1
+                // so 
+                // dc_db = dc_da * da_dz
+                currentNeuron.dc_db=currentNeuron.dc_da * currentNeuron.da_dz;
+                currentNeuron.bgrad = -1*this.learnRate*(currentNeuron.dc_db);
+
+
             }
         }
     }
@@ -268,19 +282,25 @@ export class Net{
 //                    console.log(grad);
 //                    console.log(currentNeuron.grad[k]);
 
-                    currentNeuron.w_new[k]= currentWeight+currentNeuron.grad[k];
+                    currentNeuron.w_new[k]= currentWeight+currentNeuron.wgrad[k];
                     currentNeuron.setWeight(k,currentNeuron.w_new[k]);
                 }
 
-/*                console.log("layer " + currentLayer.layerNumber + '\n'
+                currentNeuron.bias_new=currentNeuron.bias+currentNeuron.bgrad;
+                currentNeuron.setBias(currentNeuron.bias_new);
+
+                console.log("layer " + currentLayer.layerNumber + '\n'
                             + "neuron " + currentNeuron.neuronNumber + '\n'
+                            + "bias   " + currentNeuron.bias + '\n'
                             + "  weights " + currentNeuron.weights + '\n'
                             + "     dc_da = " + currentNeuron.dc_da + '\n'
                             + "     da_dz = " + currentNeuron.da_dz + '\n'
                             + "     dz_dw = " + currentNeuron.dz_dw + '\n' + '\n'
-                            + "     dc_dw = " + currentNeuron.dc_dw + '\n');
-                
-*/
+                            + "     dc_dw = " + currentNeuron.dc_dw + '\n'+'\n'
+                            
+                            + "     dc_db = " + currentNeuron.dc_db + '\n');
+
+
             }
         }
     }

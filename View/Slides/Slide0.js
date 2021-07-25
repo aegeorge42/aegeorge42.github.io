@@ -3,8 +3,11 @@ import { Net } from "../../Model/net.js";
 import {actFns} from "../../Model/actfns.js"
 import {Button} from "../../View/Button.js"
 import { Neuron } from "../../Model/neuron.js";
+import { Data } from "../../Model/Data.js"
 
 export const Slide0 = new Slide();
+
+//var fruits = new Data(["strawberry", "blueberry"],["length", "roundness"]);
 
 var net = new Net();
 Slide0.slideNet=net;
@@ -50,7 +53,7 @@ slidetext.x=160;
 slidetext.y=50;
 Slide0.inputContainer.addChild(slidetext);
 
-var test = 2;
+var test = 1;
 
 if (test == 1){
     net.setNetData(train_data1);
@@ -61,7 +64,7 @@ if (test == 1){
     net.getLayer(0).addNeuron();
     Slide0.updateDraw(Slide0.slideNet);
 
-    net.setLearnRate(0.5);
+    net.setLearnRate(0.1);
 
     Slide0.updateDraw(Slide0.slideNet);
 

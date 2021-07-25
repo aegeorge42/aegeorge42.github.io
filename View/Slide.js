@@ -63,8 +63,8 @@ export class Slide{
   data; // dataset to use
   
   slideNet; // bind working net to slide
-  maxLayers = 4; //needed for buttons
-  maxNeurons = 4; //needed for buttons
+  maxLayers = 8; //needed for buttons
+  maxNeurons = 8; //needed for buttons
 
 
   slideContainer; // holds it ALL
