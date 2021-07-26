@@ -183,6 +183,18 @@ export class Slide{
       slide.updateDraw(net);
     });
 
+    this.buttonLayerContainer.addChild(new Button("learnbatch",PIXI.Texture.from('images/buttons/cat.png'), 150,400,true));
+    this.buttonLayerContainer.getChildAt(6).on('click', async function(e){
+      var loopcount = 0;
+      pauselearn=0;
+      while(loopcount<1000 && pauselearn==0){
+        net.learn_batch();
+        slide.updateDraw(net);
+        await slide.sleep(100); //pause to see updates - 100 seems good
+        loopcount=loopcount+1;
+        //console.log(loopcount);
+      }
+    });
 
   }
 

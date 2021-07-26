@@ -191,6 +191,7 @@ export class Net{
 
         // for each layer
         for(var i=this.layers.length-1; i>-1; i--){
+
             var currentLayer=this.getLayer(i);
             var nextLayer=this.getLayer(currentLayer.layerNumber+1);
 
@@ -286,6 +287,7 @@ export class Net{
 
     learn_batch(){
 
+        // backprop each data point, storing gradient
         for(var h=0; h<this.data.points.length; h++){
             this.backprop();
 
@@ -296,6 +298,7 @@ export class Net{
                     var currentNeuron = currentLayer.getNeuron(j);
 
                     currentNeuron.wgrad_batch[h]=[...currentNeuron.dc_dw];
+                    console.log(currentNeuron.wgrad_batch);
                 }
             }
 
@@ -304,52 +307,37 @@ export class Net{
             }
         }
 
-        console.log(this.getLayer(0).getNeuron(0).wgrad_batch);
-       
-            for(var i=this.layers.length-1; i>-1; i--){
-                for(var j=0; j<currentLayer.neurons.length; j++){
-                    var currentNeuron = currentLayer.getNeuron(j);
-
-                    console.log(currentNeuron.wgrad_batch);
-
-                    currentNeuron.totgrad=[];
-
-                    for(var f = 0; f<currentNeuron.wgrad_batch.length; f++){
-                        for(var k=0; k<currentNeuron.weights.length; k++){
-                            currentNeuron.totgrad[f]=currentNeuron.wgrad_batch[f][k];
-                            console.log(currentNeuron.wgrad_batch[f][k]);
-                        }
-                    }}
-                    console.log(currentNeuron.totgrad);
-            }
-    }
-
-        /*
-        this.backprop();
-    //    console.log(this.getLayer(0).getNeuron(0).dc_dw)
-        
+       //sum of gradients
         for(var i=this.layers.length-1; i>-1; i--){
             var currentLayer=this.getLayer(i);
 
             for(var j=0; j<currentLayer.neurons.length; j++){
                 var currentNeuron = currentLayer.getNeuron(j);
 
-                currentNeuron.wgrad_batch[]=currentNeuron.wgrad;
+                currentNeuron.wgrad_batch_tot=new Array(currentNeuron.wgrad_batch[0].length).fill(0);
+
+                //console.log(currentNeuron.wgrad);
+                currentNeuron.wgrad.fill(0);
+                //console.log(currentNeuron.wgrad);
+
+                for(var f = 0; f<currentNeuron.wgrad_batch.length; f++){
+                    for(var k = 0; k<currentNeuron.wgrad_batch[k].length; k++){
+        
+                    //  currentNeuron.wgrad_batch_tot[k]= (currentNeuron.wgrad_batch_tot[k]+currentNeuron.wgrad_batch[f][k])/currentNeuron.wgrad_batch.length;
+                      currentNeuron.wgrad[k]= (currentNeuron.wgrad[k]+currentNeuron.wgrad_batch[f][k])/currentNeuron.wgrad_batch.length;
+
+                    }       
+                                 
+                }
+              //  console.log(currentNeuron.wgrad_batch_tot);
             }
         }
 
-        console.log(this.getLayer(0).getNeuron(0).wgrad);
-
+        //update
+        this.update_backprop();
         
+    }
 
-       // this.calcCost();
-       // this.update_backprop();
-
-        //iterate thru dataset
-        this.dataIdx=(this.dataIdx+1)%this.data.points.length;
-        this.setNetInput(this.data.points[this.dataIdx]);
-        */
-    
 
 
     //reset all weights and biases after calculating gradient
@@ -375,7 +363,7 @@ export class Net{
                 currentNeuron.bias_new=currentNeuron.bias+currentNeuron.bgrad;
                 currentNeuron.setBias(currentNeuron.bias_new);
 
-                console.log("layer " + currentLayer.layerNumber + '\n'
+            /*    console.log("layer " + currentLayer.layerNumber + '\n'
                             + "neuron " + currentNeuron.neuronNumber + '\n'
                             + "bias   " + currentNeuron.bias + '\n'
                             + "  weights " + currentNeuron.weights + '\n'
@@ -385,7 +373,7 @@ export class Net{
                             + "     dc_dw = " + currentNeuron.dc_dw + '\n'+'\n'
                             
                             + "     dc_db = " + currentNeuron.dc_db + '\n');
-
+*/
 
             }
         }
