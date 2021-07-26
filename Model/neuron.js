@@ -46,6 +46,9 @@ export class Neuron{
         this.wgrad=[];
         this.bgrad=0;
 
+        this.wgrad_batch=[[],[]];
+        this.totgrad=[];
+
     }
 
     setBias(b){

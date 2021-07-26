@@ -150,14 +150,14 @@ export class Slide{
       this.setNeuronButtons(net,i);
     }
 
-    this.buttonLayerContainer.addChild(new Button("learn_step",PIXI.Texture.from('images/buttons/button_learnstep.png'), 80,275,true));
+    this.buttonLayerContainer.addChild(new Button("learn_step",PIXI.Texture.from('images/buttons/button_learnstep.png'), 80,255,true));
     
     this.buttonLayerContainer.getChildAt(2).on('click', function(e){
       net.learn();
       slide.updateDraw(net);
     });
 
-    this.buttonLayerContainer.addChild(new Button("learn",PIXI.Texture.from('images/buttons/button_learn.png'), 80,350,true));
+    this.buttonLayerContainer.addChild(new Button("learn",PIXI.Texture.from('images/buttons/button_learn.png'), 80,300,true));
     
     this.buttonLayerContainer.getChildAt(3).on('click', async function(e){
       var loopcount = 0;
@@ -171,10 +171,16 @@ export class Slide{
       }
     });
 
-    this.buttonLayerContainer.addChild(new Button("pause",PIXI.Texture.from('images/buttons/button_pause.png'), 80,400,true));
+    this.buttonLayerContainer.addChild(new Button("pause",PIXI.Texture.from('images/buttons/button_pause.png'), 80,350,true));
       var pauselearn=0;
     this.buttonLayerContainer.getChildAt(4).on('click', function(e){
       pauselearn=1;
+    });
+
+    this.buttonLayerContainer.addChild(new Button("learnbatch",PIXI.Texture.from('images/buttons/learn_batch_step.png'), 80,400,true));
+    this.buttonLayerContainer.getChildAt(5).on('click', function(e){
+      net.learn_batch();
+      slide.updateDraw(net);
     });
 
 
@@ -521,7 +527,7 @@ export class Slide{
 
     this.netContainer.addChild(this.neuronOverContainer, this.neuronSensorContainer)
 
-    console.log(net.data.input_labels);
+   // console.log(net.data.input_labels);
     for(var i = 0; i<net.data.type.length; i++){
       var typeLabel = new PIXI.Text(net.data.type[i],medium);
       typeLabel.x=380+((net.layers.length-1)*150);
@@ -530,8 +536,8 @@ export class Slide{
 
     }
 
-    for(var i = 0; i<net.data.input_labels.length; i++){
-      var inputLabel = new PIXI.Text(net.data.input_labels[i],medium);
+    for(var i = 0; i<net.data.labels.length; i++){
+      var inputLabel = new PIXI.Text(net.data.labels[i],medium);
       inputLabel.anchor.set(0.5);
       inputLabel.x=200
       inputLabel.y=240+(i*100)

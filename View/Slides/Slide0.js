@@ -37,8 +37,8 @@ const train_input14 = {
 }
 
 const train_data1 = {
-   inputs: [train_input11,train_input12,train_input13,train_input14],
-   input_labels: ["length", "roundness"],
+   points: [train_input11,train_input12,train_input13,train_input14],
+   labels: ["length", "roundness"],
    type: ["strawberry", "blueberry"]
 }
 
@@ -64,7 +64,7 @@ if (test == 1){
     net.getLayer(0).addNeuron();
     Slide0.updateDraw(Slide0.slideNet);
 
-    net.setLearnRate(0.1);
+    net.setLearnRate(0.3);
 
     Slide0.updateDraw(Slide0.slideNet);
 

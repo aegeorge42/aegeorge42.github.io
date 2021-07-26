@@ -64,6 +64,8 @@ export class Net{
         this.update();
 
         this.setLearnRate(0.05);
+
+        this.batchgrad=[];
     }
 
     setOutLayer(){
@@ -78,7 +80,7 @@ export class Net{
 
     setNetData(data){
         this.data=data;
-        this.setNetInput(data.inputs[0]);
+        this.setNetInput(data.points[0]);
     }
 
     setNetInput(datapoint){
@@ -159,14 +161,13 @@ export class Net{
 
     learn(){
         this.backprop();
-
         this.calcCost();
         this.update_backprop();
 
         //iterate thru dataset
-        this.dataIdx=(this.dataIdx+1)%this.data.inputs.length;
+        this.dataIdx=(this.dataIdx+1)%this.data.points.length;
        //this.dataIdx=0;  // use for testing one data point
-       this.setNetInput(this.data.inputs[this.dataIdx]);
+       this.setNetInput(this.data.points[this.dataIdx]);
     }
 
     //each neuron in the final layer will have a cost
@@ -265,6 +266,76 @@ export class Net{
             }
         }
     }
+
+    /*
+    update_backprop_batch(iterations){
+
+        for (var iter=0;iter<iterations;iter++){
+            
+            for(var i=this.layers.length-1; i>-1; i--){
+                var currentLayer=this.getLayer(i);
+
+                for(var j=0; j<currentLayer.neurons.length; j++){
+                    var currentNeuron = currentLayer.getNeuron(j);
+                    
+                    currentNeuron.wgrad_batch[iter]=currentNeuron.wgrad;
+                }
+            }
+        }
+    }*/
+
+    learn_batch(){
+        
+        for(var h=0; h<this.data.points.length; h++){
+            this.backprop();
+
+            for(var i=this.layers.length-1; i>-1; i--){
+                var currentLayer=this.getLayer(i);
+
+                for(var j=0; j<currentLayer.neurons.length; j++){
+                    var currentNeuron = currentLayer.getNeuron(j);
+
+                    for(var k=0; k<currentNeuron.weights.length; k++){
+                        currentNeuron.totgrad[h]=currentNeuron.totgrad[h]+currentNeuron.weights[k];
+                    }
+                    console.log(currentNeuron.totgrad);
+
+                }
+            }
+
+        this.setNetInput(this.data.points[h]);
+        //console.log(this.data.points[h].expected_text)
+        }
+    
+    }
+
+        /*
+        this.backprop();
+    //    console.log(this.getLayer(0).getNeuron(0).dc_dw)
+        
+        for(var i=this.layers.length-1; i>-1; i--){
+            var currentLayer=this.getLayer(i);
+
+            for(var j=0; j<currentLayer.neurons.length; j++){
+                var currentNeuron = currentLayer.getNeuron(j);
+
+                currentNeuron.wgrad_batch[]=currentNeuron.wgrad;
+            }
+        }
+
+        console.log(this.getLayer(0).getNeuron(0).wgrad);
+
+        
+
+       // this.calcCost();
+       // this.update_backprop();
+
+        //iterate thru dataset
+        this.dataIdx=(this.dataIdx+1)%this.data.points.length;
+        this.setNetInput(this.data.points[this.dataIdx]);
+        */
+    
+
 
     //reset all weights and biases after calculating gradient
     update_backprop(){

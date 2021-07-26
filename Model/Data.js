@@ -1,9 +1,9 @@
 export class Data{
 
-    constructor(type, input_labels){
-        this.inputs=[];
+    constructor(type, labels){
+        this.points=[];
         this.type=type;
-        this.input_labels=input_labels;
+        this.labels=labels;
     }
 
     createDatapoint(input, expected, expected_text){
@@ -13,7 +13,7 @@ export class Data{
             expected_text: expected_text
 
         }
-        this.inputs.push(dp);
+        this.points.push(dp);
     }
     
 }
@@ -27,7 +27,7 @@ const train_input11 = {
 }
 
 const train_data1 = {
-   inputs: [train_input11],
-   input_labels: ["length", "roundness"],
+   points: [train_input11],
+   labels: ["length", "roundness"],
    type: ["strawberry", "blueberry"]
 }
