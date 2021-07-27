@@ -2,6 +2,8 @@
 import {Button} from "./Button.js"
 import {Slide0} from "./Slides/Slide0.js"
 import {Slide1} from "./Slides/Slide1.js"
+import {SlideX} from "./Slides/SlideX.js"
+
 
 
 
@@ -10,18 +12,28 @@ export class ViewSlideTest{
     currentSlide;
 
     constructor(){
-        this.app = new PIXI.Application({
+        
+        const app = new PIXI.Application({
+          autoResize: true,
           width: window.innerWidth,
           height: window.innerHeight,
-          backgroundColor: 0xFFBDD4
+          backgroundColor: 0xb3bbff
         });
+
+        this.app=app;
+
+        //resize canvas when window is resized
+        window.addEventListener('resize', resize);     
+        function resize(){
+            console.log("resize")
+            console.log(app)
+            app.renderer.resize(window.innerWidth, window.innerHeight);
+        }
         document.body.appendChild(this.app.view);
-
-
 
         //add premade slides
         this.slideList = [];
-        this.slideList.push(Slide0,Slide1);
+        this.slideList.push(Slide0,Slide1,SlideX);
         this.currentSlide=0;
 
         //next, prev slide buttons never move
@@ -35,8 +47,10 @@ export class ViewSlideTest{
                     vst.currentSlide=vst.currentSlide+1;
                     vst.drawSlide();
 
-                    // gotta update net at switch over
-                    vst.slideList[vst.currentSlide].updateDraw(vst.slideList[vst.currentSlide].slideNet);
+                    // gotta update net at switch over, if slide has a net
+                    if (vst.slideList[vst.currentSlide].slideNet !== undefined){
+                        vst.slideList[vst.currentSlide].updateDraw(vst.slideList[vst.currentSlide].slideNet);
+                    }
                 }
             })
 
@@ -49,15 +63,26 @@ export class ViewSlideTest{
                 if(vst.currentSlide>0){
                 vst.currentSlide=vst.currentSlide-1;
                 vst.drawSlide();
-                vst.slideList[vst.currentSlide].updateDraw(vst.slideList[vst.currentSlide].slideNet);
-
+                if (vst.slideList[vst.currentSlide].slideNet !== undefined){
+                    vst.slideList[vst.currentSlide].updateDraw(vst.slideList[vst.currentSlide].slideNet);
+                }
                 }
 //                } else console.log("1st SLIDE");
             })
 
         this.drawSlide();
+        console.log(this.app)
+
+
     }
 
+    resize() {
+        console.log("outresize");
+        console.log(app)
+        // Resize the renderer
+       // this.app.renderer.resize(window.innerWidth, window.innerHeight);
+    }
+    //window.onresize(console.log("resize"));
 
     //remove slide, leave buttons
     //I know it's ugly but it works
@@ -67,5 +92,20 @@ export class ViewSlideTest{
         } catch {}
    
         this.app.stage.addChild(this.slideList[this.currentSlide].slideContainer);
+
+        if (this.currentSlide==0){
+            this.app.stage.getChildAt(1).visible=false;
+
+            this.app.stage.getChildAt(0).x=(window.innerWidth)/2;
+            this.app.stage.getChildAt(0).y=(window.innerHeight)*3/4;
+            this.app.stage.getChildAt(0).texture=PIXI.Texture.from('images/buttons/start.png');
+        } else {
+            this.app.stage.getChildAt(1).visible=true;
+
+            this.app.stage.getChildAt(0).x=80;
+            this.app.stage.getChildAt(0).y=40;
+            this.app.stage.getChildAt(0).texture=PIXI.Texture.from('images/buttons/button_nextslide.png');
+
+        }
     }
 }

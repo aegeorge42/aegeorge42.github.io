@@ -1,12 +1,20 @@
-export class Data{
 
-    constructor(type, labels){
-        this.points=[];
+export const datatypes = {
+	STRAWBERRY: "strawberry", 
+    BLUEBERRY: "blueberry", 
+}
+
+export class Data{
+    
+    
+
+    constructor(size, type, labels){
+        this.points=new Array(size);
         this.type=type;
         this.labels=labels;
     }
 
-    createDatapoint(input, expected, expected_text){
+    createSingleDatapoint(expected_text, input, expected){
         var dp = {
             input: input,
             expected: expected,
@@ -15,19 +23,46 @@ export class Data{
         }
         this.points.push(dp);
     }
-    
+
+    createDataPoints(amount, expected_type){
+        if(expected_type == datatypes.STRAWBERRY){
+            var maxLength=5;
+            var minLength=0.5;
+
+            var maxRound=0.8;
+            var minRound=0;
+
+            for (var i =0; i<amount; i++){
+
+                var strawb = {
+                    input: [ Math.random() * (maxLength - minLength) + minLength,  Math.random() * (maxRound - minRound) + minRound],
+                    expected: [1,0],
+                    expected_text: "strawberry"
+                }
+
+                this.points[i]=strawb;
+            } 
+
+        } else if (expected_type == datatypes.BLUEBERRY){
+            var maxLength=0.9;
+            var minLength=0.05;
+
+            var maxRound=1.0;
+            var minRound=0.6;
+
+            for (var i =0; i<amount; i++){
+
+                var blueb = {
+                    input: [ Math.random() * (maxLength - minLength) + minLength,  Math.random() * (maxRound - minRound) + minRound],
+                    expected: [0,1],
+                    expected_text: "blueberry"
+                }
+
+                this.points[i]=blueb;
+            }
+        }
+    }
 }
 
-const fruits = new Data(["strawberry","blueberry"],["length", "roundness"]);
-
-const train_input11 = {
-    input: [0.99,0.01],
-    expected: [1,0],
-    expected_text: ["strawberry"]
-}
-
-const train_data1 = {
-   points: [train_input11],
-   labels: ["length", "roundness"],
-   type: ["strawberry", "blueberry"]
-}
+const fruits = new Data(100,["strawberry","blueberry"],["length", "roundness"]);
+    fruits.createDataPoints(50,datatypes.STRAWBERRY);
