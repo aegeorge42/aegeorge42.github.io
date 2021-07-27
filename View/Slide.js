@@ -236,9 +236,9 @@ export class Slide{
     
   }
 
-  isVis(name){
-    return this.buttonContainer.getChildByName(name).visible;
-  }
+ // isVis(name){
+ //   return this.buttonContainer.getChildByName(name).visible;
+ // }
 
   /*setVis(name,bool){
     if(bool==false){this.buttonContainer.getChildByName(name).visible=false;}
@@ -255,7 +255,7 @@ export class Slide{
 //    net.update();
 //    Slide0.draw(net);
 //  });
-  onClick(buttonname,thisnet,funct){
+/*  onClick(buttonname,thisnet,funct){
     var slide = this;
     slide.buttonContainer.getChildByName(buttonname).on('click', function(e){
     //  thisnet.getLayer(0).addNeuron();
@@ -263,7 +263,7 @@ export class Slide{
       slide.draw(thisnet);
     });
   }
-
+*/
   getNet(){
     return this.net;
   }

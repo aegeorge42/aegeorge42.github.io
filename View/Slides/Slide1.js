@@ -6,3 +6,8 @@ import { Neuron } from "../../Model/neuron.js";
 import { Data } from "../../Model/Data.js"
 
 export const Slide1 = new Slide();
+
+var slidename = new PIXI.Text("SLIDE 1");
+slidename.x=100;
+slidename.y=100;
+Slide1.slideContainer.addChild(slidename);
