@@ -100,14 +100,14 @@ if (test == 3){
     net.setOutLayer();
     Slide0.drawButtons(net);
     net.getLayer(0).addNeuron();
-    net.setLearnRate(0.3);
+    net.setLearnRate(0.5);
 
     net.getLayer(0).getNeuron(0).setBias(0);
     net.getLayer(0).getNeuron(1).setBias(0);
     net.getLayer(1).getNeuron(0).setBias(0);
     net.getLayer(1).getNeuron(1).setBias(0);
 
-    net.getLayer(0).getNeuron(0).setWeight(0,0.5);
+   /* net.getLayer(0).getNeuron(0).setWeight(0,0.5);
     net.getLayer(0).getNeuron(0).setWeight(1,-0.2);
 
     net.getLayer(0).getNeuron(1).setWeight(0,-0.3);
@@ -119,6 +119,19 @@ if (test == 3){
     net.getLayer(1).getNeuron(1).setWeight(0,-0.8);
     net.getLayer(1).getNeuron(1).setWeight(1,0.9);
 
+*/
+
+    net.getLayer(0).getNeuron(0).setWeight(0,0.5);
+    net.getLayer(0).getNeuron(0).setWeight(1,-0.5);
+
+    net.getLayer(0).getNeuron(1).setWeight(0,-0.5);
+    net.getLayer(0).getNeuron(1).setWeight(1,0.5);
+
+    net.getLayer(1).getNeuron(0).setWeight(0,0.5);
+    net.getLayer(1).getNeuron(0).setWeight(1,-0.5);
+
+    net.getLayer(1).getNeuron(1).setWeight(0,-0.5);
+    net.getLayer(1).getNeuron(1).setWeight(1,0.5);
 
 
     Slide0.updateDraw(Slide0.slideNet);

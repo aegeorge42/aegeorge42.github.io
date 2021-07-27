@@ -153,6 +153,7 @@ export class Slide{
     this.buttonLayerContainer.addChild(new Button("learn_step",PIXI.Texture.from('images/buttons/button_learnstep.png'), 80,255,true));
     
     this.buttonLayerContainer.getChildAt(2).on('click', function(e){
+      console.log("----INPUT " +net.dataIdx + "---------");
       net.learn();
       slide.updateDraw(net);
     });
@@ -187,7 +188,7 @@ export class Slide{
     this.buttonLayerContainer.getChildAt(6).on('click', async function(e){
       var loopcount = 0;
       pauselearn=0;
-      while(loopcount<1000 && pauselearn==0){
+      while(loopcount<100 && pauselearn==0){
         net.learn_batch();
         slide.updateDraw(net);
         await slide.sleep(100); //pause to see updates - 100 seems good
