@@ -520,7 +520,7 @@ export class Slide{
           overNeuron.addChild(overText);
 
         //detection for showing overneuron
-        var sensor= new PIXI.Sprite(PIXI.Texture.from('images/neuron.png'));
+        var sensor= new PIXI.Sprite(PIXI.Texture.from('images/neuron_old.png'));
           sensor.anchor.set(0.5);
           sensor.x=neuronBase.x;
           sensor.y=neuronBase.y;
