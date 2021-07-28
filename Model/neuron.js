@@ -114,16 +114,25 @@ export class Neuron{
             case(actFns.LINEAR):
                 this.output = outsum;
             break;
-            case(actFns.BINSTEP):
+/*            case(actFns.BINSTEP):
                 if(outsum <= 0){
                     this.output = 0;
                 } else{
                     this.output= 1;
                 }
+
             break;
+*/
             case(actFns.SIGMOID):
                 this.output=1/(1+(Math.E ** -outsum));
                 break;
+            case(actFns.RELU):
+                if(outsum<=0){
+                    this.output=0;
+                } else {
+                    this.output = outsum;
+                }
+            break;
 
         }
     }

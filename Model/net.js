@@ -148,10 +148,11 @@ export class Net{
         }
 
         // get outputs from last layer
+        // NOTE: last layer only uses sigmoid
         this.lastLayer.neurons.forEach(function(neuron){
-            if(neuron.actFun != netfn){
-                neuron.actFun = netfn;
-            }
+//            if(neuron.actFun != netfn){
+                neuron.actFun = actFns.SIGMOID;
+//            }
             neuron.calcOut();
         });
 
@@ -161,7 +162,7 @@ export class Net{
 
     learn(){
         this.backprop();
-        this.calcCost();
+    //    this.calcCost();
         this.update_backprop();
 
         //iterate thru dataset
@@ -178,14 +179,18 @@ export class Net{
     }
 
     //each neuron in the final layer will have a cost
-    calcCost(){
+    calcCost(){ 
+//        console.log("------------CALL----------")
         this.costTot=0;
         if (this.target !== undefined){
             for( var i = 0; i<this.target.length; i++){
                 if(this.netOut[i] !== undefined){
-                    this.cost[i]=0.5 * (this.target[i]-this.netOut[i]) ** 2;
+                    this.cost[i]= 0.5* ( Math.abs(this.target[i]-this.netOut[i]) ** 2);
+                //    this.cost[i]=0.5 * (this.target[i]-this.netOut[i]) ** 2;
                     this.costTot=this.costTot+this.cost[i];
+          //          console.log("target: " + this.target[i] + " net out: " + this.netOut[i] + " dcost "+ (this.target[i]-this.netOut[i])+ " cost "+ this.cost[i])
                 }
+         //       console.log("TOTAL COST: " + this.costTot);
             }
         } 
         return this.costTot;
@@ -207,18 +212,49 @@ export class Net{
             //for each neuron
             for(var j=0; j<currentLayer.neurons.length; j++){
                 var currentNeuron = currentLayer.getNeuron(j);
+                //console.log(currentNeuron.output);
+
+                //console.log(this.netActFn);
 
                 // derivative of output (da) with respect to (inputs * weights + bias)
                 // z is the value that goes inside the activation function
                 // a is the neuron output after the activation funtion
-                switch(this.netActFn){
+
+                if(this.netActFn == actFns.LINEAR){
+                    currentNeuron.da_dz=1;
+
+                } else if(this.netActFn == actFns.SIGMOID){
+                    currentNeuron.da_dz=(currentNeuron.output)*(1-currentNeuron.output);
+                } else if(this.netActFn == actFns.RELU) {
+                    if(currentNeuron.output<=0){
+                        currentNeuron.da_dz=0;
+                    } else {
+                        currentNeuron.da_dz=1;
+                    }
+                }
+
+                /*switch(this.netActFn){
                     case(actFns.LINEAR):
+                    console.log("hi");
+
                         currentNeuron.da_dz=1;
                     break;
                     case(actFns.SIGMOID):
+                    console.log("hi");
+
                         currentNeuron.da_dz=(currentNeuron.output)*(1-currentNeuron.output);
-                    break;    
-                }
+                    case(actFns.ReLU):
+                    console.log("hi");
+
+                    console.log(currentNeuron.output);
+
+                        if(currentNeuron.output<=0){
+                            currentNeuron.da_dz=0;
+                        } else {
+                            currentNeuron.da_dz=1;
+                        }
+                    break;
+                }*/
 
                 //for each weight
                 for(var k=0; k<currentNeuron.weights.length; k++){
@@ -264,9 +300,9 @@ export class Net{
                 }
              //   console.log(currentNeuron.wgrad);
 
-                console.log("layer: "+currentLayer.layerNumber 
-                                    + " neuron: " + currentNeuron.neuronNumber
-                                     + '\n' + "wgrad: "+ currentNeuron.wgrad);
+   //             console.log("layer: "+currentLayer.layerNumber 
+     //                               + " neuron: " + currentNeuron.neuronNumber
+       //                              + '\n' + "wgrad: "+ currentNeuron.wgrad);
                 /**** UPDATE BIAS *****/
                 // dc_db = dc_da * da_dz * dz_db
                 // but dz_db always = 1
@@ -308,7 +344,7 @@ export class Net{
                 }
             }
         }
-        this.costTot=batchCost;
+        this.costTot=batchCost/this.data.points.length;
 
         //sum of gradients
         for(var i=this.layers.length-1; i>-1; i--){
@@ -361,6 +397,11 @@ export class Net{
              //   currentNeuron.bias_new=currentNeuron.bias-currentNeuron.bgrad;
              //   currentNeuron.setBias(currentNeuron.bias_new);
             }
+            console.log("layer:" +currentLayer.layerNumber + '\n'
+                        + "  neuron: " + currentNeuron.neuronNumber + '\n'
+                        + "    da_dz: " + currentNeuron.da_dz + '\n' +'\n'
+                        + "    dc_dw: " + currentNeuron.dc_dw
+            );
         }
         this.update();
     }

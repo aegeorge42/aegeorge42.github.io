@@ -42,7 +42,8 @@ export const layout = {
 // This handles pretty much alllll the visual stuff
 
 export class Slide{
-  data; // dataset to use
+ 
+ /* // data; // dataset to use
   
   slideNet; // bind working net to slide
   maxLayers = 8; //needed for buttons
@@ -64,8 +65,11 @@ export class Slide{
   labelsContainer;
   
   textContainer;
-
+*/
   constructor(){
+    this.maxNeurons=3;
+    this.maxLayers=3;
+
     this.data=[];
         this.buttonContainer  = new PIXI.Container();             // Holds all my buttons EXCEPT add / remove neuron
         this.buttonNeuronAddContainer = new PIXI.Container();     // Holds add neuron buttons
@@ -171,7 +175,7 @@ export class Slide{
       //cycle data points for drawing purposes
       for(var i=0; i<net.data.points.length; i++){
        
-        console.log(slide.labelsContainer);
+  //      console.log(slide.labelsContainer);
         net.setNetInput(net.data.points[i]);
         slide.updateDraw(net);
         slide.labelsContainer.getChildAt(5).style.fill = 0x6b6b6b;

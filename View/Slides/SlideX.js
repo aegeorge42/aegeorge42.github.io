@@ -96,7 +96,7 @@ if (test == 2){
 
 if (test == 3){
     net.setNetData(train_data1);
-    net.setNetActFn(actFns.SIGMOID);
+    net.setNetActFn(actFns.RELU);
     net.setOutLayer();
     SlideX.drawButtons(net);
     net.getLayer(0).addNeuron();
