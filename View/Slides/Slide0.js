@@ -20,6 +20,9 @@ window.addEventListener('resize', resize);
 
 function resize(){
     console.log("resize slide1");
+//    this.app.renderer.resize(window.innerWidth, window.innerHeight);
+    header.x=(window.innerWidth)/2;
+    header.y=(window.innerHeight)/3;
 }
 //start button lives in viewslidetest for now
 //if (viewst !== undefined){

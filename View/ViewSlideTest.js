@@ -34,7 +34,7 @@ export class ViewSlideTest{
         //add premade slides
         this.slideList = [];
         this.slideList.push(Slide0,Slide1,SlideX);
-        this.currentSlide=1;
+        this.currentSlide=2;
 
         this.createButtons();
 /*       

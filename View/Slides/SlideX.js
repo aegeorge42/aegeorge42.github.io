@@ -37,7 +37,7 @@ const train_input14 = {
 }
 
 const train_data1 = {
-   points: [train_input11,train_input12,train_input13,train_input14],
+   points: [train_input12,train_input13,train_input14,train_input11],
    labels: ["length", "roundness"],
    type: ["strawberry", "blueberry"]
 }
