@@ -172,8 +172,8 @@ export class Net{
     }
 
     learn_batch(){
-        this.backprop_batch_test();
-        this.calcCost();
+        this.backprop_batch();
+    //    this.calcCost();
         this.update_backprop();
     }
 
@@ -188,6 +188,7 @@ export class Net{
                 }
             }
         } 
+        return this.costTot;
     }
 
     // where the action happens
@@ -258,7 +259,6 @@ export class Net{
                     currentNeuron.dc_dw[k]= currentNeuron.dc_da*currentNeuron.da_dz*currentNeuron.dz_dw[k];
                     
                     // how much to change each weight in order to decrease the cost
-                    //IMPORTANT - I pull out the negative sign here 
                     currentNeuron.wgrad[k] = this.learnRate*(currentNeuron.dc_dw[k]);
                     
                 }
@@ -273,7 +273,7 @@ export class Net{
                 // so 
                 // dc_db = dc_da * da_dz
                 currentNeuron.dc_db=currentNeuron.dc_da * currentNeuron.da_dz;
-                currentNeuron.bgrad = -1*this.learnRate*(currentNeuron.dc_db);
+                currentNeuron.bgrad = this.learnRate*(currentNeuron.dc_db);
 
 
             }
@@ -281,17 +281,22 @@ export class Net{
     }
 
 
-    backprop_batch_test(){
-
+    backprop_batch(){
+        var costs=new Array(this.data.points.length);
+        var batchCost=0;
         for(var h=0; h<this.data.points.length; h++){
             this.setNetInput(this.data.points[h]);
             this.update();
-            console.log("----INPUT " + (h)
+             /* 
+             console.log("----INPUT " + (h)
              + " " + this.data.points[h].expected_text
              + " " + this.netInput
              +" ---------" )
+             */
             this.backprop();
-
+            costs[h]=this.calcCost();
+            batchCost=batchCost+costs[h];
+            
             for(var i=this.layers.length-1; i>-1; i--){
                 var currentLayer=this.getLayer(i);
 
@@ -303,6 +308,7 @@ export class Net{
                 }
             }
         }
+        this.costTot=batchCost;
 
         //sum of gradients
         for(var i=this.layers.length-1; i>-1; i--){
@@ -312,117 +318,29 @@ export class Net{
                 var currentNeuron = currentLayer.getNeuron(j);
 
                 currentNeuron.wgrad_batch_tot=new Array(currentNeuron.wgrad_batch[0].length).fill(0);
-
-                //console.log(currentNeuron.wgrad);
                 currentNeuron.wgrad.fill(0);
-                //console.log(currentNeuron.wgrad);
-                console.log("---------TOTAL---------")
+//                console.log("---------TOTAL---------")
 
                 for(var f = 0; f<currentNeuron.wgrad_batch.length; f++){
                     for(var k = 0; k<currentNeuron.wgrad_batch[k].length; k++){
-                   //     console.log("-----tosum-----")
-                       
-                   //     console.log("f: "+f +" k: " +k + " : "+currentNeuron.wgrad_batch[f][k]);
-                       //console.log("-----tosum-----")
-        currentNeuron.wgrad[k]= (currentNeuron.wgrad[k]+currentNeuron.wgrad_batch[f][k]);
-                      //  currentNeuron.wgrad[k]= (currentNeuron.wgrad[k])/4;
-                       // console.log(currentNeuron.wgrad[k]+" + "+currentNeuron.wgrad_batch[f][k]);
-                    
-                    //  currentNeuron.wgrad[k]= (currentNeuron.wgrad[k]+currentNeuron.wgrad_batch[f][k])/currentNeuron.wgrad_batch.length;
-                //    console.log("layer: "+currentLayer.layerNumber 
-             //       + " neuron: " + currentNeuron.neuronNumber
-              //      + '\n' + "wgrad: "+ currentNeuron.wgrad[k]);
+                 
+                        currentNeuron.wgrad[k]= (currentNeuron.wgrad[k]+currentNeuron.wgrad_batch[f][k]);
                     }       
                                  
                 }
 
+                //average the sum
                 for(var m = 0; m<currentNeuron.wgrad.length; m++){
                     currentNeuron.wgrad[m]=(currentNeuron.wgrad[m]/currentNeuron.wgrad_batch.length)
                 }
+                /*
                 console.log("layer: "+currentLayer.layerNumber 
                                 + " neuron: " + currentNeuron.neuronNumber
                                 + '\n' + "TOTAL wgrad: "+ currentNeuron.wgrad);
-              //  console.log(currentNeuron.wgrad_batch_tot);
+                */
             }
         }
     }
-
-    backprop_batch(){
-
-        // backprop each data point, storing gradient
-        for(var h=0; h<this.data.points.length; h++){
-            console.log("----INPUT " + (h)
-             + " " + this.data.points[h].expected_text
-             + " " +this.netInput
-             +" ---------" )
-            this.backprop();
-            
-            for(var i=this.layers.length-1; i>-1; i--){
-                var currentLayer=this.getLayer(i);
-
-                for(var j=0; j<currentLayer.neurons.length; j++){
-                    var currentNeuron = currentLayer.getNeuron(j);
-                //    console.log(currentNeuron.wgrad)
-
-                  currentNeuron.wgrad_batch[h]=[...this.getLayer(i).getNeuron(j).wgrad];
-          //        console.log("layer: "+currentLayer.layerNumber 
-           //                     + " neuron: " + currentNeuron.neuronNumber
-           //                     + '\n' + "wgrad: "+ currentNeuron.wgrad);
-                //    console.log(currentNeuron.wgrad_batch)              
-                }
-            }
-            
-            if(this.data.points[h+1] !== undefined){
-                this.setNetInput(this.data.points[h+1]);
-                this.update();
-            }
-        }
-
-       //sum of gradients
-        for(var i=this.layers.length-1; i>-1; i--){
-            var currentLayer=this.getLayer(i);
-
-            for(var j=0; j<currentLayer.neurons.length; j++){
-                var currentNeuron = currentLayer.getNeuron(j);
-
-                currentNeuron.wgrad_batch_tot=new Array(currentNeuron.wgrad_batch[0].length).fill(0);
-
-                //console.log(currentNeuron.wgrad);
-                currentNeuron.wgrad.fill(0);
-                //console.log(currentNeuron.wgrad);
-                console.log("---------TOTAL---------")
-
-                for(var f = 0; f<currentNeuron.wgrad_batch.length; f++){
-                    for(var k = 0; k<currentNeuron.wgrad_batch[k].length; k++){
-                   //     console.log("-----tosum-----")
-                       
-                   //     console.log("f: "+f +" k: " +k + " : "+currentNeuron.wgrad_batch[f][k]);
-                       //console.log("-----tosum-----")
-        currentNeuron.wgrad[k]= (currentNeuron.wgrad[k]+currentNeuron.wgrad_batch[f][k]);
-                      //  currentNeuron.wgrad[k]= (currentNeuron.wgrad[k])/4;
-                       // console.log(currentNeuron.wgrad[k]+" + "+currentNeuron.wgrad_batch[f][k]);
-                    
-                    //  currentNeuron.wgrad[k]= (currentNeuron.wgrad[k]+currentNeuron.wgrad_batch[f][k])/currentNeuron.wgrad_batch.length;
-                //    console.log("layer: "+currentLayer.layerNumber 
-             //       + " neuron: " + currentNeuron.neuronNumber
-              //      + '\n' + "wgrad: "+ currentNeuron.wgrad[k]);
-                    }       
-                                 
-                }
-
-                for(var m = 0; m<currentNeuron.wgrad.length; m++){
-                    currentNeuron.wgrad[m]=(currentNeuron.wgrad[m]/currentNeuron.wgrad_batch.length)
-                }
-                console.log("layer: "+currentLayer.layerNumber 
-                                + " neuron: " + currentNeuron.neuronNumber
-                                + '\n' + "TOTAL wgrad: "+ currentNeuron.wgrad);
-              //  console.log(currentNeuron.wgrad_batch_tot);
-            }
-        }
-        
-    }
-
-
 
     //reset all weights and biases after calculating gradient
     update_backprop(){
@@ -440,7 +358,7 @@ export class Net{
                     currentNeuron.setWeight(k,currentNeuron.w_new[k]);
                 }
 
-             //   currentNeuron.bias_new=currentNeuron.bias+currentNeuron.bgrad;
+             //   currentNeuron.bias_new=currentNeuron.bias-currentNeuron.bgrad;
              //   currentNeuron.setBias(currentNeuron.bias_new);
             }
         }
