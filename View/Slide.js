@@ -1,4 +1,6 @@
 import {Button} from "./Button.js"
+import {actFns} from "../../Model/actfns.js"
+
 
 
 const formatter = new Intl.NumberFormat('en-US', {
@@ -214,7 +216,30 @@ export class Slide{
         loopcount=loopcount+1;
       }
     });
+
+    this.buttonContainer.addChild(new Button("setactfn",PIXI.Texture.from('images/buttons/treasure.png'), 80,550,true));
+    console.log(net.netActFn);
+    this.buttonContainer.getChildAt(7).on('click', function(e){
+      
+      net.setNetActFn(actFns.SIGMOID);
+      slide.updateDraw(net);
+
+      console.log(net.netActFn);
+    });
+
+    this.buttonContainer.addChild(new Button("setactfn",PIXI.Texture.from('images/buttons/treasure.png'), 120,550,true));
+    console.log(net.netActFn);
+    this.buttonContainer.getChildAt(8).on('click', function(e){
+      
+      net.setNetActFn(actFns.RELU);
+      slide.updateDraw(net);
+
+      console.log(net.netActFn);
+    });
+
   }
+
+  
 
   // add/remove neuron button functionality
   setNeuronButtons(net,layernum){

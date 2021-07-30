@@ -27,7 +27,7 @@ export class ViewSlideTest{
         window.addEventListener('resize', resize);     
         function resize(){
             app.renderer.resize(window.innerWidth, window.innerHeight);
-            f.width=window.innerWidth;
+            header.width=window.innerWidth;
            // f.position.set(
                //app.screen.width / 2 ,
               // app.screen.height / 2
@@ -38,17 +38,17 @@ export class ViewSlideTest{
         //add premade slides
         this.slideList = [];
         this.slideList.push(Slide0,Slide1,SlideX);
-        this.currentSlide=2;
+        this.currentSlide=0;
         this.drawSlide();
 
         //header bar
-        const f=new PIXI.Graphics();
-        f.beginFill(0x7278d6);
-        f.drawRect(0,0,window.innerWidth,80);
-        f.endFill();
+        const header=new PIXI.Graphics();
+        header.beginFill(0x7278d6);
+        header.drawRect(0,0,window.innerWidth,50);
+        header.endFill();
 
         //console.log(f)
-        this.app.stage.addChild(f);
+        this.app.stage.addChild(header);
 
         this.createButtons();
     }
@@ -68,29 +68,6 @@ export class ViewSlideTest{
    
         //add next slide to screen
         this.app.stage.addChildAt(this.slideList[this.currentSlide].slideContainer,0);
-
-        /*
-        if (this.currentSlide==0){
-            this.setVis(1,false);
-            this.setVis(2,false);
-            this.setVis(3,false);
-
-
-
-            this.app.stage.getChildAt(0).x=(window.innerWidth)/2;
-            this.app.stage.getChildAt(0).y=(window.innerHeight)*3/4;
-            this.app.stage.getChildAt(0).texture=PIXI.Texture.from('images/buttons/start.png');
-        } else {
-            this.setVis(1,true);
-            this.setVis(2,true);
-            this.setVis(3,true);
-
-            this.app.stage.getChildAt(0).x=80;
-            this.app.stage.getChildAt(0).y=40;
-            this.app.stage.getChildAt(0).texture=PIXI.Texture.from('images/buttons/button_nextslide.png');
-
-        }
-        */
     }
 
     createButtons(){
