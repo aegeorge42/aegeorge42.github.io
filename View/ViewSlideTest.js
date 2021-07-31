@@ -2,6 +2,7 @@
 import {Button} from "./Button.js"
 import {Slide0} from "./Slides/Slide0.js"
 import {Slide1} from "./Slides/Slide1.js"
+import {Slide2} from "./Slides/Slide2.js"
 import {SlideX} from "./Slides/SlideX.js"
 
 
@@ -37,8 +38,8 @@ export class ViewSlideTest{
 
         //add premade slides
         this.slideList = [];
-        this.slideList.push(Slide0,Slide1,SlideX);
-        this.currentSlide=0;
+        this.slideList.push(Slide0,Slide1,Slide2,SlideX);
+        this.currentSlide=2;
         this.drawSlide();
 
         //header bar

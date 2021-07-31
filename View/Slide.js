@@ -218,17 +218,17 @@ export class Slide{
     });
 
     this.buttonContainer.addChild(new Button("setactfn",PIXI.Texture.from('images/buttons/treasure.png'), 80,550,true));
-    console.log(net.netActFn);
+ //   console.log(net.netActFn);
     this.buttonContainer.getChildAt(7).on('click', function(e){
       
       net.setNetActFn(actFns.SIGMOID);
       slide.updateDraw(net);
 
-      console.log(net.netActFn);
+   //   console.log(net.netActFn);
     });
 
     this.buttonContainer.addChild(new Button("setactfn",PIXI.Texture.from('images/buttons/treasure.png'), 120,550,true));
-    console.log(net.netActFn);
+    //console.log(net.netActFn);
     this.buttonContainer.getChildAt(8).on('click', function(e){
       
       net.setNetActFn(actFns.RELU);
@@ -279,11 +279,34 @@ export class Slide{
   }
   */
 
+  clearButtons(){
+    console.log("clear");
+    for(var i =0; i<this.buttonContainer.children.length; i++){
+      this.buttonContainer.getChildAt(i).visible=false;
+    }   
+  }
+
   setVis(container,idx,bool){
     if(bool==false){container.getChildAt(idx).visible=false;}
     else if(bool==true){container.getChildAt(idx).visible=true;}
   }
 
+  setVisAll(container, bool){
+    if(bool==false){
+      for(var i = 0; i<container.children.length; i++){
+        container.getChildAt(i).visible=false;
+      }
+    } else if(bool==true){
+      for(var i = 0; i<container.children.length; i++){
+        container.getChildAt(i).visible=true;
+      }
+    }
+    console.log("setvis")
+  }
+
+  hi(){
+    console.log("hi");
+  }
   getNet(){
     return this.net;
   }
@@ -315,7 +338,6 @@ export class Slide{
     this.setVis(this.buttonNeuronRemContainer,net.layers.length-1,false);
   }
 
-  clearButtons(){}
   clearInputs(){}
   clearNet(){}
   clear(){}
