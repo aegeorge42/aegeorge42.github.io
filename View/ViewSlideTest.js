@@ -1,5 +1,6 @@
 //import { defaultInput } from "../Model/net.js";
 import {Button} from "./Button.js"
+import {SlideTest0} from "./Slides/SlideTest0.js"
 import {Slide0} from "./Slides/Slide0.js"
 import {Slide1} from "./Slides/Slide1.js"
 import {Slide2} from "./Slides/Slide2.js"
@@ -29,17 +30,16 @@ export class ViewSlideTest{
         function resize(){
             app.renderer.resize(window.innerWidth, window.innerHeight);
             header.width=window.innerWidth;
-           // f.position.set(
-               //app.screen.width / 2 ,
-              // app.screen.height / 2
-           //   );
         }
         document.body.appendChild(this.app.view);
 
         //add premade slides
         this.slideList = [];
-        this.slideList.push(Slide0,Slide1,Slide2,SlideX);
-        this.currentSlide=2;
+    //    this.slideList.push(Slide0,Slide1,Slide2,SlideX);
+        this.slideList.push(SlideTest0);
+
+        this.currentSlide=0;
+
         this.drawSlide();
 
         //header bar

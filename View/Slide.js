@@ -45,29 +45,6 @@ export const layout = {
 
 export class Slide{
  
- /* // data; // dataset to use
-  
-  slideNet; // bind working net to slide
-  maxLayers = 8; //needed for buttons
-  maxNeurons = 8; //needed for buttons
-
-
-  slideContainer; // holds it ALL
-  inputContainer; // inputs to draw
-  buttonContainer; // all buttons to draw -to delete?
-  buttonContainer;
-  buttonNeuronAddContainer;
-  buttonNeuronRemContainer;
-
-    
-  netContainer; // net to draw 
-  weightsContainer; // weight graphics to draw
-  neuronOverContainer;
-  neuronSensorContainer;
-  labelsContainer;
-  
-  textContainer;
-*/
   constructor(){
     this.maxNeurons=3;
     this.maxLayers=3;
@@ -121,7 +98,7 @@ export class Slide{
     this.buttonContainer.getChildAt(0).on('click', function(e){
       if(net.layers.length<slide.maxLayers){
         net.addLayer();
-        slide.updateDraw(net);
+      //  slide.updateDraw(net);
       }
     });
     
@@ -130,7 +107,7 @@ export class Slide{
     this.buttonContainer.getChildAt(1).on('click', function(e){
       if(net.layers.length>1){
         net.removeLayer();
-        slide.updateDraw(net);
+      //  slide.updateDraw(net);
       }
     });
 
@@ -146,7 +123,7 @@ export class Slide{
     this.buttonContainer.getChildAt(2).on('click', function(e){
       console.log("----INPUT " +net.dataIdx + "---------");
       net.learn();
-      slide.updateDraw(net);
+    //  slide.updateDraw(net);
     });
 
     // LEARN - STOCHASTIC
@@ -156,7 +133,7 @@ export class Slide{
       pauselearn=0;
       while(loopcount<1000 && pauselearn==0){
         net.learn();
-        slide.updateDraw(net);
+      //  slide.updateDraw(net);
         await slide.sleep(100); //pause to see updates - 100 seems good
         loopcount=loopcount+1;
         //console.log(loopcount);
@@ -179,7 +156,7 @@ export class Slide{
        
   //      console.log(slide.labelsContainer);
         net.setNetInput(net.data.points[i]);
-        slide.updateDraw(net);
+   //     slide.updateDraw(net);
         slide.labelsContainer.getChildAt(5).style.fill = 0x6b6b6b;
 
         await slide.sleep(100);
@@ -187,7 +164,7 @@ export class Slide{
 
       net.learn_batch();
       await slide.sleep(100);
-      slide.updateDraw(net);
+   //   slide.updateDraw(net);
     });
 
     //LEARN - VANILLA
@@ -201,7 +178,7 @@ export class Slide{
         if(loopcount<5){
           for(var i=0; i<net.data.points.length; i++){
             net.setNetInput(net.data.points[i]);
-            slide.updateDraw(net);
+//            slide.updateDraw(net);
             slide.labelsContainer.getChildAt(5).style.fill = 0x6b6b6b;
             await slide.sleep(100);
             slide.labelsContainer.getChildAt(5).style.fill = 0x000000;
@@ -212,7 +189,7 @@ export class Slide{
 
         await slide.sleep(100);
         net.learn_batch();
-        slide.updateDraw(net);
+//        slide.updateDraw(net);
         loopcount=loopcount+1;
       }
     });
@@ -232,7 +209,7 @@ export class Slide{
     this.buttonContainer.getChildAt(8).on('click', function(e){
       
       net.setNetActFn(actFns.RELU);
-      slide.updateDraw(net);
+//      slide.updateDraw(net);
 
       console.log(net.netActFn);
     });
@@ -248,13 +225,13 @@ export class Slide{
     this.buttonNeuronAddContainer.getChildAt(layernum).on('click', function(e){
       if(net.getLayer(layernum).neurons.length<slide.maxNeurons){
         net.getLayer(layernum).addNeuron();
-        slide.updateDraw(net);
+//        slide.updateDraw(net);
       }
     });
 
     this.buttonNeuronRemContainer.getChildAt(layernum).on('click', function(e){
       net.getLayer(layernum).removeNeuron();
-      slide.updateDraw(net);
+//      slide.updateDraw(net);
     });
 
   }
@@ -304,30 +281,21 @@ export class Slide{
     console.log("setvis")
   }
 
-  hi(){
-    console.log("hi");
+  drawInit(net){
+    this.drawInputs(net);
+    this.drawNeurons(net);
+    this.drawWeights(net);
+    this.drawCost(net);
   }
-  getNet(){
-    return this.net;
+
+  drawUpdate(net){
+    net.update();
   }
 
   // update net and redraw
   updateDraw(net){
     net.update();
     this.draw(net);
-
-    if(net.layers.length>1){
-      this.setVis(this.buttonNeuronAddContainer,net.layers.length-2,true);
-      this.setVis(this.buttonNeuronRemContainer,net.layers.length-2,true);
-    }
-
-    this.setVis(this.buttonNeuronAddContainer,net.layers.length-1,false);
-    this.setVis(this.buttonNeuronRemContainer,net.layers.length-1,false);
-  }
-
-  updateDraw_noCost(net){
-    net.update();
-    this.draw_noCost(net);
 
     if(net.layers.length>1){
       this.setVis(this.buttonNeuronAddContainer,net.layers.length-2,true);
@@ -387,6 +355,7 @@ export class Slide{
           inputSprite.addChild(inputSpriteText);
           this.inputContainer.addChild(inputSprite);
       }
+      console.log(this.inputContainer.children);
   }
 
   drawWeights(net){

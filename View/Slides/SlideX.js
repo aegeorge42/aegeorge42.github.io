@@ -134,6 +134,8 @@ if (test == 3){
     net.getLayer(1).getNeuron(1).setWeight(1,0.5);
 
 
-    SlideX.updateDraw(SlideX.slideNet);
+    SlideX.slideNet.update();
+    SlideX.drawInit(SlideX.slideNet);
+  //  SlideX.updateDraw(SlideX.slideNet);
 
 }
