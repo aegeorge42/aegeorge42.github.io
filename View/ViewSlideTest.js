@@ -35,7 +35,7 @@ export class ViewSlideTest{
 
         //add premade slides
         this.slideList = [];
-    //    this.slideList.push(Slide0,Slide1,Slide2,SlideX);
+//        this.slideList.push(Slide0,Slide1,Slide2,SlideX);
         this.slideList.push(SlideTest0);
 
         this.currentSlide=0;

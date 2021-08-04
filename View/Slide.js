@@ -56,8 +56,8 @@ export class Slide{
       this.inputContainer = new PIXI.Container();                 // inputs to draw
       this.netContainer = new PIXI.Container();                   // all neurons to draw (incl. neuronOverContainer + neuronSensorContainer)
         this.neuronOverContainer = new PIXI.Container();          // shows neuron guts
-        this.neuronSensorContainer = new PIXI.Container();        // hitbox for neuronOverContainer
-
+        this.neuronSensorContainer = new PIXI.Container();  
+        // hitbox for neuronOverContaine
       this.weightsContainer = new PIXI.Container();               // all weights to draw
       this.labelsContainer = new PIXI.Container();                // all labels to draw (ex. input labels, data type labels)
       this.textContainer = new PIXI.Container();                  // all slide text that isn't labels
@@ -66,6 +66,7 @@ export class Slide{
       this.slideContainer.addChild(this.buttonContainer,
                                   this.buttonNeuronAddContainer,
                                   this.buttonNeuronRemContainer,
+                                  
                                   this.weightsContainer,
                                   this.inputContainer, 
                                   this.labelsContainer,
@@ -433,23 +434,23 @@ export class Slide{
                   //weightSprite.buttonmode=true;
                   var self=this;
                   weightSprite.on('mouseover', function(e){
-                  //  this.alpha=0;
+                    this.alpha=0;
                   //  this.getChildAt(0).alpha=0;
-                    this.getChildAt(0).scale.set(1.5);
+                  //  this.getChildAt(0).scale.set(1.5);
                     //come back to this
                 //    var temp = new PIXI.Polygon(this.currentPath.points[0]+20,this.currentPath.points[1]+20,this.currentPath.points[2]+20,this.currentPath.points[3]+20);
                   });
                   
         
                   weightSprite.on('mouseout', function(e){
-                  //  this.alpha=1;
+                    this.alpha=1;
                   
-                  this.getChildAt(0).scale.set(1);
+                 // this.getChildAt(0).scale.set(1);
                   
 
                   });
                 this.weightsContainer.addChild(weightSprite);
-                //this.weightsContainer.addChild(f);
+                this.weightsContainer.addChild(f);
 
                   
 
@@ -545,7 +546,7 @@ export class Slide{
           sensor.x=neuronBase.x;
           sensor.y=neuronBase.y;
           sensor.tint=0xFFA500;
-          sensor.alpha=0;
+          sensor.alpha=1;
           sensor.interactive=true;
 
           var self = this;
@@ -557,19 +558,21 @@ export class Slide{
             self.neuronOverContainer.getChildAt(this.parent.getChildIndex(this)).alpha=0;
           });
 
+          layerContainer.addChild(neuronBase);
+
         this.neuronOverContainer.addChild(overNeuron);
         this.neuronSensorContainer.addChild(sensor);
 
-            
+        this.netContainer.addChild(this.neuronOverContainer, this.neuronSensorContainer)
+
         //neuronContainer.addChild(neuronBase);
         // neuronContainer.addChild(overNeuron);
         //neuronContainer.addChild(sensor);
-        layerContainer.addChild(neuronBase);
         
       }
     }
 
-    this.netContainer.addChild(this.neuronOverContainer, this.neuronSensorContainer)
+//    this.netContainer.addChild(this.neuronOverContainer, this.neuronSensorContainer)
 
    // console.log(net.data.input_labels);
     for(var i = 0; i<net.data.type.length; i++){
