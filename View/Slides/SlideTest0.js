@@ -47,5 +47,7 @@ net.update();
 
 net.printNet();
 
-SlideTest0.drawNeurons_init(net);
-SlideTest0.drawInputs_init(net);
+//SlideTest0.drawNeurons_init(net);
+//SlideTest0.drawInputs_init(net);
+
+SlideTest0.draw_init(net);

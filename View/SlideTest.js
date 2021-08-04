@@ -24,6 +24,18 @@ const medium = new PIXI.TextStyle({
   fontSize: 20
 });
 
+PIXI.Graphics.prototype.updateLineStyle = function(lineWidth, color, alpha){   
+    var len = this.graphicsData.length;    
+    for (var i = 0; i < len; i++) {        
+      var data = this.graphicsData[i];
+      data.lineWidth = lineWidth;        
+      data.lineColor = color;        
+      data.alpha = alpha;   
+      this.dirty++;        
+      this.clearDirty++;    
+    }    
+}
+  
 export class SlideTest{
     constructor(){
         this.buttonContainer  = new PIXI.Container();
@@ -48,8 +60,10 @@ export class SlideTest{
                 this.neuronSensors.name = "neuronSensors";
         this.neuronContainer.addChild(this.neuronBases, this.neuronTexts, this.neuronOvers, this.neuronOverTexts, this.neuronSensors);
 
+        this.weightsContainer = new PIXI.Container();
+
         this.slideContainer = new PIXI.Container();
-        this.slideContainer.addChild(this.buttonContainer, this.inputContainer, this.neuronContainer);
+        this.slideContainer.addChild(this.buttonContainer, this.weightsContainer, this.inputContainer, this.neuronContainer);
     }
 
     formatList(list){
@@ -72,7 +86,7 @@ export class SlideTest{
         this.buttonContainer.getChildByName("addlayer").on('click', function(e){
             net.addLayer();
             net.update();
-            slide.drawNeurons_init(net);
+            slide.draw_init(net);
             console.log(net.layers.length)
         });
 
@@ -82,7 +96,7 @@ export class SlideTest{
             if(net.layers.length>1){
                 net.removeLayer();
                 net.update();
-                slide.drawNeurons_init(net);
+                slide.draw_init(net);
             }
         });
 
@@ -115,15 +129,21 @@ export class SlideTest{
 
     draw_init(net){
         this.drawInputs_init(net);
+        this.drawWeights_init(net);
         this.drawNeurons_init(net);
     }
 
     draw_update(net){
         this.drawInputs_update(net);
         this.drawNeurons_update(net);
+        this.drawWeights_update(net);
     }
 
     drawInputs_init(net){
+
+        this.inputBases.removeChildren();
+        this.inputTexts.removeChildren();
+
         for(var i = 0; i<net.netInput.length; i++){
 
             var inputBase = new PIXI.Sprite(PIXI.Texture.from('images/input.png'));
@@ -302,8 +322,78 @@ export class SlideTest{
                 + "b: " + formatter.format(net.getLayer(i).neurons[j].bias) +'\n'
                 + "o: " + formatter.format(net.getLayer(i).neurons[j].output_nofn) + '\n'
                 + "   " + formatter.format(net.getLayer(i).neurons[j].output) + '\n' ;
-
             }
         }
+    }
+
+    drawWeights_init(net){
+
+        this.weightsContainer.removeChildren();
+
+        for(var i = 0; i<net.layers.length; i++){
+            for(var j = 0; j<net.getLayer(i).neurons.length; j++){
+                for(var k = 0; k<net.getLayer(i).neurons[j].weights.length; k++){
+                    var weightSprite=new PIXI.Graphics();
+                    weightSprite.name = i.toString() + j.toString() + k.toString();
+
+                    var thickness = Math.abs(net.getLayer(i).neurons[j].weights[k] * 10) + 1;
+                    var color = 0x000000;
+
+                    //positive weight = blue, neagtive = orange
+                    if(net.getLayer(i).neurons[j].weights[k] <= 0){
+                        color = 0xFF5733;
+                    } else if(net.getLayer(i).neurons[j].weights[k] > 0){
+                        color = 0x344EE8;
+                    }
+
+                    weightSprite.lineStyle(thickness, color);
+                    var startx = layout.NEURON_LEFTLIM + (i*layout.NEURON_X_DIF);
+                    var starty = layout.NEURON_UPPERLIM + (j*layout.NEURON_Y_DIF);
+                    var startyf = layout.NEURON_UPPERLIM + (j*layout.NEURON_Y_DIF) + layout.NEURON_NUDGE;
+                    var endx = layout.NEURON_LEFTLIM + (i*layout.NEURON_X_DIF) - layout.NEURON_X_DIF;
+                    var endy0 = layout.NEURON_UPPERLIM + (k*layout.NEURON_Y_DIF) + layout.NEURON_NUDGE;
+                    var endy =  layout.NEURON_UPPERLIM + (k*layout.NEURON_Y_DIF);
+
+                    if (i==0 && net.layers.length >1){
+                        weightSprite.drawPolygon(startx, starty, 
+                                                 endx, endy0);
+                    } else if (i==net.layers.length-1 && net.layers.length >1){
+                        weightSprite.drawPolygon(startx, startyf, 
+                                                 endx, endy);
+                    } else if (net.layers.length == 1){
+                        weightSprite.drawPolygon(startx, startyf, 
+                                                    endx, endy0);
+                    } else {
+                        weightSprite.drawPolygon(startx, starty, 
+                            endx, endy);
+                    }
+                    this.weightsContainer.addChild(weightSprite);
+                }
+            }
+        }
+    }
+
+    drawWeights_update(net){
+        for(var i = 0; i<net.layers.length; i++){
+            for(var j = 0; j<net.getLayer(i).neurons.length; j++){
+                for(var k = 0; k<net.getLayer(i).neurons[j].weights.length; k++){
+
+                    var name = i.toString() + j.toString() + k.toString();
+
+                    var thickness = Math.abs(net.getLayer(i).neurons[j].weights[k] * 10) + 1;
+                    var color = 0x000000;
+
+                    //positive weight = blue, neagtive = orange
+                    if(net.getLayer(i).neurons[j].weights[k] <= 0){
+                        color = 0xFF5733;
+                    } else if(net.getLayer(i).neurons[j].weights[k] > 0){
+                        color = 0x344EE8;
+                    }
+
+                    this.weightsContainer.getChildByName(name).updateLineStyle(thickness, color, 1);
+                }
+            }
+        }
+
     }
 }
