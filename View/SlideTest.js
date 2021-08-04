@@ -28,6 +28,13 @@ export class SlideTest{
     constructor(){
         this.buttonContainer  = new PIXI.Container();
 
+        this.inputContainer = new PIXI.Container();
+            this.inputBases = new PIXI.Container();
+                this.inputBases.name = "inputBases";
+            this.inputTexts = new PIXI.Container();
+                this.inputTexts.name = "inputTexts";
+        this.inputContainer.addChild(this.inputBases, this.inputTexts);
+
         this.neuronContainer = new PIXI.Container();
             this.neuronBases = new PIXI.Container();
                 this.neuronBases.name = "neuronBases";
@@ -41,19 +48,8 @@ export class SlideTest{
                 this.neuronSensors.name = "neuronSensors";
         this.neuronContainer.addChild(this.neuronBases, this.neuronTexts, this.neuronOvers, this.neuronOverTexts, this.neuronSensors);
 
-    /*    this.neuronBaseContainer  = new PIXI.Container();
-        this.neuronOverContainer  = new PIXI.Container();
-        this.neuronSensorContainer  = new PIXI.Container();
-
         this.slideContainer = new PIXI.Container();
-        this.slideContainer.addChild(this.buttonContainer,
-                                     this.neuronBaseContainer,
-                                     this.neuronOverContainer,
-                                     this.neuronSensorContainer
-                                     );
-    */
-        this.slideContainer = new PIXI.Container();
-        this.slideContainer.addChild(this.buttonContainer, this.neuronContainer);
+        this.slideContainer.addChild(this.buttonContainer, this.inputContainer, this.neuronContainer);
     }
 
     formatList(list){
@@ -62,6 +58,10 @@ export class SlideTest{
           nums2print[n]=formatter.format(list[n]);
         }
         return nums2print;
+    }
+
+    sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
     }
 
     drawButtons(net){
@@ -83,53 +83,76 @@ export class SlideTest{
                 net.removeLayer();
                 net.update();
                 slide.drawNeurons_init(net);
-                console.log(net.layers.length)
             }
         });
 
         // LEARN STOCHASTIC STEP
-        this.buttonContainer.addChild(new Button("learn_step",PIXI.Texture.from('images/buttons/button_learnstep.png'), 80,255,true));
-        this.buttonContainer.getChildByName("learn_step").on('click', function(e){
-            console.log("----INPUT " +net.dataIdx + "---------");
-        //    net.printNet();
+        this.buttonContainer.addChild(new Button("learn_stoch_step",PIXI.Texture.from('images/buttons/button_learnstep.png'),layout.BUTTONS_X,255,true));
+        this.buttonContainer.getChildByName("learn_stoch_step").on('click', function(e){
             net.learn();
-        //    slide.neuronBaseContainer.getChildByName("01").tint = 0x0000FF
-        //    slide.neuronBaseContainer.getChildByName("01").text = "hi"
-//            slide.neuronContainer.getChildByName("neuronBases").getChildByName("01").tint=0x0000FF;
-//            slide.neuronContainer.getChildByName("neuronTexts").getChildByName("10").text="hi";
-            slide.drawNeurons_update(net)
+            slide.draw_update(net);
+        });
 
+        // LEARN STOCHASTIC
+        this.buttonContainer.addChild(new Button("learn_stoch",PIXI.Texture.from('images/buttons/button_learn.png'),layout.BUTTONS_X,300,true));
+        this.buttonContainer.getChildByName("learn_stoch").on('click', async function(e){
+          var loopcount = 0;
+          pauselearn=0;
+          while(loopcount<100 && pauselearn==0){
+            net.learn();
+            slide.draw_update(net);
+            await slide.sleep(100); //pause to see updates - 100 seems good
+            loopcount=loopcount+1;
+          }
+        });
+
+        this.buttonContainer.addChild(new Button("pause",PIXI.Texture.from('images/buttons/button_pause.png'),layout.BUTTONS_X,350,true));
+        var pauselearn=0;
+        this.buttonContainer.getChildByName("pause").on('click', function(e){
+        pauselearn=1;
         });
     }
 
-    neuronBasesTint(net){
-        for(var i = 0; i<net.layers.length; i++){
-            for(var j = 0; j<net.getLayer(i).neurons.length; j++){
-                var out = net.getLayer(i).neurons[j].output;
-                if(out>=0.9){
-                  neuronBase.tint= 0xfff000
-                } else if (out>=0.8){
-                  neuronBase.tint= 0xfdee3b
-                } else if (out>=0.7){
-                  neuronBase.tint= 0xfbeb56
-                } else if (out>=0.6){
-                  neuronBase.tint= 0xf9e96d
-                } else if (out>=0.5){
-                  neuronBase.tint= 0xf6e781
-                } else if (out>=0.4){
-                  neuronBase.tint= 0xf2e494
-                } else if (out>=0.3){
-                  neuronBase.tint= 0xeee2a7
-                } else if (out>=0.2){
-                  neuronBase.tint= 0xe9e0b9
-                } else if (out>=0.1){
-                  neuronBase.tint= 0xe3deca
-                }  else if (out>=0.0){
-                  neuronBase.tint= 0xdcdcdc
-                }
-            }
+    draw_init(net){
+        this.drawInputs_init(net);
+        this.drawNeurons_init(net);
+    }
+
+    draw_update(net){
+        this.drawInputs_update(net);
+        this.drawNeurons_update(net);
+    }
+
+    drawInputs_init(net){
+        for(var i = 0; i<net.netInput.length; i++){
+
+            var inputBase = new PIXI.Sprite(PIXI.Texture.from('images/input.png'));
+                inputBase.anchor.set(0.5);
+                inputBase.name = i.toString();
+                inputBase.x= layout.NEURON_LEFTLIM - layout.NEURON_X_DIF;//leftlim;
+                inputBase.y= (i * layout.NEURON_Y_DIF) + layout.NEURON_UPPERLIM + layout.NEURON_NUDGE;//(i*(inputHeight+buffer))+upperlim+buffer;
+            this.inputBases.addChild(inputBase);
+
+            var inputText = new PIXI.Text(net.netInput[i]);
+                inputText.anchor.set(0.5);
+                inputText.name = inputBase.name;
+
+                console.log("text: "+inputBase.name);
+
+                inputText.x = inputBase.x;
+                inputText.y = inputBase.y;
+            this.inputTexts.addChild(inputText);
         }
     }
+
+    drawInputs_update(net){
+        for(var i = 0; i<net.netInput.length; i++){
+
+            var name = i.toString();
+            this.inputContainer.getChildByName("inputTexts").getChildByName(name).text = net.netInput[i];
+        }
+    }
+
 
     drawNeurons_init(net){
 
@@ -148,8 +171,14 @@ export class SlideTest{
                 var neuronBase = new PIXI.Sprite(PIXI.Texture.from('images/neuron.png'));
                     neuronBase.anchor.set(0.5);
                     neuronBase.name = i.toString() + j.toString();
+
                     neuronBase.x = layout.NEURON_LEFTLIM + (i * layout.NEURON_X_DIF);
-                    neuronBase.y = layout.NEURON_UPPERLIM + (j * layout.NEURON_Y_DIF);
+
+                    if(i==net.layers.length-1){
+                        neuronBase.y = layout.NEURON_UPPERLIM + (j * layout.NEURON_Y_DIF) + layout.NEURON_NUDGE;
+                    } else {
+                        neuronBase.y = layout.NEURON_UPPERLIM + (j * layout.NEURON_Y_DIF);
+                    }
 
                     var out = net.getLayer(i).neurons[j].output;
                     if(out>=0.9){

@@ -39,11 +39,13 @@ const train_data1 = {
 
 SlideTest0.drawButtons(net);
 net.setNetData(train_data1);
-
+net.setLearnRate(0.30);
 net.getLayer(0).addNeuron();
 
 net.setOutLayer();
 net.update();
-SlideTest0.drawNeurons_init(net);
 
 net.printNet();
+
+SlideTest0.drawNeurons_init(net);
+SlideTest0.drawInputs_init(net);
