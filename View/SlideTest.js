@@ -24,6 +24,7 @@ const medium = new PIXI.TextStyle({
   fontSize: 20
 });
 
+// needed to update weights
 PIXI.Graphics.prototype.updateLineStyle = function(lineWidth, color, alpha){   
     var len = this.graphicsData.length;    
     for (var i = 0; i < len; i++) {        
@@ -64,6 +65,7 @@ export class SlideTest{
         return nums2print;
     }
 
+    //needed to pause drawing between updates
     sleep(ms) {
         return new Promise(resolve => setTimeout(resolve, ms));
     }
@@ -121,14 +123,17 @@ export class SlideTest{
     draw_init(net){
         this.drawWeights_init(net);
         this.drawNeurons_init(net);
+        this.drawInputs_init(net);
     }
 
     draw_update(net){
         this.drawNeurons_update(net);
         this.drawWeights_update(net);
+        this.drawInputs_update(net);
     }
         
     drawWeights_init(net){
+        var slide = this;
         this.weightsContainer.removeChildren();
 
         for(var i = 0; i<net.layers.length; i++){
@@ -136,6 +141,7 @@ export class SlideTest{
                 for(var k = 0; k<net.getLayer(i).neurons[j].weights.length; k++){
                     var weightSprite=new PIXI.Graphics();
                     weightSprite.name = i.toString() + j.toString() + k.toString();
+                    weightSprite.idx = [i,j,k];
 
                     var thickness = Math.abs(net.getLayer(i).neurons[j].weights[k] * 10) + 1;
                     var color = 0x000000;
@@ -160,71 +166,53 @@ export class SlideTest{
                     
                     var hitbuffer = 10;
 
-                    var f=new PIXI.Graphics();
-                    f.lineStyle(3, 0x000000);
                     if (i==0 && net.layers.length >1){
                         weightSprite.drawPolygon(startx, starty, endx, endy0);
                         weightSprite.hitArea = new PIXI.Polygon(startx, starty +hitbuffer, 
                                                                 endx, endy0 +hitbuffer,
                                                                 endx, endy0 -hitbuffer,
                                                                 startx, starty -hitbuffer);
-
-                                                                f.drawPolygon(startx, starty +hitbuffer, 
-                                                                    endx, endy0 +hitbuffer,
-                                                                    endx, endy0 -hitbuffer,
-                                                                    startx, starty -hitbuffer);
-
                     } else if (i==net.layers.length-1 && net.layers.length >1){
                         weightSprite.drawPolygon(startx, startyf, endx, endy);
                         weightSprite.hitArea = new PIXI.Polygon(startx, startyf +hitbuffer, 
                                                                 endx, endy +hitbuffer,
                                                                 endx, endy -hitbuffer,
                                                                 startx, startyf -hitbuffer);
-
-                                                                f.drawPolygon(startx, startyf +hitbuffer, 
-                                                                    endx, endy +hitbuffer,
-                                                                    endx, endy -hitbuffer,
-                                                                    startx, startyf -hitbuffer);
-
                     } else if (net.layers.length == 1){
                         weightSprite.drawPolygon(startx, startyf, endx, endy0);
                         weightSprite.hitArea = new PIXI.Polygon(startx, startyf +hitbuffer, 
                                                                 endx, endy0 +hitbuffer,
                                                                 endx, endy0 -hitbuffer,
                                                                 startx, startyf -hitbuffer);
-
-                                                                f.drawPolygon(startx, startyf +hitbuffer, 
-                                                                    endx, endy0 +hitbuffer,
-                                                                    endx, endy0 -hitbuffer,
-                                                                    startx, startyf -hitbuffer);
-                        
                     } else {
                         weightSprite.drawPolygon(startx, starty, endx, endy);
                         weightSprite.hitArea = new PIXI.Polygon(startx, starty +hitbuffer, 
                                                                 endx, endy +hitbuffer,
                                                                 endx, endy -hitbuffer,
                                                                 startx, starty -hitbuffer);
-
-                                                                f.drawPolygon(startx, starty +hitbuffer, 
-                                                                    endx, endy +hitbuffer,
-                                                                    endx, endy -hitbuffer,
-                                                                    startx, starty -hitbuffer);
                     }
 
-                    
                     weightSprite.interactive=true;
 
                     var self=this;
                     weightSprite.on('mouseover', function(e){
-                        this.alpha=0;
+                    //    console.log(this.lineWidth);
+                    //    this.updateLineStyle(this.lineWidth, 0x39FF14);
                     });
                     
                     weightSprite.on('mouseout', function(e){
-                    this.alpha=1;
+                        this.updateLineStyle(this.lineWidth, this.lineColor);
+                    });
+
+                    weightSprite.on('click', function(e){
+                        var currWeight = net.getLayer(this.idx[0]).getNeuron(this.idx[1]).getWeight(this.idx[2]);
+                        net.getLayer(this.idx[0]).getNeuron(this.idx[1]).setWeight(this.idx[2],currWeight+0.1);
+                       // console.log(net.getLayer(this.idx[0]).getNeuron(this.idx[1]).setweight();
+                        console.log("click");
+                        slide.draw_update(net);
                     });
 
                     this.weightsContainer.addChild(weightSprite);
-                    //this.weightsContainer.addChild(f);
                     
                 }
             }
@@ -304,7 +292,6 @@ export class SlideTest{
 
             this.neuronBases.addChild(neuronBase);
 
-      
             var neuronText = new PIXI.Text(formatter.format(net.getLayer(i).neurons[j].output));
                 neuronText.scale.set(0.8);
                 neuronText.anchor.set(0.5);
@@ -394,8 +381,34 @@ export class SlideTest{
                 + "b: " + formatter.format(net.getLayer(i).neurons[j].bias) +'\n'
                 + "o: " + formatter.format(net.getLayer(i).neurons[j].output_nofn) + '\n'
                 + "   " + formatter.format(net.getLayer(i).neurons[j].output) + '\n' ;
-            
             }
+        }
+    }
+
+    drawInputs_init(net){
+       this.inputContainer.removeChildren();
+
+        for(var i = 0; i<net.netInput.length; i++){
+
+            var inputBase = new PIXI.Sprite(PIXI.Texture.from('images/input.png'));
+                inputBase.anchor.set(0.5);
+                inputBase.name = i.toString();
+                inputBase.x= layout.NEURON_LEFTLIM - layout.NEURON_X_DIF;//leftlim;
+                inputBase.y= (i * layout.NEURON_Y_DIF) + layout.NEURON_UPPERLIM + layout.NEURON_NUDGE;//(i*(inputHeight+buffer))+upperlim+buffer;
+            this.inputContainer.addChild(inputBase);
+
+            var inputText = new PIXI.Text(net.netInput[i]);
+                inputText.anchor.set(0.5);
+                inputText.name = inputBase.name;
+            inputBase.addChild(inputText);
+        }
+    }
+
+    drawInputs_update(net){
+        for(var i = 0; i<net.netInput.length; i++){
+
+            var name = i.toString();
+            this.inputContainer.getChildByName(name).getChildAt(0).text = net.netInput[i];
         }
     }
 }
