@@ -1,3 +1,0 @@
-import {Slide, layout} from "../Slide.js"
-import { Net } from "../../Model/net.js";
-import {actFns} from "../../Model/actfns.js"

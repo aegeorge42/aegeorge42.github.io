@@ -53,7 +53,7 @@ export class Net{
 //        this.setNetActFn(defaultActFn);
         this.dataIdx=0;
         this.setNetInput(defaultInput);
-        this.netActFn=actFns.LINEAR;
+        this.netActFn=actFns.SIGMOID;
         this.layers=[];
         this.cost=[];
         this.delta=[];
@@ -397,11 +397,11 @@ export class Net{
              //   currentNeuron.bias_new=currentNeuron.bias-currentNeuron.bgrad;
              //   currentNeuron.setBias(currentNeuron.bias_new);
             }
-            console.log("layer:" +currentLayer.layerNumber + '\n'
-                        + "  neuron: " + currentNeuron.neuronNumber + '\n'
-                        + "    da_dz: " + currentNeuron.da_dz + '\n' +'\n'
-                        + "    dc_dw: " + currentNeuron.dc_dw
-            );
+        //    console.log("layer:" +currentLayer.layerNumber + '\n'
+        //                + "  neuron: " + currentNeuron.neuronNumber + '\n'
+        //                + "    da_dz: " + currentNeuron.da_dz + '\n' +'\n'
+        //                + "    dc_dw: " + currentNeuron.dc_dw
+        //    );
         }
         this.update();
     }

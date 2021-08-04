@@ -27,7 +27,21 @@ const medium = new PIXI.TextStyle({
 export class SlideTest{
     constructor(){
         this.buttonContainer  = new PIXI.Container();
-        this.neuronBaseContainer  = new PIXI.Container();
+
+        this.neuronContainer = new PIXI.Container();
+            this.neuronBases = new PIXI.Container();
+                this.neuronBases.name = "neuronBases";
+            this.neuronTexts = new PIXI.Container();
+                this.neuronTexts.name = "neuronTexts";
+            this.neuronOvers = new PIXI.Container();
+                this.neuronOvers.name = "neuronOvers";
+            this.neuronOverTexts = new PIXI.Container();
+                this.neuronOverTexts.name = "neuronOverTexts";
+            this.neuronSensors = new PIXI.Container();
+                this.neuronSensors.name = "neuronSensors";
+        this.neuronContainer.addChild(this.neuronBases, this.neuronTexts, this.neuronOvers, this.neuronOverTexts, this.neuronSensors);
+
+    /*    this.neuronBaseContainer  = new PIXI.Container();
         this.neuronOverContainer  = new PIXI.Container();
         this.neuronSensorContainer  = new PIXI.Container();
 
@@ -37,6 +51,9 @@ export class SlideTest{
                                      this.neuronOverContainer,
                                      this.neuronSensorContainer
                                      );
+    */
+        this.slideContainer = new PIXI.Container();
+        this.slideContainer.addChild(this.buttonContainer, this.neuronContainer);
     }
 
     formatList(list){
@@ -69,17 +86,60 @@ export class SlideTest{
                 console.log(net.layers.length)
             }
         });
+
+        // LEARN STOCHASTIC STEP
+        this.buttonContainer.addChild(new Button("learn_step",PIXI.Texture.from('images/buttons/button_learnstep.png'), 80,255,true));
+        this.buttonContainer.getChildByName("learn_step").on('click', function(e){
+            console.log("----INPUT " +net.dataIdx + "---------");
+        //    net.printNet();
+            net.learn();
+        //    slide.neuronBaseContainer.getChildByName("01").tint = 0x0000FF
+        //    slide.neuronBaseContainer.getChildByName("01").text = "hi"
+//            slide.neuronContainer.getChildByName("neuronBases").getChildByName("01").tint=0x0000FF;
+//            slide.neuronContainer.getChildByName("neuronTexts").getChildByName("10").text="hi";
+            slide.drawNeurons_update(net)
+
+        });
+    }
+
+    neuronBasesTint(net){
+        for(var i = 0; i<net.layers.length; i++){
+            for(var j = 0; j<net.getLayer(i).neurons.length; j++){
+                var out = net.getLayer(i).neurons[j].output;
+                if(out>=0.9){
+                  neuronBase.tint= 0xfff000
+                } else if (out>=0.8){
+                  neuronBase.tint= 0xfdee3b
+                } else if (out>=0.7){
+                  neuronBase.tint= 0xfbeb56
+                } else if (out>=0.6){
+                  neuronBase.tint= 0xf9e96d
+                } else if (out>=0.5){
+                  neuronBase.tint= 0xf6e781
+                } else if (out>=0.4){
+                  neuronBase.tint= 0xf2e494
+                } else if (out>=0.3){
+                  neuronBase.tint= 0xeee2a7
+                } else if (out>=0.2){
+                  neuronBase.tint= 0xe9e0b9
+                } else if (out>=0.1){
+                  neuronBase.tint= 0xe3deca
+                }  else if (out>=0.0){
+                  neuronBase.tint= 0xdcdcdc
+                }
+            }
+        }
     }
 
     drawNeurons_init(net){
 
         // for now, removing all neurons and redrawing whenever layers/neurons are added/removed
         // because it only happens on button clicks its not too taxing
-        this.neuronBaseContainer.removeChildren();
-        this.neuronOverContainer.removeChildren();
-        this.neuronSensorContainer.removeChildren();
-
-
+        this.neuronBases.removeChildren();
+        this.neuronTexts.removeChildren();
+        this.neuronOvers.removeChildren();
+        this.neuronOverTexts.removeChildren();
+        this.neuronSensors.removeChildren();
 
         for(var i = 0; i<net.layers.length; i++){
 
@@ -87,23 +147,51 @@ export class SlideTest{
         
                 var neuronBase = new PIXI.Sprite(PIXI.Texture.from('images/neuron.png'));
                     neuronBase.anchor.set(0.5);
-                    neuronBase.name= i.toString() + j.toString();
-                    neuronBase.x= layout.NEURON_LEFTLIM + (i * layout.NEURON_X_DIF);
-                    neuronBase.y= layout.NEURON_UPPERLIM + (j * layout.NEURON_Y_DIF);
+                    neuronBase.name = i.toString() + j.toString();
+                    neuronBase.x = layout.NEURON_LEFTLIM + (i * layout.NEURON_X_DIF);
+                    neuronBase.y = layout.NEURON_UPPERLIM + (j * layout.NEURON_Y_DIF);
+
+                    var out = net.getLayer(i).neurons[j].output;
+                    if(out>=0.9){
+                    neuronBase.tint= 0xfff000
+                    } else if (out>=0.8){
+                    neuronBase.tint= 0xfdee3b
+                    } else if (out>=0.7){
+                    neuronBase.tint= 0xfbeb56
+                    } else if (out>=0.6){
+                    neuronBase.tint= 0xf9e96d
+                    } else if (out>=0.5){
+                    neuronBase.tint= 0xf6e781
+                    } else if (out>=0.4){
+                    neuronBase.tint= 0xf2e494
+                    } else if (out>=0.3){
+                    neuronBase.tint= 0xeee2a7
+                    } else if (out>=0.2){
+                    neuronBase.tint= 0xe9e0b9
+                    } else if (out>=0.1){
+                    neuronBase.tint= 0xe3deca
+                    }  else if (out>=0.0){
+                    neuronBase.tint= 0xdcdcdc
+                    }
+
+                this.neuronBases.addChild(neuronBase);
 
                 var neuronText = new PIXI.Text(formatter.format(net.getLayer(i).neurons[j].output));
+                    neuronText.scale.set(0.8);
                     neuronText.anchor.set(0.5);
-                    neuronText.name=neuronBase.name;
-                    neuronText.x=neuronBase.x;
-                    neuronText.y=neuronBase.y;
+                    neuronText.name = neuronBase.name;
+                    neuronText.x = neuronBase.x;
+                    neuronText.y = neuronBase.y;
+                this.neuronTexts.addChild(neuronText);
 
-                var overNeuron = new PIXI.Sprite(PIXI.Texture.from('images/overneuron.png'));
-                    overNeuron.anchor.set(0.5);
-                    overNeuron.name=neuronBase.name;
-                    overNeuron.x=neuronBase.x;
-                    overNeuron.y=neuronBase.y;
-                    overNeuron.alpha=0;
-                    overNeuron.interactive=true;
+                var neuronOver = new PIXI.Sprite(PIXI.Texture.from('images/neuronOver.png'));
+                    neuronOver.anchor.set(0.5);
+                    neuronOver.name = neuronBase.name;
+                    neuronOver.x = neuronBase.x;
+                    neuronOver.y = neuronBase.y;
+                    neuronOver.alpha = 0;
+                    neuronOver.interactive = true;
+                this.neuronOvers.addChild(neuronOver);
 
                 var overText = new PIXI.Text(
                     "i: " + this.formatList(net.getLayer(i).neurons[j].inputs) + '\n'
@@ -113,28 +201,31 @@ export class SlideTest{
                       + "   " + formatter.format(net.getLayer(i).neurons[j].output) + '\n',
                     small)
                     overText.anchor.set(0.5);
-                    overNeuron.addChild(overText);
+                    overText.name = neuronBase.name;
+                    overText.x = neuronBase.x;
+                    overText.y = neuronBase.y;
+                    overText.alpha = 0;
+                this.neuronOverTexts.addChild(overText);
 
-                var sensor= new PIXI.Sprite(PIXI.Texture.from('images/neuron.png'));
+                var sensor = new PIXI.Sprite(PIXI.Texture.from('images/neuron.png'));
                     sensor.anchor.set(0.5);
-                    sensor.x=neuronBase.x;
-                    sensor.y=neuronBase.y;
-                    sensor.tint=0xFFA500;
-                    sensor.alpha=0;
-                    sensor.interactive=true;
+                    sensor.x = neuronBase.x;
+                    sensor.y = neuronBase.y;
+                    sensor.tint = 0xFFA500;
+                    sensor.alpha = 0;
+                    sensor.interactive = true;
 
                     var self = this;
                     sensor.on('mouseover', function(e){
-                        self.neuronOverContainer.getChildAt(this.parent.getChildIndex(this)).alpha=1;
+                        self.neuronOvers.getChildAt(this.parent.getChildIndex(this)).alpha=1;
+                        self.neuronOverTexts.getChildAt(this.parent.getChildIndex(this)).alpha=1;
                     });
 
                     sensor.on('mouseout', function(e){
-                        self.neuronOverContainer.getChildAt(this.parent.getChildIndex(this)).alpha=0;
+                        self.neuronOvers.getChildAt(this.parent.getChildIndex(this)).alpha=0;
+                        self.neuronOverTexts.getChildAt(this.parent.getChildIndex(this)).alpha=0;
                     });
-
-                this.neuronOverContainer.addChild(overNeuron);
-                this.neuronSensorContainer.addChild(sensor);
-                this.neuronBaseContainer.addChild(neuronBase, neuronText);
+                this.neuronSensors.addChild(sensor);
             }
         }
     }
@@ -143,7 +234,46 @@ export class SlideTest{
         for(var i = 0; i<net.layers.length; i++){
             for(var j = 0; j<net.getLayer(i).neurons.length; j++){
 
+                var name = i.toString() + j.toString();
+
+                // update neuronText
+                this.neuronContainer.getChildByName("neuronTexts").getChildByName(name).text = 
+                    formatter.format(net.getLayer(i).neurons[j].output);
                 
+                // update tint
+                var currBase = this.neuronContainer.getChildByName("neuronBases").getChildByName(name);
+                var out = net.getLayer(i).neurons[j].output;
+                    if(out>=0.9){
+                        currBase.tint= 0xfff000
+                    } else if (out>=0.8){
+                        currBase.tint= 0xfdee3b
+                    } else if (out>=0.7){
+                        currBase.tint= 0xfbeb56
+                    } else if (out>=0.6){
+                        currBase.tint= 0xf9e96d
+                    } else if (out>=0.5){
+                        currBase.tint= 0xf6e781
+                    } else if (out>=0.4){
+                        currBase.tint= 0xf2e494
+                    } else if (out>=0.3){
+                        currBase.tint= 0xeee2a7
+                    } else if (out>=0.2){
+                        currBase.tint= 0xe9e0b9
+                    } else if (out>=0.1){
+                        currBase.tint= 0xe3deca
+                    }  else if (out>=0.0){
+                        currBase.tint= 0xdcdcdc
+                    }
+                
+                // update overneuron
+                this.neuronContainer.getChildByName("neuronOverTexts").getChildByName(name).text = 
+                
+                "i: " + this.formatList(net.getLayer(i).neurons[j].inputs) + '\n'
+                + "w: " + this.formatList(net.getLayer(i).neurons[j].weights) + '\n'
+                + "b: " + formatter.format(net.getLayer(i).neurons[j].bias) +'\n'
+                + "o: " + formatter.format(net.getLayer(i).neurons[j].output_nofn) + '\n'
+                + "   " + formatter.format(net.getLayer(i).neurons[j].output) + '\n' ;
+
             }
         }
     }
