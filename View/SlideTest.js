@@ -1,6 +1,8 @@
 import {Button} from "./Button.js"
 import {layout} from "./layout.js"
 import {actFns} from "../../Model/actfns.js"
+import {viewst} from "../Controller.js"
+
 
 const formatter = new Intl.NumberFormat('en-US', {
     minimumFractionDigits: 2,      
@@ -48,13 +50,20 @@ export class SlideTest{
             this.neuronOvers = new PIXI.Container();
                 this.neuronOvers.name = "neuronOvers";          
             this.neuronSensors = new PIXI.Container();  
-        this.weightsContainer = new PIXI.Container();               
+        this.weightsContainer = new PIXI.Container();
+        
+        this.labelsContainer = new PIXI.Container();
     
+        this.textcount=1; // need this for making next slide button avail in vst
+        this.textContainer = new PIXI.Container();
+
         this.slideContainer=new PIXI.Container();                   
         this.slideContainer.addChild(this.buttonContainer,                                      
                                       this.weightsContainer,
                                       this.inputContainer, 
-                                      this.neuronContainer);
+                                      this.neuronContainer,
+                                      this.labelsContainer,
+                                      this.textContainer);
     }
 
     formatList(list){
@@ -117,6 +126,112 @@ export class SlideTest{
         this.buttonContainer.getChildByName("pause").on('click', function(e){
         pauselearn=1;
         });
+
+        // LEARN - VANILLA STEP
+        this.buttonContainer.addChild(new Button("learnbatch",PIXI.Texture.from('images/buttons/learn_batch_step.png'),layout.BUTTONS_X,400,true));
+        this.buttonContainer.getChildByName("learnbatch").on('click', async function(e){
+            //cycle data points for drawing purposes
+            for(var i=0; i<net.data.points.length; i++){
+                net.setNetInput(net.data.points[i]);
+                net.update();
+                slide.draw_update(net);
+                slide.labelsContainer.getChildByName("costLabel").style.fill = 0x6b6b6b;
+                await slide.sleep(100);
+            }
+
+        slide.labelsContainer.getChildByName("costLabel").style.fill = 0x000000;
+        net.learn_batch();
+        await slide.sleep(100);
+
+        net.update();
+        slide.draw_update(net);
+        });
+
+        //LEARN - VANILLA
+        this.buttonContainer.addChild(new Button("learnbatch",PIXI.Texture.from('images/buttons/learnbatch.png'), layout.BUTTONS_X,450,true));
+        this.buttonContainer.getChildAt(6).on('click', async function(e){
+            var loopcount = 0;
+            pauselearn=0;
+
+            while(loopcount<100 && pauselearn==0){
+
+                //cycle data points for drawing purposes, but only for the first few times
+                if(loopcount<5){
+                    for(var i=0; i<net.data.points.length; i++){
+                        net.setNetInput(net.data.points[i]);
+                        net.update();
+                        slide.draw_update(net);
+                        slide.labelsContainer.getChildByName("costLabel").style.fill = 0x6b6b6b;
+                        await slide.sleep(100);
+                        slide.labelsContainer.getChildByName("costLabel").style.fill = 0x000000;
+
+                    }
+                }
+
+                await slide.sleep(100);
+                net.learn_batch();
+                net.update();
+                slide.draw_update(net);                
+                loopcount=loopcount+1;
+            }
+        });
+
+        this.buttonContainer.addChild(new Button("sigmoid",PIXI.Texture.from('images/buttons/sigmoid.png'), layout.BUTTONS_X,500,true));
+        this.buttonContainer.getChildByName("sigmoid").on('click', function(e){
+
+             console.log(net.netActFn);
+
+            net.setNetActFn(actFns.SIGMOID);
+            net.update();
+            console.log(net.netActFn);
+
+            slide.draw_init(net);
+        });
+
+        this.buttonContainer.addChild(new Button("relu",PIXI.Texture.from('images/buttons/relu.png'), layout.BUTTONS_X,550,true));
+        this.buttonContainer.getChildByName("relu").on('click', function(e){
+        
+            console.log(net.netActFn);
+
+            net.setNetActFn(actFns.RELU);
+            console.log(net.netActFn);
+            net.update();
+            slide.draw_init(net);
+        });
+
+        this.buttonContainer.addChild(new Button("nexttext",PIXI.Texture.from('images/buttons/nexttext.png'), layout.BUTTONS_X +100,400,true));
+        this.buttonContainer.getChildByName("nexttext").on('click', function(e){
+            slide.buttonContainer.getChildByName("prevtext").visible=true;
+            if (slide.textcount<slide.textContainer.children.length){
+                this.visible=true;
+                slide.textContainer.getChildAt(slide.textcount-1).visible=false;
+                slide.textContainer.getChildAt(slide.textcount).visible=true;
+                slide.textcount=slide.textcount+1;
+            }
+
+            // when finished with slide text, open up next slide button
+            if(slide.textcount==slide.textContainer.children.length){
+                this.visible=false;
+                viewst.app.stage.getChildByName("button_nextslide").visible=true;
+            }
+        });
+
+        this.buttonContainer.addChild(new Button("prevtext",PIXI.Texture.from('images/buttons/prevtext.png'), layout.BUTTONS_X +100,450,false));
+        this.buttonContainer.getChildByName("prevtext").on('click', function(e){
+            slide.buttonContainer.getChildByName("nexttext").visible=true;
+            viewst.app.stage.getChildByName("button_nextslide").visible=false;
+
+            if (slide.textcount>1){
+            slide.textcount=slide.textcount-1;
+
+            slide.textContainer.getChildAt(slide.textcount-1).visible=true;
+            slide.textContainer.getChildAt(slide.textcount).visible=false;
+
+            }
+            if (slide.textcount==1){
+                this.visible=false;
+            }
+        });
     }
 
 
@@ -124,12 +239,14 @@ export class SlideTest{
         this.drawWeights_init(net);
         this.drawNeurons_init(net);
         this.drawInputs_init(net);
+        this.drawLabels_init(net);
     }
 
     draw_update(net){
         this.drawNeurons_update(net);
         this.drawWeights_update(net);
         this.drawInputs_update(net);
+        this.drawLabels_update(net);
     }
         
     drawWeights_init(net){
@@ -201,7 +318,7 @@ export class SlideTest{
                     });
                     
                     weightSprite.on('mouseout', function(e){
-                        this.updateLineStyle(this.lineWidth, this.lineColor);
+                      //  this.updateLineStyle(this.lineWidth, this.lineColor);
                     });
 
                     weightSprite.on('click', function(e){
@@ -410,5 +527,54 @@ export class SlideTest{
             var name = i.toString();
             this.inputContainer.getChildByName(name).getChildAt(0).text = net.netInput[i];
         }
+    }
+
+    drawLabels_init(net){
+        this.labelsContainer.removeChildren();
+
+        for(var i = 0; i<net.data.type.length; i++){
+
+            //final output type labels ex strawberry, blueberry
+            var typeLabel = new PIXI.Text(net.data.type[i],medium);
+                typeLabel.x=layout.NEURON_LEFTLIM + (net.layers.length-1)*layout.NEURON_X_DIF + 30;
+                typeLabel.y=layout.NEURON_UPPERLIM + (i*layout.NEURON_Y_DIF) + 25;
+            this.labelsContainer.addChild(typeLabel);
+
+            // input types ex. length, roundness
+            var inputLabel = new PIXI.Text(net.data.labels[i],medium);
+                inputLabel.anchor.set(0.5);
+                inputLabel.x = layout.NEURON_LEFTLIM - layout.NEURON_X_DIF;
+                inputLabel.y = layout.NEURON_UPPERLIM + (i*layout.NEURON_Y_DIF) + 70;
+            this.labelsContainer.addChild(inputLabel);
+        }
+
+        //target label ex strawberry
+        var targetLabel = new PIXI.Text(net.targetText);
+            targetLabel.anchor.set(0.5);
+            targetLabel.name = "targetLabel";
+            targetLabel.x= layout.NEURON_LEFTLIM - layout.NEURON_X_DIF;
+            targetLabel.y= layout.NEURON_UPPERLIM - 20;
+        this.labelsContainer.addChild(targetLabel);
+
+        var costLabel = new PIXI.Text("cost" + '\n' +formatter_long.format(net.costTot));
+            costLabel.name = "costLabel";
+            costLabel.x=450;
+            costLabel.y=50;
+        this.labelsContainer.addChild(costLabel);
+    }
+
+    drawLabels_update(net){
+        this.labelsContainer.getChildByName("targetLabel").text=net.targetText;
+        this.labelsContainer.getChildByName("costLabel").text="cost" + '\n' +formatter_long.format(net.costTot);
+    }
+
+    setText(text){}
+
+    drawText(text){
+        for (var i =0; i<text.length; i++){
+            this.textContainer.addChild(text[i]);
+            this.textContainer.getChildAt(i).visible=false;
+        }
+        this.textContainer.getChildAt(0).visible=true;
     }
 }

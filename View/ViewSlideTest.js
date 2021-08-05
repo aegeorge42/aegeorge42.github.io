@@ -76,7 +76,7 @@ export class ViewSlideTest{
         var vst = this;
 
         // NEXT SLIDE
-        var button_nextslide = new Button("button_nextslide",PIXI.Texture.from('images/buttons/button_nextslide.png'),80,40,true)
+        var button_nextslide = new Button("button_nextslide",PIXI.Texture.from('images/buttons/button_nextslide.png'),80,40,false)
         this.app.stage.addChild(button_nextslide);
             
             this.app.stage.getChildByName("button_nextslide").on('click', function(e){ 
