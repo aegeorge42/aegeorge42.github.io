@@ -1,6 +1,9 @@
 //import { defaultInput } from "../Model/net.js";
 import {Button} from "./Button.js"
 import {SlideTest0} from "./Slides/SlideTest0.js"
+import {SlideTest1} from "./Slides/SlideTest1.js"
+import {layout} from "./layout.js"
+
 import {SlideTestX} from "./Slides/SlideTestX.js"
 
 
@@ -17,6 +20,7 @@ export class ViewSlideTest{
 
     constructor(){
         
+        var vst=this;
         const app = new PIXI.Application({
           autoResize: true,
           width: window.innerWidth,
@@ -29,21 +33,36 @@ export class ViewSlideTest{
         
 
         //resize canvas when window is resized
-        window.addEventListener('resize', resize);     
+        window.addEventListener('resize', resize); 
+        var h=window.innerHeight;    
         function resize(){
             app.renderer.resize(window.innerWidth, window.innerHeight);
             header.width=window.innerWidth;
+            footer.width=window.innerWidth;
+            footer.y=window.innerHeight-h;
+
+            if(vst.currentSlide==0){
+                app.stage.getChildByName("button_nextslide").x=window.innerWidth/2;
+                app.stage.getChildByName("button_nextslide").y=window.innerHeight*(3/4);
+            } else {
+                app.stage.getChildByName("button_nextslide").x=window.innerWidth-100;
+                app.stage.getChildByName("button_nextslide").y=window.innerHeight-25;
+
+                app.stage.getChildByName("button_prevslide").x=100;
+                app.stage.getChildByName("button_prevslide").y=window.innerHeight-25;
+            }
+
         }
         document.body.appendChild(this.app.view);
 
         //add premade slides
         this.slideList = [];
 //        this.slideList.push(Slide0,Slide1,Slide2,SlideX);
-        this.slideList.push(SlideTest0,SlideTestX);
+        this.slideList.push(SlideTest0,SlideTest1,SlideTestX);
 
-        this.currentSlide=0;
+        this.currentSlide=1;
 
-        this.drawSlide();
+        //this.drawSlide();
 
         //header bar
         const header=new PIXI.Graphics();
@@ -52,10 +71,23 @@ export class ViewSlideTest{
         header.drawRect(0,0,window.innerWidth,50);
         header.endFill();
 
+        const footer=new PIXI.Graphics();
+        footer.name="header";
+        footer.beginFill(0xbfbfbf);
+        //footer.drawRect(0,window.innerHeight-80,window.innerWidth,80);
+        footer.drawRect(0,window.innerHeight,window.innerWidth,-50);
+
+        console.log(footer.x +" "+ footer.y +" "+ footer.width +" "+ footer.height);
+        footer.endFill();
+
         //console.log(f)
         this.app.stage.addChild(header);
+        this.app.stage.addChild(footer);
+
 
         this.createButtons();
+        this.drawSlide_init();
+
         this.caveats();
     }
 
@@ -64,16 +96,13 @@ export class ViewSlideTest{
         else if(bool==true){this.app.stage.getChildAt(idx).visible=true;}
     }
 
-    drawSlide(){
+    drawSlide_init(){
+        this.app.stage.addChild(this.slideList[this.currentSlide].slideContainer);
+    }
 
-        //remove slide, leave buttons
-        //I know it's ugly but it works
-        try{
-            this.app.stage.removeChildAt(0);
-        } catch {}
-   
-        //add next slide to screen
-        this.app.stage.addChildAt(this.slideList[this.currentSlide].slideContainer,0);
+    drawSlide(){
+        this.app.stage.removeChildAt(this.app.stage.children.length-1);
+        this.app.stage.addChild(this.slideList[this.currentSlide].slideContainer);
     }
 
     createButtons(){
@@ -81,7 +110,7 @@ export class ViewSlideTest{
         var vst = this;
 
         // NEXT SLIDE
-        var button_nextslide = new Button("button_nextslide",PIXI.Texture.from('images/buttons/button_nextslide.png'),80,40,false)
+        var button_nextslide = new Button("button_nextslide",PIXI.Texture.from('images/buttons/button_nextslide.png'),layout.NEXTSLIDE_X,layout.NEXTSLIDE_Y,true)
         this.app.stage.addChild(button_nextslide);
             
             this.app.stage.getChildByName("button_nextslide").on('click', function(e){ 
@@ -98,7 +127,7 @@ export class ViewSlideTest{
             })
 
         //PREVIOUS SLIDE
-        var button_prevslide = new Button("button_prevslide",PIXI.Texture.from('images/buttons/button_prevslide.png'),80,80,true)
+        var button_prevslide = new Button("button_prevslide",PIXI.Texture.from('images/buttons/button_prevslide.png'),layout.PREVSLIDE_X,layout.PREVSLIDE_Y,true)
         this.app.stage.addChild(button_prevslide);
 
         this.app.stage.getChildByName("button_prevslide").on('click', function(e){ 
@@ -141,7 +170,7 @@ export class ViewSlideTest{
     caveats(){
 
         if(this.currentSlide==0){
-            for(var i = 1; i<this.app.stage.children.length; i++){
+            for(var i = 0; i<this.app.stage.children.length-1; i++){
                 this.app.stage.getChildAt(i).visible=false;
                 this.app.stage.getChildByName("button_nextslide").visible=true;
                 this.app.stage.getChildByName("button_nextslide").texture=PIXI.Texture.from('images/buttons/start.png');
@@ -149,13 +178,14 @@ export class ViewSlideTest{
                 this.app.stage.getChildByName("button_nextslide").y=window.innerHeight*(3/4);
 
             }
+        
         } else {
-            for(var i = 1; i<this.app.stage.children.length; i++){
+            for(var i = 0; i<this.app.stage.children.length-1; i++){
                 this.app.stage.getChildAt(i).visible=true;
-                this.app.stage.getChildByName("button_nextslide").visible=false;
+                this.app.stage.getChildByName("button_nextslide").visible=true;
                 this.app.stage.getChildByName("button_nextslide").texture=PIXI.Texture.from('images/buttons/button_nextslide.png');
-                this.app.stage.getChildByName("button_nextslide").x=80;
-                this.app.stage.getChildByName("button_nextslide").y=40;
+                this.app.stage.getChildByName("button_nextslide").x=window.innerWidth*(9/10);
+                this.app.stage.getChildByName("button_nextslide").y=window.innerHeight*(9/10);
             }
         }
     }

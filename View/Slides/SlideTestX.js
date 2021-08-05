@@ -2,6 +2,8 @@ import {SlideTest} from "../SlideTest.js"
 import { Net } from "../../Model/net.js";
 import {actFns} from "../../Model/actfns.js"
 import {ViewSlideTest} from "../ViewSlideTest.js"
+import {small, medium, typewriter} from "../textstyles.js"
+
 
 export const SlideTestX = new SlideTest();
 var net = new Net();
@@ -39,6 +41,7 @@ const train_data1 = {
 }
 
 SlideTestX.drawButtons(net);
+
 net.setNetData(train_data1);
 net.setLearnRate(0.10);
 net.getLayer(0).addNeuron();
@@ -53,16 +56,16 @@ net.printNet();
 
 SlideTestX.draw_init(net);
 
-var text0=new PIXI.Text("hello");
+var text0=new PIXI.Text("hello",typewriter);
     text0.x=150;
     text0.y=330;
-var text1=new PIXI.Text("goodbye");
+var text1=new PIXI.Text("goodbye",typewriter);
     text1.x=150;
     text1.y=400;
-var text2=new PIXI.Text("blah");
+var text2=new PIXI.Text("blah",typewriter);
     text2.x=300;
     text2.y=400;
-var text3=new PIXI.Text("aaaaaaaaa");
+var text3=new PIXI.Text("aaaaaaaaa",typewriter);
     text3.x=400;
     text3.y=400;
 
@@ -74,3 +77,5 @@ text[3]=text3;
 
 
 SlideTestX.drawText(text);
+SlideTestX.drawTextButtons();
+

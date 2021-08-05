@@ -2,6 +2,7 @@ import {Button} from "./Button.js"
 import {layout} from "./layout.js"
 import {actFns} from "../../Model/actfns.js"
 import {viewst} from "../Controller.js"
+import {small, medium, typewriter} from "./textstyles.js"
 
 
 const formatter = new Intl.NumberFormat('en-US', {
@@ -10,22 +11,28 @@ const formatter = new Intl.NumberFormat('en-US', {
 });
   
 const formatter_long = new Intl.NumberFormat('en-US', {
-    minimumFractionDigits: 2,      
+    minimumFractionDigits: 6,      
     maximumFractionDigits: 6,
 });
   
-const small = new PIXI.TextStyle({
-    fontFamily: 'Open Sans',
+/*const small = new PIXI.TextStyle({
+    fontFamily: 'Arial',
     fontWeight: 300,
     fontSize: 13
 });
 
 const medium = new PIXI.TextStyle({
-  fontFamily: 'Open Sans',
+  fontFamily: 'Arial',
   fontWeight: 300,
   fontSize: 20
 });
 
+export const typewriter = new PIXI.TextStyle({
+    fontFamily: 'American Typewriter',
+    fontWeight: 400,
+    fontSize: 20
+  });
+*/
 // needed to update weights
 PIXI.Graphics.prototype.updateLineStyle = function(lineWidth, color, alpha){   
     var len = this.graphicsData.length;    
@@ -42,6 +49,7 @@ PIXI.Graphics.prototype.updateLineStyle = function(lineWidth, color, alpha){
 export class SlideTest{
     constructor(){
 
+        var slide=this;
         this.buttonContainer  = new PIXI.Container();             
         this.inputContainer = new PIXI.Container();                 
         this.neuronContainer = new PIXI.Container();
@@ -64,7 +72,14 @@ export class SlideTest{
                                       this.neuronContainer,
                                       this.labelsContainer,
                                       this.textContainer);
+
+        window.addEventListener('resize', resize);     
+        function resize(){
+            slide.buttonContainer.getChildByName("nexttext").x=window.innerWidth/2;
+            slide.buttonContainer.getChildByName("nexttext").y=window.innerHeight*(9/10);
+        }
     }
+
 
     formatList(list){
         var nums2print = new Array(list.length);
@@ -77,6 +92,53 @@ export class SlideTest{
     //needed to pause drawing between updates
     sleep(ms) {
         return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    drawTextButtons(){
+        var slide = this;
+
+        this.buttonContainer.addChild(new Button("nexttext",PIXI.Texture.from('images/buttons/next.png'),layout.NEXTTEXT_X,layout.BOTTOMLIM,true));
+        this.buttonContainer.getChildByName("nexttext").on('click', function(e){
+           // slide.buttonContainer.getChildByName("prevtext").visible=true;
+            if (slide.textcount<slide.textContainer.children.length){
+           //     this.visible=true;
+            //    slide.textContainer.getChildAt(slide.textcount-1).visible=false;
+                slide.textContainer.getChildAt(slide.textcount).visible=true;
+                slide.textcount=slide.textcount+1;
+            }
+
+            // when finished with slide text, open up next slide button
+            /*
+            if(slide.textcount==slide.textContainer.children.length){
+                this.visible=false;
+                viewst.app.stage.getChildByName("button_nextslide").visible=true;
+            }*/
+        });
+
+        this.buttonContainer.addChild(new Button("prevtext",PIXI.Texture.from('images/buttons/prevtext.png'), layout.BUTTONS_X +100,450,true));
+        this.buttonContainer.getChildByName("prevtext").on('click', function(e){
+         //   slide.buttonContainer.getChildByName("nexttext").visible=true;
+        //    viewst.app.stage.getChildByName("button_nextslide").visible=false;
+
+            if (slide.textcount>1){
+            slide.textcount=slide.textcount-1;
+
+            slide.textContainer.getChildAt(slide.textcount-1).visible=true;
+           // slide.textContainer.getChildAt(slide.textcount).visible=false;
+
+            }
+           
+        });
+
+        if(slide.textContainer.children.length<=1){
+            this.buttonContainer.getChildByName("nexttext").visible=false
+            this.buttonContainer.getChildByName("prevtext").visible=false
+
+        } else {
+            this.buttonContainer.getChildByName("nexttext").visible=true;
+            this.buttonContainer.getChildByName("prevtext").visible=true;
+        }
+
     }
 
     drawButtons(net){
@@ -197,40 +259,6 @@ export class SlideTest{
             console.log(net.netActFn);
             net.update();
             slide.draw_init(net);
-        });
-
-        this.buttonContainer.addChild(new Button("nexttext",PIXI.Texture.from('images/buttons/nexttext.png'), layout.BUTTONS_X +100,400,true));
-        this.buttonContainer.getChildByName("nexttext").on('click', function(e){
-            slide.buttonContainer.getChildByName("prevtext").visible=true;
-            if (slide.textcount<slide.textContainer.children.length){
-                this.visible=true;
-                slide.textContainer.getChildAt(slide.textcount-1).visible=false;
-                slide.textContainer.getChildAt(slide.textcount).visible=true;
-                slide.textcount=slide.textcount+1;
-            }
-
-            // when finished with slide text, open up next slide button
-            if(slide.textcount==slide.textContainer.children.length){
-                this.visible=false;
-                viewst.app.stage.getChildByName("button_nextslide").visible=true;
-            }
-        });
-
-        this.buttonContainer.addChild(new Button("prevtext",PIXI.Texture.from('images/buttons/prevtext.png'), layout.BUTTONS_X +100,450,false));
-        this.buttonContainer.getChildByName("prevtext").on('click', function(e){
-            slide.buttonContainer.getChildByName("nexttext").visible=true;
-            viewst.app.stage.getChildByName("button_nextslide").visible=false;
-
-            if (slide.textcount>1){
-            slide.textcount=slide.textcount-1;
-
-            slide.textContainer.getChildAt(slide.textcount-1).visible=true;
-            slide.textContainer.getChildAt(slide.textcount).visible=false;
-
-            }
-            if (slide.textcount==1){
-                this.visible=false;
-            }
         });
     }
 
@@ -549,14 +577,14 @@ export class SlideTest{
         }
 
         //target label ex strawberry
-        var targetLabel = new PIXI.Text(net.targetText);
+        var targetLabel = new PIXI.Text(net.targetText,medium);
             targetLabel.anchor.set(0.5);
             targetLabel.name = "targetLabel";
             targetLabel.x= layout.NEURON_LEFTLIM - layout.NEURON_X_DIF;
             targetLabel.y= layout.NEURON_UPPERLIM - 20;
         this.labelsContainer.addChild(targetLabel);
 
-        var costLabel = new PIXI.Text("cost" + '\n' +formatter_long.format(net.costTot));
+        var costLabel = new PIXI.Text("cost" + '\n' +formatter_long.format(net.costTot),medium);
             costLabel.name = "costLabel";
             costLabel.x=450;
             costLabel.y=50;
