@@ -10,7 +10,7 @@ import { Data } from "../../Model/Data.js"
 
 export const Slide0 = new Slide();
 
-var header = new PIXI.Sprite(PIXI.Texture.from('images/header.png'));
+var header = new PIXI.Sprite(PIXI.Texture.from('images/overneuron.png'));
     header.anchor.set(0.5);
     header.x=(window.innerWidth)/2;
     header.y=(window.innerHeight)/3;

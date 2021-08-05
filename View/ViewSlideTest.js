@@ -1,6 +1,9 @@
 //import { defaultInput } from "../Model/net.js";
 import {Button} from "./Button.js"
 import {SlideTest0} from "./Slides/SlideTest0.js"
+import {SlideTestX} from "./Slides/SlideTestX.js"
+
+
 import {Slide0} from "./Slides/Slide0.js"
 import {Slide1} from "./Slides/Slide1.js"
 import {Slide2} from "./Slides/Slide2.js"
@@ -36,7 +39,7 @@ export class ViewSlideTest{
         //add premade slides
         this.slideList = [];
 //        this.slideList.push(Slide0,Slide1,Slide2,SlideX);
-        this.slideList.push(SlideTest0);
+        this.slideList.push(SlideTest0,SlideTestX);
 
         this.currentSlide=0;
 
@@ -44,6 +47,7 @@ export class ViewSlideTest{
 
         //header bar
         const header=new PIXI.Graphics();
+        header.name="header";
         header.beginFill(0x7278d6);
         header.drawRect(0,0,window.innerWidth,50);
         header.endFill();
@@ -52,6 +56,7 @@ export class ViewSlideTest{
         this.app.stage.addChild(header);
 
         this.createButtons();
+        this.caveats();
     }
 
     setVis(idx,bool){
@@ -83,10 +88,11 @@ export class ViewSlideTest{
                 if(vst.currentSlide+1<vst.slideList.length){
                     vst.currentSlide=vst.currentSlide+1;
                     vst.drawSlide();
+                    vst.caveats();
 
                     // gotta update net at switch over, if slide has a net
                     if (vst.slideList[vst.currentSlide].slideNet !== undefined){
-                        vst.slideList[vst.currentSlide].updateDraw(vst.slideList[vst.currentSlide].slideNet);
+                        //vst.slideList[vst.currentSlide].updateDraw(vst.slideList[vst.currentSlide].slideNet);
                     }
                 }
             })
@@ -99,6 +105,8 @@ export class ViewSlideTest{
             if(vst.currentSlide>0){
             vst.currentSlide=vst.currentSlide-1;
             vst.drawSlide();
+            vst.caveats();
+
             if (vst.slideList[vst.currentSlide].slideNet !== undefined){
                 vst.slideList[vst.currentSlide].updateDraw(vst.slideList[vst.currentSlide].slideNet);
             }
@@ -112,6 +120,7 @@ export class ViewSlideTest{
             if (vst.currentSlide!=0){
                 vst.currentSlide=0;
                 vst.drawSlide();
+                vst.caveats();
             }
         });
 
@@ -122,7 +131,32 @@ export class ViewSlideTest{
             if (vst.currentSlide!=1){
                 vst.currentSlide=1;
                 vst.drawSlide();
+                vst.caveats();
             }
         });
+    }
+
+    //sometimes buttons and stuff have different behaviors than typical
+    //here's where they get checked
+    caveats(){
+
+        if(this.currentSlide==0){
+            for(var i = 1; i<this.app.stage.children.length; i++){
+                this.app.stage.getChildAt(i).visible=false;
+                this.app.stage.getChildByName("button_nextslide").visible=true;
+                this.app.stage.getChildByName("button_nextslide").texture=PIXI.Texture.from('images/buttons/start.png');
+                this.app.stage.getChildByName("button_nextslide").x=window.innerWidth/2;
+                this.app.stage.getChildByName("button_nextslide").y=window.innerHeight*(3/4);
+
+            }
+        } else {
+            for(var i = 1; i<this.app.stage.children.length; i++){
+                this.app.stage.getChildAt(i).visible=true;
+                this.app.stage.getChildByName("button_nextslide").visible=false;
+                this.app.stage.getChildByName("button_nextslide").texture=PIXI.Texture.from('images/buttons/button_nextslide.png');
+                this.app.stage.getChildByName("button_nextslide").x=80;
+                this.app.stage.getChildByName("button_nextslide").y=40;
+            }
+        }
     }
 }
