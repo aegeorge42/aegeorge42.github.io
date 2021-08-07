@@ -73,10 +73,14 @@ export class SlideTest{
                                       this.labelsContainer,
                                       this.textContainer);
 
-        window.addEventListener('resize', resize);     
+                                      this.drawTextButtons();
+
+        window.addEventListener('resize', resize);    
+
         function resize(){
             slide.buttonContainer.getChildByName("nexttext").x=window.innerWidth/2;
             slide.buttonContainer.getChildByName("nexttext").y=window.innerHeight*(9/10);
+        
         }
     }
 
@@ -99,38 +103,22 @@ export class SlideTest{
 
         this.buttonContainer.addChild(new Button("nexttext",PIXI.Texture.from('images/buttons/next.png'),layout.NEXTTEXT_X,layout.BOTTOMLIM,true));
         this.buttonContainer.getChildByName("nexttext").on('click', function(e){
-           // slide.buttonContainer.getChildByName("prevtext").visible=true;
             if (slide.textcount<slide.textContainer.children.length){
-           //     this.visible=true;
-            //    slide.textContainer.getChildAt(slide.textcount-1).visible=false;
                 slide.textContainer.getChildAt(slide.textcount).visible=true;
                 slide.textcount=slide.textcount+1;
             }
-
-            // when finished with slide text, open up next slide button
-            /*
-            if(slide.textcount==slide.textContainer.children.length){
-                this.visible=false;
-                viewst.app.stage.getChildByName("button_nextslide").visible=true;
-            }*/
         });
 
-        this.buttonContainer.addChild(new Button("prevtext",PIXI.Texture.from('images/buttons/prevtext.png'), layout.BUTTONS_X +100,450,true));
+        //TODO - get rid of this?
+        this.buttonContainer.addChild(new Button("prevtext",PIXI.Texture.from('images/buttons/prevtext.png'), layout.NEXTTEXT_X-100,layout.BOTTOMLIM,false));
         this.buttonContainer.getChildByName("prevtext").on('click', function(e){
-         //   slide.buttonContainer.getChildByName("nexttext").visible=true;
-        //    viewst.app.stage.getChildByName("button_nextslide").visible=false;
-
             if (slide.textcount>1){
-            slide.textcount=slide.textcount-1;
-
-            slide.textContainer.getChildAt(slide.textcount-1).visible=true;
-           // slide.textContainer.getChildAt(slide.textcount).visible=false;
-
+                slide.textcount=slide.textcount-1;
+                slide.textContainer.getChildAt(slide.textcount).visible=false;
             }
-           
         });
 
-        if(slide.textContainer.children.length<=1){
+      /*  if(slide.textContainer.children.length<=1){
             this.buttonContainer.getChildByName("nexttext").visible=false
             this.buttonContainer.getChildByName("prevtext").visible=false
 
@@ -138,7 +126,7 @@ export class SlideTest{
             this.buttonContainer.getChildByName("nexttext").visible=true;
             this.buttonContainer.getChildByName("prevtext").visible=true;
         }
-
+*/
     }
 
     drawButtons(net){

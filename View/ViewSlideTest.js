@@ -2,6 +2,8 @@
 import {Button} from "./Button.js"
 import {SlideTest0} from "./Slides/SlideTest0.js"
 import {SlideTest1} from "./Slides/SlideTest1.js"
+import {SlideTest2} from "./Slides/SlideTest2.js"
+
 import {layout} from "./layout.js"
 
 import {SlideTestX} from "./Slides/SlideTestX.js"
@@ -30,8 +32,6 @@ export class ViewSlideTest{
 
         this.app=app;
 
-        
-
         //resize canvas when window is resized
         window.addEventListener('resize', resize); 
         var h=window.innerHeight;    
@@ -41,24 +41,21 @@ export class ViewSlideTest{
             footer.width=window.innerWidth;
             footer.y=window.innerHeight-h;
 
-            if(vst.currentSlide==0){
-                app.stage.getChildByName("button_nextslide").x=window.innerWidth/2;
-                app.stage.getChildByName("button_nextslide").y=window.innerHeight*(3/4);
-            } else {
-                app.stage.getChildByName("button_nextslide").x=window.innerWidth-100;
-                app.stage.getChildByName("button_nextslide").y=window.innerHeight-25;
+            app.stage.getChildByName("button_nextslide").x=window.innerWidth-100;
+            app.stage.getChildByName("button_nextslide").y=window.innerHeight-25;
 
-                app.stage.getChildByName("button_prevslide").x=100;
-                app.stage.getChildByName("button_prevslide").y=window.innerHeight-25;
-            }
+            app.stage.getChildByName("button_prevslide").x=100;
+            app.stage.getChildByName("button_prevslide").y=window.innerHeight-25;
 
+            app.stage.getChildByName("button_start").x=window.innerWidth/2;
+            app.stage.getChildByName("button_start").y=window.innerHeight*(3/4);
         }
         document.body.appendChild(this.app.view);
 
         //add premade slides
         this.slideList = [];
 //        this.slideList.push(Slide0,Slide1,Slide2,SlideX);
-        this.slideList.push(SlideTest0,SlideTest1,SlideTestX);
+        this.slideList.push(SlideTest0,SlideTest1,SlideTest2,SlideTestX);
 
         this.currentSlide=1;
 
@@ -103,11 +100,32 @@ export class ViewSlideTest{
     drawSlide(){
         this.app.stage.removeChildAt(this.app.stage.children.length-1);
         this.app.stage.addChild(this.slideList[this.currentSlide].slideContainer);
+
+
     }
 
     createButtons(){
 
         var vst = this;
+
+        //START
+        var startx = window.innerWidth/2;
+        var starty = window.innerHeight*(3/4);
+        var button_start = new Button("button_start",PIXI.Texture.from('images/buttons/start.png'),startx,starty,true);
+        this.app.stage.addChild(button_start);
+            
+            this.app.stage.getChildByName("button_start").on('click', function(e){ 
+                if(vst.currentSlide+1<vst.slideList.length){
+                    vst.currentSlide=vst.currentSlide+1;
+                    vst.drawSlide();
+                    vst.caveats();
+
+                    // gotta update net at switch over, if slide has a net
+                  //  if (vst.slideList[vst.currentSlide].slideNet !== undefined){
+                        //vst.slideList[vst.currentSlide].updateDraw(vst.slideList[vst.currentSlide].slideNet);
+                 //   }
+                }
+            });
 
         // NEXT SLIDE
         var button_nextslide = new Button("button_nextslide",PIXI.Texture.from('images/buttons/button_nextslide.png'),layout.NEXTSLIDE_X,layout.NEXTSLIDE_Y,true)
@@ -132,13 +150,13 @@ export class ViewSlideTest{
 
         this.app.stage.getChildByName("button_prevslide").on('click', function(e){ 
             if(vst.currentSlide>0){
-            vst.currentSlide=vst.currentSlide-1;
-            vst.drawSlide();
-            vst.caveats();
+                vst.currentSlide=vst.currentSlide-1;
+                vst.drawSlide();
+                vst.caveats();
 
-            if (vst.slideList[vst.currentSlide].slideNet !== undefined){
-                vst.slideList[vst.currentSlide].updateDraw(vst.slideList[vst.currentSlide].slideNet);
-            }
+                if (vst.slideList[vst.currentSlide].slideNet !== undefined){
+                   // vst.slideList[vst.currentSlide].updateDraw(vst.slideList[vst.currentSlide].slideNet);
+                }
             }
         })
 
@@ -172,21 +190,16 @@ export class ViewSlideTest{
         if(this.currentSlide==0){
             for(var i = 0; i<this.app.stage.children.length-1; i++){
                 this.app.stage.getChildAt(i).visible=false;
-                this.app.stage.getChildByName("button_nextslide").visible=true;
-                this.app.stage.getChildByName("button_nextslide").texture=PIXI.Texture.from('images/buttons/start.png');
-                this.app.stage.getChildByName("button_nextslide").x=window.innerWidth/2;
-                this.app.stage.getChildByName("button_nextslide").y=window.innerHeight*(3/4);
-
+                this.app.stage.getChildByName("button_start").visible=true;
             }
         
         } else {
             for(var i = 0; i<this.app.stage.children.length-1; i++){
                 this.app.stage.getChildAt(i).visible=true;
-                this.app.stage.getChildByName("button_nextslide").visible=true;
-                this.app.stage.getChildByName("button_nextslide").texture=PIXI.Texture.from('images/buttons/button_nextslide.png');
-                this.app.stage.getChildByName("button_nextslide").x=window.innerWidth*(9/10);
-                this.app.stage.getChildByName("button_nextslide").y=window.innerHeight*(9/10);
+                this.app.stage.getChildByName("button_start").visible=false;
             }
         }
+        
     }
+    
 }

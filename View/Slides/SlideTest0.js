@@ -1,4 +1,7 @@
+import { Button } from "../Button.js";
 import {Slide} from "../Slide.js"
+import {viewst} from "../../Controller.js"
+import {layout} from "../layout.js"
 
 export const SlideTest0 = new Slide();
 

@@ -1,10 +1,10 @@
 export const layout = {
 
-    NEXTSLIDE_X: window.innerWidth*(9/10),
-    NEXTSLIDE_Y: window.innerHeight*(9/10),
+    NEXTSLIDE_X: window.innerWidth-100,
+    NEXTSLIDE_Y: window.innerHeight-25,
 
-    PREVSLIDE_X: window.innerWidth*(1/10),
-    PREVSLIDE_Y: window.innerHeight*(9/10),
+    PREVSLIDE_X: 100,
+    PREVSLIDE_Y: window.innerHeight-25,
 
     NEXTTEXT_X: window.innerWidth/2,
     NEXTTEXT_Y: window.innerHeight*(9/10),
