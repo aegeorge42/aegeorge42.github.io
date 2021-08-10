@@ -1,9 +1,9 @@
 import { Button } from "../Button.js";
-import {Slide} from "../Slide.js"
+import {SlideTest} from "../SlideTest.js"
 import {viewst} from "../../Controller.js"
 import {layout} from "../layout.js"
 
-export const SlideTest0 = new Slide();
+export const SlideTest0 = new SlideTest();
 
 var opener = new PIXI.Sprite(PIXI.Texture.from('images/opener.png'));
     opener.anchor.set(0.5);

@@ -104,11 +104,17 @@ export class SlideTest{
 
         this.buttonContainer.addChild(new Button("nexttext",PIXI.Texture.from('images/buttons/next.png'),layout.NEXTTEXT_X,window.innerHeight-(layout.FOOTER_HEIGHT/2),true));
         this.buttonContainer.getChildByName("nexttext").on('click', function(e){
-            if (slide.textcount<slide.textContainer.children.length){
-          //      console.log(slide.textContainer.getChildAt(slide.textcount));
+        //   viewst.app.stage.getChildByName("button_nextslide").tint=0xbfbfbf;
+
+            if (slide.textcount<slide.textContainer.children.length-1){
                 slide.textContainer.getChildAt(slide.textcount).visible=true;
                 slide.textcount=slide.textcount+1;
+            } else if (slide.textcount==slide.textContainer.children.length-1){
+                slide.textContainer.getChildAt(slide.textcount).visible=true;
+                viewst.app.stage.getChildByName("button_nextslide").visible=true;
+
             }
+
         }); 
 
         //TODO - get rid of this?

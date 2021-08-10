@@ -1,24 +1,15 @@
 //import { defaultInput } from "../Model/net.js";
 import {Button} from "./Button.js"
+import {layout} from "./layout.js"
+
 import {SlideTest0} from "./Slides/SlideTest0.js"
 import {SlideTest1} from "./Slides/SlideTest1.js"
 import {SlideTest2} from "./Slides/SlideTest2.js"
 import {SlideTest3} from "./Slides/SlideTest3.js"
 import {SlideTest4} from "./Slides/SlideTest4.js"
-
-
-
-import {layout} from "./layout.js"
-
 import {SlideTestX} from "./Slides/SlideTestX.js"
 
-/*
-import {Slide0} from "./Slides/Slide0.js"
-import {Slide1} from "./Slides/Slide1.js"
-import {Slide2} from "./Slides/Slide2.js"
-import {SlideX} from "./Slides/SlideX.js"
-
-*/
+import {SlideTestA} from "./Slides/SlideTestA.js"
 
 export class View{
     slideList;
@@ -59,7 +50,7 @@ export class View{
         //add premade slides
         this.slideList = [];
 //        this.slideList.push(Slide0,Slide1,Slide2,SlideX);
-        this.slideList.push(SlideTest0,SlideTest1,SlideTest2,SlideTest4,SlideTest3,SlideTestX);
+        this.slideList.push(SlideTest0,SlideTest1,SlideTestA,SlideTest2,SlideTest4,SlideTest3,SlideTestX);
 
         this.currentSlide=2;
 
@@ -132,7 +123,7 @@ export class View{
             });
 
         // NEXT SLIDE
-        var button_nextslide = new Button("button_nextslide",PIXI.Texture.from('images/buttons/button_nextslide.png'),layout.NEXTSLIDE_X,layout.NEXTSLIDE_Y,true)
+        var button_nextslide = new Button("button_nextslide",PIXI.Texture.from('images/buttons/button_nextslide.png'),layout.NEXTSLIDE_X,layout.NEXTSLIDE_Y,false)
         this.app.stage.addChild(button_nextslide);
             
             this.app.stage.getChildByName("button_nextslide").on('click', function(e){ 
@@ -165,23 +156,23 @@ export class View{
         })
 
         
-        // GO TO 0 (LAUNCH PAGE)
-        var goto0 = new Button("goto0",PIXI.Texture.from('images/buttons/gotointro.png'),250,layout.HEADER_HEIGHT/2,false)
-        this.app.stage.addChild(goto0);
-        this.app.stage.getChildByName("goto0").on('click', function(e){ 
-            if (vst.currentSlide!=0){
-                vst.currentSlide=0;
+        // GO TO INTRO
+        var gotointro = new Button("gotointro",PIXI.Texture.from('images/buttons/gotointro.png'),250,layout.HEADER_HEIGHT/2,false)
+        this.app.stage.addChild(gotointro);
+        this.app.stage.getChildByName("gotointro").on('click', function(e){ 
+            if (vst.currentSlide!=2){
+                vst.currentSlide=2;
                 vst.drawSlide();
                 vst.caveats();
             }
         });
 
-        // GO TO 1 (LAUNCH PAGE)
+        // GO TO DATA
         var goto1 = new Button("goto1",PIXI.Texture.from('images/buttons/gotodata.png'),400,layout.HEADER_HEIGHT/2,false)
         this.app.stage.addChild(goto1);
         this.app.stage.getChildByName("goto1").on('click', function(e){ 
-            if (vst.currentSlide!=1){
-                vst.currentSlide=1;
+            if (vst.currentSlide!=3){
+                vst.currentSlide=3;
                 vst.drawSlide();
                 vst.caveats();
             }
@@ -201,7 +192,7 @@ export class View{
         
         } else {
             for(var i = 0; i<this.app.stage.children.length-1; i++){
-                this.app.stage.getChildAt(i).visible=true;
+               // this.app.stage.getChildAt(i).visible=true;
                 this.app.stage.getChildByName("button_start").visible=false;
             }
         }
