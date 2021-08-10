@@ -5,8 +5,6 @@ export const datatypes = {
 }
 
 export class Data{
-    
-    
 
     constructor(size, type, labels){
         this.points=new Array(size);
@@ -24,7 +22,8 @@ export class Data{
         this.points.push(dp);
     }
 
-    createDataPoints(amount, expected_type){
+    createDataPoints(amount, start, expected_type){
+
         if(expected_type == datatypes.STRAWBERRY){
             var maxLength=5;
             var minLength=0.5;
@@ -40,7 +39,7 @@ export class Data{
                     expected_text: "strawberry"
                 }
 
-                this.points[i]=strawb;
+                this.points[start+i]=strawb;
             } 
 
         } else if (expected_type == datatypes.BLUEBERRY){
@@ -58,11 +57,25 @@ export class Data{
                     expected_text: "blueberry"
                 }
 
-                this.points[i]=blueb;
+                this.points[start+i]=blueb;
             }
         }
     }
 }
 
-const fruits = new Data(100,["strawberry","blueberry"],["length", "roundness"]);
-    fruits.createDataPoints(50,datatypes.STRAWBERRY);
+export const fruits_small = new Data(0, ["strawberry","blueberry"],["length","roundness"]);
+    fruits_small.createSingleDatapoint("blueberry", [0.1, 0.9], [0,1]);
+    fruits_small.createSingleDatapoint("strawberry", [0.9, 0.1], [1,0]);
+    fruits_small.createSingleDatapoint("blueberry", [0.1, 0.9], [0,1]);
+    fruits_small.createSingleDatapoint("strawberry", [0.9, 0.1], [1,0]);
+    fruits_small.createSingleDatapoint("blueberry", [0.1, 0.9], [0,1]);
+    fruits_small.createSingleDatapoint("strawberry", [0.9, 0.1], [1,0]);
+    fruits_small.createSingleDatapoint("blueberry", [0.1, 0.9], [0,1]);
+    fruits_small.createSingleDatapoint("strawberry", [0.9, 0.1], [1,0]);
+    fruits_small.createSingleDatapoint("blueberry", [0.1, 0.9], [0,1]);
+    fruits_small.createSingleDatapoint("strawberry", [0.9, 0.1], [1,0]);
+
+export const fruits = new Data(100,["strawberry","blueberry"],["length", "roundness"]);
+    fruits.createDataPoints(50,0,datatypes.STRAWBERRY);
+    fruits.createDataPoints(50,50,datatypes.BLUEBERRY);
+   // console.log(fruits.points)

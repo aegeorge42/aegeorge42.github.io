@@ -3,53 +3,24 @@ import { Net } from "../../Model/net.js";
 import {actFns} from "../../Model/actfns.js"
 import {ViewSlideTest} from "../ViewSlideTest.js"
 import {small, medium, typewriter} from "../textstyles.js"
+import {fruits, fruits_small} from "../../Model/data.js"
+//import {data, fruits} from "../Model/data.js"
 
 
 export const SlideTestX = new SlideTest();
+SlideTestX.drawTextButtons();
+
 var net = new Net();
 SlideTestX.slideNet=net;
 
-
-const train_input11 = {
-    input: [0.99,0.01],
-    expected: [1,0],
-    expected_text: ["strawberry"]
-}
-
-const train_input12 = {
-    input: [0.01,0.99],
-    expected: [0,1],
-    expected_text: ["blueberry"]
-}
-
-const train_input13 = {
-    input: [0.9,0.1],
-    expected: [1,0],
-    expected_text: ["strawberry"]
-}
-
-const train_input14 = {
-    input: [0.001,0.999],
-    expected: [0,1],
-    expected_text: ["blueberry"]
-}
-
-const train_data1 = {
-   points: [train_input12,train_input13,train_input14,train_input11],
-   labels: ["length", "roundness"],
-   type: ["strawberry", "blueberry"]
-}
-
 SlideTestX.drawButtons(net);
 
-net.setNetData(train_data1);
+net.setNetData(fruits_small);
 net.setLearnRate(0.10);
 net.getLayer(0).addNeuron();
 
 net.setOutLayer();
 net.update();
-
-net.printNet();
 
 //SlideTestX.drawNeurons_init(net);
 //SlideTestX.drawInputs_init(net);
@@ -77,5 +48,5 @@ text[3]=text3;
 
 
 SlideTestX.drawText(text);
-SlideTestX.drawTextButtons();
+//SlideTestX.drawTextButtons();
 
