@@ -1,281 +1,211 @@
 //import { defaultInput } from "../Model/net.js";
 import {Button} from "./Button.js"
-
-const formatter = new Intl.NumberFormat('en-US', {
-  minimumFractionDigits: 2,      
-  maximumFractionDigits: 2,
-});
-
-const formatter_long = new Intl.NumberFormat('en-US', {
-  minimumFractionDigits: 2,      
-  maximumFractionDigits: 6,
-});
-
-const textStyle = new PIXI.TextStyle({
-  fontFamily: 'Open Sans',
-  fontWeight: 300,
-  fontSize: 15
-});
+import {SlideTest0} from "./Slides/SlideTest0.js"
+import {SlideTest1} from "./Slides/SlideTest1.js"
+import {SlideTest2} from "./Slides/SlideTest2.js"
+import {SlideTest3} from "./Slides/SlideTest3.js"
+import {SlideTest4} from "./Slides/SlideTest4.js"
 
 
 
-/*{
- ___________    _______________________________________________________
-|button     |  | netContainer                                          |
-|  Container|  |  ______________   ________________   ______________   |
-|  ______   |  | |layerContainer| | weightCont    |  |layerContainer|  |                                                     |
-| |Button|  |  | |  __________  | |  __________   |  |  __________  |  |                                       
-| |______|  |  | | |neuronCont| | | |weight    |  |  | |neuronCont| |  |
-|___________|  | | |__________| | | |__________|  |  | |__________| |  |                                           
- ___________   | |  __________  | |  __________   |  |              |  |
-|input      |  | | |neuronCont| | | |weight    |  |  |              |  |
-| Container |  | | |__________| | | |__________|  |  |              |  |  
-|  ______   |  | |______________| |_______________|  |______________|  |
-| |input |  |  |                                                       |
-| |______|  |  |                                                       |
-|___________|  |_______________________________________________________|         
+import {layout} from "./layout.js"
 
-}
+import {SlideTestX} from "./Slides/SlideTestX.js"
+
+/*
+import {Slide0} from "./Slides/Slide0.js"
+import {Slide1} from "./Slides/Slide1.js"
+import {Slide2} from "./Slides/Slide2.js"
+import {SlideX} from "./Slides/SlideX.js"
+
 */
 
 export class View{
-  inputContainer; // inputs to draw
-  buttonContainer; // all buttons to draw
-  netContainer; //container of layercontainer (of neuroncontainer)
-  slideContainer; //container of slides
-  currentSlide;
+    slideList;
+    currentSlide;
 
-  constructor(){
-    this.app = new PIXI.Application({
-      width: window.innerWidth,
-      height: window.innerHeight,
-      backgroundColor: 0xFFE180
-    });
-    document.body.appendChild(this.app.view);
-
-    this.buttonContainer = new PIXI.Container();
-    this.inputContainer = new PIXI.Container();
-    this.netContainer = new PIXI.Container();
-
-  }
-    // load all images (it would be cool if this worked)
-    /*
-    PIXI.loader
-    .add([
-      "images/cat.png",
-      "images/button.png",
-      "images/treasure.png",
-      "images/circle.png",
-      "images/button_down.png"
-    ])
-    .load(this.pixisetup);
-  }
-
-  pixisetup(){
-    console.log("ready 2 go")
-  }
-  */
-
-  //add buttons to list
-  addButtons(){
-    //make all the buttons
-    var button_input = new Button("b_in",PIXI.Texture.from('images/buttons/button_setin.png'),200,100);
-    var button_addlayer = new Button("b_addlayer",PIXI.Texture.from('images/buttons/button_layer.png'),100,50);
-    var button_removelayer = new Button("b_remlayer",PIXI.Texture.from('images/buttons/button_removelayer.png'),100,110);
-
-    var button_addn0 = new Button("b_addn0",PIXI.Texture.from('images/buttons/button_addneuron.png'),300,50);
-    var button_remn0 = new Button("b_remn0",PIXI.Texture.from('images/buttons/button_removeneuron.png'),300,100);
-
-    var button_addn1 = new Button("b_addn1",PIXI.Texture.from('images/buttons/button_addneuron.png'),420,50);
-    var button_remn1 = new Button("b_remn1",PIXI.Texture.from('images/buttons/button_removeneuron.png'),420,100);
-
-    var button_addn2 = new Button("b_addn2",PIXI.Texture.from('images/buttons/button_addneuron.png'),540,50);
-    var button_remn2 = new Button("b_remn2",PIXI.Texture.from('images/buttons/button_removeneuron.png'),540,100);
-
-    var button_addf = new Button("b_addf",PIXI.Texture.from('images/buttons/button_next.png'),100,175);
-    var button_actfn_linear= new Button("b_actfn_linear",PIXI.Texture.from('images/buttons/button_linear.png'),100,250)
-    var button_actfn_binstep= new Button("b_actfn_binstep",PIXI.Texture.from('images/buttons/button_binstep.png'),100,300)
-
-    //add all the buttons
-    this.buttonContainer.addChild(button_input, button_addlayer, button_removelayer,
-      button_addn0, button_remn0,
-      button_addn1, button_remn1,
-      button_addn2, button_remn2,
-      button_addf,button_actfn_binstep,button_actfn_linear);
-  }
-
-  setup_buttons(){
-    this.addButtons();
-    this.drawButtons();
-    this.buttonContainer.getChildByName("b_addn1").visible = false;
-    this.buttonContainer.getChildByName("b_remn1").visible = false;
-    this.buttonContainer.getChildByName("b_addn2").visible = false;
-    this.buttonContainer.getChildByName("b_remn2").visible = false;
-  }
-
-  //add a single button
-  addButton(name,textureimg, x, y){
-    var newb = new Button(name,PIXI.Texture.from(textureimg),x,y)
-    this.buttonContainer.addChild(newb);
-    this.app.stage.addChild(newb);
-  }
-
-  drawButtons(){    
-    this.app.stage.removeChild(this.buttonContainer);
-    this.app.stage.addChild(this.buttonContainer);
-  }
-
-  //used for weights
-  //doesnt work, come back to it
-  drawLine(graphic, color, thickness, start_x, start_y, end_x, end_y){
-    graphic.lineStyle(thickness, color);
-    graphic.moveTo(start_x,start_y);
-    graphic.lineTo(end_x,end_y)
-  }
-
-  draw(net){
-    var weightContainer=new PIXI.Container();
-
-    //clear the old stuff
-    this.netContainer.removeChildren();
-    
-    //for each layer
-    for(var i = 0; i<net.layers.length; i++){
-  
-      //create layercontainer + add to netcontainer
-      var layerContainer = new PIXI.Container();
-      this.netContainer.addChild(layerContainer);
-
-      var biasSprite = new PIXI.Text(formatter.format(net.getLayer(i).layerBias));
-        biasSprite.x=(i*200)+350;
-        biasSprite.y=120;
-
-      layerContainer.addChild(biasSprite);
-
-      //how many neurons in each layer
-      //neuronsinlayer=[];
-
-
-      //for each neuron
-      for(var j = 0; j<net.getLayer(i).neurons.length; j++){
-
-        //create neuroncontainer (+neuroncontainer stuff) + add to layercontainer
-        var neuronContainer = new PIXI.Container();
-          neuronContainer.x=(i*200)+350;
-          neuronContainer.y=j*120+150;
-
-        var weightSprite=new PIXI.Graphics();
-          weightSprite.lineStyle(10, 0x000000)
-          weightSprite.moveTo(neuronContainer.x+100,neuronContainer.y+50)
-          weightSprite.lineTo(550,150)
-          weightContainer.addChild(weightSprite);
-
-        var neuronBase = new PIXI.Sprite(PIXI.Texture.from('images/neuron.png'));
-          //neuronBase.tint = 0xa8ff05;
-
-        var innerText = new PIXI.Text(
-          "i: " + this.formatList(net.getLayer(i).neurons[j].inputs) + '\n'
-         + "w: " + this.formatList(net.getLayer(i).neurons[j].weights) + '\n'
-         + "b: " + formatter_long.format(net.getLayer(i).layerBias) +'\n'
-         + "o: " + formatter_long.format(net.getLayer(i).neurons[j].output_nofn) + '\n'
-         + formatter_long.format(net.getLayer(i).neurons[j].output) + '\n',
-          textStyle)
-          innerText.x=15;
-          innerText.y=0;
-
-        var neuronOutText = new PIXI.Text(formatter.format(net.getLayer(i).neurons[j].output));
-          neuronOutText.x=25;
-          neuronOutText.y=25;
-
-
-        //overneuron has to be the interactive since it's on top
-        //also layerwise:  neuroncontainer [ [neuronBase] [innerText] [overneuron [outtext]] ]
-        var overNeuron = new PIXI.Sprite(PIXI.Texture.from('images/neuron.png'));
-          overNeuron.tint=0x2003fc;
-          overNeuron.interactive=true;
-
-          overNeuron.on('mouseover', function(e){
-            this.alpha=0;
-          })
-
-          overNeuron.on('mouseout', function(e){
-            this.alpha=1;
-          })
-
-        overNeuron.addChild(neuronOutText);
+    constructor(){
         
-        neuronContainer.addChild(neuronBase);
-        neuronContainer.addChild(innerText);
-//        neuronContainer.addChild(overNeuron);     // PUT ME BACK LATER
+        var vst=this;
+        const app = new PIXI.Application({
+          autoResize: true,
+          width: window.innerWidth,
+          height: window.innerHeight,
+          backgroundColor: 0xdee0ff
+        });
 
-        //add neurons to layer
-        layerContainer.addChild(neuronContainer);
-        layerContainer.addChild(weightContainer);
-      }
+        this.app=app;
 
-    var outputContainer = new PIXI.Container();
-    this.netContainer.addChild(outputContainer);
+        //resize canvas when window is resized
+        window.addEventListener('resize', resize); 
+        var h=window.innerHeight;    
+        function resize(){
+            app.renderer.resize(window.innerWidth, window.innerHeight);
+            header.width=window.innerWidth;
+            footer.width=window.innerWidth;
+            footer.y=window.innerHeight-h;
 
-    //TARGETS
-    var outText = new PIXI.Text("target"+'\n'+"out"+'\n'+ "error"+'\n'+"delta", textStyle)
-      outText.x=170;
-      outText.y=380;
-    outputContainer.addChild(outText);
+            app.stage.getChildByName("button_nextslide").x=window.innerWidth-100;
+            app.stage.getChildByName("button_nextslide").y=window.innerHeight-25;
 
-    //errors
-    for(var k=0; k<net.target.length; k++){
-      var outText = new PIXI.Text(net.target[k] + '\n'
-      + formatter_long.format(net.netOut[k]) + '\n'
-      + formatter_long.format(net.error[k]) + '\n'
-      + formatter_long.format(net.delta[k]), textStyle)
-        outText.x=250;
-        outText.y=380;
-//        outText.y=15*k +400;
-      outputContainer.addChild(outText);
+            app.stage.getChildByName("button_prevslide").x=100;
+            app.stage.getChildByName("button_prevslide").y=window.innerHeight-25;
+
+            app.stage.getChildByName("button_start").x=window.innerWidth/2;
+            app.stage.getChildByName("button_start").y=window.innerHeight*(3/4);
+        }
+        document.body.appendChild(this.app.view);
+
+        //add premade slides
+        this.slideList = [];
+//        this.slideList.push(Slide0,Slide1,Slide2,SlideX);
+        this.slideList.push(SlideTest0,SlideTest1,SlideTest2,SlideTest4,SlideTest3,SlideTestX);
+
+        this.currentSlide=2;
+
+        //this.drawSlide();
+
+        //header bar
+        const header=new PIXI.Graphics();
+        header.name="header";
+        header.beginFill(0xbfbfbf);
+        header.drawRect(0,0,window.innerWidth,layout.HEADER_HEIGHT);
+        header.endFill();
+
+        const footer=new PIXI.Graphics();
+        footer.name="footer";
+        footer.beginFill(0xbfbfbf);
+        //footer.drawRect(0,window.innerHeight-80,window.innerWidth,80);
+        footer.drawRect(0,window.innerHeight,window.innerWidth,-layout.FOOTER_HEIGHT);
+
+        console.log(footer.x +" "+ footer.y +" "+ footer.width +" "+ footer.height);
+        footer.endFill();
+
+        //console.log(f)
+        this.app.stage.addChild(header);
+        this.app.stage.addChild(footer);
+
+
+        this.createButtons();
+        this.drawSlide_init();
+
+        this.caveats();
     }
 
-    //total error
-    var outText = new PIXI.Text("Etot"+' \n' + formatter_long.format(net.eTot), textStyle)
-      outText.x=200;
-      outText.y=460;
-    outputContainer.addChild(outText);
+    setVis(idx,bool){
+        if(bool==false){this.app.stage.getChildAt(idx).visible=false;}
+        else if(bool==true){this.app.stage.getChildAt(idx).visible=true;}
     }
 
-    //add net to screen
-    this.app.stage.addChild(this.netContainer);
-  }
-
-  clear(net){
-    this.app.stage.removeChild(this.netContainer);
-  }
-
-  //rounds number to 2 decimal places
-  formatList(list){
-    var nums2print =[];
-    for(var n=0; n<list.length; n++){
-      nums2print.push(formatter_long.format(list[n]));
+    drawSlide_init(){
+        this.app.stage.addChild(this.slideList[this.currentSlide].slideContainer);
     }
-    return nums2print;
-  }
 
-  addInputs(inputs){
-    this.inputContainer.x=160;
-    this.inputContainer.y=150;
+    drawSlide(){
+        this.app.stage.removeChildAt(this.app.stage.children.length-1);
+        this.app.stage.addChild(this.slideList[this.currentSlide].slideContainer);
 
-    this.inputContainer.removeChildren();
-
-    for(var i = 0; i<inputs.length; i++){
-      var inputSprite = new PIXI.Sprite(PIXI.Texture.from('images/input.png'));
-        inputSprite.y=i*80;
-
-      var inputSpriteText = new PIXI.Text(inputs[i]);
-        inputSpriteText.x=20;
-        inputSpriteText.y=i*80 +20;
-
-      this.inputContainer.addChild(inputSprite,inputSpriteText)
 
     }
-    this.app.stage.addChild(this.inputContainer);
-  }
+
+    createButtons(){
+
+        var vst = this;
+
+        //START
+        var startx = window.innerWidth/2;
+        var starty = window.innerHeight*(3/4);
+        var button_start = new Button("button_start",PIXI.Texture.from('images/buttons/start.png'),startx,starty,true);
+        this.app.stage.addChild(button_start);
+            
+            this.app.stage.getChildByName("button_start").on('click', function(e){ 
+                if(vst.currentSlide+1<vst.slideList.length){
+                    vst.currentSlide=vst.currentSlide+1;
+                    vst.drawSlide();
+                    vst.caveats();
+
+                    // gotta update net at switch over, if slide has a net
+                  //  if (vst.slideList[vst.currentSlide].slideNet !== undefined){
+                        //vst.slideList[vst.currentSlide].updateDraw(vst.slideList[vst.currentSlide].slideNet);
+                 //   }
+                }
+            });
+
+        // NEXT SLIDE
+        var button_nextslide = new Button("button_nextslide",PIXI.Texture.from('images/buttons/button_nextslide.png'),layout.NEXTSLIDE_X,layout.NEXTSLIDE_Y,true)
+        this.app.stage.addChild(button_nextslide);
+            
+            this.app.stage.getChildByName("button_nextslide").on('click', function(e){ 
+                if(vst.currentSlide+1<vst.slideList.length){
+                    vst.currentSlide=vst.currentSlide+1;
+                    vst.drawSlide();
+                    vst.caveats();
+
+                    // gotta update net at switch over, if slide has a net
+                    if (vst.slideList[vst.currentSlide].slideNet !== undefined){
+                        //vst.slideList[vst.currentSlide].updateDraw(vst.slideList[vst.currentSlide].slideNet);
+                    }
+                }
+            })
+
+        //PREVIOUS SLIDE
+        var button_prevslide = new Button("button_prevslide",PIXI.Texture.from('images/buttons/button_prevslide.png'),layout.PREVSLIDE_X,layout.PREVSLIDE_Y,true)
+        this.app.stage.addChild(button_prevslide);
+
+        this.app.stage.getChildByName("button_prevslide").on('click', function(e){ 
+            if(vst.currentSlide>0){
+                vst.currentSlide=vst.currentSlide-1;
+                vst.drawSlide();
+                vst.caveats();
+
+                if (vst.slideList[vst.currentSlide].slideNet !== undefined){
+                   // vst.slideList[vst.currentSlide].updateDraw(vst.slideList[vst.currentSlide].slideNet);
+                }
+            }
+        })
+
+        
+        // GO TO 0 (LAUNCH PAGE)
+        var goto0 = new Button("goto0",PIXI.Texture.from('images/buttons/gotointro.png'),250,layout.HEADER_HEIGHT/2,false)
+        this.app.stage.addChild(goto0);
+        this.app.stage.getChildByName("goto0").on('click', function(e){ 
+            if (vst.currentSlide!=0){
+                vst.currentSlide=0;
+                vst.drawSlide();
+                vst.caveats();
+            }
+        });
+
+        // GO TO 1 (LAUNCH PAGE)
+        var goto1 = new Button("goto1",PIXI.Texture.from('images/buttons/gotodata.png'),400,layout.HEADER_HEIGHT/2,false)
+        this.app.stage.addChild(goto1);
+        this.app.stage.getChildByName("goto1").on('click', function(e){ 
+            if (vst.currentSlide!=1){
+                vst.currentSlide=1;
+                vst.drawSlide();
+                vst.caveats();
+            }
+        });
+        
+    }
+
+    //sometimes buttons and stuff have different behaviors than typical
+    //here's where they get checked
+    caveats(){
+
+        if(this.currentSlide==0){
+            for(var i = 0; i<this.app.stage.children.length-1; i++){
+                this.app.stage.getChildAt(i).visible=false;
+                this.app.stage.getChildByName("button_start").visible=true;
+            }
+        
+        } else {
+            for(var i = 0; i<this.app.stage.children.length-1; i++){
+                this.app.stage.getChildAt(i).visible=true;
+                this.app.stage.getChildByName("button_start").visible=false;
+            }
+        }
+        
+    }
+    
 }
-

@@ -1,7 +1,6 @@
 import {SlideTest} from "../SlideTest.js"
 import { Net } from "../../Model/net.js";
 import {actFns} from "../../Model/actfns.js"
-import {ViewSlideTest} from "../ViewSlideTest.js"
 import {small, medium, typewriter} from "../textstyles.js"
 import {fruits, fruits_small} from "../../Model/data.js"
 //import {data, fruits} from "../Model/data.js"
