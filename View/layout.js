@@ -12,6 +12,9 @@ export const layout = {
     NEXTTEXT_X: window.innerWidth/2,
     NEXTTEXT_Y: window.innerHeight-(75/2), //FOOTER_HEIGHT/2
 
+    PREVTEXT_X: window.innerWidth/2 - 150,
+
+
     BOTTOMLIM: window.innerHeight*(9/10),
 
 //    INNERHEIGHT: window.innerHeight-(50+75),

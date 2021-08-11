@@ -67,6 +67,9 @@ export class SlideTest{
             try{
                 slide.buttonContainer.getChildByName("nexttext").x=window.innerWidth/2;
                 slide.buttonContainer.getChildByName("nexttext").y=window.innerHeight-(layout.FOOTER_HEIGHT/2);
+
+                slide.buttonContainer.getChildByName("prevtext").x=window.innerWidth/2 -150;
+                slide.buttonContainer.getChildByName("prevtext").y=window.innerHeight-(layout.FOOTER_HEIGHT/2);
             } catch {};
         
         }
@@ -102,34 +105,53 @@ export class SlideTest{
     drawTextButtons(){
         var slide = this;
 
-        this.buttonContainer.addChild(new Button("nexttext",PIXI.Texture.from('images/buttons/next.png'),layout.NEXTTEXT_X,window.innerHeight-(layout.FOOTER_HEIGHT/2),true));
-        this.buttonContainer.getChildByName("nexttext").on('click', function(e){
-        //   viewst.app.stage.getChildByName("button_nextslide").tint=0xbfbfbf;
+        this.buttonContainer.addChild(new Button("nexttext",PIXI.Texture.from('images/buttons/next.png'),layout.NEXTTEXT_X,layout.NEXTTEXT_Y,true));
+       
+        // don't draw next text button if theres 1 or less texts
+        if(this.textcount>=slide.textContainer.children.length){
+            this.buttonContainer.getChildByName("nexttext").visible=false;
+        }
 
+        this.buttonContainer.getChildByName("nexttext").on('click', function(e){
+            
             if (slide.textcount<slide.textContainer.children.length-1){
                 slide.textContainer.getChildAt(slide.textcount).visible=true;
+                slide.buttonContainer.getChildByName("prevtext").visible=true;
+
                 slide.textcount=slide.textcount+1;
+
             } else if (slide.textcount==slide.textContainer.children.length-1){
                 slide.textContainer.getChildAt(slide.textcount).visible=true;
-                viewst.app.stage.getChildByName("button_nextslide").visible=true;
+                slide.textcount=slide.textcount+1;
+                this.visible=false;
+                slide.buttonContainer.getChildByName("prevtext").visible=true;
+
+              //  slide.buttonContainer.getChildByName("prevtext").visible=false;
 
             }
-
         }); 
 
-        //TODO - get rid of this?
-        this.buttonContainer.addChild(new Button("prevtext",PIXI.Texture.from('images/buttons/prevtext.png'), layout.NEXTTEXT_X-100,layout.BOTTOMLIM,false));
+        this.buttonContainer.addChild(new Button("prevtext",PIXI.Texture.from('images/buttons/prev.png'), layout.PREVTEXT_X,layout.NEXTTEXT_Y,true));
+        if(this.textcount>=slide.textContainer.children.length){
+            this.buttonContainer.getChildByName("prevtext").visible=false;
+        }
+
         this.buttonContainer.getChildByName("prevtext").on('click', function(e){
-            if (slide.textcount>1){
-                slide.textcount=slide.textcount-1;
-                slide.textContainer.getChildAt(slide.textcount).visible=false;
+            console.log(slide.textcount);
+           if (slide.textcount>1){
+            slide.buttonContainer.getChildByName("nexttext").visible=true;
+            slide.textcount=slide.textcount-1;
+            slide.textContainer.getChildAt(slide.textcount).visible=false;
+            console.log(slide.textcount);
+            
+        } 
+            if (slide.textcount==1){
+                this.visible=false;
             }
+
         });
 
-        //deactivate button if there's no more text
-        if(this.textcount>=slide.textContainer.children.length){
-           // this.buttonContainer.getChildByName("nexttext").tintGray();
-        }
+        
     }
 
     drawButtons(net){

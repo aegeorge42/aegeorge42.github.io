@@ -7,7 +7,6 @@ import {fruits, fruits_small} from "../../Model/data.js"
 
 
 export const SlideTestX = new SlideTest();
-SlideTestX.drawTextButtons();
 
 var net = new Net();
 SlideTestX.slideNet=net;
@@ -47,5 +46,5 @@ text[3]=text3;
 
 
 SlideTestX.drawText(text);
-//SlideTestX.drawTextButtons();
+SlideTestX.drawTextButtons();
 
