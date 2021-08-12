@@ -1,7 +1,12 @@
 import {Slide} from "../Slide.js"
 import {small, medium, typewriter} from "../textstyles.js"
 
-export const SlideInstruct = new Slide();
+export const SlideIntro = new Slide();
+var text = [    ["text1", 50, 50]
+                ["text2", 100, 100]
+                ["text3", 200,200]       ];
+
+
 /*
 var text=new Array(2);
 var text0= new PIXI.Text("this was the tool that I needed" +'\n'+" when I was learning about neural networks"
@@ -19,9 +24,6 @@ text[1]=text1;
 text[2]=text2;
 
 */
-var text = [    ["text1", 50, 50],
-                ["text2", 100, 100],
-                ["text3", 200,200]       ];
 
-SlideInstruct.drawText_test(text);
+SlideInstruct.drawText(text);
 SlideInstruct.drawTextButtons();

@@ -616,11 +616,20 @@ export class Slide{
     }
 
     drawText(text){
-        for (var i =0; i<text.length; i++){
-            this.textContainer.addChild(text[i]);
-            this.textContainer.getChildAt(i).visible=false;
-        }
-        this.textContainer.getChildAt(0).visible=true;
+      for (var i =0; i<text.length; i++){
+        var t = new PIXI.Text(text[i][0]);
+          t.x=text[i][1];
+          t.y=text[i][2];
+
+        var boxbounds = t.getLocalBounds();
+        var textbox=new PIXI.Graphics();
+        textbox.beginFill(0xFFFFFF);
+        textbox.drawRect(t.x,t.y,boxbounds.width,boxbounds.height);
+        this.textContainer.addChild(textbox);
+        textbox.addChild(t);
+        this.textContainer.getChildAt(i).visible=false;
+      }
+      this.textContainer.getChildAt(0).visible=true;
     }
 
 

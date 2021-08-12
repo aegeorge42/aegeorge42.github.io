@@ -19,6 +19,7 @@ function resize(){
     opener.x=(window.innerWidth)/2;
     opener.y=(window.innerHeight)/3;
 }
-
+/*
 var g = new Graph(fruits);
 SlideHome.slideContainer.addChild(g);        
+*/
