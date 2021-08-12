@@ -25,7 +25,7 @@ export class Data{
     createDataPoints(amount, start, expected_type){
 
         if(expected_type == datatypes.STRAWBERRY){
-            var maxLength=5;
+            var maxLength=1;
             var minLength=0.5;
 
             var maxRound=0.8;
@@ -74,6 +74,17 @@ export const fruits_small = new Data(0, ["strawberry","blueberry"],["length","ro
     fruits_small.createSingleDatapoint("strawberry", [0.9, 0.1], [1,0]);
     fruits_small.createSingleDatapoint("blueberry", [0.1, 0.9], [0,1]);
     fruits_small.createSingleDatapoint("strawberry", [0.9, 0.1], [1,0]);
+
+
+export const fruits_test = new Data(0, ["strawberry","blueberry"],["length","roundness"]);
+
+    fruits_test.createSingleDatapoint("blueberry", [0.1, 0.9], [0,1]);
+        fruits_test.createSingleDatapoint("strawberry", [0.9, 0.1], [1,0]);
+    fruits_test.createSingleDatapoint("blueberry", [0.1, 0.8], [0,1]);
+        fruits_test.createSingleDatapoint("strawberry", [0.8, 0.2], [1,0]);
+    fruits_test.createSingleDatapoint("blueberry", [0.1, 0.7], [0,1]);
+        fruits_test.createSingleDatapoint("strawberry", [0.7, 0.3], [1,0]);
+
 
 export const fruits = new Data(100,["strawberry","blueberry"],["length", "roundness"]);
     fruits.createDataPoints(50,0,datatypes.STRAWBERRY);

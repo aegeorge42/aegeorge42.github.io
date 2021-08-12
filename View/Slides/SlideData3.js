@@ -1,4 +1,4 @@
-import {SlideTest} from "../SlideTest.js"
+import {Slide} from "../Slide.js"
 import { Net } from "../../Model/net.js";
 import {actFns} from "../../Model/actfns.js"
 import {small, medium, typewriter} from "../textstyles.js"
@@ -7,8 +7,8 @@ import { layout } from "../layout.js";
 
 
 
-export const SlideTest4 = new SlideTest();
-SlideTest4.drawTextButtons();
+export const SlideTest4 = new Slide();
+Slide.drawTextButtons();
 
 /*var text=new Array();
 text[0]=new PIXI.Text("FOUR");
@@ -16,6 +16,7 @@ text[0]=new PIXI.Text("FOUR");
     text[0].y=200;
 */
 //SlideTest4.drawText(text);
+/*
 SlideTest4.drawCard(1,layout.CARDHEIGHT, layout.CARDWIDTH, window.innerWidth*(1/10), (layout.HEADER_HEIGHT + (layout.CARDHEIGHT/4)),
                      "blueberry", ["length", "roundness"], [0.9,1.0], 'images/blueberry.png');
 SlideTest4.drawCard(1,layout.CARDHEIGHT, layout.CARDWIDTH, window.innerWidth*(1/10) +100, (layout.HEADER_HEIGHT + (layout.CARDHEIGHT/4)),
@@ -34,3 +35,4 @@ SlideTest4.drawCard(1,layout.CARDHEIGHT, layout.CARDWIDTH, window.innerWidth*(3/
 SlideTest4.drawCard(1,layout.CARDHEIGHT, layout.CARDWIDTH, window.innerWidth*(4/10), (layout.HEADER_HEIGHT + layout.CARDHEIGHT*(3/4)),
                      "strawberry", ["length", "roundness"], [0.9,1.0], 'images/strawberry.png');
 
+*/

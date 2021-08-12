@@ -1,15 +1,15 @@
-import {SlideTest} from "../SlideTest.js"
+import {Slide} from "../Slide.js"
 import { Net } from "../../Model/net.js";
 import {actFns} from "../../Model/actfns.js"
 import {small, medium, typewriter} from "../textstyles.js"
 
 
-export const SlideTest3 = new SlideTest();
-SlideTest3.drawTextButtons();
+export const SlideData2 = new Slide();
+SlideData2.drawTextButtons();
 
 var net2 = new Net();
 net2.removeLayer();
-SlideTest3.slideNet=net2;
+SlideData2.slideNet=net2;
 
 //SlideTest3.drawButtons(net2);
 
@@ -25,10 +25,10 @@ const train_data2 = {
     type: ["strawberry"]
 }
 
-SlideTest3.slideNet.setNetData(train_data2);
-SlideTest3.slideNet.setOutLayer();
-SlideTest3.slideNet.update();
-SlideTest3.draw_init(SlideTest3.slideNet);
+SlideData2.slideNet.setNetData(train_data2);
+SlideData2.slideNet.setOutLayer();
+SlideData2.slideNet.update();
+SlideData2.draw_init(SlideData2.slideNet);
 
 // only show neuron
 /*SlideTest3.setVis(SlideTest3.weightsContainer,false);

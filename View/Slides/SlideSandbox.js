@@ -1,4 +1,4 @@
-import {SlideTest} from "../SlideTest.js"
+import {Slide} from "../Slide.js"
 import { Net } from "../../Model/net.js";
 import {actFns} from "../../Model/actfns.js"
 import {small, medium, typewriter} from "../textstyles.js"
@@ -6,12 +6,12 @@ import {fruits, fruits_small} from "../../Model/data.js"
 //import {data, fruits} from "../Model/data.js"
 
 
-export const SlideTestX = new SlideTest();
+export const SlideSandbox = new Slide();
 
 var net = new Net();
-SlideTestX.slideNet=net;
+SlideSandbox.slideNet=net;
 
-SlideTestX.drawButtons(net);
+SlideSandbox.drawButtons(net);
 
 net.setNetData(fruits_small);
 net.setLearnRate(0.10);
@@ -20,10 +20,10 @@ net.getLayer(0).addNeuron();
 net.setOutLayer();
 net.update();
 
-//SlideTestX.drawNeurons_init(net);
-//SlideTestX.drawInputs_init(net);
+//SlideSandbox.drawNeurons_init(net);
+//SlideSandbox.drawInputs_init(net);
 
-SlideTestX.draw_init(net);
+SlideSandbox.draw_init(net);
 
 var text0=new PIXI.Text("hello",typewriter);
     text0.x=150;
@@ -45,6 +45,6 @@ text[2]=text2;
 text[3]=text3;
 
 
-SlideTestX.drawText(text);
-SlideTestX.drawTextButtons();
+SlideSandbox.drawText(text);
+SlideSandbox.drawTextButtons();
 

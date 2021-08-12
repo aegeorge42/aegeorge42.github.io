@@ -1,7 +1,7 @@
-import {SlideTest} from "../SlideTest.js"
+import {Slide} from "../Slide.js"
 import {small, medium, typewriter} from "../textstyles.js"
 
-export const SlideTest1 = new SlideTest();
+export const SlideInstruct = new Slide();
 
 var text=new Array(2);
 var text0= new PIXI.Text("this was the tool that I needed" +'\n'+" when I was learning about neural networks"
@@ -20,5 +20,5 @@ text[2]=text2;
 
 
 
-SlideTest1.drawText(text);
-SlideTest1.drawTextButtons();
+SlideInstruct.drawText(text);
+SlideInstruct.drawTextButtons();
