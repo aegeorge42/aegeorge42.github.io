@@ -1,13 +1,13 @@
 //import { defaultInput } from "../Model/net.js";
 import {Button} from "./Button.js"
 import {layout} from "./layout.js"
-import { Slide } from "./Slide.js";
-
-import {SlideHome} from "./Slides/SlideHome.js"
-import { SlideInstruct } from "./Slides/SlideInstruct.js";
-import { SlideData1 } from "./Slides/SlideData1.js";
-import { SlideData2 } from "./Slides/SlideData2.js";
-import { SlideSandbox } from "./Slides/SlideSandbox.js";
+import {SlideHome,
+    SlideInstruct,
+    SlideIntro,
+    SlideData1,
+    SlideData2,
+    SlideData3,
+    SlideSandbox} from "./allSlides.js"
 
 
 
@@ -49,9 +49,9 @@ export class View{
 
         //add premade slides
         this.slideList = [];
-        this.slideList.push(SlideHome,SlideInstruct,SlideData1,SlideData2,SlideSandbox);
+        this.slideList.push(SlideHome,SlideInstruct,SlideIntro,SlideData1,SlideData2,SlideSandbox);
 
-        this.currentSlide=0;
+        this.currentSlide=4;
 
         //this.drawSlide();
 

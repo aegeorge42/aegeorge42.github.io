@@ -23,5 +23,5 @@ var text = [    ["text1", 50, 50],
                 ["text2", 100, 100],
                 ["text3", 200,200]       ];
 
-SlideInstruct.drawText_test(text);
+SlideInstruct.drawText(text);
 SlideInstruct.drawTextButtons();

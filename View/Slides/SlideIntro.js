@@ -2,8 +2,8 @@ import {Slide} from "../Slide.js"
 import {small, medium, typewriter} from "../textstyles.js"
 
 export const SlideIntro = new Slide();
-var text = [    ["text1", 50, 50]
-                ["text2", 100, 100]
+var text = [    ["text1", 50, 50],
+                ["text2", 100, 100],
                 ["text3", 200,200]       ];
 
 
@@ -25,5 +25,5 @@ text[2]=text2;
 
 */
 
-SlideInstruct.drawText(text);
-SlideInstruct.drawTextButtons();
+SlideIntro.drawText(text);
+SlideIntro.drawTextButtons();

@@ -1,4 +1,4 @@
-import { Button } from "../Button.js";
+/*import { Button } from "../Button.js";
 import {Slide} from "../Slide.js"
 import {viewst} from "../../Controller.js"
 import {layout} from "../layout.js"
@@ -19,7 +19,7 @@ function resize(){
     opener.x=(window.innerWidth)/2;
     opener.y=(window.innerHeight)/3;
 }
-/*
+
 var g = new Graph(fruits);
 SlideHome.slideContainer.addChild(g);        
 */

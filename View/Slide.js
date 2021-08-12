@@ -355,24 +355,38 @@ export class Slide{
                     }
 
                     weightSprite.interactive=true;
-
-                    var self=this;
+                    var addweight = new Button("+",PIXI.Texture.from('images/buttons/plus.png'),(startx+endx)/2,(starty+endy)/2,false);
+                      addweight.anchor.set(0.5);
+                    var loseweight = new Button("-",PIXI.Texture.from('images/buttons/minus.png'),((startx+endx)/2)-25,(starty+endy)/2,false);
+                      addweight.anchor.set(0.5);
+                    weightSprite.addChild(addweight,loseweight);
+                                        
                     weightSprite.on('mouseover', function(e){
-                    //    console.log(this.lineWidth);
-                    //    this.updateLineStyle(this.lineWidth, 0x39FF14);
+                        this.getChildByName("+").visible=true;
+                        this.getChildByName("-").visible=true;
+                        console.log(this)
+
                     });
                     
                     weightSprite.on('mouseout', function(e){
-                      //  this.updateLineStyle(this.lineWidth, this.lineColor);
+                        this.getChildByName("+").visible=false;
+                        this.getChildByName("-").visible=false;
                     });
 
-                    weightSprite.on('click', function(e){
-                        var currWeight = net.getLayer(this.idx[0]).getNeuron(this.idx[1]).getWeight(this.idx[2]);
-                        net.getLayer(this.idx[0]).getNeuron(this.idx[1]).setWeight(this.idx[2],currWeight+0.1);
-                       // console.log(net.getLayer(this.idx[0]).getNeuron(this.idx[1]).setweight();
-                        console.log("click");
-                        net.update();
-                        slide.draw_update(net);
+                    addweight.on('click', function(e){
+                      var currWeight = net.getLayer(this.parent.idx[0]).getNeuron(this.parent.idx[1]).getWeight(this.parent.idx[2]);
+                      net.getLayer(this.parent.idx[0]).getNeuron(this.parent.idx[1]).setWeight(this.parent.idx[2],currWeight+0.1);
+                      net.update();
+                      slide.draw_update(net);
+                
+                    });
+
+                    loseweight.on('click', function(e){
+                      var currWeight = net.getLayer(this.parent.idx[0]).getNeuron(this.parent.idx[1]).getWeight(this.parent.idx[2]);
+                      net.getLayer(this.parent.idx[0]).getNeuron(this.parent.idx[1]).setWeight(this.parent.idx[2],currWeight-0.1);
+                      net.update();
+                      slide.draw_update(net);
+                
                     });
 
                     this.weightsContainer.addChild(weightSprite);
