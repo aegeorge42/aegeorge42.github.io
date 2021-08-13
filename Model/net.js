@@ -89,6 +89,15 @@ export class Net{
         this.targetText=datapoint.expected_text;
     }
 
+    setNetData_test(data){
+        this.data=data;
+        this.setNetInput_test(data.points[0]);
+    }
+
+    setNetInput_test(datapoint){
+        this.netInput=datapoint.input;
+    }
+
     setNetActFn(actfn){
         this.netActFn=actfn;
     }
@@ -161,6 +170,13 @@ export class Net{
     }
 
     learn(){
+        this.dataIdx=(this.dataIdx+1)%this.data.points.length;
+        this.setNetInput(this.data.points[this.dataIdx]);
+        this.update();
+
+        this.backprop();
+        this.update_backprop();
+        /*
         this.backprop();
     //    this.calcCost();
         this.update_backprop();
@@ -170,6 +186,7 @@ export class Net{
        //this.dataIdx=0;  // use for testing one data point
        this.setNetInput(this.data.points[this.dataIdx]);
        this.update();
+       */
     }
 
     learn_batch(){
@@ -431,7 +448,11 @@ export class Net{
     }
 
     clone(){
+        //for (var i =0;i<this.layers.length;i++){
+       //     var currentLayer=this.getLayer(i);
+       // }
+
+        
 
     }
-    
 }

@@ -5,14 +5,14 @@ export const datatypes = {
 }
 
 export class Data{
-
+    
     constructor(size, type, labels){
         this.points=new Array(size);
         this.type=type;
         this.labels=labels;
     }
 
-    createSingleDatapoint(expected_text, input, expected){
+    createSingleDatapoint_train(expected_text, input, expected){
         var dp = {
             input: input,
             expected: expected,
@@ -22,13 +22,20 @@ export class Data{
         this.points.push(dp);
     }
 
-    createDataPoints(amount, start, expected_type){
+    createSingleDatapoint_test(input){
+        var dp = {
+            input: input
+        }
+        this.points.push(dp);
+    }
+
+    createDatapoints_train(amount, start, expected_type){
 
         if(expected_type == datatypes.STRAWBERRY){
             var maxLength=1;
             var minLength=0.5;
 
-            var maxRound=0.8;
+            var maxRound=0.5;
             var minRound=0;
 
             for (var i =0; i<amount; i++){
@@ -43,7 +50,7 @@ export class Data{
             } 
 
         } else if (expected_type == datatypes.BLUEBERRY){
-            var maxLength=0.9;
+            var maxLength=0.5;
             var minLength=0.05;
 
             var maxRound=1.0;
@@ -64,29 +71,33 @@ export class Data{
 }
 
 export const fruits_small = new Data(0, ["strawberry","blueberry"],["length","roundness"]);
-    fruits_small.createSingleDatapoint("blueberry", [0.1, 0.9], [0,1]);
-    fruits_small.createSingleDatapoint("strawberry", [0.9, 0.1], [1,0]);
-    fruits_small.createSingleDatapoint("blueberry", [0.1, 0.9], [0,1]);
-    fruits_small.createSingleDatapoint("strawberry", [0.9, 0.1], [1,0]);
-    fruits_small.createSingleDatapoint("blueberry", [0.1, 0.9], [0,1]);
-    fruits_small.createSingleDatapoint("strawberry", [0.9, 0.1], [1,0]);
-    fruits_small.createSingleDatapoint("blueberry", [0.1, 0.9], [0,1]);
-    fruits_small.createSingleDatapoint("strawberry", [0.9, 0.1], [1,0]);
-    fruits_small.createSingleDatapoint("blueberry", [0.1, 0.9], [0,1]);
-    fruits_small.createSingleDatapoint("strawberry", [0.9, 0.1], [1,0]);
+    fruits_small.createSingleDatapoint_train("blueberry", [0.1, 0.9], [0,1]);
+    fruits_small.createSingleDatapoint_train("strawberry", [0.9, 0.1], [1,0]);
+    fruits_small.createSingleDatapoint_train("blueberry", [0.1, 0.9], [0,1]);
+    fruits_small.createSingleDatapoint_train("strawberry", [0.9, 0.1], [1,0]);
+    fruits_small.createSingleDatapoint_train("blueberry", [0.1, 0.9], [0,1]);
+    fruits_small.createSingleDatapoint_train("strawberry", [0.9, 0.1], [1,0]);
+    fruits_small.createSingleDatapoint_train("blueberry", [0.1, 0.9], [0,1]);
+    fruits_small.createSingleDatapoint_train("strawberry", [0.9, 0.1], [1,0]);
+    fruits_small.createSingleDatapoint_train("blueberry", [0.1, 0.9], [0,1]);
+    fruits_small.createSingleDatapoint_train("strawberry", [0.9, 0.1], [1,0]);
 
 
 export const fruits_test = new Data(0, ["strawberry","blueberry"],["length","roundness"]);
 
-    fruits_test.createSingleDatapoint("blueberry", [0.1, 0.9], [0,1]);
-        fruits_test.createSingleDatapoint("strawberry", [0.9, 0.1], [1,0]);
-    fruits_test.createSingleDatapoint("blueberry", [0.1, 0.8], [0,1]);
-        fruits_test.createSingleDatapoint("strawberry", [0.8, 0.2], [1,0]);
-    fruits_test.createSingleDatapoint("blueberry", [0.1, 0.7], [0,1]);
-        fruits_test.createSingleDatapoint("strawberry", [0.7, 0.3], [1,0]);
+    fruits_test.createSingleDatapoint_train("blueberry", [0.1, 0.9], [0,1]);
+    fruits_test.createSingleDatapoint_train("blueberry", [0.15, 0.85], [0,1]);
+    fruits_test.createSingleDatapoint_train("blueberry", [0.12, 0.92], [0,1]);
+
+    fruits_test.createSingleDatapoint_train("strawberry", [0.9, 0.1], [1,0]);
+    fruits_test.createSingleDatapoint_train("strawberry", [0.85, 0.15], [1,0]);
+    fruits_test.createSingleDatapoint_train("strawberry", [0.99, 0.12], [1,0]);
+
+
+
 
 
 export const fruits = new Data(100,["strawberry","blueberry"],["length", "roundness"]);
-    fruits.createDataPoints(50,0,datatypes.STRAWBERRY);
-    fruits.createDataPoints(50,50,datatypes.BLUEBERRY);
+    fruits.createDatapoints_train(50,0,datatypes.STRAWBERRY);
+    fruits.createDatapoints_train(50,50,datatypes.BLUEBERRY);
    // console.log(fruits.points)

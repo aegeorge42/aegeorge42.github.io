@@ -133,7 +133,7 @@ export class Slide{
         }); 
 
         this.buttonContainer.addChild(new Button("prevtext",PIXI.Texture.from('images/buttons/prev.png'), layout.PREVTEXT_X,layout.NEXTTEXT_Y,false));
-        console.log(this.textContainer.children.length)
+        //console.log(this.textContainer.children.length)
         if(this.textContainer.children.length<=1){
             this.buttonContainer.getChildByName("prevtext").visible=false;
         }
@@ -156,7 +156,7 @@ export class Slide{
         
     }
 
-    drawButtons(net){
+    drawButtons(net,graph){
         var slide = this;
 
         // ADD LAYER
@@ -183,6 +183,8 @@ export class Slide{
         this.buttonContainer.getChildByName("learn_stoch_step").on('click', function(e){
             net.learn();
             slide.draw_update(net);
+            graph.updateGraph(net,graph);
+
         });
 
         // LEARN STOCHASTIC
@@ -193,6 +195,7 @@ export class Slide{
           while(loopcount<100 && pauselearn==0){
             net.learn();
             slide.draw_update(net);
+            graph.updateGraph(net,graph);
             await slide.sleep(100); //pause to see updates - 100 seems good
             loopcount=loopcount+1;
           }
@@ -213,6 +216,7 @@ export class Slide{
                 net.setNetInput(net.data.points[i]);
                 net.update();
                 slide.draw_update(net);
+                graph.updateGraph(net,graph);
                 slide.labelsContainer.getChildByName("costLabel").style.fill = 0x6b6b6b;
                 await slide.sleep(100);
             }
@@ -234,11 +238,13 @@ export class Slide{
             while(loopcount<100 && pauselearn==0){
 
                 //cycle data points for drawing purposes, but only for the first few times
-                if(loopcount<5){
+                if(loopcount<1){
                     for(var i=0; i<net.data.points.length; i++){
                         net.setNetInput(net.data.points[i]);
                         net.update();
                         slide.draw_update(net);
+                        graph.updateGraph(net,graph);
+
                         slide.labelsContainer.getChildByName("costLabel").style.fill = 0x6b6b6b;
                         await slide.sleep(100);
                         slide.labelsContainer.getChildByName("costLabel").style.fill = 0x000000;
@@ -249,7 +255,9 @@ export class Slide{
                 await slide.sleep(100);
                 net.learn_batch();
                 net.update();
-                slide.draw_update(net);                
+                slide.draw_update(net);           
+                graph.updateGraph(net,graph);
+     
                 loopcount=loopcount+1;
             }
         });
@@ -276,7 +284,13 @@ export class Slide{
             net.update();
             slide.draw_init(net);
         });
-        
+    }
+
+    addGraph(net,graph){
+        this.buttonContainer.getChildByName("learn_stoch_step").on('click', function(e){
+
+        graph.updateGraph(net,graph);
+        });
     }
 
 

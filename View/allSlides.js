@@ -1,8 +1,8 @@
 import { Slide } from "./Slide.js"
 import { layout } from "./layout.js";
-//import { Net } from "../../Model/net.js";
 import { Net } from "../Model/net.js"
-import {fruits, fruits_small} from "../Model/data.js"
+import {fruits, fruits_small, fruits_test} from "../Model/data.js"
+import {Graph} from "./Graph.js"
 
 
 
@@ -74,6 +74,11 @@ SlideData2.slideNet.update();
 SlideData2.draw_init(SlideData2.slideNet);
 SlideData2.drawTextButtons();
 
+/*var g = new Graph(fruits_test);
+SlideData2.slideContainer.addChild(g.getGraph());
+g.updateGraph(SlideData2.slideNet)
+*/
+
 export const SlideData3 = new Slide();
 
 //SANDBOX
@@ -93,3 +98,36 @@ net.update();
 SlideSandbox.draw_init(net);
 //SlideSandbox.drawText(text);
 SlideSandbox.drawTextButtons();
+
+//GRAPH TEST
+export const SlideGraphTest = new Slide();
+
+var netGraph=new Net();
+    netGraph.setNetData(fruits);
+    netGraph.setOutLayer();
+    netGraph.getLayer(0).addNeuron();
+
+    netGraph.getLayer(0).getNeuron(0).setWeight(0,1);
+    netGraph.getLayer(0).getNeuron(0).setWeight(1,-1);
+
+    netGraph.getLayer(0).getNeuron(1).setWeight(0,-1);
+    netGraph.getLayer(0).getNeuron(1).setWeight(1,1);
+
+    netGraph.getLayer(1).getNeuron(0).setWeight(0,1);
+    netGraph.getLayer(1).getNeuron(0).setWeight(1,-1);
+
+    netGraph.getLayer(1).getNeuron(1).setWeight(0,-1);
+    netGraph.getLayer(1).getNeuron(1).setWeight(1,1);
+
+    netGraph.update();
+    SlideGraphTest.draw_init(netGraph);
+
+var g = new Graph(fruits);
+
+SlideGraphTest.drawButtons(netGraph,g);
+
+SlideGraphTest.slideContainer.addChild(g.getGraph());
+g.updateGraph(netGraph);
+SlideGraphTest.addGraph(netGraph,g);
+netGraph.setNetData(fruits);
+

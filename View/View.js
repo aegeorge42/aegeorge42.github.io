@@ -7,7 +7,8 @@ import {SlideHome,
     SlideData1,
     SlideData2,
     SlideData3,
-    SlideSandbox} from "./allSlides.js"
+    SlideSandbox,
+SlideGraphTest} from "./allSlides.js"
 
 
 
@@ -49,9 +50,9 @@ export class View{
 
         //add premade slides
         this.slideList = [];
-        this.slideList.push(SlideHome,SlideInstruct,SlideIntro,SlideData1,SlideData2,SlideSandbox);
+        this.slideList.push(SlideHome,SlideInstruct,SlideIntro,SlideData1,SlideData2,SlideSandbox,SlideGraphTest);
 
-        this.currentSlide=4;
+        this.currentSlide=6;
 
         //this.drawSlide();
 
