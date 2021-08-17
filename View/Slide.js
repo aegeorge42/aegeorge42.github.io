@@ -238,7 +238,7 @@ export class Slide{
             while(loopcount<100 && pauselearn==0){
 
                 //cycle data points for drawing purposes, but only for the first few times
-                if(loopcount<1){
+                if(loopcount<0){
                     for(var i=0; i<net.data.points.length; i++){
                         net.setNetInput(net.data.points[i]);
                         net.update();
@@ -645,18 +645,28 @@ export class Slide{
 
     drawText(text){
       for (var i =0; i<text.length; i++){
-        var t = new PIXI.Text(text[i][0]);
+
+        // need to add sprites here in order to make them work with click
+        if(text[i].isSprite){
+           console.log(text[i].isSprite)
+           this.textContainer.addChild(text[i]);
+
+        } else {
+        var t = new PIXI.Text(text[i][0],typewriter);
           t.x=text[i][1];
           t.y=text[i][2];
 
         var boxbounds = t.getLocalBounds();
         var textbox=new PIXI.Graphics();
         textbox.beginFill(0xFFFFFF);
-        textbox.drawRect(t.x,t.y,boxbounds.width,boxbounds.height);
+        textbox.drawRect(t.x-5,t.y-5,boxbounds.width+10,boxbounds.height+10);
         this.textContainer.addChild(textbox);
         textbox.addChild(t);
-        this.textContainer.getChildAt(i).visible=false;
+
       }
+      this.textContainer.getChildAt(i).visible=false;
+
+    }
       this.textContainer.getChildAt(0).visible=true;
     }
 

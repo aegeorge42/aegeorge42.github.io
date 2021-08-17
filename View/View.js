@@ -3,8 +3,10 @@ import {Button} from "./Button.js"
 import {layout} from "./layout.js"
 import {SlideHome,
     SlideInstruct,
-    SlideIntro,
-    SlideData1,
+    SlideIntro1,
+    SlideIntro2,
+    SlideIntro3,
+    SlideIntro4,
     SlideData2,
     SlideData3,
     SlideSandbox,
@@ -50,9 +52,9 @@ export class View{
 
         //add premade slides
         this.slideList = [];
-        this.slideList.push(SlideHome,SlideInstruct,SlideIntro,SlideData1,SlideData2,SlideSandbox,SlideGraphTest);
+        this.slideList.push(SlideHome,SlideInstruct,SlideIntro1,SlideIntro2,SlideIntro3,SlideIntro4,SlideData2,SlideSandbox,SlideGraphTest);
 
-        this.currentSlide=6;
+        this.currentSlide=4;
 
         //this.drawSlide();
 
