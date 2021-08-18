@@ -105,7 +105,7 @@ export class Slide{
     drawTextButtons(){
         var slide = this;
 
-        this.buttonContainer.addChild(new Button("nexttext",PIXI.Texture.from('images/buttons/next.png'),layout.NEXTTEXT_X,layout.NEXTTEXT_Y,true));
+        this.buttonContainer.addChild(new Button("nexttext",PIXI.Texture.from('images/buttons/next.png'),layout.NEXTSLIDE_X,layout.NEXTSLIDE_Y,true));
        
         // don't draw next text button if theres 1 or less texts
         if(this.textContainer.children.length<=1){
@@ -132,7 +132,7 @@ export class Slide{
             }
         }); 
 
-        this.buttonContainer.addChild(new Button("prevtext",PIXI.Texture.from('images/buttons/prev.png'), layout.PREVTEXT_X,layout.NEXTTEXT_Y,false));
+        this.buttonContainer.addChild(new Button("prevtext",PIXI.Texture.from('images/buttons/prev.png'), layout.PREVSLIDE_X,layout.NEXTSLIDE_Y,false));
         //console.log(this.textContainer.children.length)
         if(this.textContainer.children.length<=1){
             this.buttonContainer.getChildByName("prevtext").visible=false;

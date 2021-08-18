@@ -54,7 +54,7 @@ export class View{
         this.slideList = [];
         this.slideList.push(SlideHome,SlideInstruct,SlideIntro1,SlideIntro2,SlideIntro3,SlideIntro4,SlideData2,SlideSandbox,SlideGraphTest);
 
-        this.currentSlide=4;
+        this.currentSlide=3;
 
         //this.drawSlide();
 
@@ -123,7 +123,7 @@ export class View{
             });
 
         // NEXT SLIDE
-        var button_nextslide = new Button("button_nextslide",PIXI.Texture.from('images/buttons/next.png'),layout.NEXTTEXT_X,layout.NEXTSLIDE_Y,false)
+        var button_nextslide = new Button("button_nextslide",PIXI.Texture.from('images/buttons/next.png'),layout.NEXTSLIDE_X,layout.NEXTSLIDE_Y,false)
         this.app.stage.addChild(button_nextslide);
             
             this.app.stage.getChildByName("button_nextslide").on('click', function(e){ 
@@ -140,7 +140,7 @@ export class View{
             })
 
         //PREVIOUS SLIDE
-        var button_prevslide = new Button("button_prevslide",PIXI.Texture.from('images/buttons/prev.png'),layout.NEXTTEXT_X-150,layout.NEXTSLIDE_Y,true)
+        var button_prevslide = new Button("button_prevslide",PIXI.Texture.from('images/buttons/prev.png'),layout.NEXTSLIDE_X-150,layout.NEXTSLIDE_Y,true)
         this.app.stage.addChild(button_prevslide);
 
         this.app.stage.getChildByName("button_prevslide").on('click', function(e){ 

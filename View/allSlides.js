@@ -45,43 +45,33 @@ SlideIntro1.drawTextButtons();
 
 // INTRO 2
 export const SlideIntro2 = new Slide();
-var example1 = new PIXI.Sprite(PIXI.Texture.from('images/card.png'));
-    example1.isSprite=true;
-    example1.scale.set(0.8);
-    example1.x=500;
-    example1.y=100;
 
-    var e1pic=new PIXI.Sprite(PIXI.Texture.from('images/blueberry.png'));
-    e1pic.x=100;
-    e1pic.y=100;
-    example1.addChild(e1pic);
-var example2 = new PIXI.Sprite(PIXI.Texture.from('images/card.png'));
-    example2.isSprite=true;
-    example2.scale.set(0.8);
-    example2.x=800;
-    example2.y=100;
+var examples=new PIXI.Sprite(PIXI.Texture.from('images/examples.png'));
+examples.anchor.set(0.5);
+examples.isSprite=true;
+examples.x=850;
+examples.y=350;
 
-    var e2pic=new PIXI.Sprite(PIXI.Texture.from('images/strawberry.png'));
-    e2pic.x=100;
-    e2pic.y=100;
-    example2.addChild(e2pic);
+var examples_labels=new PIXI.Sprite(PIXI.Texture.from('images/examples_labels.png'));
+examples_labels.isSprite=true;
+examples_labels.anchor.set(0.5);
+examples_labels.x=850;
+examples_labels.y=350;
 
 var textIntro = [
     ["So how does it work?", 50, 100],
-    ["In order to train our network,"+'\n'+" we need to give it examples." , 50, 170],
-    example1,
-    example2,
+    ["In order to train our network,"+'\n'+" we need to give it some examples"+'\n'+"of data we want to classify." , 50, 170],
+    examples,
     ["Using our big human brains,"+'\n'+" we label these examples with the right answers" , 50, 250],
-    ["blueberry", example1.x, example1.y],
-    ["strawberry", example2.x, example2.y],
+    examples_labels,
+    ["some nn can classify images using their pixels" , 50, 250],
+    ["for our nn, we are going to assign some attributes that we think will be important for classifying" , 50, 250],
+    //examples_text_attributes
+    ["length is the object's length, while roundness is a score from 0-1 of how round the object looks",100,100],
+    ["this is called data preprocessing",100,200]
 
-    ["Next, we label our data with some attributes"+'\n'+" that we think are important for classification.",50,320],
-    ["This is what we will use as input for our neural network.",50,360],
 
-    ["length (cm):   3.0", example1.x, example1.y+275],
-    ["width (cm):    3.0", example1.x, example1.y+320],
-    ["length (cm):   5.0", example2.x, example2.y+275],
-    ["width (cm):    2.5", example2.x, example2.y+320]
+
 ];
 
 SlideIntro2.drawText(textIntro);
