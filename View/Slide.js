@@ -670,7 +670,32 @@ export class Slide{
       this.textContainer.getChildAt(0).visible=true;
     }
 
+/*
+    var textIntro2 = [
+        ["So how does it work?", 50, 100],
+        ["In order to train our network,"+'\n'+" we need to give it some examples"+'\n'+"of data we want to classify." , 50, 170],
+        examples,
+        ["Using our big human brains,"+'\n'+" we label these examples with the right answers" , 50, 250],
+        examples_labels
+    ];
+*/
 
+/*
+    var textIntro2 = [
+        [ ["So"] ["how"] ["does it work"], 50, 100],
+        [ ["we train with examples"], 100, 150 ],
+
+    ];
+*/
+    drawText_test(text){
+        for (var i =0; i<text.length; i++){
+            var textLineContainer= new PIXI.Container();
+            textLineContainer.x=text[i][text[i].length];
+            console.log(textLineContainer.x);
+        }
+    }
+
+      /*
     drawCard(small,cardheight, cardwidth, cardx, cardy, datatype, datalabels, expected, image){
         var card = new PIXI.Sprite(PIXI.Texture.from('images/card.png'));
             card.anchor.set(0.5)
@@ -710,5 +735,5 @@ export class Slide{
         var img = new PIXI.Sprite(PIXI.Texture.from(image));
             img.anchor.set(0.5);
         card.addChild(img);
-    }
+    }*/
 }

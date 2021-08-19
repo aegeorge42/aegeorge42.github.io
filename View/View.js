@@ -6,6 +6,7 @@ import {SlideHome,
     SlideIntro1,
     SlideIntro2,
     SlideIntro3,
+    SlideIntro3a,
     SlideIntro4,
     SlideData2,
     SlideData3,
@@ -52,7 +53,8 @@ export class View{
 
         //add premade slides
         this.slideList = [];
-        this.slideList.push(SlideHome,SlideInstruct,SlideIntro1,SlideIntro2,SlideIntro3,SlideIntro4,SlideData2,SlideSandbox,SlideGraphTest);
+        this.slideList.push(SlideHome,SlideInstruct,SlideIntro1,SlideIntro2,SlideIntro3,
+                            SlideIntro3a,SlideIntro4,SlideData2,SlideSandbox,SlideGraphTest);
 
         this.currentSlide=3;
 
