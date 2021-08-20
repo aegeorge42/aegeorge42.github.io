@@ -331,7 +331,6 @@ export class Slide{
                         color = 0xAAADB3;
                     }
 
-                    weightSprite.lineStyle(thickness, color);
 
                     var startx = layout.NEURON_LEFTLIM + (i*layout.NEURON_X_DIF);
                     var starty = layout.NEURON_UPPERLIM + (j*layout.NEURON_Y_DIF);
@@ -681,18 +680,85 @@ export class Slide{
 */
 
 /*
-    var textIntro2 = [
-        [ ["So"] ["how"] ["does it work"], 50, 100],
-        [ ["we train with examples"], 100, 150 ],
+var textIntro2_test = [
+    [ ["So", typewriter], ["how"], ["does it work"], [50, 100]],
+    [ ["we train with examples"], [69, 420] ],
 
-    ];
+];
 */
     drawText_test(text){
+        //for the whole text thing
         for (var i =0; i<text.length; i++){
+            if(text[i].isSprite){
+                this.textContainer.addChild(text[i]);
+            } else {
+
+
             var textLineContainer= new PIXI.Container();
-            textLineContainer.x=text[i][text[i].length];
-            console.log(textLineContainer.x);
+            var textwidth =0;
+            var textheight =0;
+
+            for(var j=0; j<(text[i].length)-1; j++){
+
+                if(text[i][j][1] === undefined){
+                    var textwidth_temp=PIXI.TextMetrics.measureText(text[i][j][0], typewriter).width;
+                    var textheight_temp=PIXI.TextMetrics.measureText(text[i][j][0], typewriter).height;
+
+                } else {
+                    var textwidth_temp=PIXI.TextMetrics.measureText(text[i][j][0], text[i][j][1]).width;
+                    var textheight_temp=PIXI.TextMetrics.measureText(text[i][j][0], text[i][j][1]).height;
+                }
+                textwidth=textwidth+textwidth_temp;
+                
+                if(textheight_temp>textheight){
+                    textheight=textheight_temp;
+                }
+            }
+            console.log("TEXTWIDTH:" + textwidth);
+            console.log("TEXTHEIGHT:" + textheight);
+            
+            var textbox= new PIXI.Graphics();
+            
+            textbox.beginFill(0xFFFFFF);
+            textbox.drawRect(text[i][(text[i].length)-1][0]-10,text[i][(text[i].length)-1][1]-10,textwidth+20, textheight+20);
+           // textbox.drawRect(text[i][text[i][(text[i].length)-1][1],(text[i].length)-1][0],50,textwidth);
+
+            textLineContainer.addChild(textbox);
+            //for each text piece
+            for(var j=0; j<(text[i].length)-1; j++){
+                
+                var textPiece= new PIXI.Text(text[i][j][0]);
+                textPiece.anchor.set(0,0.5);
+                textbox.addChild(textPiece);
+                //textLineContainer.addChild(textPiece);
+                
+
+
+                if(text[i][j][1] === undefined){
+                    textPiece.style=typewriter;
+                } else {
+                    textPiece.style=text[i][j][1];
+                }
+               // textPiece.y=textbox.y;
+                textPiece.y=text[i][(text[i].length)-1][1] + textheight/2;
+
+
+                if(j==0){
+                    textPiece.x=text[i][(text[i].length)-1][0];
+
+                } else {
+                    //textPiece.x = textLineContainer.getChildAt(j-1).x + textLineContainer.getChildAt(j-1).width;
+                    textPiece.x = textbox.getChildAt(j-1).x + textbox.getChildAt(j-1).width;
+
+                }
+            }
+            this.textContainer.addChild(textLineContainer);
         }
+            this.textContainer.getChildAt(i).visible=false;
+
+        }
+        this.textContainer.getChildAt(0).visible=true;
+
     }
 
       /*

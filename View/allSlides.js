@@ -3,7 +3,7 @@ import { layout } from "./layout.js";
 import { Net } from "../Model/net.js"
 import {fruits, fruits_small, fruits_test} from "../Model/data.js"
 import {Graph} from "./Graph.js"
-import {small, medium, typewriter, typewriter_large} from "./textstyles.js"
+import {small, medium, typewriter, typewriter_large, textstyles} from "./textstyles.js"
 //import {MultiStyleText} from "./../pixi/pixi-multistyle-text.js"
 
 
@@ -41,7 +41,14 @@ var textIntro1 = [
     ["This type of neural network is called a perceptron." , 200,250]       
 ];
 
-SlideIntro1.drawText(textIntro1);
+var textIntro1_test = [
+    [ ["As humans, we take our ability to recognize objects for granted. "], [50, 100] ],
+    [ ["Neural networks are a type of machine learning based on the human brain." 
+    + '\n'+"Using a neural network, a computer can learn to recognize and classify data." ], [100, 200] ],
+    [ ["This type of neural network is called a"], [" perceptron.",typewriter_large ], [200,300] ]       
+];
+//SlideIntro1.drawText(textIntro1);
+SlideIntro1.drawText_test(textIntro1_test);
 SlideIntro1.drawTextButtons();
 
 // INTRO 2
@@ -68,9 +75,11 @@ var textIntro2 = [
 ];
 
 var textIntro2_test = [
-    [ ["So"], ["how"], ["does it work"], 50, 100],
-    [ ["we train with examples"], [100, 150] ],
-
+    [ ["So how does it work?", typewriter_large], [50, 100]],
+    [ ["In order to train our network,"+'\n'+" we need to give it some examples"+'\n'+"of data we want to classify."], [50, 170]],
+    examples,
+    [["Using our big human brains,"+'\n'+" we label these examples"+'\n'+" with the right answers" ], [50, 300]],
+    examples_labels
 ];
 
 SlideIntro2.drawText_test(textIntro2_test);
