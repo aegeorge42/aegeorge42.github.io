@@ -746,7 +746,7 @@ export class Slide{
                 + '\n' + "  ━━━━━"  
                 + '\n' + "       "+formatter.format(net.getLayer(i).neurons[j].output_nofn);
 
-                currBase.getChildAt().text="𝑓("+ formatter.format(net.getLayer(i).neurons[j].output_nofn)+") ="
+                currBase.getChildAt(1).text="𝑓("+ formatter.format(net.getLayer(i).neurons[j].output_nofn)+") ="
             + '\n\n' + "   "+formatter.format(net.getLayer(i).neurons[j].output);
             }
         }

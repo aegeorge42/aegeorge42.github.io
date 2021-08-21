@@ -146,10 +146,10 @@ SlideNeuron1.drawTextButtons();
 export const SlideNeuron2 = new Slide();
 var net2 = new Net();
 net2.removeLayer();
- SlideNeuron2.slideNet=net2;
+SlideNeuron2.slideNet=net2;
 
 const train_input2 = {
-    input: [0.99,0.01],
+    input: [0.9,0.1],
     expected: [1],
     expected_text: ["strawberry"]
 }
@@ -160,11 +160,21 @@ const train_data2 = {
     type: ["strawberry"]
 }
 
- SlideNeuron2.slideNet.setNetData(train_data2);
- SlideNeuron2.slideNet.setOutLayer();
+SlideNeuron2.slideNet.setNetData(train_data2);
+SlideNeuron2.slideNet.setOutLayer();
 SlideNeuron2.slideNet.update();
 SlideNeuron2.draw_init_large(SlideNeuron2.slideNet);
- SlideNeuron2.drawTextButtons();
+
+var textNeuron2 = [
+    [ [SlideNeuron2.slideNet.getLayer(0).neurons[0].inputs[0].toFixed(2) +" × "+ SlideNeuron2.slideNet.getLayer(0).neurons[0].weights[0].toFixed(2)], [ 100, 100]]
+];
+console.log(SlideNeuron2.slideNet.getLayer(0).neurons[0].inputs[0].toFixed(2));
+console.log(SlideNeuron2.slideNet.getLayer(0).neurons[0].inputs[1].toFixed(2));
+
+SlideNeuron2.drawText(textNeuron2);
+
+SlideNeuron2.drawTextButtons();
+
 
 /*var g = new Graph(fruits_test);
  SlideNeuron2.slideContainer.addChild(g.getGraph());
