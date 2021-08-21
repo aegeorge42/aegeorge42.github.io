@@ -26,7 +26,7 @@ function resize(){
 // INSTRUCTIONS
 export const SlideInstruct = new Slide();
     var textInstruct = [    
-        ["This is the tool that I needed when I was learning about neural networks", 50, 350],
+        [ ["This is the tool that I needed when I was learning about neural networks"], [50, 350]],
     ];
 
     SlideInstruct.drawText(textInstruct);
@@ -34,13 +34,6 @@ export const SlideInstruct = new Slide();
 
 // INTRO 1
 export const SlideIntro1 = new Slide();
-var textIntro1 = [
-    ["As humans, we take our ability to recognize objects for granted. ", 50, 100],
-    ["Neural networks are a type of machine learning based on the human brain." 
-    + '\n'+"Using a neural network, a computer can learn to recognize and classify data." , 100, 200],
-    ["This type of neural network is called a perceptron." , 200,250]       
-];
-
 var textIntro1_test = [
     [ ["As humans, we take our ability to recognize objects for granted. "], [50, 100] ],
     [ ["Neural networks are a type of machine learning based on the human brain." 
@@ -48,7 +41,7 @@ var textIntro1_test = [
     [ ["This type of neural network is called a"], [" perceptron.",typewriter_large ], [200,300] ]       
 ];
 //SlideIntro1.drawText(textIntro1);
-SlideIntro1.drawText_test(textIntro1_test);
+SlideIntro1.drawText(textIntro1_test);
 SlideIntro1.drawTextButtons();
 
 // INTRO 2
@@ -66,14 +59,6 @@ examples_labels.anchor.set(0.5);
 examples_labels.x=850;
 examples_labels.y=325;
 
-var textIntro2 = [
-    ["So how does it work?", 50, 100],
-    ["In order to train our network,"+'\n'+" we need to give it some examples"+'\n'+"of data we want to classify." , 50, 170],
-    examples,
-    ["Using our big human brains,"+'\n'+" we label these examples with the right answers" , 50, 250],
-    examples_labels
-];
-
 var textIntro2_test = [
     [ ["So how does it work?", typewriter_large], [50, 100]],
     [ ["In order to train our network,"+'\n'+" we need to give it some examples"+'\n'+"of data we want to classify."], [50, 170]],
@@ -82,10 +67,27 @@ var textIntro2_test = [
     examples_labels
 ];
 
-SlideIntro2.drawText_test(textIntro2_test);
+SlideIntro2.drawText(textIntro2_test);
 SlideIntro2.drawTextButtons();
 SlideHome.slideContainer.addChild(opener);        
 
+// INTRO 3
+export const SlideIntro3 = new Slide();
+var i3pic=new PIXI.Sprite(PIXI.Texture.from('images/captcha.png'));
+i3pic.scale.set(0.4);
+i3pic.isSprite=true;
+
+    i3pic.x=200;
+    i3pic.y=80;
+
+var textIntro3 = [
+    [ ["If you've ever had to solve a puzzle like this to get into a website..."], [10,50]],
+    i3pic, //todo: make this at the same time
+    [ ["...you were probably helping label data to train a neural network"], [200, 380]],
+];
+
+SlideIntro3.drawText(textIntro3);
+SlideIntro3.drawTextButtons();
 
 //Change name eventually
 // INTRO 3a
@@ -98,32 +100,15 @@ var i3_example=new PIXI.Sprite(PIXI.Texture.from('images/example1.png'));
     i3_example.y=425;
 var textIntro3a = [
     i3_example,
-    ["some nn can classify images using their pixels" , 50, 250],
-    ["for our nn, we are going to assign some attributes that we think will be important for classifying" , 50, 250],
-    ["length is the object's length, while roundness is a score from 0-1 of how round the object looks",100,100],
-    ["this is called data preprocessing",100,200]
+    [ ["some nn can classify images using their pixels"], [20,50] ],
+    [ ["for our nn, we are going to assign some attributes"+'\n'+"that we think will be important for classifying"], [50,150]],
+    [ ["length is the object's length,"+'\n'+"while roundness is a score from 0-1 "+'\n'+"of how round the object looks", small], [150,300]],
+    [ ["this is called data preprocessing"], [0,400 ]]
 ];
 
 SlideIntro3a.drawText(textIntro3a);
 SlideIntro3a.drawTextButtons();
 
-// INTRO 3
-export const SlideIntro3 = new Slide();
-var i3pic=new PIXI.Sprite(PIXI.Texture.from('images/captcha.png'));
-i3pic.scale.set(0.4);
-i3pic.isSprite=true;
-
-    i3pic.x=200;
-    i3pic.y=80;
-
-var textIntro3 = [
-    ["If you've ever had to solve a puzzle like this to get into a website...", 10, 50],
-    i3pic, //todo: make this at the same time
-    ["...you were probably helping label data to train a neural network", 30, 180],
-];
-
-SlideIntro3.drawText(textIntro3);
-SlideIntro3.drawTextButtons();
 
 
 //INTRO 4
@@ -139,21 +124,29 @@ var examples_unlabeled2=new PIXI.Sprite(PIXI.Texture.from('images/examples_unlab
     examples_unlabeled2.isSprite=true;
     examples_unlabeled2.x=850;
     examples_unlabeled2.y=300;
+
 var textIntro4 = [
     examples_unlabeled,
-    ["once our net is finished learning, we'll give it some unlabeled data"+'\n'+
-    "to see how well it works.", 50, 50],
+    [ ["once our net is finished learning, we'll give it some unlabeled data"+'\n'+
+    "to see how well it works."], [50, 50]],
     examples_unlabeled2
 ];
 SlideIntro4.drawText(textIntro4);
 SlideIntro4.drawTextButtons();
 
-//NEURON INTRO
-export const SlideData2 = new Slide();
+//NEURON INTRO - JUST PICTURE
+export const SlideNeuron1 = new Slide();
+var textNeuron1 = [
+    [ ["here's a neuron"], [ 100, 100]]
+];
+SlideNeuron1.drawText(textNeuron1);
+SlideNeuron1.drawTextButtons();
 
+//INTERACTIVE NEURON
+export const SlideNeuron2 = new Slide();
 var net2 = new Net();
 net2.removeLayer();
-SlideData2.slideNet=net2;
+ SlideNeuron2.slideNet=net2;
 
 const train_input2 = {
     input: [0.99,0.01],
@@ -167,15 +160,15 @@ const train_data2 = {
     type: ["strawberry"]
 }
 
-SlideData2.slideNet.setNetData(train_data2);
-SlideData2.slideNet.setOutLayer();
-SlideData2.slideNet.update();
-SlideData2.draw_init(SlideData2.slideNet);
-SlideData2.drawTextButtons();
+ SlideNeuron2.slideNet.setNetData(train_data2);
+ SlideNeuron2.slideNet.setOutLayer();
+SlideNeuron2.slideNet.update();
+SlideNeuron2.draw_init_large(SlideNeuron2.slideNet);
+ SlideNeuron2.drawTextButtons();
 
 /*var g = new Graph(fruits_test);
-SlideData2.slideContainer.addChild(g.getGraph());
-g.updateGraph(SlideData2.slideNet)
+ SlideNeuron2.slideContainer.addChild(g.getGraph());
+g.updateGraph( SlideNeuron2.slideNet)
 */
 
 export const SlideData3 = new Slide();

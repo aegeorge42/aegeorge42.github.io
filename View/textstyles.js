@@ -27,5 +27,12 @@ export const textstyles = {
     fontFamily: 'American Typewriter',
     fontWeight: 400,
     fontSize: 20
+  }),
+
+  neuron_large: new PIXI.TextStyle({
+    fontFamily: 'Arial',
+    fontWeight: 600,
+    fontSize: 35
   })
+
 }

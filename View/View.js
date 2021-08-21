@@ -8,7 +8,8 @@ import {SlideHome,
     SlideIntro3,
     SlideIntro3a,
     SlideIntro4,
-    SlideData2,
+    SlideNeuron1,
+    SlideNeuron2,
     SlideData3,
     SlideSandbox,
 SlideGraphTest} from "./allSlides.js"
@@ -54,9 +55,9 @@ export class View{
         //add premade slides
         this.slideList = [];
         this.slideList.push(SlideHome,SlideInstruct,SlideIntro1,SlideIntro2,SlideIntro3,
-                            SlideIntro3a,SlideIntro4,SlideData2,SlideSandbox,SlideGraphTest);
+                            SlideIntro3a,SlideIntro4,SlideNeuron1,SlideNeuron2,SlideSandbox,SlideGraphTest);
 
-        this.currentSlide=3;
+        this.currentSlide=7;
 
         //this.drawSlide();
 
@@ -72,8 +73,9 @@ export class View{
         footer.beginFill(0xbfbfbf);
         //footer.drawRect(0,window.innerHeight-80,window.innerWidth,80);
         footer.drawRect(0,window.innerHeight,window.innerWidth,-layout.FOOTER_HEIGHT);
+       // console.log("INNERHEIGHT:" + layout.INNERHEIGHT + "INNERWIDTH:" + window.innerWidth);
 
-        console.log(footer.x +" "+ footer.y +" "+ footer.width +" "+ footer.height);
+      //  console.log(footer.x +" "+ footer.y +" "+ footer.width +" "+ footer.height);
         footer.endFill();
 
         //console.log(f)
@@ -157,7 +159,16 @@ export class View{
             }
         })
 
+        // HOME
+        var homebutton = new Button("homebutton",PIXI.Texture.from('images/home.png'),30,layout.HEADER_HEIGHT/2,false)
+        this.app.stage.addChild(homebutton);
+        this.app.stage.getChildByName("homebutton").on('click', function(e){ 
         
+                vst.currentSlide=0;
+                vst.drawSlide();
+                vst.caveats();
+        });
+
         // GO TO INTRO
         var gotointro = new Button("gotointro",PIXI.Texture.from('images/buttons/gotointro.png'),250,layout.HEADER_HEIGHT/2,false)
         this.app.stage.addChild(gotointro);
