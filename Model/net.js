@@ -49,6 +49,8 @@ export class Net{
     //w_old;
 
     constructor(){
+        this.maxLayers=5;
+        this.maxNeurons=3;
         this.data=[];
 //        this.setNetActFn(defaultActFn);
         this.dataIdx=0;

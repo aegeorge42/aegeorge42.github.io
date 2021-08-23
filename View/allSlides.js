@@ -200,6 +200,11 @@ net.update();
 SlideSandbox.draw_init(net);
 //SlideSandbox.drawText(text);
 SlideSandbox.drawTextButtons();
+var g = new Graph(fruits_test);
+SlideSandbox.slideContainer.addChild(g.getGraph());
+//g.updateGraph( SlideSandbox.slideNet);
+SlideSandbox.addGraphFns(SlideSandbox.slideNet,g);
+
 
 //GRAPH TEST
 export const SlideGraphTest = new Slide();
@@ -230,6 +235,6 @@ SlideGraphTest.drawButtons(netGraph,g);
 
 SlideGraphTest.slideContainer.addChild(g.getGraph());
 g.updateGraph(netGraph);
-SlideGraphTest.addGraph(netGraph,g);
+SlideGraphTest.addGraphFns(netGraph,g);
 netGraph.setNetData(fruits);
 

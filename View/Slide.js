@@ -33,6 +33,7 @@ export class Slide{
     constructor(){
 
         var slide=this;
+       // this.maxLayers=5;
         this.buttonContainer  = new PIXI.Container();             
         this.inputContainer = new PIXI.Container();                 
         this.neuronContainer = new PIXI.Container();
@@ -109,7 +110,6 @@ export class Slide{
        
         // don't draw next text button if theres 1 or less texts
         if(this.textContainer.children.length<=1){
-        //if(this.textcount>=slide.textContainer.children.length){
             this.buttonContainer.getChildByName("nexttext").visible=false;
         }
 
@@ -126,14 +126,11 @@ export class Slide{
                 slide.textcount=slide.textcount+1;
                 this.visible=false;
                 slide.buttonContainer.getChildByName("prevtext").visible=true;
-
-              //  slide.buttonContainer.getChildByName("prevtext").visible=false;
-
             }
         }); 
 
         this.buttonContainer.addChild(new Button("prevtext",PIXI.Texture.from('images/buttons/prev.png'), layout.PREVSLIDE_X,layout.NEXTSLIDE_Y,false));
-        //console.log(this.textContainer.children.length)
+
         if(this.textContainer.children.length<=1){
             this.buttonContainer.getChildByName("prevtext").visible=false;
         }
@@ -156,16 +153,25 @@ export class Slide{
         
     }
 
-    drawButtons(net,graph){
+    drawButtons(net){
         var slide = this;
+        var buttonNeuronAddContainer = new PIXI.Container();
+            buttonNeuronAddContainer.name="buttonNeuronAddContainer";
+        var buttonNeuronRemContainer = new PIXI.Container();
+            buttonNeuronRemContainer.name="buttonNeuronRemContainer";
 
+
+        this.buttonContainer.addChild(buttonNeuronAddContainer,buttonNeuronRemContainer);
         // ADD LAYER
         this.buttonContainer.addChild(new Button("addlayer",PIXI.Texture.from('images/buttons/button_layer.png'), layout.BUTTONS_X, 140,true));
         this.buttonContainer.getChildByName("addlayer").on('click', function(e){
+            if(net.layers.length<net.maxLayers){
+
             net.addLayer();
             net.update();
             slide.draw_init(net);
             console.log(net.layers.length)
+            }
         });
 
         // REMOVE LAYER
@@ -183,7 +189,7 @@ export class Slide{
         this.buttonContainer.getChildByName("learn_stoch_step").on('click', function(e){
             net.learn();
             slide.draw_update(net);
-            graph.updateGraph(net,graph);
+        //    graph.updateGraph(net,graph);
 
         });
 
@@ -195,7 +201,7 @@ export class Slide{
           while(loopcount<100 && pauselearn==0){
             net.learn();
             slide.draw_update(net);
-            graph.updateGraph(net,graph);
+        //    graph.updateGraph(net,graph);
             await slide.sleep(100); //pause to see updates - 100 seems good
             loopcount=loopcount+1;
           }
@@ -216,7 +222,7 @@ export class Slide{
                 net.setNetInput(net.data.points[i]);
                 net.update();
                 slide.draw_update(net);
-                graph.updateGraph(net,graph);
+            //    graph.updateGraph(net,graph);
                 slide.labelsContainer.getChildByName("costLabel").style.fill = 0x6b6b6b;
                 await slide.sleep(100);
             }
@@ -243,7 +249,7 @@ export class Slide{
                         net.setNetInput(net.data.points[i]);
                         net.update();
                         slide.draw_update(net);
-                        graph.updateGraph(net,graph);
+                    //    graph.updateGraph(net,graph);
 
                         slide.labelsContainer.getChildByName("costLabel").style.fill = 0x6b6b6b;
                         await slide.sleep(100);
@@ -256,7 +262,7 @@ export class Slide{
                 net.learn_batch();
                 net.update();
                 slide.draw_update(net);           
-                graph.updateGraph(net,graph);
+               // graph.updateGraph(net,graph);
      
                 loopcount=loopcount+1;
             }
@@ -284,12 +290,38 @@ export class Slide{
             net.update();
             slide.draw_init(net);
         });
+
+        console.log(this.buttonContainer.children);
+        for (var i =0; i<net.maxLayers; i++){
+            this.buttonContainer.getChildByName("buttonNeuronAddContainer").addChild(new Button("addneuron",PIXI.Texture.from('images/buttons/button_addneuron.png'),layout.NEURON_LEFTLIM+ (i*layout.NEURON_X_DIF),80, false));
+            this.buttonContainer.getChildByName("buttonNeuronRemContainer").addChild(new Button("remneuron",PIXI.Texture.from('images/buttons/button_removeneuron.png'),layout.NEURON_LEFTLIM+ (i*layout.NEURON_X_DIF),105, false));
+            this.setNeuronButtons(net,i);
+            
+          }
     }
 
-    addGraph(net,graph){
-        this.buttonContainer.getChildByName("learn_stoch_step").on('click', function(e){
+    setNeuronButtons(net,layernum){
+        var slide = this;
+    
+        this.buttonContainer.getChildByName("buttonNeuronAddContainer").getChildAt(layernum).on('click', function(e){
+          if(net.getLayer(layernum).neurons.length<net.maxNeurons){
+            net.getLayer(layernum).addNeuron();
+            net.update();
+            slide.draw_init(net);
+          }
+        });
+    
+        this.buttonContainer.getChildByName("buttonNeuronRemContainer").getChildAt(layernum).on('click', function(e){
+          net.getLayer(layernum).removeNeuron();
+          net.update();
+          slide.draw_init(net);
+        });
+    }
 
-        graph.updateGraph(net,graph);
+    
+    addGraphFns(net,graph){
+        this.buttonContainer.getChildByName("learn_stoch_step").on('click', function(e){
+            graph.updateGraph(net,graph);
         });
     }
 
@@ -299,6 +331,19 @@ export class Slide{
         this.drawNeurons_init(net);
         this.drawInputs_init(net);
         this.drawLabels_init(net);
+
+        if(this.buttonContainer.getChildByName("buttonNeuronAddContainer") !==null){
+            
+            for(var i=0;i<net.layers.length;i++){
+                this.buttonContainer.getChildByName("buttonNeuronAddContainer").getChildAt(i).visible=false;
+                this.buttonContainer.getChildByName("buttonNeuronRemContainer").getChildAt(i).visible=false;
+
+                if(i!=0){
+                this.buttonContainer.getChildByName("buttonNeuronAddContainer").getChildAt(i-1).visible=true;
+                this.buttonContainer.getChildByName("buttonNeuronRemContainer").getChildAt(i-1).visible=true;
+                }
+            }
+        }
     }
 
     draw_init_large(net){
