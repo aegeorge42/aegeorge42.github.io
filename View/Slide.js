@@ -66,10 +66,10 @@ export class Slide{
         function resize(){
             // shrug
             try{
-                slide.buttonContainer.getChildByName("nexttext").x=window.innerWidth/2;
+                slide.buttonContainer.getChildByName("nexttext").x=window.innerWidth/2 +100;
                 slide.buttonContainer.getChildByName("nexttext").y=window.innerHeight-(layout.FOOTER_HEIGHT/2);
 
-                slide.buttonContainer.getChildByName("prevtext").x=window.innerWidth/2 -150;
+                slide.buttonContainer.getChildByName("prevtext").x=window.innerWidth/2 -100;
                 slide.buttonContainer.getChildByName("prevtext").y=window.innerHeight-(layout.FOOTER_HEIGHT/2);
             } catch {};
         
@@ -129,7 +129,7 @@ export class Slide{
             }
         }); 
 
-        this.buttonContainer.addChild(new Button("prevtext",PIXI.Texture.from('images/buttons/prev.png'), layout.PREVSLIDE_X,layout.NEXTSLIDE_Y,false));
+        this.buttonContainer.addChild(new Button("prevtext",PIXI.Texture.from('images/buttons/back.png'), layout.PREVSLIDE_X,layout.NEXTSLIDE_Y,false));
 
         if(this.textContainer.children.length<=1){
             this.buttonContainer.getChildByName("prevtext").visible=false;

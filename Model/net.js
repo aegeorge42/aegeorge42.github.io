@@ -413,8 +413,8 @@ export class Net{
                     currentNeuron.setWeight(k,currentNeuron.w_new[k]);
                 }
 
-             //   currentNeuron.bias_new=currentNeuron.bias-currentNeuron.bgrad;
-             //   currentNeuron.setBias(currentNeuron.bias_new);
+                currentNeuron.bias_new=currentNeuron.bias-currentNeuron.bgrad;
+                currentNeuron.setBias(currentNeuron.bias_new);
             }
         //    console.log("layer:" +currentLayer.layerNumber + '\n'
         //                + "  neuron: " + currentNeuron.neuronNumber + '\n'

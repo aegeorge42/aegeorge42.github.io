@@ -1,6 +1,6 @@
 export class Button extends PIXI.Sprite{
 
-    constructor(name,texture,x,y,vis){
+    constructor(name,texture,x,y,vis,tint){
         super(texture)
         this.name=name;
         this.x=x;
@@ -10,7 +10,9 @@ export class Button extends PIXI.Sprite{
         this.interactive=true;
         this.buttonMode=true;
         this.visible=vis;
-
+        if(tint){
+            this.tint=tint;
+        } else this.tint=0xFFFFFF;
         //set tints for when button is hovered over
         //might make this variable in the future for 
         //different buttons?
@@ -19,7 +21,9 @@ export class Button extends PIXI.Sprite{
         })
 
         this.on('mouseout', function(e){
-            this.tint=tintNone;
+            if(tint){
+            this.tint=tint;}
+            else this.tint=0xFFFFFF;
         })
 
         this.on('mousedown', function(e){
@@ -31,7 +35,14 @@ export class Button extends PIXI.Sprite{
         })
     }
 
-    setTint(tint){
+    setTint(tint,event){
+        if(event){
+            this.on(event, function(e){
+            this.tint=tint;
+        })
+
+        } else {
+
         this.tint=tint;
         this.on('mouseover', function(e){
             this.tint=tint;
@@ -48,6 +59,7 @@ export class Button extends PIXI.Sprite{
         this.on('mouseup', function(e){
             this.tint=tint;
         })
+    }
     }
 
     tintGray(){

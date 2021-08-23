@@ -11,15 +11,15 @@ import {small, medium, typewriter, typewriter_large, textstyles} from "./textsty
 export const SlideHome = new Slide();
 var opener = new PIXI.Sprite(PIXI.Texture.from('images/opener.png'));
     opener.anchor.set(0.5);
-    opener.x=(window.innerWidth)/2;
-    opener.y=(window.innerHeight)/3;
+    opener.x=((window.innerWidth)/2);
+    opener.y=((window.innerHeight)/3)+50;
 SlideHome.slideContainer.addChild(opener);        
 
 window.addEventListener('resize', resize);     
 
 function resize(){
     opener.x=(window.innerWidth)/2;
-    opener.y=(window.innerHeight)/3;
+    opener.y=((window.innerHeight)/3) +50;
 }
 
 
@@ -73,16 +73,15 @@ SlideHome.slideContainer.addChild(opener);
 
 // INTRO 3
 export const SlideIntro3 = new Slide();
-var i3pic=new PIXI.Sprite(PIXI.Texture.from('images/captcha.png'));
-i3pic.scale.set(0.4);
-i3pic.isSprite=true;
+var captcha=new PIXI.Sprite(PIXI.Texture.from('images/captcha.png'));
+captcha.isSprite=true;
 
-    i3pic.x=200;
-    i3pic.y=80;
+    captcha.x=200;
+    captcha.y=80;
 
 var textIntro3 = [
     [ ["If you've ever had to solve a puzzle like this to get into a website..."], [10,50]],
-    i3pic, //todo: make this at the same time
+    captcha, //todo: make this at the same time
     [ ["...you were probably helping label data to train a neural network"], [200, 380]],
 ];
 
@@ -135,9 +134,32 @@ SlideIntro4.drawText(textIntro4);
 SlideIntro4.drawTextButtons();
 
 //NEURON INTRO - JUST PICTURE
+var neuron_example0=new PIXI.Sprite(PIXI.Texture.from('images/neuron_example0.png'));
+neuron_example0.isSprite=true;
+neuron_example0.anchor.set(0.5);
+
+neuron_example0.x=750;
+neuron_example0.y=350;
+
+var neuron_example=new PIXI.Sprite(PIXI.Texture.from('images/neuron_example.png'));
+neuron_example.isSprite=true;
+neuron_example.anchor.set(0.5);
+
+neuron_example.x=neuron_example0.x;
+neuron_example.y=neuron_example0.y;
+
+
 export const SlideNeuron1 = new Slide();
 var textNeuron1 = [
-    [ ["here's a neuron"], [ 100, 100]]
+    neuron_example0,
+    [ ["Here's a neuron."], [ 100, 100]],
+    neuron_example,
+    [ ["For each neuron, it takes in some inputs..." ], [ 100, 200]],
+    [ ["...some math happens..." ], [ 100, 200]],
+    [ ["and it spits out a single output" ], [ 100, 200]],
+
+
+
 ];
 SlideNeuron1.drawText(textNeuron1);
 SlideNeuron1.drawTextButtons();
@@ -166,7 +188,8 @@ SlideNeuron2.slideNet.update();
 SlideNeuron2.draw_init_large(SlideNeuron2.slideNet);
 
 var textNeuron2 = [
-    [ [SlideNeuron2.slideNet.getLayer(0).neurons[0].inputs[0].toFixed(2) +" × "+ SlideNeuron2.slideNet.getLayer(0).neurons[0].weights[0].toFixed(2)], [ 100, 100]]
+    [["Let's use one of our data points as an input."], [100,100]]
+   // [ [SlideNeuron2.slideNet.getLayer(0).neurons[0].inputs[0].toFixed(2) +" × "+ SlideNeuron2.slideNet.getLayer(0).neurons[0].weights[0].toFixed(2)], [ 100, 100]]
 ];
 console.log(SlideNeuron2.slideNet.getLayer(0).neurons[0].inputs[0].toFixed(2));
 console.log(SlideNeuron2.slideNet.getLayer(0).neurons[0].inputs[1].toFixed(2));

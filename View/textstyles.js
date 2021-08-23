@@ -11,7 +11,7 @@ export const medium = new PIXI.TextStyle({
 });
 
 export const typewriter = new PIXI.TextStyle({
-    fontFamily: 'American Typewriter',
+    fontFamily: 'Helvetica',
     fontWeight: 400,
     fontSize: 20
   });

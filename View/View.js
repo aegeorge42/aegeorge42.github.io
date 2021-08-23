@@ -27,7 +27,7 @@ export class View{
           autoResize: true,
           width: window.innerWidth,
           height: window.innerHeight,
-          backgroundColor: 0xdee0ff
+          backgroundColor: 0xe7e9ff
         });
 
         this.app=app;
@@ -41,14 +41,14 @@ export class View{
             footer.width=window.innerWidth;
             footer.y=window.innerHeight-h;
 
-            app.stage.getChildByName("button_nextslide").x=window.innerWidth/2,
+            app.stage.getChildByName("button_nextslide").x=window.innerWidth/2 +100;
             app.stage.getChildByName("button_nextslide").y=window.innerHeight-(75/2);
 
-            app.stage.getChildByName("button_prevslide").x=window.innerWidth/2 -150,
+            app.stage.getChildByName("button_prevslide").x=window.innerWidth/2 -100,
             app.stage.getChildByName("button_prevslide").y=window.innerHeight-(75/2);
 
-            app.stage.getChildByName("button_start").x=window.innerWidth/2;
-            app.stage.getChildByName("button_start").y=window.innerHeight*(3/4);
+            app.stage.getChildByName("button_start").x=window.innerWidth/2 -25;
+            app.stage.getChildByName("button_start").y=window.innerHeight*(7/8);
         }
         document.body.appendChild(this.app.view);
 
@@ -104,13 +104,15 @@ export class View{
     }
 
     createButtons(){
-
+        console.log(layout.INNERHEIGHT, window.innerWidth)
         var vst = this;
 
         //START
-        var startx = window.innerWidth/2;
-        var starty = window.innerHeight*(3/4);
-        var button_start = new Button("button_start",PIXI.Texture.from('images/buttons/start.png'),startx,starty,true);
+        var startx=window.innerWidth/2 -25;
+        var starty=window.innerHeight*(7/8);
+
+        var button_start = new Button("button_start",PIXI.Texture.from('images/buttons/start.png'),startx,starty,true,0xFFA500);
+        button_start.setTint(0xcc5801,'mouseover');
         this.app.stage.addChild(button_start);
             
             this.app.stage.getChildByName("button_start").on('click', function(e){ 
@@ -144,7 +146,7 @@ export class View{
             })
 
         //PREVIOUS SLIDE
-        var button_prevslide = new Button("button_prevslide",PIXI.Texture.from('images/buttons/prev.png'),layout.NEXTSLIDE_X-150,layout.NEXTSLIDE_Y,true)
+        var button_prevslide = new Button("button_prevslide",PIXI.Texture.from('images/buttons/back.png'),layout.PREVSLIDE_X,layout.NEXTSLIDE_Y,true)
         this.app.stage.addChild(button_prevslide);
 
         this.app.stage.getChildByName("button_prevslide").on('click', function(e){ 
@@ -181,7 +183,7 @@ export class View{
         });
 
         // GO TO DATA
-        var goto1 = new Button("goto1",PIXI.Texture.from('images/buttons/gotodata.png'),400,layout.HEADER_HEIGHT/2,false)
+        var goto1 = new Button("goto1",PIXI.Texture.from('images/buttons/gotodata.png'),400,layout.HEADER_HEIGHT/2,false,0x2c2c33)
         this.app.stage.addChild(goto1);
         this.app.stage.getChildByName("goto1").on('click', function(e){ 
             if (vst.currentSlide!=3){

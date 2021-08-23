@@ -3,11 +3,11 @@ export const layout = {
     HEADER_HEIGHT:50,
     FOOTER_HEIGHT:75,
 
-    NEXTSLIDE_X: window.innerWidth/2,
+    NEXTSLIDE_X: (window.innerWidth/2) +100,
+    PREVSLIDE_X: (window.innerWidth/2) -100,
+
     NEXTSLIDE_Y: window.innerHeight-(75/2),
 
-    PREVSLIDE_X: window.innerWidth/2 -150,
-    PREVSLIDE_Y: window.innerHeight-(75/2),
     BOTTOMLIM: window.innerHeight*(9/10),
 
     INNERHEIGHT: window.innerHeight-(50+75),
