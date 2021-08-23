@@ -579,17 +579,35 @@ export class Slide{
                 neuronText.scale.set(0.8);
                 neuronText.anchor.set(0.5);
             neuronBase.addChild(neuronText);
-      
-      
-            var overText = new PIXI.Text(
-                "i: " + this.formatList(net.getLayer(i).neurons[j].inputs) + '\n'
-                + "w: " + this.formatList(net.getLayer(i).neurons[j].weights) + '\n'
-                + "b: " + formatter.format(net.getLayer(i).neurons[j].bias) +'\n'
-                + "o: " + formatter.format(net.getLayer(i).neurons[j].output_nofn) + '\n'
-                + "   " + formatter.format(net.getLayer(i).neurons[j].output) + '\n',
-                small)
-            overText.anchor.set(.5);
-                
+
+            var ins=[];            
+            var str = "  ";
+
+            for (var ii=0;ii<net.getLayer(i).neurons[j].inputs.length;ii++){
+                ins.push(new Array(2));
+                ins[ii][0]=net.getLayer(i).neurons[j].inputs[ii].toFixed(2);
+                ins[ii][1]=net.getLayer(i).neurons[j].weights[ii].toFixed(2);
+
+                if(ii<3){
+                    str=str+ins[ii][0]+" × "+ins[ii][1]+'\n'+"+";
+                }
+            }
+            str=str+formatter.format(net.getLayer(i).neurons[j].bias)+"\n━━━━━"+"\n   "+formatter.format(net.getLayer(i).neurons[j].output_nofn)
+
+            var overText = new PIXI.Text(str,small);
+            overText.anchor.set(0,0.5);
+            overText.x=-65;
+
+            var overText2 = new PIXI.Text(" 𝑓("+formatter.format(net.getLayer(i).neurons[j].output_nofn)+")="+"\n\n  "+formatter.format(net.getLayer(i).neurons[j].output),
+            new PIXI.TextStyle({
+                fontFamily: 'Arial',
+                fontWeight: 500,
+                fontSize: 14,
+            }));
+            overText2.anchor.set(0,0.5);
+            overText2.x=5;
+
+
             var neuronOver = new PIXI.Sprite(PIXI.Texture.from('images/overneuron.png'));
                 neuronOver.anchor.set(0.5);
                 neuronOver.scale.set(1.5);
@@ -597,8 +615,14 @@ export class Slide{
                 neuronOver.x=neuronBase.x;
                 neuronOver.y=neuronBase.y;
                 neuronOver.alpha=0;
-            neuronOver.addChild(overText);
+            neuronOver.addChild(overText,overText2);
+
+
+
+            
             this.neuronOvers.addChild(neuronOver);
+
+
       
               //detection for showing overneuron
             var sensor= new PIXI.Sprite(PIXI.Texture.from('images/neuron_old.png'));

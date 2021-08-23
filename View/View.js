@@ -57,7 +57,7 @@ export class View{
         this.slideList.push(SlideHome,SlideInstruct,SlideIntro1,SlideIntro2,SlideIntro3,
                             SlideIntro3a,SlideIntro4,SlideNeuron1,SlideNeuron2,SlideSandbox,SlideGraphTest);
 
-        this.currentSlide=8;
+        this.currentSlide=9;
 
         //this.drawSlide();
 
