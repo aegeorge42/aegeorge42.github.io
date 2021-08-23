@@ -153,7 +153,7 @@ export class Slide{
         
     }
 
-    drawButtons(net){
+    drawButtons(net,graph){
         var slide = this;
         var buttonNeuronAddContainer = new PIXI.Container();
             buttonNeuronAddContainer.name="buttonNeuronAddContainer";
@@ -189,7 +189,7 @@ export class Slide{
         this.buttonContainer.getChildByName("learn_stoch_step").on('click', function(e){
             net.learn();
             slide.draw_update(net);
-        //    graph.updateGraph(net,graph);
+            if(graph){graph.updateGraph(net,graph);}
 
         });
 
@@ -201,7 +201,8 @@ export class Slide{
           while(loopcount<100 && pauselearn==0){
             net.learn();
             slide.draw_update(net);
-        //    graph.updateGraph(net,graph);
+            
+            if(graph){graph.updateGraph(net,graph);}
             await slide.sleep(100); //pause to see updates - 100 seems good
             loopcount=loopcount+1;
           }
@@ -222,7 +223,7 @@ export class Slide{
                 net.setNetInput(net.data.points[i]);
                 net.update();
                 slide.draw_update(net);
-            //    graph.updateGraph(net,graph);
+                if(graph){graph.updateGraph(net,graph);}
                 slide.labelsContainer.getChildByName("costLabel").style.fill = 0x6b6b6b;
                 await slide.sleep(100);
             }
@@ -249,7 +250,7 @@ export class Slide{
                         net.setNetInput(net.data.points[i]);
                         net.update();
                         slide.draw_update(net);
-                    //    graph.updateGraph(net,graph);
+                        if(graph){graph.updateGraph(net,graph);}
 
                         slide.labelsContainer.getChildByName("costLabel").style.fill = 0x6b6b6b;
                         await slide.sleep(100);
@@ -262,7 +263,7 @@ export class Slide{
                 net.learn_batch();
                 net.update();
                 slide.draw_update(net);           
-               // graph.updateGraph(net,graph);
+                if(graph){graph.updateGraph(net,graph);}
      
                 loopcount=loopcount+1;
             }
@@ -317,14 +318,6 @@ export class Slide{
           slide.draw_init(net);
         });
     }
-
-    
-    addGraphFns(net,graph){
-        this.buttonContainer.getChildByName("learn_stoch_step").on('click', function(e){
-            graph.updateGraph(net,graph);
-        });
-    }
-
 
     draw_init(net){
         this.drawWeights_init(net);
@@ -821,14 +814,29 @@ export class Slide{
                 }
 
                 currBase.getChildAt(0).text=formatter.format(net.getLayer(i).neurons[j].output);     
-            
-                this.neuronContainer.getChildByName("neuronOvers").getChildByName(name).getChildAt(0).text = 
-                
-                "i: " + this.formatList(net.getLayer(i).neurons[j].inputs) + '\n'
+
+                var ins=[];            
+                var str = "  ";
+    
+                for (var ii=0;ii<net.getLayer(i).neurons[j].inputs.length;ii++){
+                    ins.push(new Array(2));
+                    ins[ii][0]=net.getLayer(i).neurons[j].inputs[ii].toFixed(2);
+                    ins[ii][1]=net.getLayer(i).neurons[j].weights[ii].toFixed(2);
+    
+                    if(ii<3){
+                        str=str+ins[ii][0]+" × "+ins[ii][1]+'\n'+"+";
+                    }
+                }
+                str=str+formatter.format(net.getLayer(i).neurons[j].bias)+"\n━━━━━"+"\n   "+formatter.format(net.getLayer(i).neurons[j].output_nofn);
+    
+                this.neuronContainer.getChildByName("neuronOvers").getChildByName(name).getChildAt(0).text = str;
+                this.neuronContainer.getChildByName("neuronOvers").getChildByName(name).getChildAt(1).text = " 𝑓("+formatter.format(net.getLayer(i).neurons[j].output_nofn)+")="+"\n\n  "+formatter.format(net.getLayer(i).neurons[j].output);
+
+                /*"i: " + this.formatList(net.getLayer(i).neurons[j].inputs) + '\n'
                 + "w: " + this.formatList(net.getLayer(i).neurons[j].weights) + '\n'
                 + "b: " + formatter.format(net.getLayer(i).neurons[j].bias) +'\n'
                 + "o: " + formatter.format(net.getLayer(i).neurons[j].output_nofn) + '\n'
-                + "   " + formatter.format(net.getLayer(i).neurons[j].output) + '\n' ;
+                + "   " + formatter.format(net.getLayer(i).neurons[j].output) + '\n' ;*/
             }
         }
     }

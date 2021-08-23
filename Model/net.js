@@ -65,7 +65,7 @@ export class Net{
         this.calcCost();
         this.update();
 
-        this.setLearnRate(0.05);
+        this.setLearnRate(0.1);
 
         this.batchgrad=[];
     }

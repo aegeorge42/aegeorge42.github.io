@@ -188,7 +188,6 @@ export const SlideSandbox = new Slide();
 var net = new Net();
 SlideSandbox.slideNet=net;
 
-SlideSandbox.drawButtons(net);
 
 net.setNetData(fruits_small);
 net.setLearnRate(0.10);
@@ -196,19 +195,24 @@ net.getLayer(0).addNeuron();
 
 net.setOutLayer();
 net.update();
-
-SlideSandbox.draw_init(net);
-//SlideSandbox.drawText(text);
-SlideSandbox.drawTextButtons();
 var g = new Graph(fruits_test);
 SlideSandbox.slideContainer.addChild(g.getGraph());
+
+SlideSandbox.draw_init(net);
+SlideSandbox.drawButtons(net,g);
+
+//SlideSandbox.drawText(text);
+SlideSandbox.drawTextButtons();
+
+//SlideSandbox.drawLearnButtons(net);
+
 //g.updateGraph( SlideSandbox.slideNet);
-SlideSandbox.addGraphFns(SlideSandbox.slideNet,g);
+//SlideSandbox.addGraphFns(SlideSandbox.slideNet,g);
 
 
 //GRAPH TEST
 export const SlideGraphTest = new Slide();
-
+/*
 var netGraph=new Net();
     netGraph.setNetData(fruits);
     netGraph.setOutLayer();
@@ -237,4 +241,4 @@ SlideGraphTest.slideContainer.addChild(g.getGraph());
 g.updateGraph(netGraph);
 SlideGraphTest.addGraphFns(netGraph,g);
 netGraph.setNetData(fruits);
-
+*/
