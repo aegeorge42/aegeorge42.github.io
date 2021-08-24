@@ -18,6 +18,8 @@ export class Button extends PIXI.Sprite{
         //different buttons?
         this.on('mouseover', function(e){
             this.tint=tintOver;
+           // console.log(this.parent.app.renderer.plugins.interaction.mouse.global);
+
         })
 
         this.on('mouseout', function(e){

@@ -10,10 +10,19 @@ import {small, medium, typewriter, typewriter_large, textstyles} from "./textsty
 // HOME
 export const SlideHome = new Slide();
 var opener = new PIXI.Sprite(PIXI.Texture.from('images/opener.png'));
+    opener.isSprite=true;
     opener.anchor.set(0.5);
     opener.x=((window.innerWidth)/2);
     opener.y=((window.innerHeight)/3)+50;
-SlideHome.slideContainer.addChild(opener);        
+
+var textopener= [    
+    opener
+    //   [ ["SDJGLLKKLDFGKLFDKLFDKLFDKLD"], [10, 10]],
+];
+//SlideHome.drawText(textopener);
+//SlideHome.drawTextButtons();
+//SlideHome.slideContainer.addChild(opener);    
+    
 
 window.addEventListener('resize', resize);     
 
@@ -26,7 +35,8 @@ function resize(){
 // INSTRUCTIONS
 export const SlideInstruct = new Slide();
     var textInstruct = [    
-        [ ["This is the tool that I needed when I was learning about neural networks"], [50, 350]],
+        [ ["This is the tool that I needed when I was learning about neural networks"], [50, 350]]//,
+     //   [ ["SDJGLLKKLDFGKLFDKLFDKLFDKLD"], [10, 10]],
     ];
 
     SlideInstruct.drawText(textInstruct);
@@ -47,13 +57,13 @@ SlideIntro1.drawTextButtons();
 // INTRO 2
 export const SlideIntro2 = new Slide();
 
-var examples=new PIXI.Sprite(PIXI.Texture.from('images/examples.png'));
+var examples=new PIXI.Sprite(PIXI.Texture.from('images/allexamples_nolabels.png'));
 examples.anchor.set(0.5);
 examples.isSprite=true;
 examples.x=850;
 examples.y=325;
 
-var examples_labels=new PIXI.Sprite(PIXI.Texture.from('images/examples_labels.png'));
+var examples_labels=new PIXI.Sprite(PIXI.Texture.from('images/allexamples_labels.png'));
 examples_labels.isSprite=true;
 examples_labels.anchor.set(0.5);
 examples_labels.x=850;
@@ -69,7 +79,6 @@ var textIntro2_test = [
 
 SlideIntro2.drawText(textIntro2_test);
 SlideIntro2.drawTextButtons();
-SlideHome.slideContainer.addChild(opener);        
 
 // INTRO 3
 export const SlideIntro3 = new Slide();
@@ -188,7 +197,8 @@ SlideNeuron2.slideNet.update();
 SlideNeuron2.draw_init_large(SlideNeuron2.slideNet);
 
 var textNeuron2 = [
-    [["Let's use one of our data points as an input."], [100,100]]
+    [["Let's use one of our data points as an input."], [100,100]],
+    [["Let's use one of our data points as an input."], [150,150]],
    // [ [SlideNeuron2.slideNet.getLayer(0).neurons[0].inputs[0].toFixed(2) +" × "+ SlideNeuron2.slideNet.getLayer(0).neurons[0].weights[0].toFixed(2)], [ 100, 100]]
 ];
 console.log(SlideNeuron2.slideNet.getLayer(0).neurons[0].inputs[0].toFixed(2));
@@ -224,7 +234,10 @@ SlideSandbox.slideContainer.addChild(g.getGraph());
 SlideSandbox.draw_init(net);
 SlideSandbox.drawButtons(net,g);
 
-//SlideSandbox.drawText(text);
+var textInstruct2 = [    
+    [ ["SASGSGREGSGS"], [50, 350]]
+];
+SlideSandbox.drawText(textInstruct2);
 SlideSandbox.drawTextButtons();
 
 //SlideSandbox.drawLearnButtons(net);

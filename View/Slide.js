@@ -34,7 +34,9 @@ export class Slide{
 
         var slide=this;
        // this.maxLayers=5;
-        this.buttonContainer  = new PIXI.Container();             
+        this.buttonContainer  = new PIXI.Container();        
+        this.textbuttonContainer  = new PIXI.Container();             
+     
         this.inputContainer = new PIXI.Container();                 
         this.neuronContainer = new PIXI.Container();
             this.neuronBases = new PIXI.Container();
@@ -46,33 +48,54 @@ export class Slide{
         
         this.labelsContainer = new PIXI.Container();
     
-        this.textcount = 1; 
+        this.textcount = 0; 
         this.textContainer = new PIXI.Container();
 
-        this.cardContainer = new PIXI.Container(); 
+     //   this.cardContainer = new PIXI.Container(); 
 
-        this.slideContainer=new PIXI.Container();                   
-        this.slideContainer.addChild(this.buttonContainer,                                      
+        this.slideContainer=new PIXI.Container();
+        
+        const footer=new PIXI.Graphics();
+        footer.name="footer";
+        footer.beginFill(0xFFFFFF);
+        footer.drawRect(0,window.innerHeight,window.innerWidth,-layout.FOOTER_HEIGHT);
+
+        const header = new PIXI.Graphics();
+        header.name="header";
+        header.beginFill(0xbfbfbf);
+        header.drawRect(0,0,window.innerWidth,layout.HEADER_HEIGHT);
+
+        this.slideContainer.addChild(                                      
                                       this.weightsContainer,
                                       this.inputContainer, 
                                       this.neuronContainer,
                                       this.labelsContainer,
-                                      this.cardContainer,
-                                      this.textContainer
+                                   //  this.cardContainer,
+                                      this.textContainer,
+                                      footer,
+                                      header,
+                                      this.buttonContainer,
                                       );
 
         window.addEventListener('resize', resize);    
 
+        var h=window.innerHeight;    
         function resize(){
+            footer.width=window.innerWidth;
+            footer.y=window.innerHeight-h;
+            header.width=window.innerWidth;
+
+            
             // shrug
             try{
-                slide.buttonContainer.getChildByName("nexttext").x=window.innerWidth/2 +100;
-                slide.buttonContainer.getChildByName("nexttext").y=window.innerHeight-(layout.FOOTER_HEIGHT/2);
 
-                slide.buttonContainer.getChildByName("prevtext").x=window.innerWidth/2 -100;
-                slide.buttonContainer.getChildByName("prevtext").y=window.innerHeight-(layout.FOOTER_HEIGHT/2);
+                slide.textbuttonContainer.getChildByName("nexttext").x=window.innerWidth/2 +100;
+                slide.textbuttonContainer.getChildByName("nexttext").y=window.innerHeight-(layout.FOOTER_HEIGHT/2);
+
+                slide.textbuttonContainer.getChildByName("prevtext").x=window.innerWidth/2 -100;
+                slide.textbuttonContainer.getChildByName("prevtext").y=window.innerHeight-(layout.FOOTER_HEIGHT/2);
+
             } catch {};
-        
         }
     }
 
@@ -104,6 +127,86 @@ export class Slide{
     }
 
     drawTextButtons(){
+        this.textbuttonContainer.addChild(new Button("nexttext",PIXI.Texture.from('images/buttons/next.png'),layout.NEXTSLIDE_X,layout.NEXTSLIDE_Y,true));
+        this.textbuttonContainer.addChild(new Button("prevtext",PIXI.Texture.from('images/buttons/back.png'), layout.PREVSLIDE_X,layout.NEXTSLIDE_Y,false));
+    
+        var slide = this;
+
+        if(slide.textContainer.children.length <=1){
+            slide.textbuttonContainer.getChildByName("nexttext").visible=false;
+        }
+
+        this.textbuttonContainer.getChildByName("nexttext").on('click', function(e){
+            slide.textcount++;
+            console.log(slide.textcount);
+            slide.textContainer.getChildAt(slide.textcount).visible=true;          
+
+            if(slide.textcount==slide.textContainer.children.length-1){
+                this.visible=false;
+            }
+
+            if(slide.textcount>=1){
+                slide.textbuttonContainer.getChildByName("prevtext").visible=true;
+            }
+        });
+
+        this.textbuttonContainer.getChildByName("prevtext").on('click', function(e){
+            slide.textContainer.getChildAt(slide.textcount).visible=false;          
+            slide.textcount--;
+
+            if(slide.textcount<1){
+                slide.textbuttonContainer.getChildByName("prevtext").visible=false;
+            }
+            if(slide.textcount<slide.textContainer.children.length-1){
+                slide.textbuttonContainer.getChildByName("nexttext").visible=true;
+
+            }
+        });
+    
+
+    }
+
+        /*
+        var slide = this;
+        this.buttonContainer.addChild(new Button("nexttext",PIXI.Texture.from('images/buttons/next.png'),layout.NEXTSLIDE_X,layout.NEXTSLIDE_Y,true));
+        this.buttonContainer.addChild(new Button("prevtext",PIXI.Texture.from('images/buttons/back.png'), layout.PREVSLIDE_X,layout.NEXTSLIDE_Y,false));
+
+        if(slide.textcount>=1){
+            this.buttonContainer.getChildByName("prevtext").visible=true;
+        }
+
+        this.buttonContainer.getChildByName("nexttext").on('click', function(e){
+            slide.textcount=slide.textcount+1;
+            slide.textContainer.getChildAt(slide.textcount).visible=true;          
+
+            if(slide.textcount==slide.textContainer.children.length-1){
+                this.visible=false;
+            }
+
+             if(slide.textcount>=1){
+                slide.buttonContainer.getChildByName("prevtext").visible=true;
+             } else {
+                slide.buttonContainer.getChildByName("prevtext").visible=false;
+             }
+        });
+
+        this.buttonContainer.getChildByName("prevtext").on('click', function(e){
+
+            if (slide.textcount>=1){
+                //slide.textcount=slide.textcount-1;
+                slide.textContainer.getChildAt(slide.textcount).visible=false;          
+                slide.textcount=slide.textcount-1;
+            }
+
+            if(slide.textcount>=1){
+                slide.buttonContainer.getChildByName("prevtext").visible=true;
+             } else {
+                slide.buttonContainer.getChildByName("prevtext").visible=false;
+             }
+        });
+
+
+        /*
         var slide = this;
 
         this.buttonContainer.addChild(new Button("nexttext",PIXI.Texture.from('images/buttons/next.png'),layout.NEXTSLIDE_X,layout.NEXTSLIDE_Y,true));
@@ -114,6 +217,7 @@ export class Slide{
         }
 
         this.buttonContainer.getChildByName("nexttext").on('click', function(e){
+            console.log("slide has:" +slide.textContainer.children.length+ " current: " +(slide.textcount+1));
             
             if (slide.textcount<slide.textContainer.children.length-1){
                 slide.textContainer.getChildAt(slide.textcount).visible=true;
@@ -136,22 +240,35 @@ export class Slide{
         }
 
         this.buttonContainer.getChildByName("prevtext").on('click', function(e){
-            console.log(slide.textcount);
-           if (slide.textcount>1){
+            if (slide.textcount>1){
+
+            slide.textcount=slide.textcount-1;
+            slide.textContainer.getChildAt(slide.textcount).visible=false;
+
+            } 
+            if (slide.textcount==1){
+                this.visible=false;
+            }
+
+            
+            console.log("slide has:" +slide.textContainer.children.length+ " current: " +slide.textcount);
+          */
+            /*
+            if (slide.textcount>1){
             slide.buttonContainer.getChildByName("nexttext").visible=true;
             slide.textcount=slide.textcount-1;
             slide.textContainer.getChildAt(slide.textcount).visible=false;
-            console.log(slide.textcount);
+            console.log("slide has:" +slide.textContainer.children.length+ " current: " +slide.textcount);
             
         } 
             if (slide.textcount==1){
                 this.visible=false;
             }
-
-        });
-
         
-    }
+        });
+*/
+        
+    
 
     drawButtons(net,graph){
         var slide = this;
@@ -292,7 +409,6 @@ export class Slide{
             slide.draw_init(net);
         });
 
-        console.log(this.buttonContainer.children);
         for (var i =0; i<net.maxLayers; i++){
             this.buttonContainer.getChildByName("buttonNeuronAddContainer").addChild(new Button("addneuron",PIXI.Texture.from('images/buttons/button_addneuron.png'),layout.NEURON_LEFTLIM+ (i*layout.NEURON_X_DIF),80, false));
             this.buttonContainer.getChildByName("buttonNeuronRemContainer").addChild(new Button("remneuron",PIXI.Texture.from('images/buttons/button_removeneuron.png'),layout.NEURON_LEFTLIM+ (i*layout.NEURON_X_DIF),105, false));

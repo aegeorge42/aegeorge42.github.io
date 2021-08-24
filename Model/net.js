@@ -360,9 +360,13 @@ export class Net{
                 //    console.log(currentNeuron.wgrad)
 
                   currentNeuron.wgrad_batch[h]=[...this.getLayer(i).getNeuron(j).wgrad];
-                }
+                  currentNeuron.bgrad_batch[h]=this.getLayer(i).getNeuron(j).bgrad;
+                  //console.log(currentNeuron);
+
+                } 
             }
         }
+
         this.costTot=batchCost/this.data.points.length;
 
         //sum of gradients
@@ -383,11 +387,25 @@ export class Net{
                     }       
                                  
                 }
+            
+               // console.log(currentNeuron.wgrad);
 
                 //average the sum
                 for(var m = 0; m<currentNeuron.wgrad.length; m++){
                     currentNeuron.wgrad[m]=(currentNeuron.wgrad[m]/currentNeuron.wgrad_batch.length)
                 }
+/*
+                var bgrad_tot=0;
+                for(var p =0; p<currentNeuron.bgrad_batch.length;p++){
+                    console.log(currentNeuron.bgrad)
+                    bgrad_tot=bgrad_tot+currentNeuron.bgrad[p]
+                }
+               console.log(bgrad_tot)
+                //currentNeuron.bgrad=(bgrad_tot/currentNeuron.bgrad_batch.length);
+                //var bgrad_tot=0;
+                //bgrad_tot=bgrad_tot+currentNeuron.bgrad
+
+              //  currentNeuron.bgrad=
                 /*
                 console.log("layer: "+currentLayer.layerNumber 
                                 + " neuron: " + currentNeuron.neuronNumber

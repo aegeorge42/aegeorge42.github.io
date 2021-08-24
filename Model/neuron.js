@@ -47,6 +47,8 @@ export class Neuron{
         this.bgrad=0;
 
         this.wgrad_batch=[];
+        this.bgrad_batch=[];
+
         this.totgrad=[];
 
     }

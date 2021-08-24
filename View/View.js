@@ -37,9 +37,9 @@ export class View{
         var h=window.innerHeight;    
         function resize(){
             app.renderer.resize(window.innerWidth, window.innerHeight);
-            header.width=window.innerWidth;
-            footer.width=window.innerWidth;
-            footer.y=window.innerHeight-h;
+           // header.width=window.innerWidth;
+            //footer.width=window.innerWidth;
+           // footer.y=window.innerHeight-h;
 
             app.stage.getChildByName("button_nextslide").x=window.innerWidth/2 +100;
             app.stage.getChildByName("button_nextslide").y=window.innerHeight-(75/2);
@@ -47,8 +47,8 @@ export class View{
             app.stage.getChildByName("button_prevslide").x=window.innerWidth/2 -100,
             app.stage.getChildByName("button_prevslide").y=window.innerHeight-(75/2);
 
-            app.stage.getChildByName("button_start").x=window.innerWidth/2 -25;
-            app.stage.getChildByName("button_start").y=window.innerHeight*(7/8);
+          //  app.stage.getChildByName("button_start").x=window.innerWidth/2 -25;
+         //   app.stage.getChildByName("button_start").y=window.innerHeight*(7/8);
         }
         document.body.appendChild(this.app.view);
 
@@ -57,17 +57,53 @@ export class View{
         this.slideList.push(SlideHome,SlideInstruct,SlideIntro1,SlideIntro2,SlideIntro3,
                             SlideIntro3a,SlideIntro4,SlideNeuron1,SlideNeuron2,SlideSandbox,SlideGraphTest);
 
-        this.currentSlide=9;
+        const opener = new PIXI.Sprite(PIXI.Texture.from('images/opener.png'));
+        opener.name="opener";
+        opener.anchor.set(0.5);
+        opener.x=((window.innerWidth)/2);
+        opener.y=((window.innerHeight)/3)+50;
+        this.slideList[0].slideContainer.addChild(opener);
+
+
+        this.currentSlide=1;
+
+        this.drawSlide_init_test();
+        this.createButtons_test();
+        this.app.stage.addChild(this.slideList[this.currentSlide].textbuttonContainer);
+        this.caveats();
+        
+        /*for(var i = 1; i<this.app.stage.children.length-1; i++){
+            this.app.stage.getChildAt(i).visible=false;
+        }        
+        this.app.stage.getChildAt(0).getChildByName("footer").visible=false;
+        this.app.stage.getChildAt(0).getChildByName("header").visible=false;
+        this.app.stage.getChildByName("button_start").visible=true;
+*/
+/*
+        for(var i = 0; i<this.app.stage.getChildAt(0).children.length-1; i++){
+            this.app.stage.getChildAt(0).getChildAt(i).visible=false;
+        }
+        this.slideList[this.currentSlide].textbuttonContainer.visible=false;
+                /*
+        for(var i = 0; i<this.app.stage.children.length-1; i++){
+            this.app.stage.getChildAt(i).visible=false;
+        }
+        this.app.stage.getChildByName("button_start").visible=true;
+        this.app.stage.getChildAt(0).visible=true;
+        */
+
 
         //this.drawSlide();
 
         //header bar
+        /*
         const header=new PIXI.Graphics();
         header.name="header";
         header.beginFill(0xbfbfbf);
         header.drawRect(0,0,window.innerWidth,layout.HEADER_HEIGHT);
         header.endFill();
-
+*/
+/*
         const footer=new PIXI.Graphics();
         footer.name="footer";
         footer.beginFill(0xbfbfbf);
@@ -79,15 +115,45 @@ export class View{
         footer.endFill();
 
         //console.log(f)
-        this.app.stage.addChild(header);
-        this.app.stage.addChild(footer);
+        //this.app.stage.addChild(header);
+        //this.app.stage.addChild(footer);
 
+
+      //  this.createButtons();
+      //this.createButtons();
+        this.drawSlide_init();
+        this.app.stage.addChild(header);
 
         this.createButtons();
-        this.drawSlide_init();
+        this.app.stage.addChild(this.slideList[this.currentSlide].buttonContainer);
 
-        this.caveats();
+
+        //this.caveats();
+        */
     }
+
+    caveats(){
+        if (this.currentSlide==0){
+
+            for(var i = 1; i<this.app.stage.children.length-1; i++){
+                this.app.stage.getChildAt(i).visible=false;
+            }      
+
+            this.app.stage.getChildAt(0).getChildByName("footer").visible=false;
+            this.app.stage.getChildAt(0).getChildByName("header").visible=false;
+            this.app.stage.getChildByName("button_start").visible=true;
+
+        } else {
+            for(var i = 1; i<this.app.stage.children.length-1; i++){
+                this.app.stage.getChildAt(i).visible=true;
+            }
+
+            this.app.stage.getChildAt(0).getChildByName("footer").visible=true;
+            this.app.stage.getChildAt(0).getChildByName("header").visible=true;
+            this.app.stage.getChildByName("button_start").visible=false;
+        }
+    }
+
 
     setVis(idx,bool){
         if(bool==false){this.app.stage.getChildAt(idx).visible=false;}
@@ -95,12 +161,31 @@ export class View{
     }
 
     drawSlide_init(){
+        
+        //this.app.stage.addChildAt(this.slideList[this.currentSlide].slideContainer,0);
+
         this.app.stage.addChild(this.slideList[this.currentSlide].slideContainer);
+
     }
 
-    drawSlide(){
-        this.app.stage.removeChildAt(this.app.stage.children.length-1);
+    drawSlide_init_test(){
         this.app.stage.addChild(this.slideList[this.currentSlide].slideContainer);
+    };
+
+    drawSlide(){
+        this.app.stage.removeChildAt(0);
+        this.app.stage.addChildAt(this.slideList[this.currentSlide].slideContainer,0);
+        this.app.stage.addChild(this.slideList[this.currentSlide].buttonContainer);
+
+       // this.app.stage.removeChildAt(this.app.stage.children.length-1);
+      //  this.app.stage.addChild(this.slideList[this.currentSlide].slideContainer);
+    }
+
+    drawSlide_test(){
+        this.app.stage.removeChildAt(0);
+        this.app.stage.addChildAt(this.slideList[this.currentSlide].slideContainer,0);
+        this.app.stage.addChild(this.slideList[this.currentSlide].textbuttonContainer);
+        this.caveats();
     }
 
     createButtons(){
@@ -110,7 +195,7 @@ export class View{
         //START
         var startx=window.innerWidth/2 -25;
         var starty=window.innerHeight*(7/8);
-
+/*
         var button_start = new Button("button_start",PIXI.Texture.from('images/buttons/start.png'),startx,starty,true,0xFFA500);
         button_start.setTint(0xcc5801,'mouseover');
         this.app.stage.addChild(button_start);
@@ -119,7 +204,7 @@ export class View{
                 if(vst.currentSlide+1<vst.slideList.length){
                     vst.currentSlide=vst.currentSlide+1;
                     vst.drawSlide();
-                    vst.caveats();
+                    //vst.caveats();
 
                     // gotta update net at switch over, if slide has a net
                   //  if (vst.slideList[vst.currentSlide].slideNet !== undefined){
@@ -127,16 +212,17 @@ export class View{
                  //   }
                 }
             });
-
+*/
         // NEXT SLIDE
-        var button_nextslide = new Button("button_nextslide",PIXI.Texture.from('images/buttons/next.png'),layout.NEXTSLIDE_X,layout.NEXTSLIDE_Y,false)
+        var button_nextslide = new Button("button_nextslide",PIXI.Texture.from('images/buttons/next.png'),layout.NEXTSLIDE_X,layout.NEXTSLIDE_Y,true)
         this.app.stage.addChild(button_nextslide);
             
             this.app.stage.getChildByName("button_nextslide").on('click', function(e){ 
                 if(vst.currentSlide+1<vst.slideList.length){
+                    
                     vst.currentSlide=vst.currentSlide+1;
                     vst.drawSlide();
-                    vst.caveats();
+                 //   vst.caveats();
 
                     // gotta update net at switch over, if slide has a net
                     if (vst.slideList[vst.currentSlide].slideNet !== undefined){
@@ -153,7 +239,7 @@ export class View{
             if(vst.currentSlide>0){
                 vst.currentSlide=vst.currentSlide-1;
                 vst.drawSlide();
-                vst.caveats();
+               // vst.caveats();
 
                 if (vst.slideList[vst.currentSlide].slideNet !== undefined){
                    // vst.slideList[vst.currentSlide].updateDraw(vst.slideList[vst.currentSlide].slideNet);
@@ -168,7 +254,7 @@ export class View{
         
                 vst.currentSlide=0;
                 vst.drawSlide();
-                vst.caveats();
+               // vst.caveats();
         });
 
         // GO TO INTRO
@@ -178,10 +264,11 @@ export class View{
             if (vst.currentSlide!=2){
                 vst.currentSlide=2;
                 vst.drawSlide();
-                vst.caveats();
+                //vst.caveats();
             }
         });
 
+        /*
         // GO TO DATA
         var goto1 = new Button("goto1",PIXI.Texture.from('images/buttons/gotodata.png'),400,layout.HEADER_HEIGHT/2,false,0x2c2c33)
         this.app.stage.addChild(goto1);
@@ -192,17 +279,80 @@ export class View{
                 vst.caveats();
             }
         });
-        
+        */
     }
+
+    createButtons_test(){
+        var vst=this;
+
+        var startx=window.innerWidth/2 -25;
+        var starty=window.innerHeight*(7/8);
+
+        var button_nextslide = new Button("button_nextslide",PIXI.Texture.from('images/buttons/next.png'),layout.NEXTSLIDE_X,layout.NEXTSLIDE_Y,true);
+        var button_prevslide = new Button("button_prevslide",PIXI.Texture.from('images/buttons/back.png'),layout.PREVSLIDE_X,layout.NEXTSLIDE_Y,true);
+        var button_start = new Button("button_start",PIXI.Texture.from('images/buttons/start.png'),startx,starty,true,0xFFA500);
+
+        this.app.stage.addChild(button_nextslide,button_prevslide,button_start);
+
+        this.app.stage.getChildByName("button_start").on('click', function(e){ 
+            vst.app.stage.removeChild(vst.slideList[vst.currentSlide].textbuttonContainer);
+
+            if(vst.currentSlide+1<vst.slideList.length){
+                //remove text buttons
+                //vst.app.stage.removeChild(vst.slideList[vst.currentSlide].textbuttonContainer);
+
+                vst.currentSlide=vst.currentSlide+1;
+                vst.drawSlide_test();
+            //    vst.caveats();
+            }
+        });
+
+        this.app.stage.getChildByName("button_nextslide").on('click', function(e){ 
+            vst.app.stage.removeChild(vst.slideList[vst.currentSlide].textbuttonContainer);
+
+            if(vst.currentSlide+1<vst.slideList.length){
+                //remove text buttons
+                //vst.app.stage.removeChild(vst.slideList[vst.currentSlide].textbuttonContainer);
+
+                vst.currentSlide=vst.currentSlide+1;
+                vst.drawSlide_test();
+            //    vst.caveats();
+            }
+        });
+
+        this.app.stage.getChildByName("button_prevslide").on('click', function(e){ 
+            vst.app.stage.removeChild(vst.slideList[vst.currentSlide].textbuttonContainer);
+
+            if(vst.currentSlide>0){
+         //       vst.app.stage.removeChild(vst.slideList[vst.currentSlide].textbuttonContainer);
+
+                vst.currentSlide=vst.currentSlide-1;
+                vst.drawSlide_test();
+            //    vst.caveats();
+
+            }
+
+            
+        });
+    }
+
+   // createTextButtons(){
+     //   this.app.stage.addChild(this.slideList[this.currentSlide].textbuttonContainer);
+   // }
 
     //sometimes buttons and stuff have different behaviors than typical
     //here's where they get checked
+/*
     caveats(){
-
+        console.log(this.currentSlide);
         if(this.currentSlide==0){
             for(var i = 0; i<this.app.stage.children.length-1; i++){
                 this.app.stage.getChildAt(i).visible=false;
                 this.app.stage.getChildByName("button_start").visible=true;
+                console.log(this.slideList[this.currentSlide].slideContainer.getChildAt(5));
+              //  this.app.stage.getChildByName(this.slideList[this.currentSlide].slideContainer);
+            //  this.slideList[this.currentSlide].slideContainer.getChildByName("opener").visible=true;
+
             }
         
         } else {
@@ -213,5 +363,5 @@ export class View{
         }
         
     }
-    
+    */
 }
