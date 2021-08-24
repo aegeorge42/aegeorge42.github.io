@@ -9,7 +9,6 @@ export const layout = {
     NEXTSLIDE_Y: window.innerHeight-(75/2),
 
     BOTTOMLIM: window.innerHeight*(9/10),
-
     INNERHEIGHT: window.innerHeight-(50+75),
 
     //CARDHEIGHT: 444,

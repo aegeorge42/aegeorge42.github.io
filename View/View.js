@@ -37,16 +37,20 @@ export class View{
         var h=window.innerHeight;    
         function resize(){
             app.renderer.resize(window.innerWidth, window.innerHeight);
-           // header.width=window.innerWidth;
-            //footer.width=window.innerWidth;
-           // footer.y=window.innerHeight-h;
-
+        
             app.stage.getChildByName("button_nextslide").x=window.innerWidth/2 +100;
             app.stage.getChildByName("button_nextslide").y=window.innerHeight-(75/2);
 
             app.stage.getChildByName("button_prevslide").x=window.innerWidth/2 -100,
             app.stage.getChildByName("button_prevslide").y=window.innerHeight-(75/2);
 
+            if(vst.currentSlide==0){
+                app.stage.getChildAt(0).getChildByName("opener").x=((window.innerWidth)/2);
+                app.stage.getChildAt(0).getChildByName("opener").y=((window.innerHeight)/3)+50;
+
+                app.stage.getChildByName("button_start").x=window.innerWidth/2;
+                app.stage.getChildByName("button_start").y=((window.innerHeight)/3) +350;
+            }
           //  app.stage.getChildByName("button_start").x=window.innerWidth/2 -25;
          //   app.stage.getChildByName("button_start").y=window.innerHeight*(7/8);
         }
@@ -193,7 +197,7 @@ export class View{
         var vst = this;
 
         //START
-        var startx=window.innerWidth/2 -25;
+        var startx=window.innerWidth/2;
         var starty=window.innerHeight*(7/8);
 /*
         var button_start = new Button("button_start",PIXI.Texture.from('images/buttons/start.png'),startx,starty,true,0xFFA500);
@@ -285,8 +289,8 @@ export class View{
     createButtons_test(){
         var vst=this;
 
-        var startx=window.innerWidth/2 -25;
-        var starty=window.innerHeight*(7/8);
+        var startx=window.innerWidth/2;
+        var starty=((window.innerHeight)/3) +350;
 
         var button_nextslide = new Button("button_nextslide",PIXI.Texture.from('images/buttons/next.png'),layout.NEXTSLIDE_X,layout.NEXTSLIDE_Y,true);
         var button_prevslide = new Button("button_prevslide",PIXI.Texture.from('images/buttons/back.png'),layout.PREVSLIDE_X,layout.NEXTSLIDE_Y,true);
