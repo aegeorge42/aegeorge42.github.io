@@ -52,12 +52,12 @@ export class Slide{
         this.textContainer = new PIXI.Container();
 
      //   this.cardContainer = new PIXI.Container(); 
-
+     //   this.miscContainer=new PIXI.Container();
         this.slideContainer=new PIXI.Container();
         
         const footer=new PIXI.Graphics();
         footer.name="footer";
-        footer.beginFill(0xFFFFFF);
+        footer.beginFill(0xbfbfbf);
         footer.drawRect(0,window.innerHeight,window.innerWidth,-layout.FOOTER_HEIGHT);
 
         const header = new PIXI.Graphics();
@@ -72,6 +72,7 @@ export class Slide{
                                       this.labelsContainer,
                                    //  this.cardContainer,
                                       this.textContainer,
+                                   //   this.miscContainer,
                                       footer,
                                       header,
                                       this.buttonContainer,

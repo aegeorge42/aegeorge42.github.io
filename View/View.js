@@ -51,9 +51,8 @@ export class View{
                 app.stage.getChildByName("button_start").x=window.innerWidth/2;
                 app.stage.getChildByName("button_start").y=((window.innerHeight)/3) +350;
             }
-          //  app.stage.getChildByName("button_start").x=window.innerWidth/2 -25;
-         //   app.stage.getChildByName("button_start").y=window.innerHeight*(7/8);
         }
+
         document.body.appendChild(this.app.view);
 
         //add premade slides
@@ -69,71 +68,15 @@ export class View{
         this.slideList[0].slideContainer.addChild(opener);
 
 
-        this.currentSlide=1;
 
-        this.drawSlide_init_test();
-        this.createButtons_test();
+        this.currentSlide=7;
+
+
+
+        this.drawSlide_init();
+        this.createButtons();
         this.app.stage.addChild(this.slideList[this.currentSlide].textbuttonContainer);
         this.caveats();
-        
-        /*for(var i = 1; i<this.app.stage.children.length-1; i++){
-            this.app.stage.getChildAt(i).visible=false;
-        }        
-        this.app.stage.getChildAt(0).getChildByName("footer").visible=false;
-        this.app.stage.getChildAt(0).getChildByName("header").visible=false;
-        this.app.stage.getChildByName("button_start").visible=true;
-*/
-/*
-        for(var i = 0; i<this.app.stage.getChildAt(0).children.length-1; i++){
-            this.app.stage.getChildAt(0).getChildAt(i).visible=false;
-        }
-        this.slideList[this.currentSlide].textbuttonContainer.visible=false;
-                /*
-        for(var i = 0; i<this.app.stage.children.length-1; i++){
-            this.app.stage.getChildAt(i).visible=false;
-        }
-        this.app.stage.getChildByName("button_start").visible=true;
-        this.app.stage.getChildAt(0).visible=true;
-        */
-
-
-        //this.drawSlide();
-
-        //header bar
-        /*
-        const header=new PIXI.Graphics();
-        header.name="header";
-        header.beginFill(0xbfbfbf);
-        header.drawRect(0,0,window.innerWidth,layout.HEADER_HEIGHT);
-        header.endFill();
-*/
-/*
-        const footer=new PIXI.Graphics();
-        footer.name="footer";
-        footer.beginFill(0xbfbfbf);
-        //footer.drawRect(0,window.innerHeight-80,window.innerWidth,80);
-        footer.drawRect(0,window.innerHeight,window.innerWidth,-layout.FOOTER_HEIGHT);
-       // console.log("INNERHEIGHT:" + layout.INNERHEIGHT + "INNERWIDTH:" + window.innerWidth);
-
-      //  console.log(footer.x +" "+ footer.y +" "+ footer.width +" "+ footer.height);
-        footer.endFill();
-
-        //console.log(f)
-        //this.app.stage.addChild(header);
-        //this.app.stage.addChild(footer);
-
-
-      //  this.createButtons();
-      //this.createButtons();
-        this.drawSlide_init();
-        this.app.stage.addChild(header);
-
-        this.createButtons();
-        this.app.stage.addChild(this.slideList[this.currentSlide].buttonContainer);
-
-
-        //this.caveats();
-        */
     }
 
     caveats(){
@@ -166,8 +109,6 @@ export class View{
 
     drawSlide_init(){
         
-        //this.app.stage.addChildAt(this.slideList[this.currentSlide].slideContainer,0);
-
         this.app.stage.addChild(this.slideList[this.currentSlide].slideContainer);
 
     }
@@ -179,19 +120,10 @@ export class View{
     drawSlide(){
         this.app.stage.removeChildAt(0);
         this.app.stage.addChildAt(this.slideList[this.currentSlide].slideContainer,0);
-        this.app.stage.addChild(this.slideList[this.currentSlide].buttonContainer);
-
-       // this.app.stage.removeChildAt(this.app.stage.children.length-1);
-      //  this.app.stage.addChild(this.slideList[this.currentSlide].slideContainer);
-    }
-
-    drawSlide_test(){
-        this.app.stage.removeChildAt(0);
-        this.app.stage.addChildAt(this.slideList[this.currentSlide].slideContainer,0);
         this.app.stage.addChild(this.slideList[this.currentSlide].textbuttonContainer);
         this.caveats();
     }
-
+/*
     createButtons(){
         console.log(layout.INNERHEIGHT, window.innerWidth)
         var vst = this;
@@ -216,7 +148,7 @@ export class View{
                  //   }
                 }
             });
-*/
+
         // NEXT SLIDE
         var button_nextslide = new Button("button_nextslide",PIXI.Texture.from('images/buttons/next.png'),layout.NEXTSLIDE_X,layout.NEXTSLIDE_Y,true)
         this.app.stage.addChild(button_nextslide);
@@ -283,10 +215,10 @@ export class View{
                 vst.caveats();
             }
         });
-        */
-    }
+        
+    }*/
 
-    createButtons_test(){
+    createButtons(){
         var vst=this;
 
         var startx=window.innerWidth/2;
@@ -295,19 +227,15 @@ export class View{
         var button_nextslide = new Button("button_nextslide",PIXI.Texture.from('images/buttons/next.png'),layout.NEXTSLIDE_X,layout.NEXTSLIDE_Y,true);
         var button_prevslide = new Button("button_prevslide",PIXI.Texture.from('images/buttons/back.png'),layout.PREVSLIDE_X,layout.NEXTSLIDE_Y,true);
         var button_start = new Button("button_start",PIXI.Texture.from('images/buttons/start.png'),startx,starty,true,0xFFA500);
-
         this.app.stage.addChild(button_nextslide,button_prevslide,button_start);
 
         this.app.stage.getChildByName("button_start").on('click', function(e){ 
             vst.app.stage.removeChild(vst.slideList[vst.currentSlide].textbuttonContainer);
 
             if(vst.currentSlide+1<vst.slideList.length){
-                //remove text buttons
-                //vst.app.stage.removeChild(vst.slideList[vst.currentSlide].textbuttonContainer);
 
                 vst.currentSlide=vst.currentSlide+1;
-                vst.drawSlide_test();
-            //    vst.caveats();
+                vst.drawSlide();
             }
         });
 
@@ -315,12 +243,8 @@ export class View{
             vst.app.stage.removeChild(vst.slideList[vst.currentSlide].textbuttonContainer);
 
             if(vst.currentSlide+1<vst.slideList.length){
-                //remove text buttons
-                //vst.app.stage.removeChild(vst.slideList[vst.currentSlide].textbuttonContainer);
-
                 vst.currentSlide=vst.currentSlide+1;
-                vst.drawSlide_test();
-            //    vst.caveats();
+                vst.drawSlide();
             }
         });
 
@@ -328,44 +252,30 @@ export class View{
             vst.app.stage.removeChild(vst.slideList[vst.currentSlide].textbuttonContainer);
 
             if(vst.currentSlide>0){
-         //       vst.app.stage.removeChild(vst.slideList[vst.currentSlide].textbuttonContainer);
 
                 vst.currentSlide=vst.currentSlide-1;
-                vst.drawSlide_test();
-            //    vst.caveats();
-
+                vst.drawSlide();
             }
-
-            
         });
-    }
 
-   // createTextButtons(){
-     //   this.app.stage.addChild(this.slideList[this.currentSlide].textbuttonContainer);
-   // }
+        //GO TO BUTTONS
+        var homebutton = new Button("homebutton",PIXI.Texture.from('images/home.png'),30,layout.HEADER_HEIGHT/2,false)
+        this.app.stage.addChild(homebutton);
+        this.app.stage.getChildByName("homebutton").on('click', function(e){ 
+                vst.currentSlide=0;
+                vst.drawSlide();
+        });
 
-    //sometimes buttons and stuff have different behaviors than typical
-    //here's where they get checked
-/*
-    caveats(){
-        console.log(this.currentSlide);
-        if(this.currentSlide==0){
-            for(var i = 0; i<this.app.stage.children.length-1; i++){
-                this.app.stage.getChildAt(i).visible=false;
-                this.app.stage.getChildByName("button_start").visible=true;
-                console.log(this.slideList[this.currentSlide].slideContainer.getChildAt(5));
-              //  this.app.stage.getChildByName(this.slideList[this.currentSlide].slideContainer);
-            //  this.slideList[this.currentSlide].slideContainer.getChildByName("opener").visible=true;
-
+        var gotointro = new Button("gotointro",PIXI.Texture.from('images/buttons/gotointro.png'),250,layout.HEADER_HEIGHT/2,false)
+        this.app.stage.addChild(gotointro);
+        this.app.stage.getChildByName("gotointro").on('click', function(e){ 
+            if (vst.currentSlide!=2){
+                vst.currentSlide=2;
+                vst.drawSlide();
             }
+        });
         
-        } else {
-            for(var i = 0; i<this.app.stage.children.length-1; i++){
-                this.app.stage.getChildAt(i).visible=true;
-                this.app.stage.getChildByName("button_start").visible=false;
-            }
-        }
-        
+
+
     }
-    */
 }
