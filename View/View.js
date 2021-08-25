@@ -10,7 +10,7 @@ import {SlideHome,
     SlideIntro4,
     SlideNeuron1,
     SlideNeuron2,
-    SlideData3,
+    SlideNet1,
     SlideSandbox,
 SlideGraphTest} from "./allSlides.js"
 
@@ -58,7 +58,7 @@ export class View{
         //add premade slides
         this.slideList = [];
         this.slideList.push(SlideHome,SlideInstruct,SlideIntro1,SlideIntro2,SlideIntro3,
-                            SlideIntro3a,SlideIntro4,SlideNeuron1,SlideNeuron2,SlideSandbox,SlideGraphTest);
+                            SlideIntro3a,SlideIntro4,SlideNeuron1,SlideNeuron2,SlideNet1,SlideSandbox,SlideGraphTest);
 
         const opener = new PIXI.Sprite(PIXI.Texture.from('images/opener.png'));
         opener.name="opener";
@@ -69,7 +69,7 @@ export class View{
 
 
 
-        this.currentSlide=7;
+        this.currentSlide=0;
 
 
 

@@ -50,6 +50,7 @@ export class Slide{
     
         this.textcount = 0; 
         this.textContainer = new PIXI.Container();
+        this.imagesContainer = new PIXI.Container();
 
      //   this.cardContainer = new PIXI.Container(); 
      //   this.miscContainer=new PIXI.Container();
@@ -72,7 +73,7 @@ export class Slide{
                                       this.labelsContainer,
                                    //  this.cardContainer,
                                       this.textContainer,
-                                   //   this.miscContainer,
+                                      this.imagesContainer,
                                       footer,
                                       header,
                                       this.buttonContainer,
@@ -127,7 +128,8 @@ export class Slide{
         console.log("setvis")
     }
 
-    drawTextButtons(){
+
+    drawTextButtons2(){
         this.textbuttonContainer.addChild(new Button("nexttext",PIXI.Texture.from('images/buttons/next.png'),layout.NEXTSLIDE_X,layout.NEXTSLIDE_Y,true));
         this.textbuttonContainer.addChild(new Button("prevtext",PIXI.Texture.from('images/buttons/back.png'), layout.PREVSLIDE_X,layout.NEXTSLIDE_Y,false));
     
@@ -139,8 +141,17 @@ export class Slide{
 
         this.textbuttonContainer.getChildByName("nexttext").on('click', function(e){
             slide.textcount++;
-            console.log(slide.textcount);
-            slide.textContainer.getChildAt(slide.textcount).visible=true;          
+            //console.log(slide.textcount);
+            slide.textContainer.getChildAt(slide.textcount).visible=true;
+
+            console.log(slide.textContainer.getChildAt(slide.textcount).imagepair);
+            if(slide.textContainer.getChildAt(slide.textcount).imagepair!==undefined){
+            slide.imagesContainer.getChildAt(slide.textContainer.getChildAt(slide.textcount).imagepair).visible=true; 
+            }
+
+            //slide.imageContainer.getChildAt()
+           // console.log(slide.textContainer.getChildAt(slide.textcount))
+            console.log("Imgpair"+slide.textContainer.getChildAt(slide.textcount).imagepair);         
 
             if(slide.textcount==slide.textContainer.children.length-1){
                 this.visible=false;
@@ -152,7 +163,10 @@ export class Slide{
         });
 
         this.textbuttonContainer.getChildByName("prevtext").on('click', function(e){
-            slide.textContainer.getChildAt(slide.textcount).visible=false;          
+            slide.textContainer.getChildAt(slide.textcount).visible=false;
+            if(slide.textContainer.getChildAt(slide.textcount).imagepair!==undefined){
+                slide.imagesContainer.getChildAt(slide.textContainer.getChildAt(slide.textcount).imagepair).visible=false; 
+            }
             slide.textcount--;
 
             if(slide.textcount<1){
@@ -1123,12 +1137,357 @@ var textIntro2_test = [
 
 ];
 */
+
+    drawTextButtons(){
+        this.textbuttonContainer.addChild(new Button("nexttext",PIXI.Texture.from('images/buttons/nexttext.png'),layout.NEXTSLIDE_X,layout.NEXTSLIDE_Y,true));
+        this.textbuttonContainer.addChild(new Button("prevtext",PIXI.Texture.from('images/buttons/prev.png'), layout.PREVSLIDE_X,layout.NEXTSLIDE_Y,false));
+
+        var slide = this;
+
+        this.textbuttonContainer.getChildByName("nexttext").on('click', function(e){
+            slide.textcount++;
+            slide.textContainer.getChildAt(slide.textcount).visible=true;
+
+            if(slide.textcount==slide.textContainer.children.length-1){
+                this.visible=false;
+            }
+
+            if(slide.textcount>=1){
+                slide.textbuttonContainer.getChildByName("prevtext").visible=true;
+            }
+        });
+    }
+    /*
+        var slide = this;
+
+        this.buttonContainer.addChild(new Button("nexttext",PIXI.Texture.from('images/buttons/next.png'),layout.NEXTSLIDE_X,layout.NEXTSLIDE_Y,true));
+       
+        // don't draw next text button if theres 1 or less texts
+        if(this.textContainer.children.length<=1){
+            this.buttonContainer.getChildByName("nexttext").visible=false;
+        }
+
+        this.buttonContainer.getChildByName("nexttext").on('click', function(e){
+            console.log("slide has:" +slide.textContainer.children.length+ " current: " +(slide.textcount+1));
+            
+            if (slide.textcount<slide.textContainer.children.length-1){
+                slide.textContainer.getChildAt(slide.textcount).visible=true;
+                slide.buttonContainer.getChildByName("prevtext").visible=true;
+
+                slide.textcount=slide.textcount+1;
+
+            } else if (slide.textcount==slide.textContainer.children.length-1){
+                slide.textContainer.getChildAt(slide.textcount).visible=true;
+                slide.textcount=slide.textcount+1;
+                this.visible=false;
+                slide.buttonContainer.getChildByName("prevtext").visible=true;
+            }
+        }); 
+
+        this.buttonContainer.addChild(new Button("prevtext",PIXI.Texture.from('images/buttons/back.png'), layout.PREVSLIDE_X,layout.NEXTSLIDE_Y,false));
+
+        if(this.textContainer.children.length<=1){
+            this.buttonContainer.getChildByName("prevtext").visible=false;
+        }
+
+        this.buttonContainer.getChildByName("prevtext").on('click', function(e){
+            if (slide.textcount>1){
+
+            slide.textcount=slide.textcount-1;
+            slide.textContainer.getChildAt(slide.textcount).visible=false;
+
+            } 
+            if (slide.textcount==1){
+                this.visible=false;
+            }
+
+            
+            console.log("slide has:" +slide.textContainer.children.length+ " current: " +slide.textcount);
+          */
+            /*
+            if (slide.textcount>1){
+            slide.buttonContainer.getChildByName("nexttext").visible=true;
+            slide.textcount=slide.textcount-1;
+            slide.textContainer.getChildAt(slide.textcount).visible=false;
+            console.log("slide has:" +slide.textContainer.children.length+ " current: " +slide.textcount);
+            
+        } 
+            if (slide.textcount==1){
+                this.visible=false;
+            }
+        
+        });*/
+
+    
+    drawText_new(text){
+        for (var i =0; i<text.length; i++){
+            //if sprite
+            if(text[i].isSprite){
+                this.textContainer.addChild(text[i]);                
+            
+            //if first elem is sprite
+            } else if(text[i][0].isSprite){
+                console.log("text "+ i + "HAS sprite");
+                this.textContainer.addChild(text[i][0]);                
+
+            }
+            else {
+                console.log("text "+ i + "no sprite");
+
+            }
+
+
+
+        }
+        for (var i =0; i<this.textContainer.children.length; i++){
+            this.textContainer.getChildAt(i).visible=false;
+        }
+        this.textContainer.getChildAt(0).visible=true;
+    }
+
+
+
+
+
+    drawText_new2(text){
+        for (var i =0; i<text.length; i++){
+            if(text[i].isSprite){
+                this.imagesContainer.addChild(text[i]);                
+            } else{
+                var imgpaircheck= text[i][text[i].length-1].length;
+                var whichToUse=0;
+
+                //there is no image pair, create text until length-1
+                if(imgpaircheck=2){ whichToUse=1}
+                
+                //there IS an image pair, create text until length-2
+                else if(imgpaircheck=1){ whichToUse=2}
+
+
+
+                for(var j=0; j<(text[i].length-whichToUse); j++){
+                    var text2add= new PIXI.Text(text[i][j][0]);
+                    if(whichToUse==1){
+                        text2add.x=text[i][text[i].length-1][0];
+                        text2add.y=text[i][text[i].length-1][1];
+
+                    }
+                    console.log(text[i][text[i].length-1])
+
+                    
+
+                    if(whichToUse==2){
+                        text2add.imagepair=text[i][text[i].length-1];
+                        console.log(text2add.imagepair)}
+                    this.textContainer.addChild(text2add);     
+                    //console.log(text2add.imagepair);
+                   // console.log(text[i].length)
+                    //console.log(text[i][text[i].length-1])
+                    // this.textContainer.addChild(text[i][0]);        
+                }        
+            }
+        }
+
+        for (var i =0; i<this.textContainer.children.length; i++){
+            this.textContainer.getChildAt(i).visible=false;
+        }
+        this.textContainer.getChildAt(0).visible=true;
+    }
+
+    /** slide.textContainer.getChildAt(slide.textcount).visible=true;       */
+
+
+    drawText_test(text){
+        var textlist =[];
+
+        //total length of slide text, how many pieces of text/
+        for (var i =0; i<text.length; i++){
+            if(text[i][0].isSprite){
+                this.textContainer.addChild(text[i][0]);                
+            } else {
+
+                var textwidth =0;
+                var textheight =0;
+
+                //get width of text box
+                for(var j=0; j<(text[i].length-1); j++){
+                    console.log(text[i][j][0]);
+                    if(text[i][j][1] === undefined){
+                        var textwidth_temp=PIXI.TextMetrics.measureText(text[i][j][0], textstyles.default).width;
+                        var textheight_temp=PIXI.TextMetrics.measureText(text[i][j][0], textstyles.default).height;
+                        var text2add = new PIXI.Text(text[i][j][0],textstyles.default);
+
+                    } else {
+                        var textwidth_temp=PIXI.TextMetrics.measureText(text[i][j][0], text[i][j][1]).width;
+                        var textheight_temp=PIXI.TextMetrics.measureText(text[i][j][0], text[i][j][1]).height;
+                        var text2add = new PIXI.Text(text[i][j][0],text[i][j][1]);
+
+                    }
+                    textwidth=textwidth+textwidth_temp;
+                    
+
+                }
+                
+                for(var j=0; j<(text[i].length-1); j++){
+                    var textbox = new PIXI.Graphics();
+                    textbox.beginFill(0xFFFFFF);
+                    textbox.drawRect(0,0,textwidth,50);
+                    textlist[i] = textbox;
+                    
+                    //var text2add = new PIXI.Text(text[i][j][0],text[i][j][1]);
+                    textbox.addChild(text2add);
+                    textlist[i] = textbox;
+
+                }
+            }
+        }
+
+        for (var i =0; i<text.length; i++){
+            if(text[i][0].isSprite){
+                if(text[i][1]){
+                    console.log(text[i][1])
+                    text[i][0].addChild(textlist[i-1])
+                }
+            } else {
+                this.textContainer.addChild(textlist[i]);
+            }
+        }
+
+        console.log(this.textContainer)
+        for (var i =0; i<this.textContainer.children.length; i++){
+            this.textContainer.getChildAt(i).visible=false;
+        }
+        this.textContainer.getChildAt(0).visible=true;
+    }
+
+
+
+
+
+    drawText_test2(text){
+
+        var textlist =[];
+
+        //total length of slide text, how many pieces of text/
+        for (var i =0; i<text.length; i++){
+            if(text[i][0].isSprite){
+                this.textContainer.addChild(text[i][0]);                
+            } else {
+
+                //get textbox size
+                //for(var j=0; j<(text[i].length)-1; j++){}
+
+                var textwidth =0;
+                var textheight =0;
+                for(var j=0; j<(text[i].length)-1; j++){
+                    
+                    if(text[i][j][1] === undefined){
+                        var textwidth_temp=PIXI.TextMetrics.measureText(text[i][j][0], typewriter).width;
+                        var textheight_temp=PIXI.TextMetrics.measureText(text[i][j][0], typewriter).height;
+                    }
+                    textwidth=textwidth+textwidth_temp;
+                    textheight=textheight+textheight_temp;
+
+                        
+                    var textbox = new PIXI.Graphics();
+                    textbox.beginFill(0xFFFFFF);
+                    textbox.drawRect(text[i][(text[i].length)-1][0]-10,text[i][(text[i].length)-1][1]-10,textwidth+20, textheight+20);
+
+                    //textbox.drawRect(0,0,50,50);
+
+                    var text2add = new PIXI.Text(text[i][0]);
+                    textbox.addChild(text2add);
+                    textlist[i] = textbox;
+                }
+            }
+        }
+
+        for (var i =0; i<text.length; i++){
+            if(text[i][0].isSprite){
+                if(text[i][1]){
+                    console.log(text[i][1])
+                    text[i][0].addChild(textlist[i-1])
+                }
+            } else {
+                this.textContainer.addChild(textlist[i]);
+
+            }
+        }
+
+        for (var i =0; i<this.textContainer.children.length; i++){
+            this.textContainer.getChildAt(i).visible=false;
+        }
+        this.textContainer.getChildAt(0).visible=true;
+    }
+       /* var textPiece= new PIXI.Text("hello")//text[i][j][0]);
+        textPiece.x=100;
+        textPiece.y=100;
+        this.textContainer.addChild(textPiece);
+        console.log(this.textContainer)
+        */  
+
+      /*
+        for (var i =0; i<text.length-1; i++){
+            if(!text[i].isSprite){
+                var textbox= new PIXI.Graphics();
+                textbox.beginFill(0xFFFFFF);
+                //textbox.drawRect(50,50,50,50);
+
+                for(var j=0; j<(text[i].length)-1; j++){
+                    var textPiece= new PIXI.Text(text[i][j][0]);
+                        textPiece.x=100;
+                        textPiece.y=100;
+                    textbox.addChild(textPiece);
+                }
+                this.textContainer.addChild(textbox);
+
+            }   
+            else this.textContainer.addChild(text[i][0]);
+        }
+        console.log(this.textContainer);
+        //console.log("text"+text.)
+        
+        this.textContainer.getChildAt(i).visible=false;
+
+        
+        this.textContainer.getChildAt(0).visible=true;
+
+      
+      
+      /*  var text_list=[];
+       /for (var i =0; i<text.length; i++){
+            if(text[i][0].isSprite){
+
+            console.log(text[i][0]);
+        }
+            
+            if(!text[i].isSprite){
+                var textbox= new PIXI.Graphics();
+
+                for(var j=0; j<(text[i].length)-1; j++){
+
+                var textPiece= new PIXI.Text(text[i][j][0]);
+                textbox.addChild(textPiece);
+                }
+           /* } else {
+                console.log(text_list);
+                text[i][0].addChild(text_list[0])
+                this.textContainer.addChild(text[i]);
+
+            }*/
+            
+        
+    
+
     drawText(text){
         //for the whole text thing
         for (var i =0; i<text.length; i++){
             if(text[i].isSprite){
                 this.textContainer.addChild(text[i]);
+                //this.textContainer.addChild(this.textContainer.getChildAt(0));
+                
             } else {
+
 
 
             var textLineContainer= new PIXI.Container();
