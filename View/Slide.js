@@ -1094,8 +1094,8 @@ export class Slide{
     }
 
     drawTextButtons(){
-        this.textbuttonContainer.addChild(new Button("nexttext",PIXI.Texture.from('images/buttons/nexttext.png'),layout.NEXTSLIDE_X,layout.NEXTSLIDE_Y,true));
-        this.textbuttonContainer.addChild(new Button("prevtext",PIXI.Texture.from('images/buttons/prev.png'), layout.PREVSLIDE_X,layout.NEXTSLIDE_Y,false));
+        this.textbuttonContainer.addChild(new Button("nexttext",PIXI.Texture.from('images/buttons/next.png'),layout.NEXTSLIDE_X,layout.NEXTSLIDE_Y,true));
+        this.textbuttonContainer.addChild(new Button("prevtext",PIXI.Texture.from('images/buttons/back.png'), layout.PREVSLIDE_X,layout.NEXTSLIDE_Y,false));
 
         var slide = this;
         if(slide.textContainer.children.length<=1){

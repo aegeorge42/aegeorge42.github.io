@@ -71,9 +71,7 @@ export const SlideIntro2 = new Slide();
 
     var textIntro2 = [
         [ ["So how does it work?", typewriter_large], [50, 100]],
-        examples,
-
-        [ ["In order to train our network,"+'\n'+" we need to give it some examples"+'\n'+"of data we want to classify."], [50, 170]],
+        [examples,["In order to train our network,"+'\n'+" we need to give it some examples"+'\n'+"of data we want to classify."], [50, 170]],
         [["Using our big human brains,"+'\n'+" we label these examples"+'\n'+" with the right answers" ], [50, 300]],
         examples_labels
     ];
