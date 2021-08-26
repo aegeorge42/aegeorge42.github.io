@@ -22,13 +22,13 @@ var testsprite2=new PIXI.Sprite(PIXI.Texture.from('images/button_over.png'));
 
 
 var textInstruct = [    
-    [ ["Here is text without sprite"], [50, 350]],
-    [ testsprite,["text WITH sprite"], [70, 100]],
+    [ ["Here is text without sprite"], [150, 150]],
+    [ testsprite,["text WITH sprite"], [170, 300]],
     testsprite2, //just a sprite
-    [ ["text check",typewriter], ["morecheck"],[70, 100]],
+    [ ["text check"], [" morecheck",textstyles.neuron_large], [" even more"],[70, 100]],
 ];    
 
-SlideInstruct.drawText_new(textInstruct);
+SlideInstruct.drawText(textInstruct);
 SlideInstruct.drawTextButtons();
 
 
@@ -51,9 +51,7 @@ export const SlideIntro1 = new Slide();
         + '\n'+"Using a neural network, a computer can learn to recognize and classify data." ], [100, 200] ],
         [ ["This type of neural network is called a"], [" perceptron.",typewriter_large ], [200,300] ]       
     ];
-    //SlideIntro1.drawText_new(textIntro1);
-  //  SlideIntro1.drawText_test(textIntro1);
-
+    SlideIntro1.drawText(textIntro1);
     SlideIntro1.drawTextButtons();
 
 // INTRO 2
@@ -74,7 +72,6 @@ export const SlideIntro2 = new Slide();
     var textIntro2 = [
         [ ["So how does it work?", typewriter_large], [50, 100]],
         examples,
-        [ [""],[0,0]],
 
         [ ["In order to train our network,"+'\n'+" we need to give it some examples"+'\n'+"of data we want to classify."], [50, 170]],
         [["Using our big human brains,"+'\n'+" we label these examples"+'\n'+" with the right answers" ], [50, 300]],
@@ -92,16 +89,15 @@ export const SlideIntro3 = new Slide();
         captcha.y=80;
 
     var textIntro3 = [
-        [ ["If you've ever had to solve a puzzle like this to get into a website...",textstyles.neuron_large], [10,50],0],
-        captcha, //todo: make this at the same time
-        [ ["...you were probably helping label data to train a neural network"], [200, 380]],
-        examples, //todo: make this at the same time
+        [ captcha,["If you've ever had to solve a puzzle like this to get into a website..."], [10,50]],
+       /// captcha, //todo: make this at the same time
+        [ ["...you were probably helping label data to train a neural network"], [200, 380]]
 
 
       //  [ ["...you were probably helping label data to train a neural network"], [" perceptron.",typewriter_large ],[200, 380]],
     ];
 
-  //  SlideIntro3.drawText(textIntro3);
+    SlideIntro3.drawText(textIntro3);
      //SlideIntro3.drawText_new(textIntro3);
 
     SlideIntro3.drawTextButtons();
@@ -116,8 +112,7 @@ export const SlideIntro3a = new Slide();
         i3_example.x=850;
         i3_example.y=425;
     var textIntro3a = [
-        i3_example,
-        [ ["some nn can classify images using their pixels"], [20,50] ],
+        [ i3_example, ["some nn can classify images using their pixels"], [20,50] ],
         [ ["for our nn, we are going to assign some attributes"+'\n'+"that we think will be important for classifying"], [50,150]],
         [ ["length is the object's length,"+'\n'+"while roundness is a score from 0-1 "+'\n'+"of how round the object looks", small], [150,300]],
         [ ["this is called data preprocessing"], [0,400 ]]
@@ -189,15 +184,11 @@ export const SlideNeuron1 = new Slide();
 var textNeuron1 = [
    // [neuron_example3,neuron_example0],
 
- //   [[["Here's a neuron."], [ 100, 100]],neuron_example0],
+    [neuron_example0,["Here's a neuron."], [ 100, 100]],
  //   neuron_example0,
-    [ ["For each neuron, it takes in some inputs..." ], [ 100, 200] ],
-
-    neuron_example1,
-    neuron_example2,
-    [ ["...some math happens..." ], [ 100, 300]],
-    neuron_example3,
-    [ ["and it spits out a single output" ], [ 100, 400]],
+    [ neuron_example1,["For each neuron, it takes in some inputs..." ], [ 100, 200] ],
+    [ neuron_example2,["...some math happens..." ], [ 100, 300]],
+    [ neuron_example3,["and it spits out a single output" ], [ 100, 400]],
 ];
 
 SlideNeuron1.drawText(textNeuron1);
@@ -273,7 +264,7 @@ SlideNet1.labelsContainer.visible=false;
 console.log(SlideNet1.labelsContainer);
 */
 var textNet1 = [
-    [["Because we have 2 classes, we need two output neurons"], [100,100]],
+    [["Because we have 2 classes, we need two output neurons"], [100,100]]
 ];
 SlideNet1.drawText(textNet1);
 SlideNet1.drawTextButtons();
