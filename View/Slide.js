@@ -356,11 +356,11 @@ export class Slide{
                 net.update();
                 slide.draw_update(net);
                 if(graph){graph.updateGraph(net,graph);}
-                slide.labelsContainer.getChildByName("costLabel").style.fill = 0x6b6b6b;
+            //    slide.labelsContainer.getChildByName("costLabel").style.fill = 0x6b6b6b;
                 await slide.sleep(100);
             }
 
-        slide.labelsContainer.getChildByName("costLabel").style.fill = 0x000000;
+       // slide.labelsContainer.getChildByName("costLabel").style.fill = 0x000000;
         net.learn_batch();
         await slide.sleep(100);
 
@@ -384,9 +384,9 @@ export class Slide{
                         slide.draw_update(net);
                         if(graph){graph.updateGraph(net,graph);}
 
-                        slide.labelsContainer.getChildByName("costLabel").style.fill = 0x6b6b6b;
+                      //  slide.labelsContainer.getChildByName("costLabel").style.fill = 0x6b6b6b;
                         await slide.sleep(100);
-                        slide.labelsContainer.getChildByName("costLabel").style.fill = 0x000000;
+                       // slide.labelsContainer.getChildByName("costLabel").style.fill = 0x000000;
 
                     }
                 }
@@ -474,7 +474,7 @@ export class Slide{
         this.drawWeights_init_large(net);
         this.drawNeurons_init_large(net);
         this.drawInputs_init_large(net);
-       // this.drawLabels_init(net);
+        this.drawLabels_init_large(net);
     }
 
     draw_update(net){
@@ -560,7 +560,7 @@ export class Slide{
                     weightSprite.on('mouseover', function(e){
                         this.getChildByName("+").visible=true;
                         this.getChildByName("-").visible=true;
-                        console.log(this)
+                       // console.log(this)
 
                     });
                     
@@ -826,7 +826,7 @@ export class Slide{
       
         for(var i = 0; i<net.layers.length; i++){
           for(var j = 0; j<net.getLayer(i).neurons.length; j++){
-            var neuronBase = new PIXI.Sprite(PIXI.Texture.from('images/neuron_large.png'));
+            var neuronBase = new PIXI.Sprite(PIXI.Texture.from('images/neuron_large1.png'));
             
             neuronBase.anchor.set(0.5);
             neuronBase.name = i.toString() + j.toString();
@@ -903,12 +903,59 @@ export class Slide{
             overText_actfn_out.anchor.set(1,0.5);
             overText_actfn_out.x=105;
             overText_actfn_out.y=50;
-                
+               
             neuronBase.addChild(overText_weights,overText_outnofn);
             neuronBase.addChild(overText_f,overText_paren,overText_actfn,overText_actfn_out);
 
+            var neuronOver_large=new PIXI.Sprite(PIXI.Texture.from('images/neuronovertest.png'));
+                neuronOver_large.anchor.set(0.5);
+
+                neuronOver_large.x=layout.NEURON_LARGE_X;
+                neuronOver_large.y=layout.NEURON_LARGE_Y;
+                neuronOver_large.visible=false;
+                neuronOver_large.interactive=true;
+
+                neuronOver_large.on('mouseover', function(e){
+                    this.alpha=0;
+                  });
+        
+                neuronOver_large.on('mouseout', function(e){
+                    this.alpha=1;
+                  });
+
+                  var out = net.getLayer(i).neurons[j].output;
+                
+                  if(out>=0.9){
+                      neuronOver_large.tint= 0xfff000
+                  } else if (out>=0.8){
+                    neuronOver_large.tint= 0xfdee3b
+                  } else if (out>=0.7){
+                    neuronOver_large.tint= 0xfbeb56
+                  } else if (out>=0.6){
+                    neuronOver_large.tint= 0xf9e96d
+                  } else if (out>=0.5){
+                    neuronOver_large.tint= 0xf6e781
+                  } else if (out>=0.4){
+                    neuronOver_large.tint= 0xf2e494
+                  } else if (out>=0.3){
+                    neuronOver_large.tint= 0xeee2a7
+                  } else if (out>=0.2){
+                    neuronOver_large.tint= 0xe9e0b9
+                  } else if (out>=0.1){
+                    neuronOver_large.tint= 0xe3deca
+                  }  else if (out>=0.0){
+                    neuronOver_large.tint= 0xdcdcdc
+                  }
+
+            var neuronOver_large_text = new PIXI.Text(formatter.format(net.getLayer(i).neurons[j].output));
+                  
+                neuronOver_large_text.anchor.set(0.5);
+                neuronOver_large.addChild(neuronOver_large_text);
+
             this.neuronBases.addChild(neuronBase);
-            this.neuronContainer.addChild(this.neuronBases);
+            this.neuronOvers.addChild(neuronOver_large);
+
+            this.neuronContainer.addChild(this.neuronBases,this.neuronOvers);
           }
         }
     }
@@ -994,12 +1041,36 @@ export class Slide{
                 + '\n' + "  ━━━━━";
 
                 currBase.getChildAt(1).text=formatter.format(net.getLayer(i).neurons[j].output_nofn);
-
-                /*currBase.getChildAt(2).text="𝑓("+ formatter.format(net.getLayer(i).neurons[j].output_nofn)+") ="
-                + '\n\n' + "   "+formatter.format(net.getLayer(i).neurons[j].output);*/
                 
                 currBase.getChildAt(4).text=formatter.format(net.getLayer(i).neurons[j].output_nofn);
                 currBase.getChildAt(5).text=formatter.format(net.getLayer(i).neurons[j].output);
+
+                var currOver = this.neuronContainer.getChildByName("neuronOvers").getChildAt(0);
+                currOver.getChildAt(0).text=formatter.format(net.getLayer(i).neurons[j].output)//formatter.format(net.getLayer(i).neurons[j].output);
+
+                var out = net.getLayer(i).neurons[j].output;
+                  if(out>=0.9){
+                    currOver.tint= 0xfff000;
+                  } else if (out>=0.8){
+                    currOver.tint= 0xfdee3b;
+                  } else if (out>=0.7){
+                    currOver.tint= 0xfbeb56;
+                  } else if (out>=0.6){
+                    currOver.tint= 0xf9e96d;
+                  } else if (out>=0.5){
+                    currOver.tint= 0xf6e781;
+                  } else if (out>=0.4){
+                    currOver.tint= 0xf2e494;
+                  } else if (out>=0.3){
+                    currOver.tint= 0xeee2a7;
+                  } else if (out>=0.2){
+                    currOver.tint= 0xe9e0b9;
+                  } else if (out>=0.1){
+                    currOver.tint= 0xe3deca;
+                  }  else if (out>=0.0){
+                    currOver.tint= 0xdcdcdc;
+                  }
+
             }
         }
     }
@@ -1037,7 +1108,7 @@ export class Slide{
                 inputBase.y= (i * layout.NEURON_LARGE_Y_DIF) + layout.NEURON_UPPERLIM; //+ layout.NEURON_NUDGE;//(i*(inputHeight+buffer))+upperlim+buffer;
             this.inputContainer.addChild(inputBase);
 
-            var inputText = new PIXI.Text(net.netInput[i],medium);
+            var inputText = new PIXI.Text(net.netInput[i].toFixed(2),medium);
                 inputText.anchor.set(0.5);
                 inputText.name = inputBase.name;
             inputBase.addChild(inputText);
@@ -1059,6 +1130,7 @@ export class Slide{
         for(var i = 0; i<net.data.type.length; i++){
 
             //final output type labels ex strawberry, blueberry
+            var typeLabelBox = new PIXI.Graphics
             var typeLabel = new PIXI.Text(net.data.type[i],medium);
                 typeLabel.x=layout.NEURON_LEFTLIM + (net.layers.length-1)*layout.NEURON_X_DIF + 30;
                 typeLabel.y=layout.NEURON_UPPERLIM + (i*layout.NEURON_Y_DIF) + 25;
@@ -1073,24 +1145,131 @@ export class Slide{
             this.labelsContainer.addChild(inputLabel);
         }
 
+        var target = new PIXI.Sprite(PIXI.Texture.from('images/strawberrycard1.png'));
+        target.scale.set(0.6)
+        target.anchor.set(0.5)
+
+
+        var randomblue= Math.floor(Math.random() * (4) + 1);
+        var randomstraw = Math.floor(Math.random() * (8 - 5 + 1) + 5)
+
+        console.log(randomblue);
+        target.name="target";
+
+        if (net.targetText=="blueberry"){
+            target.texture=PIXI.Texture.from('images/blueberrycard1.png');
+        } else if (net.targetText=="strawberry"){
+            target.texture=PIXI.Texture.from('images/strawberrycard1.png');
+
+        }
+            /*if (net.targetText=="blueberry"){
+                switch(randomblue){
+                    case 1: target.texture=PIXI.Texture.from('images/blueberrycard1.png');
+                            break;
+                    case 2: target.texture=PIXI.Texture.from('images/blueberrycard2.png');
+                            break;
+                    case 3: target.texture=PIXI.Texture.from('images/blueberrycard3.png');
+                            break;
+                    case 4: target.texture=PIXI.Texture.from('images/blueberrycard4.png');
+                            break;
+                }
+            } else {
+                switch(randomstraw){
+                    case 5: target.texture=PIXI.Texture.from('images/strawberrycard1.png');
+                            break;
+                    case 6: target.texture=PIXI.Texture.from('images/strawberrycard2.png');
+                            break;
+                    case 7: target.texture=PIXI.Texture.from('images/strawberrycard3.png');
+                            break;
+                    case 8: target.texture=PIXI.Texture.from('images/strawberrycard4.png');
+                            break;
+                }
+            }*/
+            target.x = layout.NEURON_LEFTLIM- layout.NEURON_X_DIF -100;
+            target.y=layout.NEURON_UPPERLIM +100//layout.NEURON_Y_DIF;
+            this.labelsContainer.addChild(target);
+
         //target label ex strawberry
-        var targetLabel = new PIXI.Text(net.targetText,medium);
+        /*
+        var textwidth=PIXI.TextMetrics.measureText(net.targetText, textstyles.large).width;
+        var textheight=PIXI.TextMetrics.measureText(net.targetText, textstyles.large).height;
+
+        var targetLabelBox = new PIXI.Graphics();
+        targetLabelBox.name = "targetLabelBox";
+
+        targetLabelBox.beginFill(0xFFFFFF);
+       // textbox.drawRect(text[i][(text[i].length)-1][0]-10,text[i][(text[i].length)-1][1]-10,textwidth+20, textheight+20);
+
+        targetLabelBox.drawRect(layout.NEURON_LEFTLIM - layout.NEURON_X_DIF -60,layout.NEURON_UPPERLIM-50,textwidth+20, textheight+20);
+        targetLabelBox.endFill();
+
+        var targetLabel = new PIXI.Text(net.targetText,textstyles.large);
             targetLabel.anchor.set(0.5);
             targetLabel.name = "targetLabel";
             targetLabel.x= layout.NEURON_LEFTLIM - layout.NEURON_X_DIF;
-            targetLabel.y= layout.NEURON_UPPERLIM - 20;
-        this.labelsContainer.addChild(targetLabel);
-
+            targetLabel.y= layout.NEURON_UPPERLIM - 25;
+        targetLabelBox.addChild(targetLabel);
+        this.labelsContainer.addChild(targetLabelBox);
+        
+/*
         var costLabel = new PIXI.Text("cost" + '\n' +formatter_long.format(net.costTot),medium);
             costLabel.name = "costLabel";
             costLabel.x=450;
             costLabel.y=50;
         this.labelsContainer.addChild(costLabel);
+        */
     }
 
+    drawLabels_init_large(net){
+        for(var i=0; i<net.data.labels.length; i++){
+            // input types ex. length, roundness
+            var inputLabel = new PIXI.Text(net.data.labels[i],medium);
+                inputLabel.anchor.set(0.5);
+                inputLabel.x = layout.NEURON_LARGE_LEFTLIM;
+                inputLabel.y = layout.NEURON_UPPERLIM + (i*layout.NEURON_LARGE_Y_DIF) +50;
+            this.labelsContainer.addChild(inputLabel);
+        }
+
+    }
+
+
     drawLabels_update(net){
-        this.labelsContainer.getChildByName("targetLabel").text=net.targetText;
-        this.labelsContainer.getChildByName("costLabel").text="cost" + '\n' +formatter_long.format(net.costTot);
+
+        var target = this.labelsContainer.getChildByName("target");
+        var random = Math.floor(Math.random() * (4) + 1);
+       // console.log(target.texture)
+
+
+       if (net.targetText=="blueberry"){
+        target.texture=PIXI.Texture.from('images/blueberrycard1.png');
+       } else if (net.targetText=="strawberry"){
+       target.texture=PIXI.Texture.from('images/strawberrycard1.png');
+       }
+/*
+        if (net.targetText=="blueberry"){
+            switch(random){
+                case 1: target.texture=PIXI.Texture.from('images/blueberrycard1.png');
+                        break;
+                case 2: target.texture=PIXI.Texture.from('images/blueberrycard2.png');
+                        break;
+                case 3: target.texture=PIXI.Texture.from('images/blueberrycard3.png');
+                        break;
+                case 4: target.texture=PIXI.Texture.from('images/blueberrycard4.png');
+                        break;
+            }
+        } else {
+            switch(random){
+                case 1: target.texture=PIXI.Texture.from('images/strawberrycard1.png');
+                        break;
+                case 2: target.texture=PIXI.Texture.from('images/strawberrycard2.png');
+                        break;
+                case 3: target.texture=PIXI.Texture.from('images/strawberrycard3.png');
+                        break;
+                case 4: target.texture=PIXI.Texture.from('images/strawberrycard4.png');
+                        break;
+            }
+        }
+*/
     }
 
     drawTextButtons(){
@@ -1145,7 +1324,7 @@ export class Slide{
             
             //if first elem is sprite
             } else if(text[i][0].isSprite){
-                console.log("text "+ i + "HAS sprite");
+               // console.log("text "+ i + "HAS sprite");
                // this.textContainer.addChild(text[i][0]);                
 
                 var textwidth = 0;
@@ -1173,7 +1352,7 @@ export class Slide{
                 this.textContainer.addChild(textbox);       
                 
                 for(var j=1; j<(text[i].length)-1; j++){
-                    console.log(text[i][j][0])
+                  //  console.log(text[i][j][0])
                     var textPiece= new PIXI.Text(text[i][j][0]);
                     textPiece.anchor.set(0,0.5);
                     textbox.addChild(textPiece);
@@ -1196,10 +1375,11 @@ export class Slide{
                 }
                 textbox.addChild(text[i][0]);
 
+            // first elem of first elem is sprite (for removal)
             }
             //if only text
             else {
-                console.log("text "+ i + "no sprite");
+                //console.log("text "+ i + "no sprite");
                 var textwidth = 0;
                 var textheight = 0;
                 for(var j=0; j<(text[i].length)-1; j++){
@@ -1225,7 +1405,7 @@ export class Slide{
                 this.textContainer.addChild(textbox);       
                 
                 for(var j=0; j<(text[i].length)-1; j++){
-                    console.log(text[i][j][0])
+                   // console.log(text[i][j][0])
                     var textPiece= new PIXI.Text(text[i][j][0]);
                     textPiece.anchor.set(0,0.5);
                     textbox.addChild(textPiece);

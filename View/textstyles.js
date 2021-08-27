@@ -24,9 +24,15 @@ export const typewriter = new PIXI.TextStyle({
 
 export const textstyles = {
   default: new PIXI.TextStyle({
-    fontFamily: 'American Typewriter',
+    fontFamily: 'Helvetica',
     fontWeight: 400,
     fontSize: 20
+  }),
+
+  large: new PIXI.TextStyle({
+    fontFamily: 'Helvetica',
+    fontWeight: 400,
+    fontSize: 24
   }),
 
   neuron_large: new PIXI.TextStyle({

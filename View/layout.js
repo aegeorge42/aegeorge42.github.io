@@ -18,7 +18,7 @@ export const layout = {
     
     BUTTONS_X: 80,
 
-    NEURON_LEFTLIM: 400,
+    NEURON_LEFTLIM: 550,
     NEURON_UPPERLIM: 150,
 
     NEURON_X_DIF: 150,
@@ -26,11 +26,11 @@ export const layout = {
 
     NEURON_LARGE_X: 950,
     NEURON_LARGE_Y: 280,
-    NEURON_LARGE_WIDTH: 450,
+    //NEURON_LARGE_WIDTH: 250,
 
     NEURON_LARGE_Y_DIF:250,
 
-    NEURON_LARGE_LEFTLIM:500,
+    NEURON_LARGE_LEFTLIM:580,
     NEURON_NUDGE: 35
 
 

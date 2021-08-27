@@ -10,6 +10,9 @@ import {SlideHome,
     SlideIntro4,
     SlideNeuron1,
     SlideNeuron2,
+    SlideNeuron2b,
+    SlideNeuron2c,
+    SlideNeuron2d,
     SlideNet1,
     SlideSandbox,
 SlideGraphTest} from "./allSlides.js"
@@ -32,6 +35,7 @@ export class View{
 
         this.app=app;
 
+        console.log(window.innerWidth,layout.INNERHEIGHT);
         //resize canvas when window is resized
         window.addEventListener('resize', resize); 
         var h=window.innerHeight;    
@@ -58,7 +62,8 @@ export class View{
         //add premade slides
         this.slideList = [];
         this.slideList.push(SlideHome,SlideInstruct,SlideIntro1,SlideIntro2,SlideIntro3,
-                            SlideIntro3a,SlideIntro4,SlideNeuron1,SlideNeuron2,SlideNet1,SlideSandbox,SlideGraphTest);
+                            SlideIntro4,SlideIntro3a,SlideNeuron1,SlideNeuron2,SlideNeuron2b,SlideNeuron2c,SlideNeuron2d,
+                            SlideNet1,SlideSandbox,SlideGraphTest);
 
         const opener = new PIXI.Sprite(PIXI.Texture.from('images/opener.png'));
         opener.name="opener";
@@ -69,7 +74,7 @@ export class View{
 
 
 
-        this.currentSlide=0;
+        this.currentSlide=12;
 
 
 
@@ -152,6 +157,14 @@ export class View{
                 vst.currentSlide=vst.currentSlide+1;
                 vst.drawSlide();
             }
+
+            if(vst.slideList[vst.currentSlide].slideNet !== undefined && vst.slideList[vst.currentSlide].largenet==1){//&& vst.currentSlide == 9){
+                console.log(vst.slideList[vst.currentSlide].slideNet)
+                vst.slideList[vst.currentSlide].slideNet.update();
+                vst.slideList[vst.currentSlide].draw_update_large(vst.slideList[vst.currentSlide].slideNet)
+                vst.drawSlide();
+            }
+            
         });
 
         this.app.stage.getChildByName("button_prevslide").on('click', function(e){ 
@@ -168,6 +181,8 @@ export class View{
         var homebutton = new Button("homebutton",PIXI.Texture.from('images/home.png'),30,layout.HEADER_HEIGHT/2,false)
         this.app.stage.addChild(homebutton);
         this.app.stage.getChildByName("homebutton").on('click', function(e){ 
+            vst.app.stage.removeChild(vst.slideList[vst.currentSlide].textbuttonContainer);
+
                 vst.currentSlide=0;
                 vst.drawSlide();
         });
@@ -175,7 +190,10 @@ export class View{
         var gotointro = new Button("gotointro",PIXI.Texture.from('images/buttons/gotointro.png'),250,layout.HEADER_HEIGHT/2,false)
         this.app.stage.addChild(gotointro);
         this.app.stage.getChildByName("gotointro").on('click', function(e){ 
+            
             if (vst.currentSlide!=2){
+                vst.app.stage.removeChild(vst.slideList[vst.currentSlide].textbuttonContainer);
+
                 vst.currentSlide=2;
                 vst.drawSlide();
             }

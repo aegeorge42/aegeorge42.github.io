@@ -71,7 +71,7 @@ export class Data{
 }
 
 export const fruits_small = new Data(0, ["strawberry","blueberry"],["length","roundness"]);
-    fruits_small.createSingleDatapoint_train("blueberry", [0.1, 0.9], [0,1]);
+    fruits_small.createSingleDatapoint_train("blueberry", [0.2, 1.00], [0,1]);
     fruits_small.createSingleDatapoint_train("strawberry", [0.9, 0.1], [1,0]);
     fruits_small.createSingleDatapoint_train("blueberry", [0.1, 0.9], [0,1]);
     fruits_small.createSingleDatapoint_train("strawberry", [0.9, 0.1], [1,0]);
