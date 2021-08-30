@@ -87,7 +87,6 @@ export class Slide{
             footer.y=window.innerHeight-h;
             header.width=window.innerWidth;
 
-            
             // shrug
             try{
 

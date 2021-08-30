@@ -35,7 +35,8 @@ export class View{
 
         this.app=app;
 
-        console.log(window.innerWidth,layout.INNERHEIGHT);
+        //console.log(window.innerWidth,layout.INNERHEIGHT);
+        //console.log((window.innerWidth)/(layout.INNERHEIGHT)/2.269503546099291)
         //resize canvas when window is resized
         window.addEventListener('resize', resize); 
         var h=window.innerHeight;    
@@ -74,7 +75,7 @@ export class View{
 
 
 
-        this.currentSlide=10;
+        this.currentSlide=3;
 
 
 

@@ -8,6 +8,9 @@ import {small, medium, typewriter, typewriter_large, textstyles} from "./textsty
 import { Button } from "./Button.js";
 //import {MultiStyleText} from "./../pixi/pixi-multistyle-text.js"
 
+var resize_w = window.innerWidth/1280;
+var resize_h = layout.INNERHEIGHT/564;
+var resize=Math.min(resize_h,resize_w);
 
 // HOME
 export const SlideHome = new Slide();
@@ -35,21 +38,23 @@ export const SlideIntro1 = new Slide();
 // INTRO 2
 export const SlideIntro2 = new Slide();
 
-    var examples=new PIXI.Sprite(PIXI.Texture.from('images/allexamples_nolabels.png'));
-    examples.anchor.set(0.5);
+    var examples=new PIXI.Sprite(PIXI.Texture.from('images/examples_nolabels.png'));
     examples.isSprite=true;
-    examples.x=550;
-    examples.y=325;
 
-    var examples_labels=new PIXI.Sprite(PIXI.Texture.from('images/allexamples_labels.png'));
+    examples.x=window.innerWidth/3;
+    examples.scale.set(resize);
+    examples.y=60;
+
+    var examples_labels=new PIXI.Sprite(PIXI.Texture.from('images/examples_labels.png'));
     examples_labels.isSprite=true;
-    examples_labels.anchor.set(0.5);
-    examples_labels.x=550;
-    examples_labels.y=325;
+    //examples_labels.scale.set(w,h);
+
+    examples_labels.x=window.innerWidth/3;
+    examples_labels.y=60;
 
     var textIntro2 = [
-        [ ["So how does it work?", typewriter_large], [50, 100]],
-        [examples,["In order to train our network,"+'\n'+" we need to give it some examples"+'\n'+"of data we want to classify."], [50, 170]],
+       // [ ["So how does it work?", typewriter_large], [50, 100]],
+        [examples,["In order to train our network,"+'\n'+" we need to give it some examples"+'\n'+"of data we want to classify."], [100, 170]],
         [["Using our big human brains,"+'\n'+" we label these examples"+'\n'+" with the right answers" ], [50, 300]],
         examples_labels
     ];
