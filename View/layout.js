@@ -24,7 +24,7 @@ export const layout = {
     NEURON_X_DIF: 150,
     NEURON_Y_DIF: 125,
 
-    NEURON_LARGE_X: 950,
+    NEURON_LARGE_X: 850,
     NEURON_LARGE_Y: 280,
     //NEURON_LARGE_WIDTH: 250,
 

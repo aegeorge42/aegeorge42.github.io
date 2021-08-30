@@ -40,21 +40,22 @@ export const SlideIntro2 = new Slide();
 
     var examples=new PIXI.Sprite(PIXI.Texture.from('images/examples_nolabels.png'));
         examples.isSprite=true;
-        examples.anchor.set(1,0);
+        //examples.anchor.set(0,0.5);
+        examples.x=400;
+        examples.y=50;
+        //examples.x=Math.max(70,500);
+       // examples.y=(window.innerHeight/2)-50;
 
-        examples.x=Math.max(window.innerWidth-20,500);
-        examples.y=70;
-
-        examples.scale.set(resize);
+     //   examples.scale.set(resize);
 
     var examples_labels=new PIXI.Sprite(PIXI.Texture.from('images/examples_labels.png'));
         examples_labels.isSprite=true;
         examples_labels.anchor.set(1,0);
 
-        examples_labels.x=window.innerWidth-20;
-        examples_labels.y=70;
+        examples_labels.x=400;
+        examples_labels.y=50;
 
-        examples_labels.scale.set(resize);
+     //   examples_labels.scale.set(resize);
 
 
     var textIntro2 = [
@@ -74,7 +75,7 @@ export const SlideIntro3 = new Slide();
     captcha.isSprite=true;
         captcha.x=100;
         captcha.y=120;
-        captcha.scale.set(resize);
+       // captcha.scale.set(resize);
 
 
     var textIntro3 = [
@@ -250,7 +251,7 @@ export const SlideNeuron2b = new Slide();
     SlideNeuron2b.draw_init_large(SlideNeuron2b.slideNet);
 
     var textNeuron2b = [
-        [neuron_large_actfncover,["Each input is multiplied by a weight."], [50,100]],
+        [neuron_large_actfncover,["Each input is multiplied by a weight."], [100,100]],
         [["Next, we take the sum of all those values."], [100,150]],
         [["We also add in another number - called the"], [" bias", textstyles.ital], [100,200]],
         [["Hover your mouse over the weights and click the buttons to increase and decrease the weights"], [100,250]],

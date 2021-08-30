@@ -54,7 +54,14 @@ export class View{
             //console.log(app.stage.getChildAt(0).get);
             
 
-            app.stage.getChildAt(0).getChildAt(4).position.set(Math.max(window.innerWidth-w,0),Math.max(window.innerHeight-h,0));
+            app.stage.getChildAt(0).getChildAt(0).position.set(Math.max(window.innerWidth-w,-50),Math.max(window.innerHeight-h,-50));
+            app.stage.getChildAt(0).getChildAt(1).position.set(Math.max(window.innerWidth-w,-50),Math.max(window.innerHeight-h,-50));
+            app.stage.getChildAt(0).getChildAt(2).position.set(Math.max(window.innerWidth-w,-50),Math.max(window.innerHeight-h,-50));
+            app.stage.getChildAt(0).getChildAt(3).position.set(Math.max(window.innerWidth-w,-50),Math.max(window.innerHeight-h,-50));
+            app.stage.getChildAt(0).getChildAt(4).position.set(Math.max(window.innerWidth-w,-50),Math.max(window.innerHeight-h,-50));
+
+
+
             //app.stage.getChildAt(0).getChildAt(4).position.set(0,0);
 
            // app.stage.getChildAt(0).getChildAt(4).pivot.set(app.stage.getChildAt(0).getChildAt(4).width,app.stage.getChildAt(0).getChildAt(4).height);

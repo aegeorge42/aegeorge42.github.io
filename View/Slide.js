@@ -1222,6 +1222,10 @@ export class Slide{
     */
     
     drawText(text){
+        var resize_w = window.innerWidth/1280;
+        var resize_h = layout.INNERHEIGHT/564;
+        var resize=Math.min(resize_h,resize_w); 
+
             for (var i =0; i<text.length; i++){
             //if sprite
             if(text[i].isSprite){
@@ -1253,6 +1257,8 @@ export class Slide{
                 textbox.beginFill(0xFFFFFF);
                 textbox.drawRoundedRect(text[i][(text[i].length)-1][0]-10,text[i][(text[i].length)-1][1]-10,textwidth+20, textheight+20);
                 textbox.endFill();
+                //textbox.scale.set(resize);
+
 
                 this.textContainer.addChild(textbox);       
                 
