@@ -1,9 +1,11 @@
 import { Slide } from "./Slide.js"
 import { layout } from "./layout.js";
 import { Net } from "../Model/net.js"
+import { actFns } from "../Model/neuron.js";
 import {fruits, fruits_small, fruits_test} from "../Model/data.js"
 import {Graph} from "./Graph.js"
 import {small, medium, typewriter, typewriter_large, textstyles} from "./textstyles.js"
+import { Button } from "./Button.js";
 //import {MultiStyleText} from "./../pixi/pixi-multistyle-text.js"
 
 
@@ -197,13 +199,13 @@ export const SlideNeuron2 = new Slide();
         neuron_large_over.y=layout.NEURON_LARGE_Y;
 
     var inputexample=new PIXI.Sprite(PIXI.Texture.from('images/single_example.png'));
-    inputexample.isSprite=true;
-    inputexample.anchor.set(0.5);
-    inputexample.scale.set(0.8);
-    inputexample.x= (window.innerWidth*1/4);//850;
-    inputexample.y= (window.innerHeight/2);//425;
+        inputexample.isSprite=true;
+        inputexample.anchor.set(0.5);
+        inputexample.scale.set(0.8);
+        inputexample.x= (window.innerWidth*1/4);//850;
+        inputexample.y= (window.innerHeight/2);//425;
+    SlideNeuron2.slideContainer.addChild(inputexample);
 
-    SlideNeuron2.slideContainer.addChild(inputexample)
     var textNeuron2 = [
         [neuron_large_over,["Let's use one of our data points as an input."], [0,100]],
         [["The two values that we found earlier are fed directly into our net"], [100,350]],
@@ -233,6 +235,7 @@ export const SlideNeuron2b = new Slide();
         [["quick into to act fn"], [100,300]],
 
     ];
+
     SlideNeuron2b.drawText(textNeuron2b);
     SlideNeuron2b.drawTextButtons();
 
@@ -253,7 +256,22 @@ export const SlideNeuron2c = new Slide();
 
     ];
     SlideNeuron2c.drawText(textNeuron2c);
-    SlideNeuron2c.drawTextButtons();
+    SlideNeuron2c.drawTextButtons();  
+      SlideNeuron2c.drawActFnButtons(SlideNeuron2c.slideNet);
+    //  SlideNeuron2c.buttonContainer.getChildByName("relu").on('click', function(e){console.log("hi")});
+/*
+    SlideNeuron2c.buttonContainer.addChild(new Button("relu",PIXI.Texture.from('images/buttons/relu.png'), layout.BUTTONS_X,550,true));
+    SlideNeuron2c.buttonContainer.getChildByName("relu").on('click', function(e){
+        
+            //console.log(net.netActFn);
+        //    console.log(SlideNeuron2c.slideNet.netActFn);
+
+            SlideNeuron2c.slideNet.setNetActFn(actFns.RELU);
+          //  console.log(SlideNeuron2c.slideNet.netActFn);
+           SlideNeuron2c.slideNet.update();
+          // console.log()
+            SlideNeuron2c.draw_update_large(SlideNeuron2c.slideNet);
+        });*/
 
 //INTERACTIVE NEURON with ACTFN - COVER
 export const SlideNeuron2d = new Slide();

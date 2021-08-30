@@ -129,7 +129,7 @@ export class Slide{
     }
 
 
-    drawTextButtons2(){
+   /* drawTextButtons2(){
         this.textbuttonContainer.addChild(new Button("nexttext",PIXI.Texture.from('images/buttons/next.png'),layout.NEXTSLIDE_X,layout.NEXTSLIDE_Y,true));
         this.textbuttonContainer.addChild(new Button("prevtext",PIXI.Texture.from('images/buttons/back.png'), layout.PREVSLIDE_X,layout.NEXTSLIDE_Y,false));
     
@@ -180,7 +180,7 @@ export class Slide{
     
 
     }
-
+*/
         /*
         var slide = this;
         this.buttonContainer.addChild(new Button("nexttext",PIXI.Texture.from('images/buttons/next.png'),layout.NEXTSLIDE_X,layout.NEXTSLIDE_Y,true));
@@ -283,7 +283,36 @@ export class Slide{
         });
 */
         
-    
+    drawActFnButtons(net){
+        var slide = this;
+        this.buttonContainer.addChild(new Button("sigmoid",PIXI.Texture.from('images/buttons/sigmoid.png'), layout.BUTTONS_X,500,true));
+        this.buttonContainer.getChildByName("sigmoid").on('click', function(e){
+
+//             console.log(net.netActFn);
+
+            net.setNetActFn(actFns.SIGMOID);
+            console.log(net)
+            net.update_single();
+            console.log(net)
+
+           // console.log(net.netActFn);
+
+            slide.draw_update_large(net);
+        });
+
+        this.buttonContainer.addChild(new Button("relu",PIXI.Texture.from('images/buttons/relu.png'), layout.BUTTONS_X,550,true));
+        this.buttonContainer.getChildByName("relu").on('click', function(e){
+        
+            console.log(net.netActFn);
+
+            net.setNetActFn(actFns.RELU);
+            console.log(net.netActFn);
+            console.log(net)
+            net.update_single();
+            console.log(net)
+            slide.draw_update_large(net);
+        });
+    }
 
     drawButtons(net,graph){
         var slide = this;
@@ -410,7 +439,7 @@ export class Slide{
             net.update();
             console.log(net.netActFn);
 
-            slide.draw_init(net);
+            slide.draw_update(net);
         });
 
         this.buttonContainer.addChild(new Button("relu",PIXI.Texture.from('images/buttons/relu.png'), layout.BUTTONS_X,550,true));
@@ -421,7 +450,7 @@ export class Slide{
             net.setNetActFn(actFns.RELU);
             console.log(net.netActFn);
             net.update();
-            slide.draw_init(net);
+            slide.draw_update(net);
         });
 
         for (var i =0; i<net.maxLayers; i++){
@@ -551,6 +580,13 @@ export class Slide{
                     }
 
                     weightSprite.interactive=true;
+
+                    var weightText = new PIXI.Text(net.getLayer(i).getNeuron(j).getWeight(k).toFixed(2),textstyles.default)
+                        weightText.visible=false;
+                        weightText.x=0;
+                        weightText.y=100;
+                        weightText.name="weightText";
+                    weightSprite.addChild(weightText)
                     var addweight = new Button("+",PIXI.Texture.from('images/buttons/plus.png'),(startx+endx)/2,(starty+endy)/2,false);
                       addweight.anchor.set(0.5);
                     var loseweight = new Button("-",PIXI.Texture.from('images/buttons/minus.png'),((startx+endx)/2)-25,(starty+endy)/2,false);
@@ -558,13 +594,22 @@ export class Slide{
                     weightSprite.addChild(addweight,loseweight);
                                         
                     weightSprite.on('mouseover', function(e){
+                        this.getChildByName("weightText").visible=true;
+                        this.getChildByName("weightText").x=e.data.global.x;
+                        this.getChildByName("weightText").y=e.data.global.y;
+
+                        this.getChildByName("+").x=e.data.global.x;
+                        this.getChildByName("+").y=e.data.global.y;
+
+                        this.getChildByName("-").x=e.data.global.x-25;
+                        this.getChildByName("-").y=e.data.global.y;
+
                         this.getChildByName("+").visible=true;
                         this.getChildByName("-").visible=true;
-                       // console.log(this)
-
                     });
                     
                     weightSprite.on('mouseout', function(e){
+                        this.getChildByName("weightText").visible=false;
                         this.getChildByName("+").visible=false;
                         this.getChildByName("-").visible=false;
                     });
@@ -574,15 +619,18 @@ export class Slide{
                       net.getLayer(this.parent.idx[0]).getNeuron(this.parent.idx[1]).setWeight(this.parent.idx[2],currWeight+0.1);
                       net.update();
                       slide.draw_update(net);
-                
+                      this.parent.getChildByName("weightText").text=net.getLayer(this.parent.idx[0]).getNeuron(this.parent.idx[1]).getWeight(this.parent.idx[2]).toFixed(2);
+                        //console.log(this.parent.getChildByName("weightText"))
                     });
 
                     loseweight.on('click', function(e){
                       var currWeight = net.getLayer(this.parent.idx[0]).getNeuron(this.parent.idx[1]).getWeight(this.parent.idx[2]);
+                      console.log(currWeight);
+
                       net.getLayer(this.parent.idx[0]).getNeuron(this.parent.idx[1]).setWeight(this.parent.idx[2],currWeight-0.1);
                       net.update();
                       slide.draw_update(net);
-                
+                        console.log(currWeight);
                     });
 
                     this.weightsContainer.addChild(weightSprite);
@@ -637,6 +685,12 @@ export class Slide{
                     weightSprite.addChild(addweight,loseweight);
                                         
                     weightSprite.on('mouseover', function(e){
+                        this.getChildByName("+").x=e.data.global.x;
+                        this.getChildByName("+").y=e.data.global.y;
+
+                        this.getChildByName("-").x=e.data.global.x-25;
+                        this.getChildByName("-").y=e.data.global.y;
+
                         this.getChildByName("+").visible=true;
                         this.getChildByName("-").visible=true;
                     });
@@ -651,6 +705,7 @@ export class Slide{
                         net.getLayer(this.parent.idx[0]).getNeuron(this.parent.idx[1]).setWeight(this.parent.idx[2],currWeight+0.1);
                         net.update();
                         slide.draw_update_large(net);
+                    ///    console.log(this);
                   
                     });
   
@@ -1045,6 +1100,7 @@ export class Slide{
                 currBase.getChildAt(4).text=formatter.format(net.getLayer(i).neurons[j].output_nofn);
                 currBase.getChildAt(5).text=formatter.format(net.getLayer(i).neurons[j].output);
 
+                console.log(currBase.getChildAt(5).text);
                 var currOver = this.neuronContainer.getChildByName("neuronOvers").getChildAt(0);
                 currOver.getChildAt(0).text=formatter.format(net.getLayer(i).neurons[j].output)//formatter.format(net.getLayer(i).neurons[j].output);
 
@@ -1346,7 +1402,7 @@ export class Slide{
 
                 var textbox = new PIXI.Graphics();
                 textbox.beginFill(0xFFFFFF);
-                textbox.drawRect(text[i][(text[i].length)-1][0]-10,text[i][(text[i].length)-1][1]-10,textwidth+20, textheight+20);
+                textbox.drawRoundedRect(text[i][(text[i].length)-1][0]-10,text[i][(text[i].length)-1][1]-10,textwidth+20, textheight+20);
                 textbox.endFill();
 
                 this.textContainer.addChild(textbox);       
@@ -1399,7 +1455,7 @@ export class Slide{
 
                 var textbox = new PIXI.Graphics();
                 textbox.beginFill(0xFFFFFF);
-                textbox.drawRect(text[i][(text[i].length)-1][0]-10,text[i][(text[i].length)-1][1]-10,textwidth+20, textheight+20);
+                textbox.drawRoundedRect(text[i][(text[i].length)-1][0]-10,text[i][(text[i].length)-1][1]-10,textwidth+20, textheight+20);
                 textbox.endFill();
 
                 this.textContainer.addChild(textbox);       
