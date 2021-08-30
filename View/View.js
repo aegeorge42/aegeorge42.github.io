@@ -39,8 +39,32 @@ export class View{
         //console.log((window.innerWidth)/(layout.INNERHEIGHT)/2.269503546099291)
         //resize canvas when window is resized
         window.addEventListener('resize', resize); 
-        var h=window.innerHeight;    
+        var w=window.innerWidth;    
+        var h=window.innerHeight;  
+        console.log(window.innerHeight)  
+        //app.stage.getChildAt(0).getChildAt(4).pivot.set(window.innerWidth/2,window.innerHeight/2);
+
+
         function resize(){
+           // app.stage.getChildAt(0).getChildAt(4).x=0//window.innerWidth/2//-w;
+           // app.stage.getChildAt(0).getChildAt(4).y=0//window.innerHeight/2//-h;
+            var resize_w = window.innerWidth/w;
+            var resize_h = window.innerHeight/h;
+            var resizef=Math.min(resize_h,resize_w);
+            //console.log(app.stage.getChildAt(0).get);
+            
+
+            app.stage.getChildAt(0).getChildAt(4).position.set(Math.max(window.innerWidth-w,0),Math.max(window.innerHeight-h,0));
+            //app.stage.getChildAt(0).getChildAt(4).position.set(0,0);
+
+           // app.stage.getChildAt(0).getChildAt(4).pivot.set(app.stage.getChildAt(0).getChildAt(4).width,app.stage.getChildAt(0).getChildAt(4).height);
+            
+
+           // app.stage.getChildAt(0).getChildAt(4).scale.set(resizef);
+            //app.stage.getChildAt(0).getChildAt(4).pivot.set(w,h);
+
+
+
             app.renderer.resize(window.innerWidth, window.innerHeight);
         
             app.stage.getChildByName("button_nextslide").x=window.innerWidth/2 +100;
@@ -50,6 +74,7 @@ export class View{
             app.stage.getChildByName("button_prevslide").y=window.innerHeight-(75/2);
 
             if(vst.currentSlide==0){
+
                 app.stage.getChildAt(0).getChildByName("opener").x=((window.innerWidth)/2);
                 app.stage.getChildAt(0).getChildByName("opener").y=((window.innerHeight)/3)+50;
 
@@ -75,7 +100,7 @@ export class View{
 
 
 
-        this.currentSlide=3;
+        this.currentSlide=9;
 
 
 

@@ -50,6 +50,11 @@ export class Slide{
     
         this.textcount = 0; 
         this.textContainer = new PIXI.Container();
+        //this.textContainer.position.set(0,0);
+
+        //this.textContainer.pivot.set(0,0);
+        this.textContainer.pivot.set(this.textContainer.width,this.textContainer.height)
+
         this.imagesContainer = new PIXI.Container();
 
      //   this.cardContainer = new PIXI.Container(); 
@@ -73,7 +78,7 @@ export class Slide{
                                       this.labelsContainer,
                                    //  this.cardContainer,
                                       this.textContainer,
-                                      this.imagesContainer,
+                                   //   this.imagesContainer,
                                       footer,
                                       header,
                                       this.buttonContainer,
@@ -126,161 +131,6 @@ export class Slide{
         }
         console.log("setvis")
     }
-
-
-   /* drawTextButtons2(){
-        this.textbuttonContainer.addChild(new Button("nexttext",PIXI.Texture.from('images/buttons/next.png'),layout.NEXTSLIDE_X,layout.NEXTSLIDE_Y,true));
-        this.textbuttonContainer.addChild(new Button("prevtext",PIXI.Texture.from('images/buttons/back.png'), layout.PREVSLIDE_X,layout.NEXTSLIDE_Y,false));
-    
-        var slide = this;
-
-        if(slide.textContainer.children.length <=1){
-            slide.textbuttonContainer.getChildByName("nexttext").visible=false;
-        }
-
-        this.textbuttonContainer.getChildByName("nexttext").on('click', function(e){
-            slide.textcount++;
-            //console.log(slide.textcount);
-            slide.textContainer.getChildAt(slide.textcount).visible=true;
-
-            console.log(slide.textContainer.getChildAt(slide.textcount).imagepair);
-            if(slide.textContainer.getChildAt(slide.textcount).imagepair!==undefined){
-            slide.imagesContainer.getChildAt(slide.textContainer.getChildAt(slide.textcount).imagepair).visible=true; 
-            }
-
-            //slide.imageContainer.getChildAt()
-           // console.log(slide.textContainer.getChildAt(slide.textcount))
-            console.log("Imgpair"+slide.textContainer.getChildAt(slide.textcount).imagepair);         
-
-            if(slide.textcount==slide.textContainer.children.length-1){
-                this.visible=false;
-            }
-
-            if(slide.textcount>=1){
-                slide.textbuttonContainer.getChildByName("prevtext").visible=true;
-            }
-        });
-
-        this.textbuttonContainer.getChildByName("prevtext").on('click', function(e){
-            slide.textContainer.getChildAt(slide.textcount).visible=false;
-            if(slide.textContainer.getChildAt(slide.textcount).imagepair!==undefined){
-                slide.imagesContainer.getChildAt(slide.textContainer.getChildAt(slide.textcount).imagepair).visible=false; 
-            }
-            slide.textcount--;
-
-            if(slide.textcount<1){
-                slide.textbuttonContainer.getChildByName("prevtext").visible=false;
-            }
-            if(slide.textcount<slide.textContainer.children.length-1){
-                slide.textbuttonContainer.getChildByName("nexttext").visible=true;
-
-            }
-        });
-    
-
-    }
-*/
-        /*
-        var slide = this;
-        this.buttonContainer.addChild(new Button("nexttext",PIXI.Texture.from('images/buttons/next.png'),layout.NEXTSLIDE_X,layout.NEXTSLIDE_Y,true));
-        this.buttonContainer.addChild(new Button("prevtext",PIXI.Texture.from('images/buttons/back.png'), layout.PREVSLIDE_X,layout.NEXTSLIDE_Y,false));
-
-        if(slide.textcount>=1){
-            this.buttonContainer.getChildByName("prevtext").visible=true;
-        }
-
-        this.buttonContainer.getChildByName("nexttext").on('click', function(e){
-            slide.textcount=slide.textcount+1;
-            slide.textContainer.getChildAt(slide.textcount).visible=true;          
-
-            if(slide.textcount==slide.textContainer.children.length-1){
-                this.visible=false;
-            }
-
-             if(slide.textcount>=1){
-                slide.buttonContainer.getChildByName("prevtext").visible=true;
-             } else {
-                slide.buttonContainer.getChildByName("prevtext").visible=false;
-             }
-        });
-
-        this.buttonContainer.getChildByName("prevtext").on('click', function(e){
-
-            if (slide.textcount>=1){
-                //slide.textcount=slide.textcount-1;
-                slide.textContainer.getChildAt(slide.textcount).visible=false;          
-                slide.textcount=slide.textcount-1;
-            }
-
-            if(slide.textcount>=1){
-                slide.buttonContainer.getChildByName("prevtext").visible=true;
-             } else {
-                slide.buttonContainer.getChildByName("prevtext").visible=false;
-             }
-        });
-
-
-        /*
-        var slide = this;
-
-        this.buttonContainer.addChild(new Button("nexttext",PIXI.Texture.from('images/buttons/next.png'),layout.NEXTSLIDE_X,layout.NEXTSLIDE_Y,true));
-       
-        // don't draw next text button if theres 1 or less texts
-        if(this.textContainer.children.length<=1){
-            this.buttonContainer.getChildByName("nexttext").visible=false;
-        }
-
-        this.buttonContainer.getChildByName("nexttext").on('click', function(e){
-            console.log("slide has:" +slide.textContainer.children.length+ " current: " +(slide.textcount+1));
-            
-            if (slide.textcount<slide.textContainer.children.length-1){
-                slide.textContainer.getChildAt(slide.textcount).visible=true;
-                slide.buttonContainer.getChildByName("prevtext").visible=true;
-
-                slide.textcount=slide.textcount+1;
-
-            } else if (slide.textcount==slide.textContainer.children.length-1){
-                slide.textContainer.getChildAt(slide.textcount).visible=true;
-                slide.textcount=slide.textcount+1;
-                this.visible=false;
-                slide.buttonContainer.getChildByName("prevtext").visible=true;
-            }
-        }); 
-
-        this.buttonContainer.addChild(new Button("prevtext",PIXI.Texture.from('images/buttons/back.png'), layout.PREVSLIDE_X,layout.NEXTSLIDE_Y,false));
-
-        if(this.textContainer.children.length<=1){
-            this.buttonContainer.getChildByName("prevtext").visible=false;
-        }
-
-        this.buttonContainer.getChildByName("prevtext").on('click', function(e){
-            if (slide.textcount>1){
-
-            slide.textcount=slide.textcount-1;
-            slide.textContainer.getChildAt(slide.textcount).visible=false;
-
-            } 
-            if (slide.textcount==1){
-                this.visible=false;
-            }
-
-            
-            console.log("slide has:" +slide.textContainer.children.length+ " current: " +slide.textcount);
-          */
-            /*
-            if (slide.textcount>1){
-            slide.buttonContainer.getChildByName("nexttext").visible=true;
-            slide.textcount=slide.textcount-1;
-            slide.textContainer.getChildAt(slide.textcount).visible=false;
-            console.log("slide has:" +slide.textContainer.children.length+ " current: " +slide.textcount);
-            
-        } 
-            if (slide.textcount==1){
-                this.visible=false;
-            }
-        
-        });
-*/
         
     drawActFnButtons(net){
         var slide = this;
@@ -702,7 +552,7 @@ export class Slide{
                     addweight.on('click', function(e){
                         var currWeight = net.getLayer(this.parent.idx[0]).getNeuron(this.parent.idx[1]).getWeight(this.parent.idx[2]);
                         net.getLayer(this.parent.idx[0]).getNeuron(this.parent.idx[1]).setWeight(this.parent.idx[2],currWeight+0.1);
-                        net.update();
+                        net.update_single();
                         slide.draw_update_large(net);
                     ///    console.log(this);
                   
@@ -711,7 +561,7 @@ export class Slide{
                     loseweight.on('click', function(e){
                         var currWeight = net.getLayer(this.parent.idx[0]).getNeuron(this.parent.idx[1]).getWeight(this.parent.idx[2]);
                         net.getLayer(this.parent.idx[0]).getNeuron(this.parent.idx[1]).setWeight(this.parent.idx[2],currWeight-0.1);
-                        net.update();
+                        net.update_single();
                         slide.draw_update_large(net);
                     });
 
@@ -1372,7 +1222,7 @@ export class Slide{
     */
     
     drawText(text){
-        for (var i =0; i<text.length; i++){
+            for (var i =0; i<text.length; i++){
             //if sprite
             if(text[i].isSprite){
                 this.textContainer.addChild(text[i]);                

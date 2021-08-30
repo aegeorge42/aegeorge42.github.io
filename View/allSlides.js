@@ -6,8 +6,8 @@ import {fruits, fruits_small, fruits_test} from "../Model/data.js"
 import {Graph} from "./Graph.js"
 import {small, medium, typewriter, typewriter_large, textstyles} from "./textstyles.js"
 import { Button } from "./Button.js";
-//import {MultiStyleText} from "./../pixi/pixi-multistyle-text.js"
 
+//draw things the right size for window
 var resize_w = window.innerWidth/1280;
 var resize_h = layout.INNERHEIGHT/564;
 var resize=Math.min(resize_h,resize_w);
@@ -39,22 +39,28 @@ export const SlideIntro1 = new Slide();
 export const SlideIntro2 = new Slide();
 
     var examples=new PIXI.Sprite(PIXI.Texture.from('images/examples_nolabels.png'));
-    examples.isSprite=true;
+        examples.isSprite=true;
+        examples.anchor.set(1,0);
 
-    examples.x=window.innerWidth/3;
-    examples.scale.set(resize);
-    examples.y=60;
+        examples.x=Math.max(window.innerWidth-20,500);
+        examples.y=70;
+
+        examples.scale.set(resize);
 
     var examples_labels=new PIXI.Sprite(PIXI.Texture.from('images/examples_labels.png'));
-    examples_labels.isSprite=true;
-    //examples_labels.scale.set(w,h);
+        examples_labels.isSprite=true;
+        examples_labels.anchor.set(1,0);
 
-    examples_labels.x=window.innerWidth/3;
-    examples_labels.y=60;
+        examples_labels.x=window.innerWidth-20;
+        examples_labels.y=70;
+
+        examples_labels.scale.set(resize);
+
 
     var textIntro2 = [
        // [ ["So how does it work?", typewriter_large], [50, 100]],
-        [examples,["In order to train our network,"+'\n'+" we need to give it some examples"+'\n'+"of data we want to classify."], [100, 170]],
+       //examples,
+        [examples,["In order to train our network,"+'\n'+" we need to give it some examples"+'\n'+"of data we want to classify."], [50, 170]],
         [["Using our big human brains,"+'\n'+" we label these examples"+'\n'+" with the right answers" ], [50, 300]],
         examples_labels
     ];
@@ -66,12 +72,14 @@ export const SlideIntro2 = new Slide();
 export const SlideIntro3 = new Slide();
     var captcha=new PIXI.Sprite(PIXI.Texture.from('images/captcha.png'));
     captcha.isSprite=true;
-        captcha.x=200;
-        captcha.y=80;
+        captcha.x=100;
+        captcha.y=120;
+        captcha.scale.set(resize);
+
 
     var textIntro3 = [
-        [ captcha,["If you've ever had to solve a puzzle like this to get into a website..."], [10,50]],
-        [ ["...you were probably helping label data to train a neural network"], [200, 380]]
+        [ captcha,["If you've ever had to solve a puzzle like this to get into a website..."], [50,70]],
+        [ ["...you were probably helping label data to train a neural network"], [400, 380]]
     ];
 
     SlideIntro3.drawText(textIntro3);
@@ -94,8 +102,8 @@ export const SlideIntro4 = new Slide();
     var textIntro4 = [
 
 
-        [examples1, ["Once our net is finished learning, we'll give it some unlabeled data"+'\n'+
-        "to test if it works."],[100,100]],
+        [examples1, ["Once our net is finished learning,"+'\n'+ "we'll give it some unlabeled data"+'\n'+
+        "to test if it works."],[50,100]],
         examples2
     ];
     SlideIntro4.drawText(textIntro4);
@@ -105,17 +113,25 @@ export const SlideIntro4 = new Slide();
 //Change name eventually
 // INTRO 3a
 export const SlideIntro3a = new Slide();
-    var i3_example=new PIXI.Sprite(PIXI.Texture.from('images/single_example.png'));
-        i3_example.isSprite=true;
-    //   i3_example.scale.set(0.8);
-        i3_example.anchor.set(0.5);
-        i3_example.x= (window.innerWidth*3/4);//850;
-        i3_example.y= (window.innerHeight/2);//425;
+    var example_blue_no=new PIXI.Sprite(PIXI.Texture.from('images/example1_blue_no.png'));
+        example_blue_no.isSprite=true;
+        example_blue_no.anchor.set(0.5);
+        example_blue_no.x= (window.innerWidth*1/4);
+        example_blue_no.y= (window.innerHeight/2);
+
+    var example_blue_char=new PIXI.Sprite(PIXI.Texture.from('images/example_blue_char.png'));
+        example_blue_char.isSprite=true;
+        example_blue_char.anchor.set(0.5);
+        example_blue_char.x= (window.innerWidth*1/4);
+        example_blue_char.y= (window.innerHeight/2);
+
+
     var textIntro3a = [
-        [ i3_example, ["some nn can classify images using their pixels"], [20,50] ],
-        [ ["for our nn, we are going to assign some attributes"+'\n'+"that we think will be important for classifying"], [50,150]],
-        [ ["length is the object's length,"+'\n'+"while roundness is a score from 0-1 "+'\n'+"of how round the object looks", small], [150,300]],
-        [ ["this is called data preprocessing"], [0,400 ]]
+        [ example_blue_no, ["Some neural networks can classify images using their pixels."], [50,70] ],
+        [ ["for our neural network, we are going to assign some attributes"+'\n'+"that we think are important."], [300,150]],
+        example_blue_char,
+        [ ["roundness is a score from 0-1 "+'\n'+"of how round the object looks", textstyles.small], [300,300]],
+        [ ["This step is called"],[" data preprocessing.",textstyles.ital], [300,400 ]]
     ];
 
     SlideIntro3a.drawText(textIntro3a);
@@ -234,10 +250,11 @@ export const SlideNeuron2b = new Slide();
     SlideNeuron2b.draw_init_large(SlideNeuron2b.slideNet);
 
     var textNeuron2b = [
-        [neuron_large_actfncover,["math explanation"], [0,100]],
-        [["click weights to change and see"], [100,150]],
-        [["don't forget to talk about bias"], [100,250]],
-        [["quick into to act fn"], [100,300]],
+        [neuron_large_actfncover,["Each input is multiplied by a weight."], [50,100]],
+        [["Next, we take the sum of all those values."], [100,150]],
+        [["We also add in another number - called the"], [" bias", textstyles.ital], [100,200]],
+        [["Hover your mouse over the weights and click the buttons to increase and decrease the weights"], [100,250]],
+        [["There's one more step that happens before getting the final output"], [100,300]],
 
     ];
 
@@ -252,17 +269,47 @@ export const SlideNeuron2c = new Slide();
     SlideNeuron2c.slideNet.update();
     SlideNeuron2c.draw_init_large(SlideNeuron2c.slideNet);
 
-    //SlideNeuron2c.neuronContainer.getChildAt(1).getChildAt(0).visible=true;
-
     var textNeuron2c = [
-        [["act fn"], [0,100]],
-       // [neuron_large_over2,["math explanation"], [0,100]],
-       // [neuron_large_over2,["pp"], [0,100]],
-
+        [ ["we plug that value from the last step into a special function called an"],[" activation function", textstyles.ital], [50,100]],   
+        [ ["Right now, we're using the sigmoid function (pic)"], [50,150]],
+        [ ["which squishes our output between 0 and 1"], [50,200]],
     ];
     SlideNeuron2c.drawText(textNeuron2c);
     SlideNeuron2c.drawTextButtons();  
-      SlideNeuron2c.drawActFnButtons(SlideNeuron2c.slideNet);
+
+export const SlideNeuron2d = new Slide();
+    SlideNeuron2d.largenet=1;
+
+    SlideNeuron2d.slideNet=net_neuron;
+    SlideNeuron2d.slideNet.update();
+    SlideNeuron2d.draw_init_large(SlideNeuron2d.slideNet);
+
+    var textNeuron2d = [
+        [ ["There's also the RELU function (pic)"], [50,150]],
+        [ ["which gives us 0 if the input is 0 or below, or returns the input if it's greater than 0."], [50,200]],
+        [ ["click the buttons below to change your activation function."], [50,200]],
+
+        [ ["importance"], [50,300]],
+
+    ];
+    SlideNeuron2d.drawText(textNeuron2d);
+    SlideNeuron2d.drawTextButtons();  
+    SlideNeuron2d.drawActFnButtons(SlideNeuron2d.slideNet);
+
+
+    /*
+        [ ["There's also the RELU function (pic)"], [50,150]],
+        [ ["which gives us 0 if the input is 0 or below, or returns the input if it's greater than 0."], [50,150]],
+        [ ["which gives us 0 if the input is 0 or below, or returns the input if it's greater than 0."], [50,150]],
+
+        [ ["sentence about importance"], [50,200]],
+
+
+
+       // [neuron_large_over2,["pp"], [0,100]],
+*/
+
+
     //  SlideNeuron2c.buttonContainer.getChildByName("relu").on('click', function(e){console.log("hi")});
 /*
     SlideNeuron2c.buttonContainer.addChild(new Button("relu",PIXI.Texture.from('images/buttons/relu.png'), layout.BUTTONS_X,550,true));
@@ -279,21 +326,21 @@ export const SlideNeuron2c = new Slide();
         });*/
 
 //INTERACTIVE NEURON with ACTFN - COVER
-export const SlideNeuron2d = new Slide();
-    SlideNeuron2d.largenet=1;
+export const SlideNeuron2e = new Slide();
+    SlideNeuron2e.largenet=1;
 
-    SlideNeuron2d.slideNet=net_neuron;
-    SlideNeuron2d.slideNet.update();
-    SlideNeuron2d.draw_init_large(SlideNeuron2c.slideNet);
+    SlideNeuron2e.slideNet=net_neuron;
+    SlideNeuron2e.slideNet.update();
+    SlideNeuron2e.draw_init_large(SlideNeuron2c.slideNet);
 
-    SlideNeuron2d.neuronContainer.getChildAt(1).getChildAt(0).visible=true;
+    SlideNeuron2e.neuronContainer.getChildAt(1).getChildAt(0).visible=true;
 
-    var textNeuron2c = [
+    var textNeuron2e = [
         [["For now, we'll just show the output from each neuron."+'\n'+" Mouse over the neuron to see the math inside tho"], [50,100]],
         [["We can also show how active each neuron is by its color - more yellow is more active"], [50,200]],
     ];
-    SlideNeuron2d.drawText(textNeuron2c);
-    SlideNeuron2d.drawTextButtons();
+    SlideNeuron2e.drawText(textNeuron2e);
+    SlideNeuron2e.drawTextButtons();
 
 
 
