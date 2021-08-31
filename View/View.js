@@ -36,28 +36,14 @@ export class View{
 
         this.app=app;
 
-        //console.log(window.innerWidth,layout.INNERHEIGHT);
-        //console.log((window.innerWidth)/(layout.INNERHEIGHT)/2.269503546099291)
-        //resize canvas when window is resized
         window.addEventListener('resize', resize); 
         var w=window.innerWidth;    
         var h=window.innerHeight;
-    //    if(w<1000){
-    //        w=1000;
-    //    }  
+   
         console.log(window.innerHeight)  
-        //app.stage.getChildAt(0).getChildAt(4).pivot.set(window.innerWidth/2,window.innerHeight/2);
-
 
         function resize(){
-           // app.stage.getChildAt(0).getChildAt(4).x=0//window.innerWidth/2//-w;
-           // app.stage.getChildAt(0).getChildAt(4).y=0//window.innerHeight/2//-h;
-            var resize_w = window.innerWidth/w;
-            var resize_h = window.innerHeight/h;
-            var resizef=Math.min(resize_h,resize_w);
-            //console.log(app.stage.getChildAt(0).get);
-            
-           // app.stage.getChildAt(0).pivot.set(-window.innerWidth/2,0);
+
             if(window.innerWidth-w >=0){
                 app.stage.getChildAt(0).position.set(Math.min(window.innerWidth-w,0),0);
                 app.stage.getChildAt(0).getChildByName("header").x=0;
@@ -73,50 +59,6 @@ export class View{
 
 
             }
-
-          /*  app.stage.getChildAt(0).getChildByName("header").x=Math.min(0,0-(window.innerWidth-w));
-            app.stage.getChildAt(0).getChildByName("header").width=window.innerWidth+40;
-            app.stage.getChildAt(0).getChildByName("footer").x=Math.min(0,0-(window.innerWidth-w));
-
-            app.stage.getChildAt(0).getChildByName("footer").width=window.innerWidth+40;
-/*
-            app.stage.getChildAt(0).position.set(Math.max(window.innerWidth-w,-40),Math.max(window.innerHeight-h,-40));
-            app.stage.getChildAt(0).getChildByName("header").x=Math.min(0,0-(window.innerWidth-w));
-            app.stage.getChildAt(0).getChildByName("header").width=window.innerWidth+40;
-            app.stage.getChildAt(0).getChildByName("footer").x=Math.min(0,0-(window.innerWidth-w));
-
-            app.stage.getChildAt(0).getChildByName("footer").width=window.innerWidth+40;
-
-*/
-
-
-
-
-
-
-
-
-           /* footer.width=window.innerWidth;
-            footer.y=window.innerHeight-h;
-            header.width=window.innerWidth;
-
-           /* app.stage.getChildAt(0).getChildAt(0).position.set(Math.max(window.innerWidth-w,-40),Math.max(window.innerHeight-h,-40));
-            app.stage.getChildAt(0).getChildAt(1).position.set(Math.max(window.innerWidth-w,-40),Math.max(window.innerHeight-h,-40));
-            app.stage.getChildAt(0).getChildAt(2).position.set(Math.max(window.innerWidth-w,-40),Math.max(window.innerHeight-h,-40));
-            app.stage.getChildAt(0).getChildAt(3).position.set(Math.max(window.innerWidth-w,-40),Math.max(window.innerHeight-h,-40));
-            app.stage.getChildAt(0).getChildAt(4).position.set(Math.max(window.innerWidth-w,-40),Math.max(window.innerHeight-h,-40));
-*/
-
-
-            //app.stage.getChildAt(0).getChildAt(4).position.set(0,0);
-
-           // app.stage.getChildAt(0).getChildAt(4).pivot.set(app.stage.getChildAt(0).getChildAt(4).width,app.stage.getChildAt(0).getChildAt(4).height);
-            
-
-           // app.stage.getChildAt(0).getChildAt(4).scale.set(resizef);
-            //app.stage.getChildAt(0).getChildAt(4).pivot.set(w,h);
-
-
 
             app.renderer.resize(window.innerWidth, window.innerHeight);
         
