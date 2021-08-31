@@ -4,6 +4,7 @@ import {layout} from "./layout.js"
 import {SlideHome,
     SlideInstruct,
     SlideIntro1,
+    SlideIntro1b,
     SlideIntro2,
     SlideIntro3,
     SlideIntro3a,
@@ -40,7 +41,10 @@ export class View{
         //resize canvas when window is resized
         window.addEventListener('resize', resize); 
         var w=window.innerWidth;    
-        var h=window.innerHeight;  
+        var h=window.innerHeight;
+    //    if(w<1000){
+    //        w=1000;
+    //    }  
         console.log(window.innerHeight)  
         //app.stage.getChildAt(0).getChildAt(4).pivot.set(window.innerWidth/2,window.innerHeight/2);
 
@@ -53,13 +57,55 @@ export class View{
             var resizef=Math.min(resize_h,resize_w);
             //console.log(app.stage.getChildAt(0).get);
             
+           // app.stage.getChildAt(0).pivot.set(-window.innerWidth/2,0);
+            if(window.innerWidth-w >=0){
+                app.stage.getChildAt(0).position.set(Math.min(window.innerWidth-w,0),0);
+                app.stage.getChildAt(0).getChildByName("header").x=0;
+                app.stage.getChildAt(0).getChildByName("header").width=window.innerWidth;
+                app.stage.getChildAt(0).getChildByName("footer").width=window.innerWidth;
 
-            app.stage.getChildAt(0).getChildAt(0).position.set(Math.max(window.innerWidth-w,-50),Math.max(window.innerHeight-h,-50));
-            app.stage.getChildAt(0).getChildAt(1).position.set(Math.max(window.innerWidth-w,-50),Math.max(window.innerHeight-h,-50));
-            app.stage.getChildAt(0).getChildAt(2).position.set(Math.max(window.innerWidth-w,-50),Math.max(window.innerHeight-h,-50));
-            app.stage.getChildAt(0).getChildAt(3).position.set(Math.max(window.innerWidth-w,-50),Math.max(window.innerHeight-h,-50));
-            app.stage.getChildAt(0).getChildAt(4).position.set(Math.max(window.innerWidth-w,-50),Math.max(window.innerHeight-h,-50));
 
+
+            } else {
+                app.stage.getChildAt(0).position.set(Math.max(window.innerWidth-w,-40),0);
+                app.stage.getChildAt(0).getChildByName("header").width=window.innerWidth+40;
+                app.stage.getChildAt(0).getChildByName("footer").width=window.innerWidth+40;
+
+
+            }
+
+          /*  app.stage.getChildAt(0).getChildByName("header").x=Math.min(0,0-(window.innerWidth-w));
+            app.stage.getChildAt(0).getChildByName("header").width=window.innerWidth+40;
+            app.stage.getChildAt(0).getChildByName("footer").x=Math.min(0,0-(window.innerWidth-w));
+
+            app.stage.getChildAt(0).getChildByName("footer").width=window.innerWidth+40;
+/*
+            app.stage.getChildAt(0).position.set(Math.max(window.innerWidth-w,-40),Math.max(window.innerHeight-h,-40));
+            app.stage.getChildAt(0).getChildByName("header").x=Math.min(0,0-(window.innerWidth-w));
+            app.stage.getChildAt(0).getChildByName("header").width=window.innerWidth+40;
+            app.stage.getChildAt(0).getChildByName("footer").x=Math.min(0,0-(window.innerWidth-w));
+
+            app.stage.getChildAt(0).getChildByName("footer").width=window.innerWidth+40;
+
+*/
+
+
+
+
+
+
+
+
+           /* footer.width=window.innerWidth;
+            footer.y=window.innerHeight-h;
+            header.width=window.innerWidth;
+
+           /* app.stage.getChildAt(0).getChildAt(0).position.set(Math.max(window.innerWidth-w,-40),Math.max(window.innerHeight-h,-40));
+            app.stage.getChildAt(0).getChildAt(1).position.set(Math.max(window.innerWidth-w,-40),Math.max(window.innerHeight-h,-40));
+            app.stage.getChildAt(0).getChildAt(2).position.set(Math.max(window.innerWidth-w,-40),Math.max(window.innerHeight-h,-40));
+            app.stage.getChildAt(0).getChildAt(3).position.set(Math.max(window.innerWidth-w,-40),Math.max(window.innerHeight-h,-40));
+            app.stage.getChildAt(0).getChildAt(4).position.set(Math.max(window.innerWidth-w,-40),Math.max(window.innerHeight-h,-40));
+*/
 
 
             //app.stage.getChildAt(0).getChildAt(4).position.set(0,0);
@@ -94,7 +140,7 @@ export class View{
 
         //add premade slides
         this.slideList = [];
-        this.slideList.push(SlideHome,SlideInstruct,SlideIntro1,SlideIntro2,SlideIntro3,
+        this.slideList.push(SlideHome,SlideInstruct,SlideIntro1,SlideIntro1b,SlideIntro2,SlideIntro3,
                             SlideIntro4,SlideIntro3a,SlideNeuron1,SlideNeuron2,SlideNeuron2b,SlideNeuron2c,SlideNeuron2d,
                             SlideNet1,SlideSandbox,SlideGraphTest);
 
@@ -107,7 +153,7 @@ export class View{
 
 
 
-        this.currentSlide=13;
+        this.currentSlide=3;
 
 
 

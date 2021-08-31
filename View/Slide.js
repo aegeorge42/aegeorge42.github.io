@@ -88,6 +88,7 @@ export class Slide{
 
         var h=window.innerHeight;    
         function resize(){
+            header.x=0;
             footer.width=window.innerWidth;
             footer.y=window.innerHeight-h;
             header.width=window.innerWidth;

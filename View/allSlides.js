@@ -26,14 +26,35 @@ SlideInstruct.drawTextButtons();
 
 // INTRO 1
 export const SlideIntro1 = new Slide();
+
+
     var textIntro1= [
         [ ["As humans, we take our ability to recognize objects for granted. "], [50, 100] ],
         [ ["Neural networks are a type of machine learning based on the human brain." 
-        + '\n'+"Using a neural network, a computer can learn to recognize and classify data." ], [100, 200] ],
-        [ ["This type of neural network is called a"], [" perceptron.",typewriter_large ], [200,300] ]       
+        + '\n'+"Using a neural network, a computer can learn to recognize and classify data." ], [100, 150] ],
+        [ ["This type of neural network is called a"], [" perceptron.",typewriter_large ], [200,250] ]       
     ];
     SlideIntro1.drawText(textIntro1);
     SlideIntro1.drawTextButtons();
+
+export const SlideIntro1b = new Slide();
+    var singleblue =new PIXI.Sprite(PIXI.Texture.from('images/singleblue.png'));
+    singleblue.isSprite=true;
+    singleblue.x=500;
+    singleblue.y=50;
+
+    var singlestraw =new PIXI.Sprite(PIXI.Texture.from('images/singlestraw.png'));
+    singlestraw.isSprite=true;
+    singlestraw.x=670;
+    singlestraw.y=50;
+
+    SlideIntro1b.slideContainer.addChild(singleblue,singlestraw);
+
+    var textIntro1b= [
+        [ ["Click on an image to feed it into the perceptron. "], [50, 100] ],
+    ];
+    SlideIntro1b.drawText(textIntro1b);
+    SlideIntro1b.drawTextButtons();
 
 // INTRO 2
 export const SlideIntro2 = new Slide();
