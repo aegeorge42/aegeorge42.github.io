@@ -378,7 +378,7 @@ export class Net{
 
                   currentNeuron.wgrad_batch[h]=[...this.getLayer(i).getNeuron(j).wgrad];
                   currentNeuron.bgrad_batch[h]=this.getLayer(i).getNeuron(j).bgrad;
-                  console.log("neuron " +currentLayer.layerNumber+""+ currentNeuron.neuronNumber + " bgrad: " + currentNeuron.bgrad_batch);
+                //  console.log("neuron " +currentLayer.layerNumber+""+ currentNeuron.neuronNumber + " bgrad: " + currentNeuron.bgrad_batch);
                 //  console.log("neuron " +currentLayer.layerNumber+""+ currentNeuron.neuronNumber + " wgrad: " + currentNeuron.wgrad_batch);
 
                 } 
@@ -415,11 +415,11 @@ export class Net{
 
                 var bgrad_tot=0;
                 for(var p =0; p<currentNeuron.bgrad_batch.length;p++){
-                    bgrad_tot=bgrad_tot+currentNeuron.bgrad_batch[p];
-
+                    bgrad_tot=(bgrad_tot+currentNeuron.bgrad_batch[p]);
                 }
-                console.log("neuron " +currentLayer.layerNumber+""+ currentNeuron.neuronNumber + " bgrad_tot: " + bgrad_tot);
-                currentNeuron.bgrad=bgrad_tot;
+                //console.log("neuron " +currentLayer.layerNumber+""+ currentNeuron.neuronNumber + " bgrad_tot: " + bgrad_tot);
+                currentNeuron.bgrad=bgrad_tot/currentNeuron.bgrad_batch.length;
+               //console.log("neuron " +currentLayer.layerNumber+""+ currentNeuron.neuronNumber + " bgrad_FINAL: " + currentNeuron.bgrad);
 
 
 

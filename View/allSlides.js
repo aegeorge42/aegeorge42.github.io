@@ -552,7 +552,7 @@ export const SlideNet2 = new Slide();
     net1.update();
     SlideNet2.draw_init(net1);
 
-    var SlideNet2Graph = new Graph(fruits_test);
+    var SlideNet2Graph = new Graph(fruits);
     SlideNet2.slideContainer.addChild(SlideNet2Graph.getGraph());
     SlideNet2.drawButtons(net1,SlideNet2Graph);
     SlideNet2.setVis(SlideNet2.slideContainer.getChildAt(7),false);
@@ -574,7 +574,7 @@ export const SlideNet3 = new Slide();
     net1.update();
     SlideNet3.draw_init(net1);
 
-    var SlideNet2Graph = new Graph(fruits_test);
+    var SlideNet2Graph = new Graph(fruits);
     SlideNet3.slideContainer.addChild(SlideNet2Graph.getGraph());
     SlideNet3.drawButtons(net1,SlideNet2Graph);
     SlideNet3.setVis(SlideNet3.slideContainer.getChildAt(7),false);
@@ -594,13 +594,13 @@ var net = new Net();
 SlideSandbox.slideNet=net;
 
 
-net.setNetData(fruits_small);
-net.setLearnRate(0.10);
+net.setNetData(fruits);
+net.setLearnRate(0.3);
 net.getLayer(0).addNeuron();
 
 net.setOutLayer();
 net.update();
-var g = new Graph(fruits_small);
+var g = new Graph(fruits);
 SlideSandbox.slideContainer.addChild(g.getGraph());
 
 SlideSandbox.draw_init(net);

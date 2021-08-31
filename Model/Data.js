@@ -97,7 +97,7 @@ export const fruits_test = new Data(0, ["strawberry","blueberry"],["length","rou
 
 
 
-export const fruits = new Data(100,["strawberry","blueberry"],["length", "roundness"]);
-    fruits.createDatapoints_train(50,0,datatypes.STRAWBERRY);
-    fruits.createDatapoints_train(50,50,datatypes.BLUEBERRY);
+export const fruits = new Data(50,["strawberry","blueberry"],["length", "roundness"]);
+    fruits.createDatapoints_train(25,0,datatypes.STRAWBERRY);
+    fruits.createDatapoints_train(25,25,datatypes.BLUEBERRY);
    // console.log(fruits.points)

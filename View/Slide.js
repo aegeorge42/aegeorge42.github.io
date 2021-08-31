@@ -230,6 +230,8 @@ export class Slide{
         this.buttonContainer.addChild(new Button("learnbatch_step",PIXI.Texture.from('images/buttons/learn_batch_step.png'),layout.BUTTONS_X,400,true));
         this.buttonContainer.getChildByName("learnbatch_step").on('click', async function(e){
             //cycle data points for drawing purposes
+            /*
+
             for(var i=0; i<net.data.points.length; i++){
                 net.setNetInput(net.data.points[i]);
                 net.update();
@@ -238,7 +240,7 @@ export class Slide{
             //    slide.labelsContainer.getChildByName("costLabel").style.fill = 0x6b6b6b;
                 await slide.sleep(100);
             }
-
+*/
        // slide.labelsContainer.getChildByName("costLabel").style.fill = 0x000000;
         net.learn_batch();
         await slide.sleep(100);
@@ -253,8 +255,9 @@ export class Slide{
             var loopcount = 0;
             pauselearn=0;
 
-            while(loopcount<100 && pauselearn==0){
+            while(pauselearn==0){
 
+/*
                 //cycle data points for drawing purposes, but only for the first few times
                 if(loopcount<0){
                     for(var i=0; i<net.data.points.length; i++){
@@ -269,11 +272,16 @@ export class Slide{
 
                     }
                 }
-
+*/
                 await slide.sleep(100);
                 net.learn_batch();
                 net.update();
-                slide.draw_update(net);           
+                slide.draw_update(net);   
+                console.log(net.costTot);
+                if(net.costTot<0.05){
+                    break;
+                }
+        
                 if(graph){graph.updateGraph(net,graph);}
      
                 loopcount=loopcount+1;
@@ -1095,6 +1103,12 @@ export class Slide{
             target.y=layout.NEURON_UPPERLIM +100//layout.NEURON_Y_DIF;
             this.labelsContainer.addChild(target);
 
+            var costLabel = new PIXI.Text("cost" + '\n' +formatter_long.format(net.costTot),medium);
+            costLabel.name = "costLabel";
+            costLabel.x=450;
+            costLabel.y=50;
+        this.labelsContainer.addChild(costLabel);
+
         //target label ex strawberry
         /*
         var textwidth=PIXI.TextMetrics.measureText(net.targetText, textstyles.large).width;
@@ -1151,6 +1165,8 @@ export class Slide{
        } else if (net.targetText=="strawberry"){
        target.texture=PIXI.Texture.from('images/strawberrycard1.png');
        }
+
+       this.labelsContainer.getChildByName("costLabel").text="cost" + '\n' +formatter_long.format(net.costTot);
 /*
         if (net.targetText=="blueberry"){
             switch(random){
