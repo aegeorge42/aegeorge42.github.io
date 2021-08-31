@@ -107,7 +107,7 @@ export class View{
 
 
 
-        this.currentSlide=9;
+        this.currentSlide=13;
 
 
 

@@ -388,6 +388,7 @@ var g = new Graph(fruits_test);
 SlideSandbox.slideContainer.addChild(g.getGraph());
 
 SlideSandbox.draw_init(net);
+//SlideSandbox.drawButtons(net);
 SlideSandbox.drawButtons(net,g);
 
 var textInstruct2 = [    

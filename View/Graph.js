@@ -8,8 +8,8 @@ export class Graph extends PIXI.Sprite{
         this.bg = new PIXI.Sprite(PIXI.Texture.from('images/graph.png'));
             this.bg.height=200;
             this.bg.width=200;
-            this.bg.x=600;
-            this.bg.y=100;
+            this.bg.x=900;
+            this.bg.y=300;
 
         this.fakedata=new Data(0, ["strawberry","blueberry"],["length","roundness"]);
 
