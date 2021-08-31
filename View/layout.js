@@ -3,6 +3,8 @@ export const layout = {
     HEADER_HEIGHT:50,
     FOOTER_HEIGHT:75,
 
+    LEFTBUFFER: window.innerWidth/2 - window.innerWidth*(3/8),
+
     NEXTSLIDE_X: (window.innerWidth/2) +100,
     PREVSLIDE_X: (window.innerWidth/2) -100,
 
@@ -18,19 +20,19 @@ export const layout = {
     
     BUTTONS_X: 80,
 
-    NEURON_LEFTLIM: 550,
+    NEURON_LEFTLIM: 500,
     NEURON_UPPERLIM: 150,
 
     NEURON_X_DIF: 150,
     NEURON_Y_DIF: 125,
 
-    NEURON_LARGE_X: 850,
+    NEURON_LARGE_X: 1000,
     NEURON_LARGE_Y: 280,
     //NEURON_LARGE_WIDTH: 250,
 
     NEURON_LARGE_Y_DIF:250,
 
-    NEURON_LARGE_LEFTLIM:580,
+    NEURON_LARGE_LEFTLIM:650,
     NEURON_NUDGE: 35
 
 

@@ -14,11 +14,16 @@ import {SlideHome,
     SlideNeuron1,
     SlideNeuron2,
     SlideNeuron2b,
+    SlideNeuron2b2,
     SlideNeuron2c,
     SlideNeuron2d,
     SlideNet1,
+    SlideNet1b,
+    SlideNet2,
+    SlideNet3,
     SlideSandbox,
-SlideGraphTest} from "./allSlides.js"
+SlideGraphTest,
+SlideNeuron2e} from "./allSlides.js"
 
 
 
@@ -41,13 +46,24 @@ export class View{
         window.addEventListener('resize', resize); 
         var w=window.innerWidth;    
         var h=window.innerHeight;
+            if(w<1000){w=1000}
    
-        console.log(window.innerHeight)  
+       // console.log(window.innerHeight)  
 
+       var buffer=100;
         function resize(){
+           // app.stage.getChildAt(0).position.set((window.innerWidth-w)/2,0)//(Math.min(window.innerWidth-w,0),0);
+            /*
+            if(w<window.innerWidth){app.stage.getChildAt(0).position.set((window.innerWidth-w)/2,0)} else {}
 
-            if(window.innerWidth-w >=0){
-                app.stage.getChildAt(0).position.set(Math.min(window.innerWidth-w,0),0);
+            console.log(w);
+                app.stage.getChildAt(0).getChildByName("header").x=0-(window.innerWidth-w)/2;
+                app.stage.getChildAt(0).getChildByName("header").width=window.innerWidth*2;
+                app.stage.getChildAt(0).getChildByName("footer").x=0-(window.innerWidth-w)/2;
+                app.stage.getChildAt(0).getChildByName("footer").width=window.innerWidth*2;
+
+           /* if(window.innerWidth-w >=0){
+                app.stage.getChildAt(0).position.set((window.innerWidth-w)/2,0)//(Math.min(window.innerWidth-w,0),0);
                 app.stage.getChildAt(0).getChildByName("header").x=0;
                 app.stage.getChildAt(0).getChildByName("header").width=window.innerWidth;
                 app.stage.getChildAt(0).getChildByName("footer").width=window.innerWidth;
@@ -55,12 +71,14 @@ export class View{
 
 
             } else {
-                app.stage.getChildAt(0).position.set(Math.max(window.innerWidth-w,-40),0);
-                app.stage.getChildAt(0).getChildByName("header").width=window.innerWidth+40;
-                app.stage.getChildAt(0).getChildByName("footer").width=window.innerWidth+40;
+                app.stage.getChildAt(0).position.set((window.innerWidth-w)/2,0)//(Math.min(window.innerWidth-w,0),0);
+
+             //   app.stage.getChildAt(0).position.set(Math.max(window.innerWidth-w,-buffer),0);
+                app.stage.getChildAt(0).getChildByName("header").width=window.innerWidth+buffer;
+                app.stage.getChildAt(0).getChildByName("footer").width=window.innerWidth+buffer;
 
 
-            }
+            }*/
 
             app.renderer.resize(window.innerWidth, window.innerHeight);
         
@@ -72,11 +90,7 @@ export class View{
 
             if(vst.currentSlide==0){
 
-                app.stage.getChildAt(0).getChildByName("opener").x=((window.innerWidth)/2);
-                app.stage.getChildAt(0).getChildByName("opener").y=((window.innerHeight)/3)+50;
-
                 app.stage.getChildByName("button_start").x=window.innerWidth/2;
-                app.stage.getChildByName("button_start").y=((window.innerHeight)/3) +350;
             }
         }
 
@@ -84,9 +98,10 @@ export class View{
 
         //add premade slides
         this.slideList = [];
-        this.slideList.push(SlideHome,SlideInstruct,SlideIntro1,SlideIntro1a,SlideIntro1b,SlideIntro1c,SlideIntro2,SlideIntro3,
-                            SlideIntro4,SlideIntro3a,SlideNeuron1,SlideNeuron2,SlideNeuron2b,SlideNeuron2c,SlideNeuron2d,
-                            SlideNet1,SlideSandbox,SlideGraphTest);
+        this.slideList.push(SlideHome,SlideInstruct, //1
+                            SlideIntro1,SlideIntro1a,SlideIntro1b,SlideIntro1c,SlideIntro2,SlideIntro3, SlideIntro4,SlideIntro3a, //9
+                            SlideNeuron1,SlideNeuron2,SlideNeuron2b,SlideNeuron2b2,SlideNeuron2c,SlideNeuron2d,SlideNeuron2e, //16
+                            SlideNet1, SlideNet1b,SlideNet2, SlideNet3, SlideSandbox,SlideGraphTest);
 
         const opener = new PIXI.Sprite(PIXI.Texture.from('images/opener.png'));
         opener.name="opener";
@@ -97,7 +112,7 @@ export class View{
 
 
 
-        this.currentSlide=3;
+        this.currentSlide=18;
 
 
 
@@ -187,6 +202,13 @@ export class View{
                 vst.slideList[vst.currentSlide].draw_update_large(vst.slideList[vst.currentSlide].slideNet)
                 vst.drawSlide();
             }
+
+            if(vst.slideList[vst.currentSlide].slideNet !== undefined && vst.slideList[vst.currentSlide].largenet!=1){//&& vst.currentSlide == 9){
+                console.log(vst.slideList[vst.currentSlide].slideNet)
+                vst.slideList[vst.currentSlide].slideNet.update();
+                vst.slideList[vst.currentSlide].draw_update(vst.slideList[vst.currentSlide].slideNet)
+                vst.drawSlide();
+            }
             
         });
 
@@ -218,6 +240,18 @@ export class View{
                 vst.app.stage.removeChild(vst.slideList[vst.currentSlide].textbuttonContainer);
 
                 vst.currentSlide=2;
+                vst.drawSlide();
+            }
+        });
+
+        var gotodata = new Button("gotodata",PIXI.Texture.from('images/buttons/gotodata.png'),350,layout.HEADER_HEIGHT/2,false)
+        this.app.stage.addChild(gotodata);
+        this.app.stage.getChildByName("gotodata").on('click', function(e){ 
+            
+            if (vst.currentSlide!=6){
+                vst.app.stage.removeChild(vst.slideList[vst.currentSlide].textbuttonContainer);
+
+                vst.currentSlide=6;
                 vst.drawSlide();
             }
         });
