@@ -1263,28 +1263,27 @@ export class Slide{
 
                 this.textContainer.addChild(textbox);       
                 
-                for(var j=1; j<(text[i].length)-1; j++){
-                  //  console.log(text[i][j][0])
-                    var textPiece= new PIXI.Text(text[i][j][0]);
-                    textPiece.anchor.set(0,0.5);
-                    textbox.addChild(textPiece);
-
-                    if(text[i][j][1] === undefined){
-                        textPiece.style= textstyles.default;
-                    } else {
-                        textPiece.style=text[i][j][1];
-                    }
-
-                    textPiece.y=text[i][(text[i].length)-1][1] + textheight/2;
-
-                    if(j==1){
-                        textPiece.x=text[i][(text[i].length)-1][0];
-
-                    } else {
-                        textPiece.x = textbox.getChildAt(j-1).x + textbox.getChildAt(j-1).width;
-                    }
-                
-                }
+                for(var j=0; j<(text[i].length)-1; j++){
+                    // console.log(text[i][j][0])
+                     var textPiece= new PIXI.Text(text[i][j][0]);
+                     textPiece.anchor.set(0,0.5);
+                     textbox.addChild(textPiece);
+ 
+                     if(text[i][j][1] === undefined){
+                         textPiece.style= textstyles.default;
+                     } else {
+                         textPiece.style=text[i][j][1];
+                     }
+ 
+                     textPiece.y=text[i][(text[i].length)-1][1] + textheight/2;
+ 
+                     if(j==0){
+                         textPiece.x=text[i][(text[i].length)-1][0];
+ 
+                     } else {
+                         textPiece.x = textbox.getChildAt(j-1).x + textbox.getChildAt(j-1).width;
+                     }
+                 }
                 textbox.addChild(text[i][0]);
 
             // first elem of first elem is sprite (for removal)

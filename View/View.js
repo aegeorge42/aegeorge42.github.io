@@ -4,7 +4,9 @@ import {layout} from "./layout.js"
 import {SlideHome,
     SlideInstruct,
     SlideIntro1,
+    SlideIntro1a,
     SlideIntro1b,
+    SlideIntro1c,
     SlideIntro2,
     SlideIntro3,
     SlideIntro3a,
@@ -82,7 +84,7 @@ export class View{
 
         //add premade slides
         this.slideList = [];
-        this.slideList.push(SlideHome,SlideInstruct,SlideIntro1,SlideIntro1b,SlideIntro2,SlideIntro3,
+        this.slideList.push(SlideHome,SlideInstruct,SlideIntro1,SlideIntro1a,SlideIntro1b,SlideIntro1c,SlideIntro2,SlideIntro3,
                             SlideIntro4,SlideIntro3a,SlideNeuron1,SlideNeuron2,SlideNeuron2b,SlideNeuron2c,SlideNeuron2d,
                             SlideNet1,SlideSandbox,SlideGraphTest);
 

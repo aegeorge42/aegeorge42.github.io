@@ -43,6 +43,20 @@ export const textstyles = {
 
   }),
 
+  default_blue: new PIXI.TextStyle({
+    fontFamily: 'Helvetica',
+    fontWeight: 400,
+    fontSize: 24,
+    fill: 0x0000FF
+  }),
+
+  default_red: new PIXI.TextStyle({
+    fontFamily: 'Helvetica',
+    fontWeight: 400,
+    fontSize: 24,
+    fill: 0xFF0000
+  }),
+
   large: new PIXI.TextStyle({
     fontFamily: 'Helvetica',
     fontWeight: 400,

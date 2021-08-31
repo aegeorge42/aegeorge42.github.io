@@ -8,53 +8,137 @@ import {small, medium, typewriter, typewriter_large, textstyles} from "./textsty
 import { Button } from "./Button.js";
 
 //draw things the right size for window
+/*
 var resize_w = window.innerWidth/1280;
 var resize_h = layout.INNERHEIGHT/564;
 var resize=Math.min(resize_h,resize_w);
+*/
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
 
 // HOME
 export const SlideHome = new Slide();
 
 // INSTRUCTIONS
 export const SlideInstruct = new Slide();
-
-var textInstruct = [    
-    [ ["Here is that tool that I needed to learn about neural networks"], [150, 150]],
-];    
-SlideInstruct.drawText(textInstruct);
-SlideInstruct.drawTextButtons();
+    var textInstruct = [    
+        [ ["Here is that tool that I needed to learn about neural networks"], [150, 150]],
+    ];    
+    SlideInstruct.drawText(textInstruct);
+    SlideInstruct.drawTextButtons();
 
 // INTRO 1
 export const SlideIntro1 = new Slide();
 
-
     var textIntro1= [
-        [ ["As humans, we take our ability to recognize objects for granted. "], [50, 100] ],
+        [ ["As humans, we take our ability to recognize objects for granted. "], [50, 70] ],
         [ ["Neural networks are a type of machine learning based on the human brain." 
-        + '\n'+"Using a neural network, a computer can learn to recognize and classify data." ], [100, 150] ],
-        [ ["This type of neural network is called a"], [" perceptron.",typewriter_large ], [200,250] ]       
+        + '\n'+"Using a neural network, a computer can learn to recognize and classify data." ], [150, 120] ],
+        [ ["This type of neural network is called a"], [" perceptron.",typewriter_large ], [300,200] ],
+        //[ percep_blank1, ["Here's a perceptron that has learned to identify strawberries and blueberries"],[200,300]]       
     ];
     SlideIntro1.drawText(textIntro1);
     SlideIntro1.drawTextButtons();
 
+export const SlideIntro1a = new Slide();
+    var percep_blank1 =new PIXI.Sprite(PIXI.Texture.from('images/percep_blank.png'));
+    percep_blank1.isSprite=true;
+    percep_blank1.x=170;
+    percep_blank1.y=200;
+
+    var textIntro1a= [
+        [percep_blank1,  ["Here's a perceptron that has learned to identify"],
+            [" strawberries ", textstyles.default_red],
+            ["and"],
+            [" blueberries ", textstyles.default_blue],
+
+            [200,100]]       
+    ];
+
+   // SlideIntro1a.slideContainer.addChild(percep_blank1);
+
+    SlideIntro1a.drawText(textIntro1a);
+    SlideIntro1a.drawTextButtons();
+
 export const SlideIntro1b = new Slide();
+    var percep_blank =new PIXI.Sprite(PIXI.Texture.from('images/percep_blank.png'));
+        percep_blank.isSprite=true;
+        percep_blank.x=percep_blank1.x;
+        percep_blank.y=percep_blank1.y;
+
     var singleblue =new PIXI.Sprite(PIXI.Texture.from('images/singleblue.png'));
+    singleblue.scale.set(0.8)
     singleblue.isSprite=true;
     singleblue.x=500;
     singleblue.y=50;
+    singleblue.interactive=true;
+    singleblue.buttonMode=true;
+    singleblue.on('click', async function(e){
+        this.x=percep_blank.x-100;
+        this.y=percep_blank.y+50;
+
+        singlestraw.x=670;
+        singlestraw.y=50;
+        singlecherry.x=840;
+        singlecherry.y=50;
+
+        await sleep(500);
+        percep_blank.texture=PIXI.Texture.from('images/percep_blue.png');
+    });
+
 
     var singlestraw =new PIXI.Sprite(PIXI.Texture.from('images/singlestraw.png'));
+    singlestraw.scale.set(0.8)
     singlestraw.isSprite=true;
     singlestraw.x=670;
     singlestraw.y=50;
+    singlestraw.interactive=true;
+    singlestraw.buttonMode=true;
+    singlestraw.on('click', async function(e){
+        this.x=percep_blank.x-100;
+        this.y=percep_blank.y+50;
 
-    SlideIntro1b.slideContainer.addChild(singleblue,singlestraw);
+        singleblue.x=500;
+        singleblue.y=50;
+        singlecherry.x=840;
+        singlecherry.y=50;
+
+        await sleep(500);
+        percep_blank.texture=PIXI.Texture.from('images/percep_straw.png');
+    });
+
+    var singlecherry =new PIXI.Sprite(PIXI.Texture.from('images/single_cherry.png'));
+    singlecherry.scale.set(0.8)
+    singlecherry.isSprite=true;
+    singlecherry.x=840;
+    singlecherry.y=50;
+    singlecherry.interactive=true;
+    singlecherry.buttonMode=true;
+    singlecherry.on('click', async function(e){
+        this.x=percep_blank.x-100;
+        this.y=percep_blank.y+50;
+
+        singleblue.x=500;
+        singleblue.y=50;
+        singlestraw.x=670;
+        singlestraw.y=50;
+
+        await sleep(500);
+        percep_blank.texture=PIXI.Texture.from('images/percep_unknown.png');
+    });
+
+    SlideIntro1b.slideContainer.addChild(singleblue,singlestraw,singlecherry);
 
     var textIntro1b= [
-        [ ["Click on an image to feed it into the perceptron. "], [50, 100] ],
+        [percep_blank, ["Click on an image to feed it into the perceptron. "], [50, 100] ],
     ];
     SlideIntro1b.drawText(textIntro1b);
     SlideIntro1b.drawTextButtons();
+
+
+export const SlideIntro1c = new Slide();
 
 // INTRO 2
 export const SlideIntro2 = new Slide();
