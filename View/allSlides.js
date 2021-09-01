@@ -55,7 +55,8 @@ export const SlideIntro1 = new Slide();
 export const SlideIntro1a = new Slide();
     var percep_blank1 =new PIXI.Sprite(PIXI.Texture.from('images/percep_blank.png'));
     percep_blank1.isSprite=true;
-    percep_blank1.x=layout.LEFTBUFFER;
+
+    percep_blank1.x=layout.LEFTBUFFER + 150;
     percep_blank1.y=150;
 
     var textIntro1a= [
@@ -77,7 +78,13 @@ export const SlideIntro1b = new Slide();
         percep_blank.x=percep_blank1.x;
         percep_blank.y=percep_blank1.y;
 
-    var bluex=layout.LEFTBUFFER+350;
+    var textIntro1b= [
+        [percep_blank, ["Click on an image to feed it into the perceptron. "], [layout.LEFTBUFFER, 100] ],
+    ];
+
+    var textwid= PIXI.TextMetrics.measureText(textIntro1b[0][1][0],textstyles.default).width;
+
+    var bluex=layout.LEFTBUFFER+textwid+50;
     var strawx=bluex+150;
     var cherryx=strawx+150;
 
@@ -135,8 +142,8 @@ export const SlideIntro1b = new Slide();
 
         singleblue.x=bluex;
         singleblue.y=50;
-        singlestraw.x=670;
-        singlestraw.y=strawx;
+        singlestraw.x=strawx;
+        singlestraw.y=50;
 
         await sleep(500);
         percep_blank.texture=PIXI.Texture.from('images/percep_unknown.png');
@@ -144,9 +151,6 @@ export const SlideIntro1b = new Slide();
 
     SlideIntro1b.slideContainer.addChild(singleblue,singlestraw,singlecherry);
 
-    var textIntro1b= [
-        [percep_blank, ["Click on an image to feed it into the perceptron. "], [layout.LEFTBUFFER, 100] ],
-    ];
     SlideIntro1b.drawText(textIntro1b);
     SlideIntro1b.drawTextButtons();
 
@@ -163,29 +167,29 @@ SlideIntro1c.drawTextButtons();
 // INTRO 2
 export const SlideIntro2 = new Slide();
 
-    var examplesx= layout.LEFTBUFFER-100 
     var examples=new PIXI.Sprite(PIXI.Texture.from('images/examples_nolabels.png'));
         examples.isSprite=true;
         examples.scale.set(0.8);
-        examples.x=examplesx;
+        examples.x=0;
         examples.y=70;
 
     var examples_labels=new PIXI.Sprite(PIXI.Texture.from('images/examples_labels.png'));
         examples_labels.isSprite=true;
         examples_labels.scale.set(0.8);
-        examples_labels.x=examplesx;
+        examples_labels.x=0;
         examples_labels.y=70;
 
 
     var textIntro2 = [
-        [examples,["In order to train our network, "+'\n'+"we need to give it some examples "+'\n'+"of data we want to classify."], [layout.LEFTBUFFER, 170]],
+        [["In order to train our network, "+'\n'+"we need to give it some examples "+'\n'+"of data we want to classify."], [layout.LEFTBUFFER, 170]],
+        examples,
         [["Using our big human brains,"+'\n'+" we label these examples"+'\n'+" with the right answers" ], [layout.LEFTBUFFER, 300]],
         examples_labels
     ];
 
-    var textwid= PIXI.TextMetrics.measureText("In order to train our network,"+'\n'+" we need to give it some examples"+'\n'+"of data we want to classify.",textstyles.default).width;
-    examples.x=examplesx+textwid;
-    examples_labels.x=examplesx+textwid;
+    var textwid= PIXI.TextMetrics.measureText(textIntro2[0][0][0],textstyles.default).width;
+    examples.x=layout.LEFTBUFFER+textwid +20;
+    examples_labels.x=layout.LEFTBUFFER+textwid +20;
 
 
 
@@ -198,12 +202,12 @@ export const SlideIntro3 = new Slide();
     captcha.isSprite=true;
         captcha.x=layout.LEFTBUFFER;
         captcha.y=120;
-        captcha.scale.set(0.9);
+        captcha.scale.set(0.8);
 
 
     var textIntro3 = [
         [ captcha,["If you've ever had to solve a puzzle like this to get into a website..."], [layout.LEFTBUFFER,80]],
-        [ ["...you were probably helping label data to train a neural network"], [layout.LEFTBUFFER +350, 380]]
+        [ ["...you were probably helping label data to train a neural network"], [layout.LEFTBUFFER +300, 380]]
     ];
 
     SlideIntro3.drawText(textIntro3);
@@ -406,7 +410,11 @@ export const SlideNeuron2b2 = new Slide();
     neuron_large_actfncover2.y=layout.NEURON_LARGE_Y;
 
     var textNeuron2b2 = [
-        [neuron_large_actfncover2,["We also add in another number - called the"], [" bias", textstyles.ital], [layout.LEFTBUFFER-50,200]],
+        [neuron_large_actfncover2,["We also add in another number - called the"], [" bias", textstyles.ital], [layout.LEFTBUFFER,200]],
+        [["define bias"],[layout.LEFTBUFFER-50,250]],
+        [["To start, our weights and biases are random."],[layout.LEFTBUFFER,300]],
+
+
     ];
 
     SlideNeuron2b2.drawText(textNeuron2b2);
@@ -529,6 +537,7 @@ SlideNet1.drawText(textNet1);
 SlideNet1.drawTextButtons();
 SlideNet1.drawButtons(SlideNet1);
 SlideNet1.setVis(SlideNet1.slideContainer.getChildAt(7),false);
+SlideNet1.slideContainer.getChildAt(7).getChildByName("actfnsbox").visible=true;
 SlideNet1.slideContainer.getChildAt(7).getChildByName("sigmoid").visible=true;
 SlideNet1.slideContainer.getChildAt(7).getChildByName("relu").visible=true;
 //SlideNet1.drawActFnButtons(SlideNet1.slideNet);
@@ -547,6 +556,7 @@ export const SlideNet1b = new Slide();
     SlideNet1b.drawButtons(SlideNet1b.slideNet);
     SlideNet1b.setVis(SlideNet1b.slideContainer.getChildAt(7),false);
     
+    SlideNet1b.slideContainer.getChildAt(7).getChildByName("actfnsbox").visible=true;
     SlideNet1b.slideContainer.getChildAt(7).getChildByName("sigmoid").visible=true;
     SlideNet1b.slideContainer.getChildAt(7).getChildByName("relu").visible=true;
     SlideNet1b.slideContainer.getChildAt(7).getChildByName("addlayer").visible=true;
@@ -562,6 +572,7 @@ export const SlideNet2 = new Slide();
     SlideNet2.slideContainer.addChild(SlideNet2Graph.getGraph());
     SlideNet2.drawButtons(net1,SlideNet2Graph);
     SlideNet2.setVis(SlideNet2.slideContainer.getChildAt(7),false);
+    SlideNet2.slideContainer.getChildAt(7).getChildByName("actfnsbox").visible=true;
     SlideNet2.slideContainer.getChildAt(7).getChildByName("sigmoid").visible=true;
     SlideNet2.slideContainer.getChildAt(7).getChildByName("relu").visible=true;
     SlideNet2.slideContainer.getChildAt(7).getChildByName("addlayer").visible=true;
@@ -586,6 +597,7 @@ export const SlideNet3 = new Slide();
     SlideNet3.slideContainer.addChild(SlideNet2Graph.getGraph());
     SlideNet3.drawButtons(net1,SlideNet2Graph);
     SlideNet3.setVis(SlideNet3.slideContainer.getChildAt(7),false);
+    SlideNet3.slideContainer.getChildAt(7).getChildByName("actfnsbox").visible=true;
     SlideNet3.slideContainer.getChildAt(7).getChildByName("sigmoid").visible=true;
     SlideNet3.slideContainer.getChildAt(7).getChildByName("relu").visible=true;
 

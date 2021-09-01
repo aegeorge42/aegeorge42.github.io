@@ -53,7 +53,7 @@ export class Slide{
         //this.textContainer.position.set(0,0);
 
         //this.textContainer.pivot.set(0,0);
-        this.textContainer.pivot.set(this.textContainer.width,this.textContainer.height)
+        //this.textContainer.pivot.set(this.textContainer.width,this.textContainer.height)
 
         this.imagesContainer = new PIXI.Container();
 
@@ -134,23 +134,21 @@ export class Slide{
     }
         
     drawActFnButtons(net){
+        var actfnsbox = new PIXI.Sprite(PIXI.Texture.from('images/actfnsbox.png'));
+            actfnsbox.name="actfnsbox";
+            actfnsbox.x=layout.BUTTONS_X-60;
+            actfnsbox.y=window.innerHeight-180;
+        this.buttonContainer.addChild(actfnsbox);
+
         var slide = this;
-        this.buttonContainer.addChild(new Button("sigmoid",PIXI.Texture.from('images/buttons/sigmoid.png'), layout.BUTTONS_X,500,true));
+        this.buttonContainer.addChild(new Button("sigmoid",PIXI.Texture.from('images/buttons/sigmoid.png'), actfnsbox.x+70,window.innerHeight-115,true));
         this.buttonContainer.getChildByName("sigmoid").on('click', function(e){
-
-//             console.log(net.netActFn);
-
             net.setNetActFn(actFns.SIGMOID);
-            console.log(net)
             net.update_single();
-            console.log(net)
-
-           // console.log(net.netActFn);
-
             slide.draw_update_large(net);
         });
 
-        this.buttonContainer.addChild(new Button("relu",PIXI.Texture.from('images/buttons/relu.png'), layout.BUTTONS_X,550,true));
+        this.buttonContainer.addChild(new Button("relu",PIXI.Texture.from('images/buttons/relu.png'), actfnsbox.x+180,window.innerHeight-115,true));
         this.buttonContainer.getChildByName("relu").on('click', function(e){
         
             console.log(net.netActFn);
@@ -288,7 +286,13 @@ export class Slide{
             }
         });
 
-        this.buttonContainer.addChild(new Button("sigmoid",PIXI.Texture.from('images/buttons/sigmoid.png'), layout.BUTTONS_X,500,true));
+        var actfnsbox = new PIXI.Sprite(PIXI.Texture.from('images/actfnsbox.png'));
+        actfnsbox.name="actfnsbox";
+        actfnsbox.x=layout.BUTTONS_X-60;
+        actfnsbox.y=window.innerHeight-180;
+
+        this.buttonContainer.addChild(actfnsbox);
+        this.buttonContainer.addChild(new Button("sigmoid",PIXI.Texture.from('images/buttons/sigmoid.png'), actfnsbox.x+70,window.innerHeight-115,true));
         this.buttonContainer.getChildByName("sigmoid").on('click', function(e){
 
              console.log(net.netActFn);
@@ -300,7 +304,7 @@ export class Slide{
             slide.draw_update(net);
         });
 
-        this.buttonContainer.addChild(new Button("relu",PIXI.Texture.from('images/buttons/relu.png'), layout.BUTTONS_X,550,true));
+        this.buttonContainer.addChild(new Button("relu",PIXI.Texture.from('images/buttons/relu.png'), actfnsbox.x+180,window.innerHeight-115,true));
         this.buttonContainer.getChildByName("relu").on('click', function(e){
         
             console.log(net.netActFn);

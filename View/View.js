@@ -51,22 +51,24 @@ export class View{
         var buffer=0;
        // console.log(window.innerHeight)  
         function resize(){
-            buffer=(window.innerWidth-w)/2;
-            console.log(buffer)
-            app.stage.getChildAt(0).position.set(buffer,0);
-            app.stage.getChildAt(0).getChildByName("header").x=0-buffer;
-            app.stage.getChildAt(0).getChildByName("footer").x=0-buffer;
-
+            buffer=(window.innerWidth-w)/8;            
             app.renderer.resize(window.innerWidth, window.innerHeight);
-        
+
+            if(vst.currentSlide!=0){
+
+            app.stage.getChildAt(0).position.set(Math.max(buffer,0),0);
+            app.stage.getChildAt(0).getChildByName("header").x=Math.min(0,0-buffer);
+            app.stage.getChildAt(0).getChildByName("footer").x=Math.min(0,0-buffer);
+            
             app.stage.getChildByName("button_nextslide").x=window.innerWidth/2 +100;
             app.stage.getChildByName("button_nextslide").y=window.innerHeight-(75/2);
 
             app.stage.getChildByName("button_prevslide").x=window.innerWidth/2 -100,
             app.stage.getChildByName("button_prevslide").y=window.innerHeight-(75/2);
 
-            if(vst.currentSlide==0){
-                app.stage.getChildByName("button_start").x=window.innerWidth/2;
+            } else {
+                app.stage.getChildAt(0).getChildByName("opener").x=window.innerWidth/2;
+                app.stage.getChildByName("button_start").x=app.stage.getChildAt(0).getChildByName("opener").x;
             }
         }
 
@@ -88,7 +90,7 @@ export class View{
 
 
 
-        this.currentSlide=1;
+        this.currentSlide=0;
 
 
 
@@ -99,15 +101,31 @@ export class View{
     }
 
     resize(){
-        console.log(window.innerWidth);                
+      //  console.log(window.innerWidth);                
 
-       var buffer2=(window.innerWidth-this.w)/2;
-           // app.stage.getChildAt(0).position.set(Math.max(buffer2,0),0);
-     //   } else {
-           this.app.stage.getChildAt(0).position.set(buffer2,0);
-           this.app.stage.getChildAt(0).getChildByName("header").x=0-buffer2;
+            var buffer2=(window.innerWidth-this.w)/8;
+
+            if(this.currentSlide==0){
+                this.app.stage.getChildAt(0).getChildByName("opener").x=window.innerWidth/2;
+                this.app.stage.getChildByName("button_start").x=window.innerWidth/2;
+            } else {
+                this.app.stage.getChildAt(0).position.set(buffer2,0);
+                this.app.stage.getChildAt(0).getChildByName("header").x=0-buffer2;
            this.app.stage.getChildAt(0).getChildByName("footer").x=0-buffer2;
 
+            }
+           // this.app.stage.getChildAt(0).position.set(buffer2,0);
+     //   } else {
+           //this.app.stage.getChildAt(0).position.set(buffer2,0);
+        //   this.app.stage.getChildAt(0).getChildByName("header").x=0-buffer2;
+           //this.app.stage.getChildAt(0).getChildByName("footer").x=0-buffer2;
+
+           if(this.currentSlide==0){
+           // this.app.stage.getChildAt(0).getChildByName("opener").x=window.innerWidth/2 -buffer2;
+           //this.app.stage.getChildByName("button_start").x=this.app.stage.getChildAt(0).getChildByName("opener").x +buffer2;
+           // app.stage.getChildAt(0).getChildByName("opener").x=(window.innerWidth/2)-buffer;
+
+        }
        // }*/
     }
 
@@ -236,14 +254,14 @@ export class View{
             }
         });
 
-        var gotodata = new Button("gotodata",PIXI.Texture.from('images/buttons/gotodata.png'),350,layout.HEADER_HEIGHT/2,false)
-        this.app.stage.addChild(gotodata);
-        this.app.stage.getChildByName("gotodata").on('click', function(e){ 
+        var gotoneuron = new Button("gotoneuron",PIXI.Texture.from('images/buttons/gotoneuron.png'),375,layout.HEADER_HEIGHT/2,false)
+        this.app.stage.addChild(gotoneuron);
+        this.app.stage.getChildByName("gotoneuron").on('click', function(e){ 
             
-            if (vst.currentSlide!=6){
+            if (vst.currentSlide!=10){
                 vst.app.stage.removeChild(vst.slideList[vst.currentSlide].textbuttonContainer);
 
-                vst.currentSlide=6;
+                vst.currentSlide=10;
                 vst.drawSlide();
             }
         });

@@ -5,7 +5,8 @@ export const layout = {
 
     //LEFTBUFFER: window.innerWidth/2 - window.innerWidth*(3/8),
 
-    LEFTBUFFER:Math.max((window.innerWidth-1100)/2,20),
+    LEFTBUFFER: Math.max((window.innerWidth-1100)/2,20),
+    CENTER: Math.max((window.innerWidth-1100)/2,20)+window.innerWidth/2,
 
     NEXTSLIDE_X: (window.innerWidth/2) +100,
     PREVSLIDE_X: (window.innerWidth/2) -100,
@@ -20,7 +21,7 @@ export const layout = {
 
     BLUEBERRY_WIDTH: 120,
     
-    BUTTONS_X: 80,
+    BUTTONS_X:  Math.max((window.innerWidth-1100)/2,20) +50,
 
     NEURON_LEFTLIM: 500,
     NEURON_UPPERLIM: 150,
