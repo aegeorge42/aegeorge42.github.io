@@ -7,17 +7,6 @@ import {Graph} from "./Graph.js"
 import {small, medium, typewriter, typewriter_large, textstyles} from "./textstyles.js"
 import { Button } from "./Button.js";
 
-//draw things the right size for window
-/*
-var resize_w = window.innerWidth/1280;
-var resize_h = layout.INNERHEIGHT/564;
-var resize=Math.min(resize_h,resize_w);
-*/
-
-var ww= window.innerWidth;
-var wh=window.innerHeight;
-
-
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
@@ -32,14 +21,17 @@ export const SlideInstruct = new Slide();
     ];    
     SlideInstruct.drawText(textInstruct);
     SlideInstruct.drawTextButtons();
-    /*
+
+    /* visualize buffer area
         var rect = new PIXI.Graphics();
         rect.drawRect(0,0,1100,450);
         SlideInstruct.slideContainer.addChild(rect);
         rect.x=(window.innerWidth-1100)/2;
         rect.y=60;
     */
-// INTRO 1
+
+
+/********  INTRO ********/
 export const SlideIntro1 = new Slide();
 
     var textIntro1= [
@@ -47,7 +39,6 @@ export const SlideIntro1 = new Slide();
         [ ["Neural networks are a type of machine learning based on the human brain." 
         + '\n'+"Using a neural network, a computer can learn to recognize and classify data." ], [layout.LEFTBUFFER, 120] ],
         [ ["This type of neural network is called a"], [" perceptron.",typewriter_large ], [layout.LEFTBUFFER,200] ],
-        //[ percep_blank1, ["Here's a perceptron that has learned to identify strawberries and blueberries"],[200,300]]       
     ];
     SlideIntro1.drawText(textIntro1);
     SlideIntro1.drawTextButtons();
@@ -57,7 +48,7 @@ export const SlideIntro1a = new Slide();
     percep_blank1.isSprite=true;
 
     percep_blank1.x=layout.LEFTBUFFER + 150;
-    percep_blank1.y=150;
+    percep_blank1.y=200;
 
     var textIntro1a= [
         [percep_blank1,  ["Here's a perceptron that has learned to classify"],
@@ -67,11 +58,10 @@ export const SlideIntro1a = new Slide();
             [layout.LEFTBUFFER,100]]       
     ];
 
-   // SlideIntro1a.slideContainer.addChild(percep_blank1);
-
     SlideIntro1a.drawText(textIntro1a);
     SlideIntro1a.drawTextButtons();
 
+// INTRO - example percep - INTERACTIVE
 export const SlideIntro1b = new Slide();
     var percep_blank =new PIXI.Sprite(PIXI.Texture.from('images/percep_blank.png'));
         percep_blank.isSprite=true;
@@ -88,83 +78,84 @@ export const SlideIntro1b = new Slide();
     var strawx=bluex+150;
     var cherryx=strawx+150;
 
+    var inx= layout.LEFTBUFFER+150;
+    var iny = percep_blank.y+80;
+
     var singleblue =new PIXI.Sprite(PIXI.Texture.from('images/singleblue.png'));
-    singleblue.scale.set(0.8)
-    singleblue.isSprite=true;
-    singleblue.x=bluex;
-    singleblue.y=50;
-    singleblue.interactive=true;
-    singleblue.buttonMode=true;
-    singleblue.on('click', async function(e){
-        this.x=percep_blank.x-100;
-        this.y=percep_blank.y+50;
+        singleblue.scale.set(0.8)
+        singleblue.isSprite=true;
+        singleblue.x=bluex;
+        singleblue.y=50;
+        singleblue.interactive=true;
+        singleblue.buttonMode=true;
+        singleblue.on('click', async function(e){
+            this.x=inx;
+            this.y=iny;
 
-        singlestraw.x=strawx;
-        singlestraw.y=50;
-        singlecherry.x=cherryx;
-        singlecherry.y=50;
+            singlestraw.x=strawx;
+            singlestraw.y=50;
+            singlecherry.x=cherryx;
+            singlecherry.y=50;
 
-        await sleep(500);
-        percep_blank.texture=PIXI.Texture.from('images/percep_blue.png');
-    });
+            await sleep(500);
+           percep_blank.texture=PIXI.Texture.from('images/percep_blueberry.png');
+        });
 
 
     var singlestraw =new PIXI.Sprite(PIXI.Texture.from('images/singlestraw.png'));
-    singlestraw.scale.set(0.8)
-    singlestraw.isSprite=true;
-    singlestraw.x=strawx;
-    singlestraw.y=50;
-    singlestraw.interactive=true;
-    singlestraw.buttonMode=true;
-    singlestraw.on('click', async function(e){
-        this.x=percep_blank.x-100;
-        this.y=percep_blank.y+50;
-
-        singleblue.x=bluex;
-        singleblue.y=50;
-        singlecherry.x=cherryx;
-        singlecherry.y=50;
-
-        await sleep(500);
-        percep_blank.texture=PIXI.Texture.from('images/percep_straw.png');
-    });
-
-    var singlecherry =new PIXI.Sprite(PIXI.Texture.from('images/single_cherry.png'));
-    singlecherry.scale.set(0.8)
-    singlecherry.isSprite=true;
-    singlecherry.x=cherryx;
-    singlecherry.y=50;
-    singlecherry.interactive=true;
-    singlecherry.buttonMode=true;
-    singlecherry.on('click', async function(e){
-        this.x=percep_blank.x-100;
-        this.y=percep_blank.y+50;
-
-        singleblue.x=bluex;
-        singleblue.y=50;
+        singlestraw.scale.set(0.8)
+        singlestraw.isSprite=true;
         singlestraw.x=strawx;
         singlestraw.y=50;
+        singlestraw.interactive=true;
+        singlestraw.buttonMode=true;
+        singlestraw.on('click', async function(e){
+            this.x=inx;
+            this.y=iny;
 
-        await sleep(500);
-        percep_blank.texture=PIXI.Texture.from('images/percep_unknown.png');
-    });
+            singleblue.x=bluex;
+            singleblue.y=50;
+            singlecherry.x=cherryx;
+            singlecherry.y=50;
+
+            await sleep(500);
+            percep_blank.texture=PIXI.Texture.from('images/percep_strawberry.png');
+        });
+
+    var singlecherry =new PIXI.Sprite(PIXI.Texture.from('images/single_cherry.png'));
+        singlecherry.scale.set(0.8)
+        singlecherry.isSprite=true;
+        singlecherry.x=cherryx;
+        singlecherry.y=50;
+        singlecherry.interactive=true;
+        singlecherry.buttonMode=true;
+        singlecherry.on('click', async function(e){
+            this.x=inx;
+            this.y=iny;
+
+            singleblue.x=bluex;
+            singleblue.y=50;
+            singlestraw.x=strawx;
+            singlestraw.y=50;
+
+            await sleep(500);
+            percep_blank.texture=PIXI.Texture.from('images/percep_idk.png');
+        });
 
     SlideIntro1b.slideContainer.addChild(singleblue,singlestraw,singlecherry);
 
     SlideIntro1b.drawText(textIntro1b);
     SlideIntro1b.drawTextButtons();
 
-
 export const SlideIntro1c = new Slide();
 var textIntro1c= [
-    [["So how does it work? "], [layout.LEFTBUFFER, 100] ],
-    [["First, we have to train our neural network."], [layout.LEFTBUFFER, 200] ],
+    [["So how does it work? ",textstyles.large_bold], [layout.LEFTBUFFER+200, 100] ],
+    [["First, we have to train our neural network."], [layout.LEFTBUFFER+200, 200] ],
 
 ];
 SlideIntro1c.drawText(textIntro1c);
 SlideIntro1c.drawTextButtons();
 
-// INTRO 2
 export const SlideIntro2 = new Slide();
 
     var examples=new PIXI.Sprite(PIXI.Texture.from('images/examples_nolabels.png'));
@@ -196,7 +187,6 @@ export const SlideIntro2 = new Slide();
     SlideIntro2.drawText(textIntro2);
     SlideIntro2.drawTextButtons();
 
-// INTRO 3
 export const SlideIntro3 = new Slide();
     var captcha=new PIXI.Sprite(PIXI.Texture.from('images/captcha.png'));
     captcha.isSprite=true;
@@ -213,7 +203,6 @@ export const SlideIntro3 = new Slide();
     SlideIntro3.drawText(textIntro3);
     SlideIntro3.drawTextButtons();
 
-//INTRO 4
 export const SlideIntro4 = new Slide();
     var examples1=new PIXI.Sprite(PIXI.Texture.from('images/examples1.png'));
         examples1.isSprite=true;
@@ -229,12 +218,12 @@ export const SlideIntro4 = new Slide();
         examples2.y=80;
 
     var textIntro4 = [
-        [examples1, ["Once our net is finished learning,"+'\n'+ "we'll give it some unlabeled data"+'\n'+
+        [examples1, ["Once our net is finished learning, "+'\n'+ "we'll give it some unlabeled data"+'\n'+
         "to test if it works."],[layout.LEFTBUFFER,100]],
         examples2
     ];
 
-    var textwid= PIXI.TextMetrics.measureText("Once our net is finished learning,"+'\n'+ "we'll give it some unlabeled data"+'\n'+"to test if it works.",textstyles.default).width;
+    var textwid= PIXI.TextMetrics.measureText(textIntro4[0][1][0],textstyles.default).width;
     examples1.x=examples1.x+textwid;
     examples2.x=examples2.x+textwid;
 
@@ -242,74 +231,104 @@ export const SlideIntro4 = new Slide();
     SlideIntro4.drawText(textIntro4);
     SlideIntro4.drawTextButtons();
 
-
-//Change name eventually
-// INTRO 3a
 export const SlideIntro3a = new Slide();
-    var example_blue_no=new PIXI.Sprite(PIXI.Texture.from('images/example1_blue_no.png'));
+    var example_blue_no=new PIXI.Sprite(PIXI.Texture.from('images/example1_nolabel.png'));
         example_blue_no.isSprite=true;
-        example_blue_no.x= layout.LEFTBUFFER+(window.innerWidth*2/3);
-        example_blue_no.y= (window.innerHeight/2);
+        example_blue_no.x= layout.LEFTBUFFER;
+        example_blue_no.y= 50;//(window.innerHeight/2);
 
-    var example_blue_char=new PIXI.Sprite(PIXI.Texture.from('images/example_blue_char.png'));
+        console.log("WIDTH"+example_blue_no.width)
+    var example_blue_char=new PIXI.Sprite(PIXI.Texture.from('images/example1_label.png'));
         example_blue_char.isSprite=true;
         example_blue_char.x= layout.LEFTBUFFER
-        example_blue_char.y= (window.innerHeight/2);
+        example_blue_char.y= 50;
 
 
     var textIntro3a = [
-        [ example_blue_no, ["Some neural networks can classify images using their pixels."], [layout.LEFTBUFFER,100] ],
-        [ ["for our neural network, we are going to assign some attributes"+'\n'+"that we think are important."], [layout.LEFTBUFFER,150]],
+        [ example_blue_no, ["Some neural networks can classify images using their pixels. "], [layout.LEFTBUFFER+350,100] ],
+        [ ["for our neural network, we are going to assign some attributes"+'\n'+"that we think are important."], [layout.LEFTBUFFER+350,150]],
         example_blue_char,
-        [ ["roundness is a score from 0-1 "+'\n'+"of how round the object looks", textstyles.small], [300,300]],
-        [ ["This step is called"],[" data preprocessing.",textstyles.ital], [300,400 ]],
-        [ ["Now we're ready to start building our net.",textstyles.ital], [300,400 ]]
-
+       // [ ["roundness is a score from 0-1 "+'\n'+"of how round the object looks", textstyles.medium], [layout.LEFTBUFFER+340,400]],
+        [ ["This step is called"],[" data preprocessing.",textstyles.ital], [layout.LEFTBUFFER+400,340 ]],
+        [ ["Now we're ready to start building our neural network.",textstyles.large_bold], [layout.LEFTBUFFER+350,400]]
     ];
+
+    textwid= PIXI.TextMetrics.measureText(textIntro3a[0][1][0],textstyles.default).width;
+    //example_blue_no.x=layout.LEFTBUFFER+textwid;
+    //example_blue_char.x=layout.LEFTBUFFER+textwid;
+
+    
 
     SlideIntro3a.drawText(textIntro3a);
     
     SlideIntro3a.drawTextButtons();
 
-//NEURON INTRO - JUST PICTURE
+
+
+/************      NEURON     **************/
+export const SlideNeuronA = new Slide();
+
+    var percep_blank2 =new PIXI.Sprite(PIXI.Texture.from('images/percep_blank.png'));
+        percep_blank2.scale.set(1.2)
+        percep_blank2.isSprite=true;
+
+        percep_blank2.x=layout.LEFTBUFFER + 150;
+        percep_blank2.y=150;
+
+    var percep_labels =new PIXI.Sprite(PIXI.Texture.from('images/percep_labels.png'));
+        percep_labels.scale.set(1.2)
+        percep_labels.isSprite=true;
+
+        percep_labels.x=layout.LEFTBUFFER + 150;
+        percep_labels.y=150;
+
+    var textNeuronA = [
+        [percep_blank2,["A neural network is made up of "], ["neurons",textstyles.large_bold],[" connected by "], ["weights. ",textstyles.large_bold],[ layout.LEFTBUFFER, 100]],
+        percep_labels
+    ];
+
+    SlideNeuronA.drawText(textNeuronA);
+    SlideNeuronA.drawTextButtons();
+
 export const SlideNeuron1 = new Slide();
 
-    var neuron_example_x=0;
-    var neuron_example_y=50;
+    var neuron_example_x=layout.LEFTBUFFER;
+    var neuron_example_y=70;
+    var scale=0.8;
 
     var neuron_example0=new PIXI.Sprite(PIXI.Texture.from('images/neuron_example0.png'));
+        neuron_example0.scale.set(scale);
         neuron_example0.isSprite=true;
         neuron_example0.x=neuron_example_x;
         neuron_example0.y=neuron_example_y;
 
     var neuron_example1=new PIXI.Sprite(PIXI.Texture.from('images/neuron_example1.png'));
+        neuron_example1.scale.set(scale);
         neuron_example1.isSprite=true;
         neuron_example1.x=neuron_example_x;
         neuron_example1.y=neuron_example_y;
 
     var neuron_example2=new PIXI.Sprite(PIXI.Texture.from('images/neuron_example2.png'));
+        neuron_example2.scale.set(scale);
         neuron_example2.isSprite=true;
         neuron_example2.x=neuron_example_x;
         neuron_example2.y=neuron_example_y;
 
     var neuron_example3=new PIXI.Sprite(PIXI.Texture.from('images/neuron_example3.png'));
+        neuron_example3.scale.set(scale);
         neuron_example3.isSprite=true;
         neuron_example3.x=neuron_example_x;
         neuron_example3.y=neuron_example_y;
 
-    var neuron_example=new PIXI.Sprite(PIXI.Texture.from('images/neuron_example.png'));
-        neuron_example.isSprite=true;
-        neuron_example.x=neuron_example_x;
-        neuron_example.y=neuron_example_y;
-
     var textNeuron1 = [
-        [neuron_example0,["Here's a neuron. "], [ layout.LEFTBUFFER-50, 100]],
-        [ neuron_example1,["A neuron takes in some inputs... " ], [ layout.LEFTBUFFER-50, 200] ],
-        [ neuron_example2,["...some math happens... " ], [ layout.LEFTBUFFER-50, 300]],
-        [ neuron_example3,["and spits out a single output " ], [ layout.LEFTBUFFER-50, 400]],
+        [neuron_example0,["Here's a neuron. ", textstyles.large_bold], [ layout.LEFTBUFFER, 120]],
+        [ neuron_example1,["A neuron takes in some inputs... " ], [ layout.LEFTBUFFER, 200] ],
+        [ ["(each input is a single number)", textstyles.medium ], [ layout.LEFTBUFFER+20, 250] ],
+        [ neuron_example2,["...some math happens... " ], [ layout.LEFTBUFFER+500, 450]],
+        [ neuron_example3,["...and spits out a single output. " ], [ layout.LEFTBUFFER+760, 350]],
     ];
 
-    var textwid= PIXI.TextMetrics.measureText("A neuron takes in some inputs... ",textstyles.default).width;
+    var textwid= PIXI.TextMetrics.measureText(textNeuron1[1][1][0],textstyles.default).width;
     neuron_example1.x=neuron_example_x+textwid;
     neuron_example2.x=neuron_example_x+textwid;
     neuron_example3.x=neuron_example_x+textwid;
@@ -351,18 +370,13 @@ export const SlideNeuron2 = new Slide();
     var inputexample=new PIXI.Sprite(PIXI.Texture.from('images/single_example.png'));
         inputexample.isSprite=true;
         inputexample.scale.set(0.7);
-        inputexample.x= layout.LEFTBUFFER-50
+        inputexample.x= layout.LEFTBUFFER;
         inputexample.y= 120;
     SlideNeuron2.slideContainer.addChild(inputexample);
 
     var textNeuron2 = [
-        [neuron_large_over,["Let's start with this image. "], [layout.LEFTBUFFER-50,100]],
-        [["The two values that we found earlier "+'\n'+"become our inputs "], [layout.LEFTBUFFER-100,475]],
-
-    /*  [["for now, we'll just show the output of the neuron. Also, more yellow= more active"], [150,150]],
-        [["but hover over the neuron to see what's going on inside"], [150,200]],*/
-
-    // [ [SlideNeuron2.slideNet.getLayer(0).neurons[0].inputs[0].toFixed(2) +" × "+ SlideNeuron2.slideNet.getLayer(0).neurons[0].weights[0].toFixed(2)], [ 100, 100]]
+        [neuron_large_over,["Let's start with this image. "], [layout.LEFTBUFFER,80]],
+        [["The two values that we found earlier "+'\n'+"become our inputs "], [layout.LEFTBUFFER,465]],
     ];
 
     SlideNeuron2.drawText(textNeuron2);
@@ -383,14 +397,18 @@ export const SlideNeuron2b = new Slide();
         neuron_large_actfncover.x=layout.NEURON_LARGE_X;
         neuron_large_actfncover.y=layout.NEURON_LARGE_Y;
 
+    /*var biascover = new PIXI.Graphics();
+        biascover.beginFill(0xFFFFFF);
+        biascover.drawRect(layout.NEURON_LARGE_X-165,layout.NEURON_LARGE_Y,100,25)
+*/
     var textNeuron2b = [
-        [neuron_large_actfncover,["Each input is multiplied by a weight."], [layout.LEFTBUFFER-50,100]],
-        [["Next, we take the sum of all those values."], [layout.LEFTBUFFER-50,150]],
-       // [["We also add in another number - called the"], [" bias", textstyles.ital], [layout.LEFTBUFFER-50,200]],
-        [["Hover your mouse over the weights and click the buttons "+'\n'+ " to increase and decrease the weights"], [layout.LEFTBUFFER-50,250]],
-
+        [neuron_large_actfncover,["Each input is multiplied by a weight. "], [layout.LEFTBUFFER,100]],
+        [["Next, we take the sum of all those values. "], [layout.LEFTBUFFER,150]],
+        [["We also add in another number - called the"], [" bias  ", textstyles.ital], [layout.LEFTBUFFER,200]],
+        [["Hover your mouse over the weights and click the buttons "+'\n'+ " to increase and decrease the weights. "], [layout.LEFTBUFFER-50,250]],
     ];
 
+   // SlideNeuron2b.slideContainer.addChild(biascover);
     SlideNeuron2b.drawText(textNeuron2b);
     SlideNeuron2b.drawTextButtons();
 
@@ -410,8 +428,8 @@ export const SlideNeuron2b2 = new Slide();
     neuron_large_actfncover2.y=layout.NEURON_LARGE_Y;
 
     var textNeuron2b2 = [
-        [neuron_large_actfncover2,["We also add in another number - called the"], [" bias", textstyles.ital], [layout.LEFTBUFFER,200]],
-        [["define bias"],[layout.LEFTBUFFER-50,250]],
+        [neuron_large_actfncover2,["define"], [layout.LEFTBUFFER,200]],
+      //  [["define bias + weights"],[layout.LEFTBUFFER-50,250]],
         [["To start, our weights and biases are random."],[layout.LEFTBUFFER,300]],
 
 
@@ -434,7 +452,7 @@ export const SlideNeuron2c = new Slide();
     sigmoid.y=layout.LEFTBUFFER;
 
     var textNeuron2c = [
-        [ ["we plug that value from the last step into an"], [" activation function", textstyles.ital], [layout.LEFTBUFFER-120,100]],   
+        [ ["we plug that value from the last step into an"], [" activation function", textstyles.ital], [layout.LEFTBUFFER-50,70]],   
         [ sigmoid,["Right now, we're using the sigmoid function"], [50,150]],
         [ ["which squishes our output between 0 and 1"], [50,200]],
     ];

@@ -11,6 +11,7 @@ import {SlideHome,
     SlideIntro3,
     SlideIntro3a,
     SlideIntro4,
+    SlideNeuronA,
     SlideNeuron1,
     SlideNeuron2,
     SlideNeuron2b,
@@ -78,7 +79,7 @@ export class View{
         this.slideList = [];
         this.slideList.push(SlideHome,SlideInstruct, //1
                             SlideIntro1,SlideIntro1a,SlideIntro1b,SlideIntro1c,SlideIntro2,SlideIntro3, SlideIntro4,SlideIntro3a, //9
-                            SlideNeuron1,SlideNeuron2,SlideNeuron2b,SlideNeuron2b2,SlideNeuron2c,SlideNeuron2d,SlideNeuron2e, //16
+                            SlideNeuronA, SlideNeuron1,SlideNeuron2,SlideNeuron2b,SlideNeuron2b2,SlideNeuron2c,SlideNeuron2d,SlideNeuron2e, //16
                             SlideNet1, SlideNet1b,SlideNet2, SlideNet3, SlideSandbox,SlideGraphTest);
 
         const opener = new PIXI.Sprite(PIXI.Texture.from('images/opener.png'));
@@ -90,7 +91,7 @@ export class View{
 
 
 
-        this.currentSlide=0;
+        this.currentSlide=12;
 
 
 
@@ -101,32 +102,18 @@ export class View{
     }
 
     resize(){
-      //  console.log(window.innerWidth);                
 
-            var buffer2=(window.innerWidth-this.w)/8;
+        var buffer2=(window.innerWidth-this.w)/8;
 
-            if(this.currentSlide==0){
-                this.app.stage.getChildAt(0).getChildByName("opener").x=window.innerWidth/2;
-                this.app.stage.getChildByName("button_start").x=window.innerWidth/2;
-            } else {
-                this.app.stage.getChildAt(0).position.set(buffer2,0);
-                this.app.stage.getChildAt(0).getChildByName("header").x=0-buffer2;
-           this.app.stage.getChildAt(0).getChildByName("footer").x=0-buffer2;
-
-            }
-           // this.app.stage.getChildAt(0).position.set(buffer2,0);
-     //   } else {
-           //this.app.stage.getChildAt(0).position.set(buffer2,0);
-        //   this.app.stage.getChildAt(0).getChildByName("header").x=0-buffer2;
-           //this.app.stage.getChildAt(0).getChildByName("footer").x=0-buffer2;
-
-           if(this.currentSlide==0){
-           // this.app.stage.getChildAt(0).getChildByName("opener").x=window.innerWidth/2 -buffer2;
-           //this.app.stage.getChildByName("button_start").x=this.app.stage.getChildAt(0).getChildByName("opener").x +buffer2;
-           // app.stage.getChildAt(0).getChildByName("opener").x=(window.innerWidth/2)-buffer;
+        if(this.currentSlide==0){
+            this.app.stage.getChildAt(0).getChildByName("opener").x=window.innerWidth/2;
+            this.app.stage.getChildByName("button_start").x=window.innerWidth/2;
+        } else {
+            this.app.stage.getChildAt(0).position.set(buffer2,0);
+            this.app.stage.getChildAt(0).getChildByName("header").x=0-buffer2;
+        this.app.stage.getChildAt(0).getChildByName("footer").x=0-buffer2;
 
         }
-       // }*/
     }
 
     caveats(){

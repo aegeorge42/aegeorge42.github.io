@@ -29,6 +29,12 @@ export const textstyles = {
     fontSize: 20
   }),
 
+  medium: new PIXI.TextStyle({
+    fontFamily: 'Helvetica',
+    fontWeight: 400,
+    fontSize: 16
+  }),
+
   small: new PIXI.TextStyle({
     fontFamily: 'Helvetica',
     fontWeight: 400,
@@ -40,6 +46,14 @@ export const textstyles = {
     fontWeight: 400,
     fontSize: 20,
     fontStyle: 'italic'
+
+  }),
+
+  large_bold: new PIXI.TextStyle({
+    fontFamily: 'Helvetica',
+    fontWeight: 600,
+    fontSize: 25,
+    //fontStyle: 'bold'
 
   }),
 

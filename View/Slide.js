@@ -443,35 +443,43 @@ export class Slide{
 
                     weightSprite.interactive=true;
 
+                    var weightTextBox = new PIXI.Graphics();
+                        weightTextBox.beginFill(0xFFFFFF);
+                        weightTextBox.drawRect(-35,-10,70,60);
+                        weightTextBox.name="weightTextBox";
+
                     var weightText = new PIXI.Text(net.getLayer(i).getNeuron(j).getWeight(k).toFixed(2),textstyles.default)
                         weightText.visible=false;
-                        weightText.x=0;
-                        weightText.y=100;
+                        weightText.anchor.set(0.5);
+                        weightText.y=35;
                         weightText.name="weightText";
-                    weightSprite.addChild(weightText)
+                    weightSprite.addChild(weightTextBox);
+                    weightTextBox.addChild(weightText);
+
+
                     var addweight = new Button("+",PIXI.Texture.from('images/buttons/plus.png'),(startx+endx)/2,(starty+endy)/2,false);
-                      addweight.anchor.set(0.5);
                     var loseweight = new Button("-",PIXI.Texture.from('images/buttons/minus.png'),((startx+endx)/2)-25,(starty+endy)/2,false);
-                      addweight.anchor.set(0.5);
                     weightSprite.addChild(addweight,loseweight);
                                         
                     weightSprite.on('mouseover', function(e){
-                        this.getChildByName("weightText").visible=true;
-                        this.getChildByName("weightText").x=e.data.global.x;
-                        this.getChildByName("weightText").y=e.data.global.y;
+                        this.getChildByName("weightTextBox").visible=true;
+                        this.getChildByName("weightTextBox").x=e.data.global.x;
+                        this.getChildByName("weightTextBox").y=e.data.global.y;
 
-                        this.getChildByName("+").x=e.data.global.x;
-                        this.getChildByName("+").y=e.data.global.y;
+                        this.getChildByName("weightTextBox").getChildByName("weightText").visible=true;
 
-                        this.getChildByName("-").x=e.data.global.x-25;
-                        this.getChildByName("-").y=e.data.global.y;
+                        this.getChildByName("+").x=e.data.global.x+15;
+                        this.getChildByName("+").y=e.data.global.y+10;
+
+                        this.getChildByName("-").x=e.data.global.x-15;
+                        this.getChildByName("-").y=e.data.global.y+10;
 
                         this.getChildByName("+").visible=true;
                         this.getChildByName("-").visible=true;
                     });
                     
                     weightSprite.on('mouseout', function(e){
-                        this.getChildByName("weightText").visible=false;
+                        this.getChildByName("weightTextBox").visible=false;
                         this.getChildByName("+").visible=false;
                         this.getChildByName("-").visible=false;
                     });
@@ -534,30 +542,52 @@ export class Slide{
                     var hitbuffer = 10;
                     weightSprite.interactive=true;
 
+                    var weightTextBox = new PIXI.Graphics();
+                        weightTextBox.beginFill(0xFFFFFF);
+                        weightTextBox.drawRect(-35,-10,70,60);
+                        weightTextBox.name="weightTextBox";
+
+                    var weightText = new PIXI.Text(net.getLayer(i).getNeuron(j).getWeight(k).toFixed(2),textstyles.default)
+                        weightText.visible=false;
+                        weightText.anchor.set(0.5);
+                        weightText.y=35;
+                        weightText.name="weightText";
+                    weightSprite.addChild(weightTextBox);
+                    weightTextBox.addChild(weightText);
+
+
                     weightSprite.drawPolygon(startx, starty, endx, endy);
                     weightSprite.hitArea = new PIXI.Polygon(startx, starty +hitbuffer, 
                                                             endx, endy +hitbuffer,
                                                             endx, endy -hitbuffer,
                                                             startx, starty -hitbuffer);
 
+                                
+
                     var addweight = new Button("+",PIXI.Texture.from('images/buttons/plus.png'),(startx+endx)/2,(starty+endy)/2,false);
-                      addweight.anchor.set(0.5);
                     var loseweight = new Button("-",PIXI.Texture.from('images/buttons/minus.png'),((startx+endx)/2)-25,(starty+endy)/2,false);
-                      addweight.anchor.set(0.5);
                     weightSprite.addChild(addweight,loseweight);
                                         
                     weightSprite.on('mouseover', function(e){
-                        this.getChildByName("+").x=e.data.global.x;
-                        this.getChildByName("+").y=e.data.global.y;
 
-                        this.getChildByName("-").x=e.data.global.x-25;
-                        this.getChildByName("-").y=e.data.global.y;
+                        this.getChildByName("weightTextBox").visible=true;
+                        this.getChildByName("weightTextBox").x=e.data.global.x;
+                        this.getChildByName("weightTextBox").y=e.data.global.y;
+
+                        this.getChildByName("weightTextBox").getChildByName("weightText").visible=true;
+
+                        this.getChildByName("+").x=e.data.global.x+15;
+                        this.getChildByName("+").y=e.data.global.y+10;
+
+                        this.getChildByName("-").x=e.data.global.x-15;
+                        this.getChildByName("-").y=e.data.global.y+10;
 
                         this.getChildByName("+").visible=true;
                         this.getChildByName("-").visible=true;
                     });
                     
                     weightSprite.on('mouseout', function(e){
+                        this.getChildByName("weightTextBox").visible=false;
                         this.getChildByName("+").visible=false;
                         this.getChildByName("-").visible=false;
                     });
@@ -603,6 +633,8 @@ export class Slide{
                     }
 
                     this.weightsContainer.getChildByName(name).updateLineStyle(thickness, color, 1);
+                    this.weightsContainer.getChildByName(name).getChildByName("weightTextBox").getChildByName("weightText").text=
+                    net.getLayer(i).getNeuron(j).getWeight(k).toFixed(2);
                 }
             }
         }

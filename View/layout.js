@@ -29,13 +29,13 @@ export const layout = {
     NEURON_X_DIF: 150,
     NEURON_Y_DIF: 125,
 
-    NEURON_LARGE_X: 1000,
+    NEURON_LARGE_X: Math.max((window.innerWidth-1100)/2,20)+925,
     NEURON_LARGE_Y: 280,
     //NEURON_LARGE_WIDTH: 250,
 
     NEURON_LARGE_Y_DIF:250,
 
-    NEURON_LARGE_LEFTLIM:650,
+    NEURON_LARGE_LEFTLIM: Math.max((window.innerWidth-1100)/2,20)+525,
     NEURON_NUDGE: 35
 
 
