@@ -44,41 +44,18 @@ export class View{
         this.app=app;
 
         window.addEventListener('resize', resize); 
+
+        this.w= window.innerWidth;    
         var w=window.innerWidth;    
         var h=window.innerHeight;
-            if(w<1000){w=1000}
-   
+        var buffer=0;
        // console.log(window.innerHeight)  
-
-       var buffer=100;
         function resize(){
-           // app.stage.getChildAt(0).position.set((window.innerWidth-w)/2,0)//(Math.min(window.innerWidth-w,0),0);
-            /*
-            if(w<window.innerWidth){app.stage.getChildAt(0).position.set((window.innerWidth-w)/2,0)} else {}
-
-            console.log(w);
-                app.stage.getChildAt(0).getChildByName("header").x=0-(window.innerWidth-w)/2;
-                app.stage.getChildAt(0).getChildByName("header").width=window.innerWidth*2;
-                app.stage.getChildAt(0).getChildByName("footer").x=0-(window.innerWidth-w)/2;
-                app.stage.getChildAt(0).getChildByName("footer").width=window.innerWidth*2;
-
-           /* if(window.innerWidth-w >=0){
-                app.stage.getChildAt(0).position.set((window.innerWidth-w)/2,0)//(Math.min(window.innerWidth-w,0),0);
-                app.stage.getChildAt(0).getChildByName("header").x=0;
-                app.stage.getChildAt(0).getChildByName("header").width=window.innerWidth;
-                app.stage.getChildAt(0).getChildByName("footer").width=window.innerWidth;
-
-
-
-            } else {
-                app.stage.getChildAt(0).position.set((window.innerWidth-w)/2,0)//(Math.min(window.innerWidth-w,0),0);
-
-             //   app.stage.getChildAt(0).position.set(Math.max(window.innerWidth-w,-buffer),0);
-                app.stage.getChildAt(0).getChildByName("header").width=window.innerWidth+buffer;
-                app.stage.getChildAt(0).getChildByName("footer").width=window.innerWidth+buffer;
-
-
-            }*/
+            buffer=(window.innerWidth-w)/2;
+            console.log(buffer)
+            app.stage.getChildAt(0).position.set(buffer,0);
+            app.stage.getChildAt(0).getChildByName("header").x=0-buffer;
+            app.stage.getChildAt(0).getChildByName("footer").x=0-buffer;
 
             app.renderer.resize(window.innerWidth, window.innerHeight);
         
@@ -89,7 +66,6 @@ export class View{
             app.stage.getChildByName("button_prevslide").y=window.innerHeight-(75/2);
 
             if(vst.currentSlide==0){
-
                 app.stage.getChildByName("button_start").x=window.innerWidth/2;
             }
         }
@@ -112,7 +88,7 @@ export class View{
 
 
 
-        this.currentSlide=18;
+        this.currentSlide=1;
 
 
 
@@ -122,7 +98,21 @@ export class View{
         this.caveats();
     }
 
+    resize(){
+        console.log(window.innerWidth);                
+
+       var buffer2=(window.innerWidth-this.w)/2;
+           // app.stage.getChildAt(0).position.set(Math.max(buffer2,0),0);
+     //   } else {
+           this.app.stage.getChildAt(0).position.set(buffer2,0);
+           this.app.stage.getChildAt(0).getChildByName("header").x=0-buffer2;
+           this.app.stage.getChildAt(0).getChildByName("footer").x=0-buffer2;
+
+       // }*/
+    }
+
     caveats(){
+
         if (this.currentSlide==0){
 
             for(var i = 1; i<this.app.stage.children.length-1; i++){
@@ -165,6 +155,7 @@ export class View{
         this.app.stage.addChildAt(this.slideList[this.currentSlide].slideContainer,0);
         this.app.stage.addChild(this.slideList[this.currentSlide].textbuttonContainer);
         this.caveats();
+        this.resize();
     }
 
     createButtons(){
@@ -230,6 +221,7 @@ export class View{
 
                 vst.currentSlide=0;
                 vst.drawSlide();
+                
         });
 
         var gotointro = new Button("gotointro",PIXI.Texture.from('images/buttons/gotointro.png'),250,layout.HEADER_HEIGHT/2,false)

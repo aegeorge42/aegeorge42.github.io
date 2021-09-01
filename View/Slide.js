@@ -1105,8 +1105,8 @@ export class Slide{
 
             var costLabel = new PIXI.Text("cost" + '\n' +formatter_long.format(net.costTot),medium);
             costLabel.name = "costLabel";
-            costLabel.x=450;
-            costLabel.y=50;
+            costLabel.x=550;
+            costLabel.y=400;
         this.labelsContainer.addChild(costLabel);
 
         //target label ex strawberry

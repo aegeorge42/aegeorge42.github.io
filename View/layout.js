@@ -3,7 +3,9 @@ export const layout = {
     HEADER_HEIGHT:50,
     FOOTER_HEIGHT:75,
 
-    LEFTBUFFER: window.innerWidth/2 - window.innerWidth*(3/8),
+    //LEFTBUFFER: window.innerWidth/2 - window.innerWidth*(3/8),
+
+    LEFTBUFFER:Math.max((window.innerWidth-1100)/2,20),
 
     NEXTSLIDE_X: (window.innerWidth/2) +100,
     PREVSLIDE_X: (window.innerWidth/2) -100,

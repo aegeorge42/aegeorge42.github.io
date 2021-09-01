@@ -32,7 +32,13 @@ export const SlideInstruct = new Slide();
     ];    
     SlideInstruct.drawText(textInstruct);
     SlideInstruct.drawTextButtons();
-
+    /*
+        var rect = new PIXI.Graphics();
+        rect.drawRect(0,0,1100,450);
+        SlideInstruct.slideContainer.addChild(rect);
+        rect.x=(window.innerWidth-1100)/2;
+        rect.y=60;
+    */
 // INTRO 1
 export const SlideIntro1 = new Slide();
 
@@ -49,7 +55,7 @@ export const SlideIntro1 = new Slide();
 export const SlideIntro1a = new Slide();
     var percep_blank1 =new PIXI.Sprite(PIXI.Texture.from('images/percep_blank.png'));
     percep_blank1.isSprite=true;
-    percep_blank1.x=window.innerWidth/2 -layout.LEFTBUFFER;
+    percep_blank1.x=layout.LEFTBUFFER;
     percep_blank1.y=150;
 
     var textIntro1a= [
@@ -139,7 +145,7 @@ export const SlideIntro1b = new Slide();
     SlideIntro1b.slideContainer.addChild(singleblue,singlestraw,singlecherry);
 
     var textIntro1b= [
-        [percep_blank, ["Click on an image to feed it into the perceptron. "], [layout.LEFTBUFFER-100, 100] ],
+        [percep_blank, ["Click on an image to feed it into the perceptron. "], [layout.LEFTBUFFER, 100] ],
     ];
     SlideIntro1b.drawText(textIntro1b);
     SlideIntro1b.drawTextButtons();
@@ -147,8 +153,8 @@ export const SlideIntro1b = new Slide();
 
 export const SlideIntro1c = new Slide();
 var textIntro1c= [
-    [["So how does it work? "], [layout.LEFTBUFFER-100, 100] ],
-    [["First, we have to train our neural network."], [layout.LEFTBUFFER-100, 200] ],
+    [["So how does it work? "], [layout.LEFTBUFFER, 100] ],
+    [["First, we have to train our neural network."], [layout.LEFTBUFFER, 200] ],
 
 ];
 SlideIntro1c.drawText(textIntro1c);
@@ -172,8 +178,8 @@ export const SlideIntro2 = new Slide();
 
 
     var textIntro2 = [
-        [examples,["In order to train our network, "+'\n'+"we need to give it some examples "+'\n'+"of data we want to classify."], [layout.LEFTBUFFER-100, 170]],
-        [["Using our big human brains,"+'\n'+" we label these examples"+'\n'+" with the right answers" ], [layout.LEFTBUFFER-100, 300]],
+        [examples,["In order to train our network, "+'\n'+"we need to give it some examples "+'\n'+"of data we want to classify."], [layout.LEFTBUFFER, 170]],
+        [["Using our big human brains,"+'\n'+" we label these examples"+'\n'+" with the right answers" ], [layout.LEFTBUFFER, 300]],
         examples_labels
     ];
 
@@ -220,7 +226,7 @@ export const SlideIntro4 = new Slide();
 
     var textIntro4 = [
         [examples1, ["Once our net is finished learning,"+'\n'+ "we'll give it some unlabeled data"+'\n'+
-        "to test if it works."],[layout.LEFTBUFFER-50,100]],
+        "to test if it works."],[layout.LEFTBUFFER,100]],
         examples2
     ];
 
@@ -558,6 +564,8 @@ export const SlideNet2 = new Slide();
     SlideNet2.setVis(SlideNet2.slideContainer.getChildAt(7),false);
     SlideNet2.slideContainer.getChildAt(7).getChildByName("sigmoid").visible=true;
     SlideNet2.slideContainer.getChildAt(7).getChildByName("relu").visible=true;
+    SlideNet2.slideContainer.getChildAt(7).getChildByName("addlayer").visible=true;
+    SlideNet2.slideContainer.getChildAt(7).getChildByName("remlayer").visible=true;
 
     var textNet2 = [
         [["Here's a graph of all our data"], [layout.LEFTBUFFER+570,70]],
