@@ -447,6 +447,10 @@ export class Slide{
                         weightTextBox.beginFill(0xFFFFFF);
                         weightTextBox.drawRect(-35,-10,70,60);
                         weightTextBox.name="weightTextBox";
+                        weightTextBox.interactive=true;
+                        weightTextBox.on('mouseover', function(e){
+                            this.visible=true;
+                        });
 
                     var weightText = new PIXI.Text(net.getLayer(i).getNeuron(j).getWeight(k).toFixed(2),textstyles.default)
                         weightText.visible=false;
@@ -462,17 +466,21 @@ export class Slide{
                     weightSprite.addChild(addweight,loseweight);
                                         
                     weightSprite.on('mouseover', function(e){
+
+                        var xbuffer=Math.max(0,(window.innerWidth-viewst.w)/6);
+                        var ybuffer=Math.max(0,(window.innerHeight-viewst.h)/4);
+
                         this.getChildByName("weightTextBox").visible=true;
-                        this.getChildByName("weightTextBox").x=e.data.global.x;
-                        this.getChildByName("weightTextBox").y=e.data.global.y;
+                        this.getChildByName("weightTextBox").x=e.data.global.x-xbuffer;
+                        this.getChildByName("weightTextBox").y=e.data.global.y-10-ybuffer;
 
                         this.getChildByName("weightTextBox").getChildByName("weightText").visible=true;
 
-                        this.getChildByName("+").x=e.data.global.x+15;
-                        this.getChildByName("+").y=e.data.global.y+10;
+                        this.getChildByName("+").x=e.data.global.x+15-xbuffer;
+                        this.getChildByName("+").y=e.data.global.y-ybuffer;
 
-                        this.getChildByName("-").x=e.data.global.x-15;
-                        this.getChildByName("-").y=e.data.global.y+10;
+                        this.getChildByName("-").x=e.data.global.x-15-xbuffer;
+                        this.getChildByName("-").y=e.data.global.y-ybuffer;
 
                         this.getChildByName("+").visible=true;
                         this.getChildByName("-").visible=true;
@@ -546,6 +554,12 @@ export class Slide{
                         weightTextBox.beginFill(0xFFFFFF);
                         weightTextBox.drawRect(-35,-10,70,60);
                         weightTextBox.name="weightTextBox";
+                        weightTextBox.visible=false;
+                        weightTextBox.interactive=true;
+                        weightTextBox.on('mouseover', function(e){
+                            this.visible=true;
+                        });
+
 
                     var weightText = new PIXI.Text(net.getLayer(i).getNeuron(j).getWeight(k).toFixed(2),textstyles.default)
                         weightText.visible=false;
@@ -569,18 +583,20 @@ export class Slide{
                     weightSprite.addChild(addweight,loseweight);
                                         
                     weightSprite.on('mouseover', function(e){
+                        var xbuffer=Math.max(0,(window.innerWidth-viewst.w)/6);
+                        var ybuffer=Math.max(0,(window.innerHeight-viewst.h)/4);
 
                         this.getChildByName("weightTextBox").visible=true;
-                        this.getChildByName("weightTextBox").x=e.data.global.x;
-                        this.getChildByName("weightTextBox").y=e.data.global.y;
+                        this.getChildByName("weightTextBox").x=e.data.global.x-xbuffer;
+                        this.getChildByName("weightTextBox").y=e.data.global.y-10-ybuffer;
 
                         this.getChildByName("weightTextBox").getChildByName("weightText").visible=true;
 
-                        this.getChildByName("+").x=e.data.global.x+15;
-                        this.getChildByName("+").y=e.data.global.y+10;
+                        this.getChildByName("+").x=e.data.global.x+15-xbuffer;
+                        this.getChildByName("+").y=e.data.global.y-ybuffer;
 
-                        this.getChildByName("-").x=e.data.global.x-15;
-                        this.getChildByName("-").y=e.data.global.y+10;
+                        this.getChildByName("-").x=e.data.global.x-15-xbuffer;
+                        this.getChildByName("-").y=e.data.global.y-ybuffer;
 
                         this.getChildByName("+").visible=true;
                         this.getChildByName("-").visible=true;

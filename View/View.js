@@ -50,38 +50,29 @@ export class View{
         var w=window.innerWidth;    
         this.h=window.innerHeight;
         var h=window.innerHeight;
-        var bufferx=0;
+        this.bufferx=0;
         var buffery=0;
        // console.log(window.innerHeight)  
         function resize(){
-            bufferx=(window.innerWidth-w)/6;
+            this.bufferx=(window.innerWidth-w)/6;
             buffery=(window.innerHeight-h)/4;            
             
             app.renderer.resize(window.innerWidth, window.innerHeight);
 
             if(vst.currentSlide!=0){
-            //app.stage.getChildAt(0).position.set(Math.max(bufferx,0),Math.max(buffery,0));
-            app.stage.getChildAt(0).position.set(Math.max(bufferx,0),Math.max(buffery,-50));
-            app.stage.getChildAt(0).getChildByName("header").x=Math.min(0,0-bufferx);
-            //app.stage.getChildAt(0).getChildByName("header").y=Math.min(0,0-buffery);
-            app.stage.getChildAt(0).getChildByName("header").y=Math.min(50,0-buffery);
+                app.stage.getChildAt(0).position.set(Math.max(this.bufferx,0),Math.max(buffery,-50));
+                app.stage.getChildAt(0).getChildByName("header").x=Math.min(0,0-this.bufferx);
+                app.stage.getChildAt(0).getChildByName("header").y=Math.min(50,0-buffery);
 
-            app.stage.getChildAt(0).getChildByName("footer").x=Math.min(0,0-bufferx);
-
+                app.stage.getChildAt(0).getChildByName("footer").x=Math.min(0,0-this.bufferx);
                 app.stage.getChildAt(0).getChildByName("footer").y=(buffery*4)-buffery;
 
-            /*console.log("windowheight: "+ window.innerHeight+ '\n'+
-                        "h: " + h + '\n'+
-                        "buffery: " + buffery + '\n'+
-                        "footer.y:" + app.stage.getChildAt(0).getChildByName("footer").y)
-            */
-            app.stage.getChildByName("button_nextslide").x=window.innerWidth/2 +100;
-            app.stage.getChildByName("button_nextslide").y=window.innerHeight-(75/2);
+           
+                app.stage.getChildByName("button_nextslide").x=window.innerWidth/2 +100;
+                app.stage.getChildByName("button_nextslide").y=window.innerHeight-(75/2);
 
-            app.stage.getChildByName("button_prevslide").x=window.innerWidth/2 -100,
-            app.stage.getChildByName("button_prevslide").y=window.innerHeight-(75/2);
-            
-
+                app.stage.getChildByName("button_prevslide").x=window.innerWidth/2 -100,
+                app.stage.getChildByName("button_prevslide").y=window.innerHeight-(75/2);
 
             } else {
                 app.stage.getChildAt(0).getChildByName("opener").x=window.innerWidth/2;
@@ -90,21 +81,8 @@ export class View{
                 app.stage.getChildByName("button_start").x=window.innerWidth/2;
                 app.stage.getChildByName("button_start").y=((window.innerHeight)/3) +350;
             }
-
         }
 
-        function resize2(){
-            if(app.stage.getChildAt(0) !== undefined ){
-                app.stage.getChildAt(0).pivot.set(0,0);
-            }
-            
-            //app.stage.getChildAt(0).pivot.set(0,0);
-
-            app.renderer.resize(window.innerWidth, window.innerHeight);
-
-            app.stage.getChildAt(0).position.set(window.innerWidth/2,window.innerHeight/2);
-
-        }
         document.body.appendChild(this.app.view);
 
         //add premade slides
@@ -123,7 +101,7 @@ export class View{
 
 
 
-        this.currentSlide=1;
+        this.currentSlide=16;
 
 
 
@@ -133,6 +111,7 @@ export class View{
         this.caveats();
     }
 
+    // when window is resized, gotta resize all the other slides
     resize(){
         var bufferx2=(window.innerWidth-this.w)/6;
         var buffery2=(window.innerHeight-this.h)/4;            
@@ -154,7 +133,7 @@ export class View{
             this.app.stage.getChildByName("button_prevslide").x=window.innerWidth/2 -100,
             this.app.stage.getChildByName("button_prevslide").y=window.innerHeight-(75/2);
             
-
+            //e.data.global.x=e.data.global.x+100;
 
             } else {
                 this.app.stage.getChildAt(0).getChildByName("opener").x=window.innerWidth/2;
@@ -163,33 +142,11 @@ export class View{
                 this.app.stage.getChildByName("button_start").x=window.innerWidth/2;
                 this.app.stage.getChildByName("button_start").y=((window.innerHeight)/3) +350;
             }
-
-
-/*
-        var bufferx2=(window.innerWidth-this.w)/6;
-        var buffery2=(window.innerHeight-this.h);   
-
-        if(this.currentSlide==0){
-            this.app.stage.getChildAt(0).getChildByName("opener").x=window.innerWidth/2;
-            this.app.stage.getChildAt(0).getChildByName("opener").y=((window.innerHeight)/3)+50;
-
-            this.app.stage.getChildByName("button_start").x=window.innerWidth/2;
-            this.app.stage.getChildByName("button_start").y=((window.innerHeight)/3) +350;
-
-        } else {
-            this.app.stage.getChildAt(0).position.set(Math.max(bufferx2,0),Math.max(buffery2,-50));
-
-            //this.app.stage.getChildAt(0).position.set(bufferx2,0);
-            this.app.stage.getChildAt(0).getChildByName("header").x=0-bufferx2;
-            this.app.stage.getChildAt(0).getChildByName("footer").x=0-bufferx2;
-        }
-*/
     }
 
+    // handle 1st and last slide diff formats
     caveats(){
-
         if (this.currentSlide==0){
-
             for(var i = 1; i<this.app.stage.children.length-1; i++){
                 this.app.stage.getChildAt(i).visible=false;
             }      

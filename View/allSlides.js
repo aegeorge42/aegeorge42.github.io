@@ -17,24 +17,26 @@ export const SlideHome = new Slide();
 // INSTRUCTIONS
 export const SlideInstruct = new Slide();
     var textInstruct = [    
-        [ ["Here is that tool that I needed to learn about neural networks"], [layout.LEFTBUFFER, 50]],
+        [ ["Here is that tool that I needed to learn about neural networks"], [layout.LEFTBUFFER, layout.TOPBUFFER]],
     ];    
     SlideInstruct.drawText(textInstruct);
     SlideInstruct.drawTextButtons();
 
     // visualize buffer area
-    /*
-        var rect = new PIXI.Graphics();
-        rect.drawRect(layout.LEFTBUFFER,layout.BOTTOMBUFFER,1100,450);
-        SlideInstruct.slideContainer.addChild(rect);*/
+    
+        /*var rect = new PIXI.Graphics();
+        rect.drawRect(layout.LEFTBUFFER,layout.TOPBUFFER,1100,470);
+        SlideInstruct.slideContainer.addChild(rect);
         //rect.x=(window.innerWidth-1100)/2;
         //rect.y=60;
-    var rect = new PIXI.Sprite(PIXI.Texture.from('images/button_down.png'));
-        //rect.anchor.set(0,1);
-        rect.x=layout.LEFTBUFFER;
-        rect.y=layout.BOTTOMBUFFER-100;
-    SlideInstruct.slideContainer.addChild(rect);
+        SlideInstruct.slideContainer.addChild(rect);
 
+   /* var rect2 = new PIXI.Sprite(PIXI.Texture.from('images/button_down.png'));
+        rect2.anchor.set(0,1);
+        rect2.x=layout.LEFTBUFFER;
+        rect2.y=layout.BOTTOMBUFFER-100;
+    SlideInstruct.slideContainer.addChild(rect2);
+    */
 
 
 /********  INTRO ********/
@@ -455,12 +457,12 @@ export const SlideNeuron2c = new Slide();
     var sigmoid=new PIXI.Sprite(PIXI.Texture.from('images/sigmoid_graph.png'));
     sigmoid.isSprite=true;
     sigmoid.x=layout.LEFTBUFFER;
-    sigmoid.y=70;
+    sigmoid.y=layout.TOPBUFFER+75;
 
     var textNeuron2c = [
-        [ ["we plug that value from the last step into an"], [" activation function", textstyles.ital], [layout.LEFTBUFFER,170]],   
-        [ sigmoid,["Right now, we're using the sigmoid function"], [50,150]],
-        [ ["which squishes our output between 0 and 1"], [50,200]],
+        [ ["we plug that value from the last step into an"], [" activation function", textstyles.ital], [layout.LEFTBUFFER,layout.TOPBUFFER]],   
+        [ sigmoid,["Right now, we're using the sigmoid function: "], [layout.LEFTBUFFER,layout.TOPBUFFER+50]],
+        [ ["This squishes our output between 0 and 1"], [layout.LEFTBUFFER,layout.TOPBUFFER+400]],
     ];
     SlideNeuron2c.drawText(textNeuron2c);
     SlideNeuron2c.drawTextButtons();  
@@ -472,12 +474,27 @@ export const SlideNeuron2d = new Slide();
     SlideNeuron2d.slideNet.update();
     SlideNeuron2d.draw_init_large(SlideNeuron2d.slideNet);
 
-    var textNeuron2d = [
-        [ ["There's also the RELU function (pic)"], [50,150]],
-        [ ["which gives us 0 if the input is 0 or below, or returns the input if it's greater than 0."], [50,200]],
-        [ ["click the buttons below to change your activation function."], [50,200]],
+    var relu=new PIXI.Sprite(PIXI.Texture.from('images/relu_graph.png'));
+    relu.isSprite=true;
+    relu.x=layout.LEFTBUFFER;
+    relu.y=layout.TOPBUFFER+75;
 
-        [ ["importance"], [50,300]],
+    var textNeuron2d = [
+        [ ["Another activation function is called"],[" ReLU", textstyles.large_bold], [layout.LEFTBUFFER,layout.TOPBUFFER]],
+        [ ["(which stands for",textstyles.medium],
+          [" Re",textstyles.medium_bold],
+          ["ctified",textstyles.medium],
+          [" L",textstyles.medium_bold],
+          ["inear",textstyles.medium],
+          [" U",textstyles.medium_bold],
+          ["nit)",textstyles.medium],
+          [layout.LEFTBUFFER,layout.TOPBUFFER+50]],
+          
+        relu,
+        [ ["this function returns 0 if the input is 0 or below, or returns the input if it's greater than 0."], [layout.LEFTBUFFER,200]],
+        /*[ ["click the buttons below to change your activation function."], [layout.LEFTBUFFER,200]],
+
+        [ ["importance"], [50,300]],*/
 
     ];
     SlideNeuron2d.drawText(textNeuron2d);
