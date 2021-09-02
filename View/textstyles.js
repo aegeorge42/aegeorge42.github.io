@@ -50,7 +50,7 @@ export const textstyles = {
   ital: new PIXI.TextStyle({
     fontFamily: 'Helvetica',
     fontWeight: 400,
-    fontSize: 20,
+    fontSize: 22,
     fontStyle: 'italic'
 
   }),

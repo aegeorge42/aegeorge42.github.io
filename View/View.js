@@ -18,8 +18,13 @@ import {SlideHome,
     SlideNeuron2b2,
     SlideNeuron2c,
     SlideNeuron2d,
+    SlideNeuron2d2,
+
     SlideNet1,
     SlideNet1b,
+    SlideNet1c,
+    SlideNet1d,
+    SlideNet1e,
     SlideNet2,
     SlideNet3,
     SlideSandbox,
@@ -89,8 +94,8 @@ export class View{
         this.slideList = [];
         this.slideList.push(SlideHome,SlideInstruct, //1
                             SlideIntro1,SlideIntro1a,SlideIntro1b,SlideIntro1c,SlideIntro2,SlideIntro3, SlideIntro4,SlideIntro3a, //9
-                            SlideNeuronA, SlideNeuron1,SlideNeuron2,SlideNeuron2b,SlideNeuron2b2,SlideNeuron2c,SlideNeuron2d,SlideNeuron2e, //16
-                            SlideNet1, SlideNet1b,SlideNet2, SlideNet3, SlideSandbox,SlideGraphTest);
+                            SlideNeuronA, SlideNeuron1,SlideNeuron2,SlideNeuron2b,SlideNeuron2b2,SlideNeuron2c,SlideNeuron2d,SlideNeuron2d2,SlideNeuron2e, //16
+                            SlideNet1, SlideNet1b,SlideNet1c, SlideNet1d, SlideNet1e,SlideNet2, SlideNet3, SlideSandbox,SlideGraphTest);
 
         const opener = new PIXI.Sprite(PIXI.Texture.from('images/opener.png'));
         opener.name="opener";
@@ -101,7 +106,7 @@ export class View{
 
 
 
-        this.currentSlide=16;
+        this.currentSlide=21;
 
 
 
