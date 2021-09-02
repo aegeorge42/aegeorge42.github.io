@@ -5,7 +5,9 @@ export const layout = {
 
     //LEFTBUFFER: window.innerWidth/2 - window.innerWidth*(3/8),
 
-    LEFTBUFFER: Math.max((window.innerWidth-1100)/2,20),
+    LEFTBUFFER: Math.max((window.innerWidth-1100)/2,15),
+    BOTTOMBUFFER: window.innerHeight-80,//window.innerHeight-75,//Math.max((window.innerWidth-1100)/2,20),
+
     CENTER: Math.max((window.innerWidth-1100)/2,20)+window.innerWidth/2,
 
     NEXTSLIDE_X: (window.innerWidth/2) +100,

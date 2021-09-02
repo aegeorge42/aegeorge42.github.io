@@ -17,18 +17,24 @@ export const SlideHome = new Slide();
 // INSTRUCTIONS
 export const SlideInstruct = new Slide();
     var textInstruct = [    
-        [ ["Here is that tool that I needed to learn about neural networks"], [layout.LEFTBUFFER, 150]],
+        [ ["Here is that tool that I needed to learn about neural networks"], [layout.LEFTBUFFER, 50]],
     ];    
     SlideInstruct.drawText(textInstruct);
     SlideInstruct.drawTextButtons();
 
-    /* visualize buffer area
+    // visualize buffer area
+    /*
         var rect = new PIXI.Graphics();
-        rect.drawRect(0,0,1100,450);
-        SlideInstruct.slideContainer.addChild(rect);
-        rect.x=(window.innerWidth-1100)/2;
-        rect.y=60;
-    */
+        rect.drawRect(layout.LEFTBUFFER,layout.BOTTOMBUFFER,1100,450);
+        SlideInstruct.slideContainer.addChild(rect);*/
+        //rect.x=(window.innerWidth-1100)/2;
+        //rect.y=60;
+    var rect = new PIXI.Sprite(PIXI.Texture.from('images/button_down.png'));
+        //rect.anchor.set(0,1);
+        rect.x=layout.LEFTBUFFER;
+        rect.y=layout.BOTTOMBUFFER-100;
+    SlideInstruct.slideContainer.addChild(rect);
+
 
 
 /********  INTRO ********/
@@ -446,13 +452,13 @@ export const SlideNeuron2c = new Slide();
     SlideNeuron2c.slideNet.update();
     SlideNeuron2c.draw_init_large(SlideNeuron2c.slideNet);
 
-    var sigmoid=new PIXI.Sprite(PIXI.Texture.from('images/sigmoid_temp.png'));
+    var sigmoid=new PIXI.Sprite(PIXI.Texture.from('images/sigmoid_graph.png'));
     sigmoid.isSprite=true;
     sigmoid.x=layout.LEFTBUFFER;
-    sigmoid.y=layout.LEFTBUFFER;
+    sigmoid.y=70;
 
     var textNeuron2c = [
-        [ ["we plug that value from the last step into an"], [" activation function", textstyles.ital], [layout.LEFTBUFFER-50,70]],   
+        [ ["we plug that value from the last step into an"], [" activation function", textstyles.ital], [layout.LEFTBUFFER,170]],   
         [ sigmoid,["Right now, we're using the sigmoid function"], [50,150]],
         [ ["which squishes our output between 0 and 1"], [50,200]],
     ];

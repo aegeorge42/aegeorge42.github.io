@@ -48,31 +48,63 @@ export class View{
 
         this.w= window.innerWidth;    
         var w=window.innerWidth;    
+        this.h=window.innerHeight;
         var h=window.innerHeight;
-        var buffer=0;
+        var bufferx=0;
+        var buffery=0;
        // console.log(window.innerHeight)  
         function resize(){
-            buffer=(window.innerWidth-w)/8;            
+            bufferx=(window.innerWidth-w)/6;
+            buffery=(window.innerHeight-h)/4;            
+            
             app.renderer.resize(window.innerWidth, window.innerHeight);
 
             if(vst.currentSlide!=0){
+            //app.stage.getChildAt(0).position.set(Math.max(bufferx,0),Math.max(buffery,0));
+            app.stage.getChildAt(0).position.set(Math.max(bufferx,0),Math.max(buffery,-50));
+            app.stage.getChildAt(0).getChildByName("header").x=Math.min(0,0-bufferx);
+            //app.stage.getChildAt(0).getChildByName("header").y=Math.min(0,0-buffery);
+            app.stage.getChildAt(0).getChildByName("header").y=Math.min(50,0-buffery);
 
-            app.stage.getChildAt(0).position.set(Math.max(buffer,0),0);
-            app.stage.getChildAt(0).getChildByName("header").x=Math.min(0,0-buffer);
-            app.stage.getChildAt(0).getChildByName("footer").x=Math.min(0,0-buffer);
-            
+            app.stage.getChildAt(0).getChildByName("footer").x=Math.min(0,0-bufferx);
+
+                app.stage.getChildAt(0).getChildByName("footer").y=(buffery*4)-buffery;
+
+            /*console.log("windowheight: "+ window.innerHeight+ '\n'+
+                        "h: " + h + '\n'+
+                        "buffery: " + buffery + '\n'+
+                        "footer.y:" + app.stage.getChildAt(0).getChildByName("footer").y)
+            */
             app.stage.getChildByName("button_nextslide").x=window.innerWidth/2 +100;
             app.stage.getChildByName("button_nextslide").y=window.innerHeight-(75/2);
 
             app.stage.getChildByName("button_prevslide").x=window.innerWidth/2 -100,
             app.stage.getChildByName("button_prevslide").y=window.innerHeight-(75/2);
+            
+
 
             } else {
                 app.stage.getChildAt(0).getChildByName("opener").x=window.innerWidth/2;
-                app.stage.getChildByName("button_start").x=app.stage.getChildAt(0).getChildByName("opener").x;
+                app.stage.getChildAt(0).getChildByName("opener").y=((window.innerHeight)/3)+50;
+
+                app.stage.getChildByName("button_start").x=window.innerWidth/2;
+                app.stage.getChildByName("button_start").y=((window.innerHeight)/3) +350;
             }
+
         }
 
+        function resize2(){
+            if(app.stage.getChildAt(0) !== undefined ){
+                app.stage.getChildAt(0).pivot.set(0,0);
+            }
+            
+            //app.stage.getChildAt(0).pivot.set(0,0);
+
+            app.renderer.resize(window.innerWidth, window.innerHeight);
+
+            app.stage.getChildAt(0).position.set(window.innerWidth/2,window.innerHeight/2);
+
+        }
         document.body.appendChild(this.app.view);
 
         //add premade slides
@@ -91,7 +123,7 @@ export class View{
 
 
 
-        this.currentSlide=12;
+        this.currentSlide=1;
 
 
 
@@ -102,18 +134,56 @@ export class View{
     }
 
     resize(){
+        var bufferx2=(window.innerWidth-this.w)/6;
+        var buffery2=(window.innerHeight-this.h)/4;            
+            
+        this.app.renderer.resize(window.innerWidth, window.innerHeight);
 
-        var buffer2=(window.innerWidth-this.w)/8;
+        if(this.currentSlide!=0){
+            this.app.stage.getChildAt(0).position.set(Math.max(bufferx2,0),Math.max(buffery2,-50));
+
+            this.app.stage.getChildAt(0).getChildByName("header").x=Math.min(0,0-bufferx2);
+            this.app.stage.getChildAt(0).getChildByName("header").y=Math.min(50,0-buffery2);
+
+            this.app.stage.getChildAt(0).getChildByName("footer").x=Math.min(0,0-bufferx2);
+            this.app.stage.getChildAt(0).getChildByName("footer").y=(buffery2*4)-buffery2;
+
+            this.app.stage.getChildByName("button_nextslide").x=window.innerWidth/2 +100;
+            this.app.stage.getChildByName("button_nextslide").y=window.innerHeight-(75/2);
+
+            this.app.stage.getChildByName("button_prevslide").x=window.innerWidth/2 -100,
+            this.app.stage.getChildByName("button_prevslide").y=window.innerHeight-(75/2);
+            
+
+
+            } else {
+                this.app.stage.getChildAt(0).getChildByName("opener").x=window.innerWidth/2;
+                this.app.stage.getChildAt(0).getChildByName("opener").y=((window.innerHeight)/3)+50;
+
+                this.app.stage.getChildByName("button_start").x=window.innerWidth/2;
+                this.app.stage.getChildByName("button_start").y=((window.innerHeight)/3) +350;
+            }
+
+
+/*
+        var bufferx2=(window.innerWidth-this.w)/6;
+        var buffery2=(window.innerHeight-this.h);   
 
         if(this.currentSlide==0){
             this.app.stage.getChildAt(0).getChildByName("opener").x=window.innerWidth/2;
-            this.app.stage.getChildByName("button_start").x=window.innerWidth/2;
-        } else {
-            this.app.stage.getChildAt(0).position.set(buffer2,0);
-            this.app.stage.getChildAt(0).getChildByName("header").x=0-buffer2;
-        this.app.stage.getChildAt(0).getChildByName("footer").x=0-buffer2;
+            this.app.stage.getChildAt(0).getChildByName("opener").y=((window.innerHeight)/3)+50;
 
+            this.app.stage.getChildByName("button_start").x=window.innerWidth/2;
+            this.app.stage.getChildByName("button_start").y=((window.innerHeight)/3) +350;
+
+        } else {
+            this.app.stage.getChildAt(0).position.set(Math.max(bufferx2,0),Math.max(buffery2,-50));
+
+            //this.app.stage.getChildAt(0).position.set(bufferx2,0);
+            this.app.stage.getChildAt(0).getChildByName("header").x=0-bufferx2;
+            this.app.stage.getChildAt(0).getChildByName("footer").x=0-bufferx2;
         }
+*/
     }
 
     caveats(){
