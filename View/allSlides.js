@@ -188,6 +188,8 @@ export const SlideIntro2 = new Slide();
         [["In order to train our network, "+'\n'+"we need to give it some examples "+'\n'+"of data we want to classify."], [layout.LEFTBUFFER, 170]],
         examples,
         [["Using our big human brains,"+'\n'+" we label these examples"+'\n'+" with the right answers" ], [layout.LEFTBUFFER, 300]],
+        [["This is called supervised learning" ], [layout.LEFTBUFFER, 470]],
+
         examples_labels
     ];
 

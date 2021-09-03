@@ -77,10 +77,12 @@ export class Slide{
         this.slideContainer.addChild(                                      
                                       this.weightsContainer,
                                       this.inputContainer, 
-                                      this.neuronContainer,
+                                    //  this.neuronContainer,
                                    //  this.cardContainer,
                                       this.textContainer,
                                       this.labelsContainer,
+                                      this.neuronContainer,
+
                                       this.costLabel,
 
                                    //   this.imagesContainer,
@@ -1227,7 +1229,7 @@ export class Slide{
             //final output type labels ex strawberry, blueberry
             var typeLabelBox = new PIXI.Graphics
             var typeLabel = new PIXI.Text(net.data.type[i],medium);
-                typeLabel.x=layout.NEURON_LEFTLIM + (net.layers.length-1)*layout.NEURON_X_DIF + 30;
+                typeLabel.x=layout.NEURON_LEFTLIM + (net.layers.length-1)*layout.NEURON_X_DIF + 40;
                 typeLabel.y=layout.NEURON_UPPERLIM + (i*layout.NEURON_Y_DIF) + 25;
             this.labelsContainer.addChild(typeLabel);
         }
@@ -1329,8 +1331,8 @@ export class Slide{
     }
 
     drawTextButtons(){
-        this.textbuttonContainer.addChild(new Button("nexttext",PIXI.Texture.from('images/buttons/nexttext.png'),layout.NEXTSLIDE_X,layout.NEXTSLIDE_Y,true));
-        this.textbuttonContainer.addChild(new Button("prevtext",PIXI.Texture.from('images/buttons/prev.png'), layout.PREVSLIDE_X,layout.NEXTSLIDE_Y,false));
+        this.textbuttonContainer.addChild(new Button("nexttext",PIXI.Texture.from('images/buttons/next.png'),layout.NEXTSLIDE_X,layout.NEXTSLIDE_Y,true));
+        this.textbuttonContainer.addChild(new Button("prevtext",PIXI.Texture.from('images/buttons/back.png'), layout.PREVSLIDE_X,layout.NEXTSLIDE_Y,false));
 
         var slide = this;
         if(slide.textContainer.children.length<=1){

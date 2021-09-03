@@ -89,6 +89,6 @@ export class Button extends PIXI.Sprite{
 }
 
 const tintNone = 0xFFFFFF;
-export const tintOver = 0xFFD078;
+export const tintOver = 0xFFE0A6;
 export const tintDown = 0xFFA500;
 const tintGray = 0x808080;
