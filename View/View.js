@@ -12,6 +12,7 @@ import {SlideHome,
     SlideIntro3a,
     SlideIntro4,
     SlideNeuronA,
+    SlideNeuronA2,
     SlideNeuron1,
     SlideNeuron2,
     SlideNeuron2b,
@@ -19,7 +20,6 @@ import {SlideHome,
     SlideNeuron2c,
     SlideNeuron2d,
     SlideNeuron2d2,
-
     SlideNet1,
     SlideNet1b,
     SlideNet1c,
@@ -94,7 +94,7 @@ export class View{
         this.slideList = [];
         this.slideList.push(SlideHome,SlideInstruct, //1
                             SlideIntro1,SlideIntro1a,SlideIntro1b,SlideIntro1c,SlideIntro2,SlideIntro3, SlideIntro4,SlideIntro3a, //9
-                            SlideNeuronA, SlideNeuron1,SlideNeuron2,SlideNeuron2b,SlideNeuron2b2,SlideNeuron2c,SlideNeuron2d,SlideNeuron2d2,SlideNeuron2e, //16
+                            SlideNeuronA, SlideNeuronA2, SlideNeuron1,SlideNeuron2,SlideNeuron2b,SlideNeuron2b2,SlideNeuron2c,SlideNeuron2d,SlideNeuron2d2,SlideNeuron2e, //16
                             SlideNet1, SlideNet1b,SlideNet1c, SlideNet1d, SlideNet1e,SlideNet2, SlideNet3, SlideSandbox,SlideGraphTest);
 
         const opener = new PIXI.Sprite(PIXI.Texture.from('images/opener.png'));
@@ -225,14 +225,14 @@ export class View{
             }
 
             if(vst.slideList[vst.currentSlide].slideNet !== undefined && vst.slideList[vst.currentSlide].largenet==1){//&& vst.currentSlide == 9){
-                console.log(vst.slideList[vst.currentSlide].slideNet)
+            //    console.log(vst.slideList[vst.currentSlide].slideNet)
                 vst.slideList[vst.currentSlide].slideNet.update();
                 vst.slideList[vst.currentSlide].draw_update_large(vst.slideList[vst.currentSlide].slideNet)
                 vst.drawSlide();
             }
 
             if(vst.slideList[vst.currentSlide].slideNet !== undefined && vst.slideList[vst.currentSlide].largenet!=1){//&& vst.currentSlide == 9){
-                console.log(vst.slideList[vst.currentSlide].slideNet)
+            //    console.log(vst.slideList[vst.currentSlide].slideNet)
                 vst.slideList[vst.currentSlide].slideNet.update();
                 vst.slideList[vst.currentSlide].draw_update(vst.slideList[vst.currentSlide].slideNet)
                 vst.drawSlide();

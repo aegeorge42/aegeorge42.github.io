@@ -303,6 +303,14 @@ export const SlideNeuronA = new Slide();
     SlideNeuronA.drawText(textNeuronA);
     SlideNeuronA.drawTextButtons();
 
+export const SlideNeuronA2 = new Slide();
+    var textNeuronA2 = [
+        [["neurons are organized in layers"],[layout.LEFTBUFFER,layout.TOPBUFFER]]
+    ];
+
+    SlideNeuronA2.drawText(textNeuronA2);
+    SlideNeuronA2.drawTextButtons();
+
 export const SlideNeuron1 = new Slide();
 
     var neuron_example_x=layout.LEFTBUFFER;
@@ -504,7 +512,7 @@ export const SlideNeuron2d2 = new Slide();
     SlideNeuron2d2.slideNet=net_neuron;
     SlideNeuron2d2.slideNet.update();
     SlideNeuron2d2.draw_init_large(SlideNeuron2d2.slideNet);
-    SlideNeuron2d2.drawActFnButtons(SlideNeuron2d2.slideNet);
+    SlideNeuron2d2.drawActFnButtons();
     var textNeuron2d2 = [
         [ ["Use the buttons below to change the activation function"], [layout.LEFTBUFFER,layout.TOPBUFFER]],   
         [ ["why we need it"], [layout.LEFTBUFFER,layout.TOPBUFFER+200]],
@@ -528,10 +536,11 @@ export const SlideNeuron2e = new Slide();
     ];
     SlideNeuron2e.drawText(textNeuron2e);
     SlideNeuron2e.drawTextButtons();
-    SlideNeuron2e.drawActFnButtons(SlideNeuron2e.slideNet);
+    SlideNeuron2e.drawActFnButtons();
     
 
 export const SlideNet1 = new Slide();
+//SlideNet1.largenet=1;
 var net1 = new Net();
 SlideNet1.slideNet=net1;
 net1.setNetData(fruits_small);
@@ -540,12 +549,6 @@ net1.removeLayer();
 net1.update();
 SlideNet1.draw_init(net1);
 
-/*
-SlideNet1.weightsContainer.visible=false;
-SlideNet1.neuronContainer.visible=false;
-SlideNet1.labelsContainer.visible=false;    
-console.log(SlideNet1.labelsContainer);
-*/
 var textNet1 = [
     [["Because we have 2 classes,"+'\n'+ "we need two final neurons"], [layout.LEFTBUFFER+625,70]],
     [["these are called"], [" output neurons", textstyles.ital], [layout.LEFTBUFFER+625,150]],
@@ -557,13 +560,7 @@ var textNet1 = [
 ];
 SlideNet1.drawText(textNet1);
 SlideNet1.drawTextButtons();
-SlideNet1.drawButtons(SlideNet1.slideNet);
-//SlideNet1.drawCost(SlideNet1.slideNet);
-
-SlideNet1.setVis(SlideNet1.slideContainer.getChildAt(8),false);
-SlideNet1.slideContainer.getChildAt(8).getChildByName("actfnsbox").visible=true;
-SlideNet1.slideContainer.getChildAt(8).getChildByName("sigmoid").visible=true;
-SlideNet1.slideContainer.getChildAt(8).getChildByName("relu").visible=true;
+SlideNet1.drawActFnButtons(SlideNet1.slideNet);
 
 export const SlideNet1b = new Slide();
     SlideNet1b.slideNet=net1;
@@ -578,14 +575,10 @@ export const SlideNet1b = new Slide();
     ];
     SlideNet1b.drawText(textNet1b);
     SlideNet1b.drawTextButtons();
-    SlideNet1b.drawButtons(SlideNet1b.slideNet);
-    SlideNet1b.setVis(SlideNet1b.slideContainer.getChildAt(8),false);
-    SlideNet1b.slideContainer.getChildAt(8).getChildByName("actfnsbox").visible=true;
-    SlideNet1b.slideContainer.getChildAt(8).getChildByName("sigmoid").visible=true;
-    SlideNet1b.slideContainer.getChildAt(8).getChildByName("relu").visible=true;
-    //SlideNet1b.slideContainer.getChildAt(8).getChildByName("addlayer").visible=true;
-    //SlideNet1b.slideContainer.getChildAt(8).getChildByName("remlayer").visible=true;
-   // [["notice how the OUTPUT of one layer becomes the INPUT for the next layer"], [layout.LEFTBUFFER+625,90]],
+    SlideNet1b.drawActFnButtons();
+
+    //SlideNet1b.drawButtons(SlideNet1b.slideNet);
+    //SlideNet1b.setVis(SlideNet1b.slideContainer.getChildAt(8),false);
 
 export const SlideNet1c = new Slide();
     SlideNet1c.slideNet=net1;
@@ -599,12 +592,10 @@ export const SlideNet1c = new Slide();
     ];
     SlideNet1c.drawText(textNet1c);
     SlideNet1c.drawTextButtons();
-    SlideNet1c.drawButtons(SlideNet1b.slideNet);
-    SlideNet1c.slideContainer.getChildAt(8).getChildByName("learn_stoch_step").visible=false;
-    SlideNet1c.slideContainer.getChildAt(8).getChildByName("learn_stoch").visible=false;
-    SlideNet1c.slideContainer.getChildAt(8).getChildByName("pause").visible=false;
-    SlideNet1c.slideContainer.getChildAt(8).getChildByName("learnbatch_step").visible=false;
-    SlideNet1c.slideContainer.getChildAt(8).getChildByName("learnbatch").visible=false;
+    SlideNet1c.drawActFnButtons();
+
+    SlideNet1c.drawLayerButtons();
+   // SlideNet1c.drawResetButton();
 
 export const SlideNet1d = new Slide();
     var textNet1d = [
@@ -637,11 +628,8 @@ export const SlideNet2 = new Slide();
     SlideNet2.slideContainer.addChild(SlideNet2Graph.getGraph());
     SlideNet2.drawButtons(net1,SlideNet2Graph);
     SlideNet2.setVis(SlideNet2.slideContainer.getChildAt(8),false);
-    SlideNet2.slideContainer.getChildAt(8).getChildByName("actfnsbox").visible=true;
-    SlideNet2.slideContainer.getChildAt(8).getChildByName("sigmoid").visible=true;
-    SlideNet2.slideContainer.getChildAt(8).getChildByName("relu").visible=true;
-    SlideNet2.slideContainer.getChildAt(8).getChildByName("addlayer").visible=true;
-    SlideNet2.slideContainer.getChildAt(8).getChildByName("remlayer").visible=true;
+  //  SlideNet2.slideContainer.getChildAt(8).getChildByName("addlayer").visible=true;
+    //SlideNet2.slideContainer.getChildAt(8).getChildByName("remlayer").visible=true;
 
     var textNet2 = [
         [["p"], [layout.LEFTBUFFER+570,70]],
@@ -662,9 +650,6 @@ export const SlideNet3 = new Slide();
     SlideNet3.slideContainer.addChild(SlideNet2Graph.getGraph());
     SlideNet3.drawButtons(net1,SlideNet2Graph);
     SlideNet3.setVis(SlideNet3.slideContainer.getChildAt(8),false);
-    SlideNet3.slideContainer.getChildAt(8).getChildByName("actfnsbox").visible=true;
-    SlideNet3.slideContainer.getChildAt(8).getChildByName("sigmoid").visible=true;
-    SlideNet3.slideContainer.getChildAt(8).getChildByName("relu").visible=true;
 
     var textNet3 = [
         [["fffff"], [layout.LEFTBUFFER+570,70]],

@@ -1,4 +1,4 @@
-import {Button} from "./Button.js"
+import {Button, tintDown, tintOver} from "./Button.js"
 import {layout} from "./layout.js"
 import {actFns} from "../../Model/actfns.js"
 import {Data} from "../Model/data.js"
@@ -100,16 +100,18 @@ export class Slide{
             header.width=window.innerWidth;
 
             // shrug
-     //       try{
+            try{
 
                 slide.textbuttonContainer.getChildByName("nexttext").x=window.innerWidth/2 +100;
                 slide.textbuttonContainer.getChildByName("nexttext").y=window.innerHeight-(layout.FOOTER_HEIGHT/2);
 
                 slide.textbuttonContainer.getChildByName("prevtext").x=window.innerWidth/2 -100;
                 slide.textbuttonContainer.getChildByName("prevtext").y=window.innerHeight-(layout.FOOTER_HEIGHT/2);
-                //console.log(slide.textbuttonContainer)
 
-           // } catch {};
+                // lock buttons
+                slide.buttonContainer.getChildByName("actfnsbox").y=(layout.BOTTOMBUFFER-100)+(window.innerHeight-h)-(window.innerHeight-h)/4;
+
+            } catch {};
         }
     }
 
@@ -139,8 +141,8 @@ export class Slide{
         }
         console.log("setvis")
     }
-        
-    drawActFnButtons(net){
+
+    drawActFnButtons(){
         var actfnsbox = new PIXI.Sprite(PIXI.Texture.from('images/actfnsbox.png'));
             actfnsbox.name="actfnsbox";
             actfnsbox.x=layout.LEFTBUFFER;
@@ -148,29 +150,142 @@ export class Slide{
             actfnsbox.y=layout.BOTTOMBUFFER-100;
         this.buttonContainer.addChild(actfnsbox);
 
-        var slide = this;
-        this.buttonContainer.addChild(new Button("sigmoid",PIXI.Texture.from('images/buttons/sigmoid.png'), actfnsbox.x+70,window.innerHeight-115,true));
-        this.buttonContainer.getChildByName("sigmoid").on('click', function(e){
-            net.setNetActFn(actFns.SIGMOID);
-            net.update_single();
-            slide.draw_update_large(net);
+        var slide=this;
+        actfnsbox.addChild(new Button("sigmoid",PIXI.Texture.from('images/buttons/sigmoid.png'), 70,65,true));
+        actfnsbox.getChildByName("sigmoid").setTint(tintDown);
+        actfnsbox.getChildByName("sigmoid").on('click', function(e){
+
+            this.setTint(tintDown);
+            actfnsbox.getChildByName("relu").tint=0xFFFFFF;
+            actfnsbox.getChildByName("relu").tintDefault();
+
+
+            if(slide.largenet==1){
+                slide.slideNet.setNetActFn(actFns.SIGMOID);
+                slide.slideNet.update_single();
+                slide.draw_update_large(slide.slideNet);
+            } else {
+                slide.slideNet.setNetActFn(actFns.SIGMOID);
+                slide.slideNet.update();
+                slide.draw_update(slide.slideNet);
+            }
+
         });
 
-        this.buttonContainer.addChild(new Button("relu",PIXI.Texture.from('images/buttons/relu.png'), actfnsbox.x+180,window.innerHeight-115,true));
-        this.buttonContainer.getChildByName("relu").on('click', function(e){
-        
-            console.log(net.netActFn);
+        actfnsbox.addChild(new Button("relu",PIXI.Texture.from('images/buttons/relu.png'), 180, 65,true));
 
-            net.setNetActFn(actFns.RELU);
-            console.log(net.netActFn);
-            console.log(net)
-            net.update_single();
-            console.log(net)
-            slide.draw_update_large(net);
+        actfnsbox.getChildByName("relu").on('click', function(e){
+
+            this.setTint(tintDown);
+            actfnsbox.getChildByName("sigmoid").tint=0xFFFFFF;
+            actfnsbox.getChildByName("sigmoid").tintDefault();
+
+            this.isclick=true
+            if(slide.largenet==1){
+                slide.slideNet.setNetActFn(actFns.RELU);
+                slide.slideNet.update_single();
+                slide.draw_update_large(slide.slideNet);
+            } else {
+                slide.slideNet.setNetActFn(actFns.RELU);
+                slide.slideNet.update();
+                slide.draw_update(slide.slideNet);
+            }
+            
+        });
+
+    }
+
+    drawLayerButtons(){
+        var slide = this;
+        var buttonNeuronAddContainer = new PIXI.Container();
+            buttonNeuronAddContainer.name="buttonNeuronAddContainer";
+        var buttonNeuronRemContainer = new PIXI.Container();
+            buttonNeuronRemContainer.name="buttonNeuronRemContainer";
+
+        this.buttonContainer.addChild(buttonNeuronAddContainer,buttonNeuronRemContainer);
+
+        //ADD LAYER
+        this.buttonContainer.addChild(new Button("addlayer",PIXI.Texture.from('images/buttons/button_layer.png'), layout.BUTTONS_X, 140,true));
+        this.buttonContainer.getChildByName("addlayer").on('click', function(e){
+            if(slide.slideNet.layers.length<slide.slideNet.maxLayers){
+
+            slide.slideNet.addLayer();
+            slide.slideNet.update();
+            slide.draw_init(slide.slideNet);
+            }
+        });
+
+        // REMOVE LAYER
+        this.buttonContainer.addChild(new Button("remlayer",PIXI.Texture.from('images/buttons/button_removelayer.png'), layout.BUTTONS_X, 200, true));
+        this.buttonContainer.getChildByName("remlayer").on('click', function(e){
+            if(slide.slideNet.layers.length>1){
+                slide.slideNet.removeLayer();
+                slide.slideNet.update();
+                slide.draw_init(slide.slideNet);
+            }
+        });
+
+        for (var i =0; i<slide.slideNet.maxLayers; i++){
+            this.buttonContainer.getChildByName("buttonNeuronAddContainer").addChild(new Button("addneuron",PIXI.Texture.from('images/buttons/button_addneuron.png'),layout.NEURON_LEFTLIM+ (i*layout.NEURON_X_DIF),layout.NEURON_UPPERLIM-70, false));
+            this.buttonContainer.getChildByName("buttonNeuronRemContainer").addChild(new Button("remneuron",PIXI.Texture.from('images/buttons/button_removeneuron.png'),layout.NEURON_LEFTLIM+ (i*layout.NEURON_X_DIF),layout.NEURON_UPPERLIM-50, false));
+            this.setNeuronButtons(i);
+            
+          }
+    }
+
+    setNeuronButtons(layernum){
+        var slide = this;
+    
+        this.buttonContainer.getChildByName("buttonNeuronAddContainer").getChildAt(layernum).on('click', function(e){
+          if(slide.slideNet.getLayer(layernum).neurons.length<slide.slideNet.maxNeurons){
+            slide.slideNet.getLayer(layernum).addNeuron();
+            slide.slideNet.update();
+            slide.draw_init(slide.slideNet);
+          }
+        });
+    
+        this.buttonContainer.getChildByName("buttonNeuronRemContainer").getChildAt(layernum).on('click', function(e){
+            if(slide.slideNet.getLayer(layernum).neurons.length>1){
+
+                slide.slideNet.getLayer(layernum).removeNeuron();
+                slide.slideNet.update();
+                slide.draw_init(slide.slideNet);
+            }
         });
     }
 
+    drawResetButton(){
+        this.buttonContainer.addChild(new Button("reset",PIXI.Texture.from('images/buttons/cat.png'),layout.BUTTONS_X,80,true));
+
+
+        var slide=this;
+        this.buttonContainer.getChildByName("reset").on('click', function(e){
+            for(var i=0;i<slide.slideNet.layers.length;i++){
+                slide.buttonContainer.getChildByName("buttonNeuronAddContainer").getChildAt(i).visible=false;
+                slide.buttonContainer.getChildByName("buttonNeuronRemContainer").getChildAt(i).visible=false;
+            }
+
+            var newnet = new Net();
+            console.log(slide.slideNet.data)
+            newnet.setNetData(slide.slideNet.data);
+            newnet.removeLayer();
+
+            newnet.setOutLayer();
+            newnet.update();
+            slide.slideNet=newnet;
+            slide.draw_init(newnet);
+
+            slide.buttonContainer.getChildByName("actfnsbox").getChildByName("sigmoid").setTint(tintDown);
+            slide.buttonContainer.getChildByName("actfnsbox").getChildByName("relu").setTint(0xFFFFFF);
+
+            //actfnsbox.getChildByName("relu").tint=0xFFFFFF;
+            //actfnsbox.getChildByName("relu").tintDefault();
+        });
+
+    }
+
     drawButtons(net,graph){
+        /*
         var slide = this;
         var buttonNeuronAddContainer = new PIXI.Container();
             buttonNeuronAddContainer.name="buttonNeuronAddContainer";
@@ -200,7 +315,7 @@ export class Slide{
                 slide.draw_init(net);
             }
         });
-
+*/
         //reset
         this.buttonContainer.addChild(new Button("reset",PIXI.Texture.from('images/buttons/cat.png'),layout.BUTTONS_X,80,true));
         this.buttonContainer.getChildByName("reset").on('click', function(e){
@@ -309,6 +424,7 @@ export class Slide{
             }
         });
 
+        /*
         var actfnsbox = new PIXI.Sprite(PIXI.Texture.from('images/actfnsbox.png'));
         actfnsbox.name="actfnsbox";
         actfnsbox.x=layout.BUTTONS_X-60;
@@ -344,27 +460,7 @@ export class Slide{
             this.setNeuronButtons(net,i);
             
           }
-    }
-
-    setNeuronButtons(net,layernum){
-        var slide = this;
-    
-        this.buttonContainer.getChildByName("buttonNeuronAddContainer").getChildAt(layernum).on('click', function(e){
-          if(net.getLayer(layernum).neurons.length<net.maxNeurons){
-            net.getLayer(layernum).addNeuron();
-            net.update();
-            slide.draw_init(net);
-          }
-        });
-    
-        this.buttonContainer.getChildByName("buttonNeuronRemContainer").getChildAt(layernum).on('click', function(e){
-            if(net.getLayer(layernum).neurons.length>1){
-
-                net.getLayer(layernum).removeNeuron();
-                net.update();
-                slide.draw_init(net);
-            }
-        });
+          */
     }
 
     draw_init(net){
@@ -373,6 +469,7 @@ export class Slide{
         this.drawInputs_init(net);
         this.drawLabels_init(net);
 
+        
         if(this.buttonContainer.getChildByName("buttonNeuronAddContainer") !==null){
             
             for(var i=0;i<net.layers.length;i++){
@@ -385,6 +482,7 @@ export class Slide{
                 }
             }
         }
+        
     }
 
     draw_init_large(net){
@@ -1275,9 +1373,6 @@ export class Slide{
     */
     
     drawText(text){
-        var resize_w = window.innerWidth/1280;
-        var resize_h = layout.INNERHEIGHT/564;
-        var resize=Math.min(resize_h,resize_w); 
 
             for (var i =0; i<text.length; i++){
             //if sprite
