@@ -36,7 +36,7 @@ export class Slide{
         var slide=this;
        // this.maxLayers=5;
         this.buttonContainer  = new PIXI.Container();        
-        this.textbuttonContainer  = new PIXI.Container();             
+        this.textbuttonContainer  = new PIXI.Container(); 
      
         this.inputContainer = new PIXI.Container();                 
         this.neuronContainer = new PIXI.Container();
@@ -87,6 +87,7 @@ export class Slide{
                                       footer,
                                       header,
                                       this.buttonContainer,
+                                      this.textbuttonContainer,
                                       );
 
         window.addEventListener('resize', resize);    
@@ -99,15 +100,16 @@ export class Slide{
             header.width=window.innerWidth;
 
             // shrug
-            try{
+     //       try{
 
                 slide.textbuttonContainer.getChildByName("nexttext").x=window.innerWidth/2 +100;
                 slide.textbuttonContainer.getChildByName("nexttext").y=window.innerHeight-(layout.FOOTER_HEIGHT/2);
 
                 slide.textbuttonContainer.getChildByName("prevtext").x=window.innerWidth/2 -100;
                 slide.textbuttonContainer.getChildByName("prevtext").y=window.innerHeight-(layout.FOOTER_HEIGHT/2);
+                //console.log(slide.textbuttonContainer)
 
-            } catch {};
+           // } catch {};
         }
     }
 
@@ -1229,8 +1231,8 @@ export class Slide{
     }
 
     drawTextButtons(){
-        this.textbuttonContainer.addChild(new Button("nexttext",PIXI.Texture.from('images/buttons/next.png'),layout.NEXTSLIDE_X,layout.NEXTSLIDE_Y,true));
-        this.textbuttonContainer.addChild(new Button("prevtext",PIXI.Texture.from('images/buttons/back.png'), layout.PREVSLIDE_X,layout.NEXTSLIDE_Y,false));
+        this.textbuttonContainer.addChild(new Button("nexttext",PIXI.Texture.from('images/buttons/nexttext.png'),layout.NEXTSLIDE_X,layout.NEXTSLIDE_Y,true));
+        this.textbuttonContainer.addChild(new Button("prevtext",PIXI.Texture.from('images/buttons/prev.png'), layout.PREVSLIDE_X,layout.NEXTSLIDE_Y,false));
 
         var slide = this;
         if(slide.textContainer.children.length<=1){
