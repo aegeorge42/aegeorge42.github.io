@@ -110,9 +110,6 @@ export class Slide{
                 slide.textbuttonContainer.getChildByName("prevtext").x=window.innerWidth/2 -100;
                 slide.textbuttonContainer.getChildByName("prevtext").y=window.innerHeight-(layout.FOOTER_HEIGHT/2);
 
-                // lock buttons
-                slide.buttonContainer.getChildByName("actfnsbox").y=(layout.BOTTOMBUFFER-100)+(window.innerHeight-h)-(window.innerHeight-h)/4;
-
             } catch {};
         }
     }
@@ -207,8 +204,20 @@ export class Slide{
         this.buttonContainer.addChild(buttonNeuronAddContainer,buttonNeuronRemContainer);
 
         //ADD LAYER
-        this.buttonContainer.addChild(new Button("addlayer",PIXI.Texture.from('images/buttons/button_layer.png'), layout.BUTTONS_X, 140,true));
-        this.buttonContainer.getChildByName("addlayer").on('click', function(e){
+        var layersbox = new PIXI.Sprite(PIXI.Texture.from('images/layersbox.png'));
+            layersbox.name="layersbox";
+            layersbox.x= layout.LEFTBUFFER;
+            layersbox.y= layout.BOTTOMBUFFER-250; 
+        this.buttonContainer.addChild(layersbox);
+
+
+        layersbox.addChild(new Button("addlayer",PIXI.Texture.from('images/buttons/button_layer.png'), 75, 70,true));
+        layersbox.addChild(new Button("remlayer",PIXI.Texture.from('images/buttons/button_removelayer.png'), 75, 115, true));
+
+
+        
+        //this.buttonContainer.addChild(new Button("addlayer",PIXI.Texture.from('images/buttons/button_layer.png'), layout.BUTTONS_X, 140,true));
+        layersbox.getChildByName("addlayer").on('click', function(e){
             if(slide.slideNet.layers.length<slide.slideNet.maxLayers){
 
             slide.slideNet.addLayer();
@@ -216,10 +225,11 @@ export class Slide{
             slide.draw_init(slide.slideNet);
             }
         });
+        
 
         // REMOVE LAYER
-        this.buttonContainer.addChild(new Button("remlayer",PIXI.Texture.from('images/buttons/button_removelayer.png'), layout.BUTTONS_X, 200, true));
-        this.buttonContainer.getChildByName("remlayer").on('click', function(e){
+        //this.buttonContainer.addChild(new Button("remlayer",PIXI.Texture.from('images/buttons/button_removelayer.png'), layout.BUTTONS_X, 200, true));
+        layersbox.getChildByName("remlayer").on('click', function(e){
             if(slide.slideNet.layers.length>1){
                 slide.slideNet.removeLayer();
                 slide.slideNet.update();
@@ -566,14 +576,14 @@ export class Slide{
                                                                 endx, endy -hitbuffer,
                                                                 startx, starty -hitbuffer);
                     }
-
+                   // console.log(weightS)
                     weightSprite.interactive=true;
 
                     var weightTextBox = new PIXI.Graphics();
                         weightTextBox.beginFill(0xFFFFFF);
                         weightTextBox.drawRect(-35,-10,70,60);
                         weightTextBox.name="weightTextBox";
-                        weightTextBox.visible=false;
+                       // weightTextBox.visible=false;
                         weightTextBox.interactive=true;
                         weightTextBox.on('mouseover', function(e){
                             this.visible=true;
@@ -593,9 +603,8 @@ export class Slide{
                     weightSprite.addChild(addweight,loseweight);
                                         
                     weightSprite.on('mouseover', function(e){
-
-                        var xbuffer=Math.max(0,(window.innerWidth-viewst.w)/6);
-                        var ybuffer=Math.max(0,(window.innerHeight-viewst.h)/4);
+                        var xbuffer=Math.max(0,(window.innerWidth-viewst.startwidth)/6);
+                        var ybuffer=Math.max(0,(window.innerHeight-viewst.startheight)/4);
 
                         this.getChildByName("weightTextBox").visible=true;
                         this.getChildByName("weightTextBox").x=e.data.global.x-xbuffer;
@@ -624,7 +633,7 @@ export class Slide{
                       net.getLayer(this.parent.idx[0]).getNeuron(this.parent.idx[1]).setWeight(this.parent.idx[2],currWeight+0.1);
                       net.update();
                       slide.draw_update(net);
-                      this.parent.getChildByName("weightText").text=net.getLayer(this.parent.idx[0]).getNeuron(this.parent.idx[1]).getWeight(this.parent.idx[2]).toFixed(2);
+                      //this.parent.getChildByName("weightText").text=net.getLayer(this.parent.idx[0]).getNeuron(this.parent.idx[1]).getWeight(this.parent.idx[2]).toFixed(2);
                         //console.log(this.parent.getChildByName("weightText"))
                     });
 
@@ -710,8 +719,8 @@ export class Slide{
                     weightSprite.addChild(addweight,loseweight);
                                         
                     weightSprite.on('mouseover', function(e){
-                        var xbuffer=Math.max(0,(window.innerWidth-viewst.w)/6);
-                        var ybuffer=Math.max(0,(window.innerHeight-viewst.h)/4);
+                        var xbuffer=Math.max(0,(window.innerWidth-viewst.startwidth)/6);
+                        var ybuffer=Math.max(0,(window.innerHeight-viewst.startheight)/4);
 
                         this.getChildByName("weightTextBox").visible=true;
                         this.getChildByName("weightTextBox").x=e.data.global.x-xbuffer;
@@ -1064,7 +1073,6 @@ export class Slide{
 
                 var currBase = this.neuronContainer.getChildByName("neuronBases").getChildByName(name);
                 var out = net.getLayer(i).neurons[j].output;
-                
                 if(out>=0.9){
                     currBase.tint= 0xfff000
                 } else if (out>=0.8){
@@ -1086,9 +1094,9 @@ export class Slide{
                 }  else if (out>=0.0){
                     currBase.tint= 0xdcdcdc
                 }
-
+            
                 currBase.getChildAt(0).text=formatter.format(net.getLayer(i).neurons[j].output);     
-
+        
                 var ins=[];            
                 var str = "  ";
     
@@ -1227,9 +1235,8 @@ export class Slide{
         for(var i = 0; i<net.data.type.length; i++){
 
             //final output type labels ex strawberry, blueberry
-            var typeLabelBox = new PIXI.Graphics
             var typeLabel = new PIXI.Text(net.data.type[i],medium);
-                typeLabel.x=layout.NEURON_LEFTLIM + (net.layers.length-1)*layout.NEURON_X_DIF + 40;
+                typeLabel.x=layout.NEURON_LEFTLIM + (net.layers.length-1)*layout.NEURON_X_DIF + 30;
                 typeLabel.y=layout.NEURON_UPPERLIM + (i*layout.NEURON_Y_DIF) + 25;
             this.labelsContainer.addChild(typeLabel);
         }
@@ -1243,24 +1250,19 @@ export class Slide{
         }
 
         var target = new PIXI.Sprite(PIXI.Texture.from('images/strawberrycard1.png'));
-        target.scale.set(0.6)
+        //target.scale.set(0.4)
         target.anchor.set(0.5)
 
-
-        var randomblue= Math.floor(Math.random() * (4) + 1);
-        var randomstraw = Math.floor(Math.random() * (8 - 5 + 1) + 5)
-
-        console.log(randomblue);
         target.name="target";
 
         if (net.targetText=="blueberry"){
-            target.texture=PIXI.Texture.from('images/blueberrycard1.png');
+            target.texture=PIXI.Texture.from('images/blueberrycard.png');
         } else if (net.targetText=="strawberry"){
-            target.texture=PIXI.Texture.from('images/strawberrycard1.png');
+            target.texture=PIXI.Texture.from('images/strawberrycard.png');
 
         }
             
-        target.x = layout.NEURON_LEFTLIM- layout.NEURON_X_DIF -100;
+        target.x = layout.NEURON_LEFTLIM- layout.NEURON_X_DIF -80;
         target.y=layout.NEURON_UPPERLIM +100//layout.NEURON_Y_DIF;
         this.labelsContainer.addChild(target);
 /*
@@ -1320,9 +1322,9 @@ export class Slide{
 
 
        if (net.targetText=="blueberry"){
-        target.texture=PIXI.Texture.from('images/blueberrycard1.png');
+        target.texture=PIXI.Texture.from('images/blueberrycard.png');
        } else if (net.targetText=="strawberry"){
-       target.texture=PIXI.Texture.from('images/strawberrycard1.png');
+       target.texture=PIXI.Texture.from('images/strawberrycard.png');
        }
 
        if (this.costLabel.getChildByName("costBox") !== null){

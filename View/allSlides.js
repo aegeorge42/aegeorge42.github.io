@@ -567,12 +567,14 @@ SlideNet1.drawActFnButtons(SlideNet1.slideNet);
 export const SlideNet1b = new Slide();
     SlideNet1b.slideNet=net1;
     net1.update();
-    console.log("layers"+net1.layers.length)
+
+    net1.addLayer();
+    net1.update();
     SlideNet1b.draw_init(net1);    
     var textNet1b = [
         [["We can also add layers to our nn."], [layout.LEFTBUFFER+625,70]],
         [["These are called hidden layers."], [layout.LEFTBUFFER+625,90]],
-        [["As we add layers, notice how the OUTPUT of one layer becomes the INPUT for the next layer"], [layout.LEFTBUFFER+625,90]],
+        [["notice how the OUTPUT of one layer becomes the INPUT for the next layer"], [layout.LEFTBUFFER+625,90]],
 
     ];
     SlideNet1b.drawText(textNet1b);
@@ -628,8 +630,12 @@ export const SlideNet2 = new Slide();
 
     var SlideNet2Graph = new Graph(fruits);
     SlideNet2.slideContainer.addChild(SlideNet2Graph.getGraph());
-    SlideNet2.drawButtons(net1,SlideNet2Graph);
-    SlideNet2.setVis(SlideNet2.slideContainer.getChildAt(8),false);
+    SlideNet2.drawActFnButtons();
+    SlideNet2.drawLayerButtons();
+
+
+    //SlideNet2.drawButtons(net1,SlideNet2Graph);
+    //SlideNet2.setVis(SlideNet2.slideContainer.getChildAt(8),false);
   //  SlideNet2.slideContainer.getChildAt(8).getChildByName("addlayer").visible=true;
     //SlideNet2.slideContainer.getChildAt(8).getChildByName("remlayer").visible=true;
 
@@ -650,7 +656,7 @@ export const SlideNet3 = new Slide();
 
     var SlideNet2Graph = new Graph(fruits);
     SlideNet3.slideContainer.addChild(SlideNet2Graph.getGraph());
-    SlideNet3.drawButtons(net1,SlideNet2Graph);
+    //SlideNet3.drawButtons(net1,SlideNet2Graph);
     SlideNet3.setVis(SlideNet3.slideContainer.getChildAt(8),false);
 
     var textNet3 = [
@@ -658,7 +664,8 @@ export const SlideNet3 = new Slide();
     ];
     SlideNet3.drawText(textNet3);
     SlideNet3.drawTextButtons();
-
+    SlideNet3.drawActFnButtons();
+    SlideNet3.drawLayerButtons();
 
 //SANDBOX
 export const SlideSandbox = new Slide();
@@ -676,8 +683,8 @@ var g = new Graph(fruits);
 SlideSandbox.slideContainer.addChild(g.getGraph());
 
 SlideSandbox.draw_init(net);
-//SlideSandbox.drawButtons(net);
-SlideSandbox.drawButtons(net,g);
+SlideSandbox.drawActFnButtons();
+SlideSandbox.drawLayerButtons();
 
 var textInstruct2 = [    
     [ ["SASGSGREGSGS"], [50, 350]]

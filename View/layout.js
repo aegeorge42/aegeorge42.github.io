@@ -28,7 +28,7 @@ export const layout = {
     
     BUTTONS_X:  Math.max((window.innerWidth-1100)/2,20) +50,
 
-    NEURON_LEFTLIM: Math.max((window.innerWidth-1100)/2,15) +450,
+    NEURON_LEFTLIM: Math.max((window.innerWidth-1100)/2,15) +500,
     NEURON_UPPERLIM: 170,
 
     NEURON_X_DIF: 150,

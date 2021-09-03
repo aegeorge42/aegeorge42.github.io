@@ -50,41 +50,83 @@ export class View{
         this.app=app;
 
         window.addEventListener('resize', resize); 
-
-        this.w= window.innerWidth;    
-        var w=window.innerWidth;    
+/*
+        this.w= window.innerWidth;  
         this.h=window.innerHeight;
+
+        var initw = window.innerWidth;  
+
+        var w=window.innerWidth;    
         var h=window.innerHeight;
-        this.bufferx=0;
+
+        var bufferx=0;
+        this.buffery=0;
         var buffery=0;
-       // console.log(window.innerHeight)  
+        var buffery2=0;
+
+        var b =0;        
+        this.h2=window.innerHeight;
+        this.w2=window.innerWidth;
+        var win=this;
+
+        */
+
+        this.startwidth = window.innerWidth;
+        this.startheight = window.innerHeight;
+        this.startheight_nochange = window.innerHeight;
+
+
+        var win = this;
+
         function resize(){
-            this.bufferx=(window.innerWidth-w)/6;
-            buffery=(window.innerHeight-h)/4;            
-            
+
+            var resize_wid = (window.innerWidth-win.startwidth)/4;
+            var resize_height = (window.innerHeight-win.startheight)/6;
+
             app.renderer.resize(window.innerWidth, window.innerHeight);
 
-            if(vst.currentSlide!=0){
-                app.stage.getChildAt(0).position.set(Math.max(this.bufferx,0),Math.max(buffery,-50));
-                app.stage.getChildAt(0).getChildByName("header").x=Math.min(0,0-this.bufferx);
-                app.stage.getChildAt(0).getChildByName("header").y=Math.min(50,0-buffery);
+            app.stage.getChildByName("button_nextslide").x=window.innerWidth/2 +100;
+            app.stage.getChildByName("button_nextslide").y=window.innerHeight-(75/2);
 
-                app.stage.getChildAt(0).getChildByName("footer").x=Math.min(0,0-this.bufferx);
-                app.stage.getChildAt(0).getChildByName("footer").y=(buffery*4)-buffery;
+            app.stage.getChildByName("button_prevslide").x=window.innerWidth/2 -100,
+            app.stage.getChildByName("button_prevslide").y=window.innerHeight-(75/2);
 
-           
-                app.stage.getChildByName("button_nextslide").x=window.innerWidth/2 +100;
-                app.stage.getChildByName("button_nextslide").y=window.innerHeight-(75/2);
-
-                app.stage.getChildByName("button_prevslide").x=window.innerWidth/2 -100,
-                app.stage.getChildByName("button_prevslide").y=window.innerHeight-(75/2);
-
-            } else {
+            if(vst.currentSlide==0){
                 app.stage.getChildAt(0).getChildByName("opener").x=window.innerWidth/2;
                 app.stage.getChildAt(0).getChildByName("opener").y=((window.innerHeight)/3)+50;
 
                 app.stage.getChildByName("button_start").x=window.innerWidth/2;
                 app.stage.getChildByName("button_start").y=((window.innerHeight)/3) +350;
+
+            } else {
+
+
+            app.stage.getChildAt(0).getChildAt(0).position.set(resize_wid,resize_height) //weights
+            app.stage.getChildAt(0).getChildAt(1).position.set(resize_wid,resize_height) //input
+            app.stage.getChildAt(0).getChildAt(2).position.set(resize_wid,resize_height) //text
+            app.stage.getChildAt(0).getChildAt(3).position.set(resize_wid,resize_height) //labels
+            app.stage.getChildAt(0).getChildAt(4).position.set(resize_wid,resize_height) //neurons
+            app.stage.getChildAt(0).getChildAt(5).position.set(resize_wid,resize_height) //cost label
+            //app.stage.getChildAt(0).getChildAt(8).position.set(resize_wid,resize_height) 
+
+            
+
+            app.stage.getChildAt(0).getChildAt(6).position.set(0,0);
+
+
+            
+            app.stage.getChildByName("button_nextslide").x=window.innerWidth/2 +100;
+            app.stage.getChildByName("button_nextslide").y=window.innerHeight-(75/2);
+
+            app.stage.getChildByName("button_prevslide").x=window.innerWidth/2 -100,
+            app.stage.getChildByName("button_prevslide").y=window.innerHeight-(75/2);
+
+            app.stage.getChildAt(0).getChildByName("footer").y=window.innerHeight-win.startheight_nochange;
+
+            try{
+                app.stage.getChildAt(0).getChildAt(8).getChildByName("actfnsbox").y=window.innerHeight-win.startheight_nochange +(layout.BOTTOMBUFFER-100);//(layout.BOTTOMBUFFER-100)+(window.innerHeight-this.h);
+            } catch {}
+
             }
         }
 
@@ -106,7 +148,7 @@ export class View{
 
 
 
-        this.currentSlide=21;
+        this.currentSlide=18;
 
 
 
@@ -117,36 +159,21 @@ export class View{
     }
 
     // when window is resized, gotta resize all the other slides
-    resize(){
-        var bufferx2=(window.innerWidth-this.w)/6;
-        var buffery2=(window.innerHeight-this.h)/4;            
-            
-        this.app.renderer.resize(window.innerWidth, window.innerHeight);
+    // but only some stuff
+    resize2(){
+        this.startheight=window.innerHeight;
+        this.startwidth=window.innerWidth;
+        try{
+            this.app.stage.getChildAt(0).getChildAt(8).getChildByName("actfnsbox").y=window.innerHeight-this.startheight_nochange +(layout.BOTTOMBUFFER-100);//(layout.BOTTOMBUFFER-100)+(window.innerHeight-this.h);
+        }catch{}
 
-        if(this.currentSlide!=0){
-            this.app.stage.getChildAt(0).position.set(Math.max(bufferx2,0),Math.max(buffery2,-50));
-
-            this.app.stage.getChildAt(0).getChildByName("header").x=Math.min(0,0-bufferx2);
-            this.app.stage.getChildAt(0).getChildByName("header").y=Math.min(50,0-buffery2);
-
-            this.app.stage.getChildAt(0).getChildByName("footer").x=Math.min(0,0-bufferx2);
-            this.app.stage.getChildAt(0).getChildByName("footer").y=(buffery2*4)-buffery2;
-
-            this.app.stage.getChildByName("button_nextslide").x=window.innerWidth/2 +100;
-            this.app.stage.getChildByName("button_nextslide").y=window.innerHeight-(75/2);
-
-            this.app.stage.getChildByName("button_prevslide").x=window.innerWidth/2 -100,
-            this.app.stage.getChildByName("button_prevslide").y=window.innerHeight-(75/2);
-            
-            //e.data.global.x=e.data.global.x+100;
-
-            } else {
-                this.app.stage.getChildAt(0).getChildByName("opener").x=window.innerWidth/2;
+        if(this.currentSlide==0){
+        this.app.stage.getChildAt(0).getChildByName("opener").x=window.innerWidth/2;
                 this.app.stage.getChildAt(0).getChildByName("opener").y=((window.innerHeight)/3)+50;
 
                 this.app.stage.getChildByName("button_start").x=window.innerWidth/2;
                 this.app.stage.getChildByName("button_start").y=((window.innerHeight)/3) +350;
-            }
+        }
     }
 
     // handle 1st and last slide diff formats
@@ -192,7 +219,7 @@ export class View{
         this.app.stage.addChildAt(this.slideList[this.currentSlide].slideContainer,0);
         this.app.stage.addChild(this.slideList[this.currentSlide].textbuttonContainer);
         this.caveats();
-        this.resize();
+        this.resize2();
     }
 
     createButtons(){
