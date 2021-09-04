@@ -1092,7 +1092,6 @@ export class Slide{
     drawNeurons_update(net){
         for(var i = 0; i<net.layers.length; i++){
             for(var j = 0; j<net.getLayer(i).neurons.length; j++){
-
                 var name = i.toString() + j.toString();
 
                 var currBase = this.neuronContainer.getChildByName("neuronBases").getChildByName(name);
@@ -1487,6 +1486,11 @@ export class Slide{
             }
 
         }
+        
+        for (var i =0; i<this.textContainer.children.length; i++){
+            this.textContainer.getChildAt(i).visible=false;
+        }
+        this.textContainer.getChildAt(0).visible=true;
     }
     
     drawText(text){
