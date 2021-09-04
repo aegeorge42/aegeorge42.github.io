@@ -74,6 +74,30 @@ export class Slide{
         header.beginFill(0xbfbfbf);
         header.drawRect(0,0,window.innerWidth,layout.HEADER_HEIGHT);
 
+        /*let text = new PIXI.MultiStyleText("Let's make some <ml>multiline</ml>\nand <ms>multistyle</ms> text for\n<pixi>Pixi.js!</pixi>",
+        {
+            "default": {
+                fontFamily: "Arial",
+                fontSize: "24px",
+                fill: "#cccccc",
+                align: "center"
+            },
+            "ml": {
+                fontStyle: "italic",
+                fill: "#ff8888"
+            },
+            "ms": {
+                fontStyle: "italic",
+                fill: "#4488ff"
+            },
+            "pixi": {
+                fontSize: "64px",
+                fill: "#efefef"
+            }
+        });
+
+        */
+
         this.slideContainer.addChild(                                      
                                       this.weightsContainer,
                                       this.inputContainer, 
@@ -1375,6 +1399,95 @@ export class Slide{
         [ ["text check",typewriter], ["morecheck"],[70, 100]],
     ];   
     */
+
+    drawText2(text){
+        for (var i = 0; i<text.length; i++){
+            var lines = 0;
+            var textheight=0;
+            var textwidth=0;
+            var textheight_temp=24;
+
+            for(var j=0; j<(text[i].length)-1; j++){
+
+                // how many lines is the text box
+                if(PIXI.TextMetrics.measureText(text[i][j][0],textstyles.default).lines.length>lines){
+                    lines=PIXI.TextMetrics.measureText(text[i][j][0],textstyles.default).lines.length;
+                }
+                
+                //get longest length/width
+                if(text[i][j][1] === undefined){
+                    var textwidth_temp=PIXI.TextMetrics.measureText(text[i][j][0], textstyles.default).width;
+                   // var textheight_temp=PIXI.TextMetrics.measureText(text[i][j][0], textstyles.default).height;
+                } else {
+                    var textwidth_temp=PIXI.TextMetrics.measureText(text[i][j][0],text[i][j][1]).width;
+                   // var textheight_temp=PIXI.TextMetrics.measureText(text[i][j][0], text[i][j][1]).height;
+                }
+
+                var currlines = PIXI.TextMetrics.measureText(text[i][j][0],textstyles.default).lines.length;
+
+                if(currlines==lines){
+                    textwidth=textwidth+textwidth_temp;
+
+                }
+
+                //if(textwidth_temp>textwidth ){
+                //    textwidth=textwidth_temp;
+               // }
+
+
+
+
+    
+                console.log(text[i][j][0], lines)
+            }
+
+            textheight=textheight_temp*lines;
+            var textbox = new PIXI.Graphics();
+                textbox.beginFill(0xFFFFFF);
+                textbox.drawRoundedRect(text[i][(text[i].length)-1][0]-10,text[i][(text[i].length)-1][1]-10,textwidth+20, textheight+20);
+                textbox.endFill();
+            this.textContainer.addChild(textbox);       
+
+            for(var j=0; j<(text[i].length)-1; j++){
+                var textPiece= new PIXI.Text(text[i][j][0]);
+                    textPiece.anchor.set(0,0.5);
+                    textbox.addChild(textPiece);
+
+                    if(text[i][j][1] === undefined){
+                        textPiece.style= textstyles.default;
+                    } else {
+                        textPiece.style=text[i][j][1];
+                    }
+
+                    var currlines = PIXI.TextMetrics.measureText(text[i][j][0],textstyles.default).lines.length;
+
+                    
+                    if(j==0){
+                        
+                        textPiece.x=text[i][(text[i].length)-1][0];
+
+                        if(currlines < lines){ 
+                            textPiece.y=text[i][(text[i].length)-1][1] + textheight/4;
+                        } else {
+                            textPiece.y=text[i][(text[i].length)-1][1] + textheight/2;
+                        }
+                    } else { 
+                        var prevlines = PIXI.TextMetrics.measureText(text[i][j-1][0],textstyles.default).lines;
+
+                        textPiece.x=PIXI.TextMetrics.measureText(prevlines[prevlines.length-1],textstyles.default).width + text[i][(text[i].length)-1][0];
+                       
+                       
+                        if(currlines < lines){ 
+                            textPiece.y=text[i][(text[i].length)-1][1] + textheight*3/4;
+                        } else {
+                            textPiece.y=text[i][(text[i].length)-1][1] + textheight/2;
+
+                        }
+                    }
+            }
+
+        }
+    }
     
     drawText(text){
 
@@ -1399,10 +1512,12 @@ export class Slide{
                         var textwidth_temp=PIXI.TextMetrics.measureText(text[i][j][0],text[i][j][1]).width;
                         var textheight_temp=PIXI.TextMetrics.measureText(text[i][j][0], text[i][j][1]).height;
                     }
+
                     textwidth=textwidth+textwidth_temp;
                     if(textheight_temp>textheight){
                         textheight=textheight_temp;
                     }
+
                 }
 
                 var textbox = new PIXI.Graphics();
@@ -1427,6 +1542,7 @@ export class Slide{
                      }
  
                      textPiece.y=text[i][(text[i].length)-1][1] + textheight/2;
+                     //console.log(j)
  
                      if(j==0){
                          textPiece.x=text[i][(text[i].length)-1][0];
@@ -1439,26 +1555,66 @@ export class Slide{
 
             // first elem of first elem is sprite (for removal)
             }
+
             //if only text
             else {
-                //console.log("text "+ i + "no sprite");
                 var textwidth = 0;
                 var textheight = 0;
+                var lineslength= [];
+                var lines = 0;
                 for(var j=0; j<(text[i].length)-1; j++){
+
+
                     
-                    if(text[i][j][1] === undefined){
-                        var textwidth_temp=PIXI.TextMetrics.measureText(text[i][j][0], textstyles.default).width;
-                        var textheight_temp=PIXI.TextMetrics.measureText(text[i][j][0], textstyles.default).height;
-                    } else {
-                        var textwidth_temp=PIXI.TextMetrics.measureText(text[i][j][0],text[i][j][1]).width;
-                        var textheight_temp=PIXI.TextMetrics.measureText(text[i][j][0], text[i][j][1]).height;
+/*
+                    //get tallest text (excluding double lines)
+                    if(PIXI.TextMetrics.measureText(text[i][j][0], textstyles.default).lines.length <=1 ){
+                    console.log(PIXI.TextMetrics.measureText(text[i][j][0], textstyles.default).lines)
+
+                        if(text[i][j][1] === undefined){
+                            var textwidth_temp=PIXI.TextMetrics.measureText(text[i][j][0], textstyles.default).width;
+                            var textheight_temp=PIXI.TextMetrics.measureText(text[i][j][0], textstyles.default).height;
+                        } else {
+                            var textwidth_temp=PIXI.TextMetrics.measureText(text[i][j][0],text[i][j][1]).width;
+                            var textheight_temp=PIXI.TextMetrics.measureText(text[i][j][0], text[i][j][1]).height;
+                        }
+
+                        if(textheight_temp>textheight){
+                            textheight=textheight_temp;
+                        }
+
                     }
-                    textwidth=textwidth+textwidth_temp;
+
+*/
+                    //how many lines total
+                    if(PIXI.TextMetrics.measureText(text[i][j][0],textstyles.default).lines.length>lines){
+                        lines=PIXI.TextMetrics.measureText(text[i][j][0],textstyles.default).lines.length;
+                    }
+
+                  //  console.log(lines)
+
+
+                    textwidth=100;
+                    textheight_temp=24;
+                    textheight=lines*textheight_temp;
+/*
+                    //right now only measures 1st line
+                    var lines = PIXI.TextMetrics.measureText(text[i][0][0],textstyles.default).lines;
+                    if(lines.length>1){
+                        if(textwidth_temp>textwidth){
+                            textwidth=textwidth_temp;
+                        }
+                    } else {
+                        textwidth=textwidth+textwidth_temp;
+
+                    }
+                 
                     if(textheight_temp>textheight){
                         textheight=textheight_temp;
                     }
+                    }
+*/
                 }
-
                 var textbox = new PIXI.Graphics();
                 textbox.beginFill(0xFFFFFF);
                 textbox.drawRoundedRect(text[i][(text[i].length)-1][0]-10,text[i][(text[i].length)-1][1]-10,textwidth+20, textheight+20);
@@ -1478,14 +1634,119 @@ export class Slide{
                         textPiece.style=text[i][j][1];
                     }
 
-                    textPiece.y=text[i][(text[i].length)-1][1] + textheight/2;
-
+                  //  conss
+                    //if this is the first string, draw at specified coords
                     if(j==0){
                         textPiece.x=text[i][(text[i].length)-1][0];
+                        textPiece.y=text[i][(text[i].length)-1][1] + textheight/2;
 
                     } else {
-                        textPiece.x = textbox.getChildAt(j-1).x + textbox.getChildAt(j-1).width;
+                       
+                        if(lines=1){
+                  //          console.log(textPiece.text)
+                            textPiece.x = textbox.getChildAt(j-1).x + textbox.getChildAt(j-1).width;
+                            textPiece.y= 10//200//text[i][(text[i].length)-1][1] + textheight/2;
+                        } else if(lines=2){
+                        //    console.log(textPiece.text)
+
+                            textPiece.y= 10
+                        }
+
                     }
+
+
+
+
+
+
+ 
+/*
+                        //how many lines is the previous text?
+                        var prevlines = PIXI.TextMetrics.measureText(text[i][j-1][0],prevstyle).lines;
+                        var currlines = PIXI.TextMetrics.measureText(text[i][j][0],currstyle).lines;
+
+                        if(prevlines.length<=1){
+                            textPiece.x = textbox.getChildAt(j-1).x + textbox.getChildAt(j-1).width;
+                            textPiece.y=text[i][(text[i].length)-1][1] + textheight/2;
+
+                            /*if(currlines.length>1){
+                                textPiece.y=text[i][(text[i].length)-1][1] + textheight/2;
+
+                            }
+                        } else {
+                            
+
+                            //get length + heightt of last line of prev text 
+                            textPiece.x = PIXI.TextMetrics.measureText(prevlines[prevlines.length-1],prevstyle).width + text[i][(text[i].length)-1][0];
+                           // textPiece.y=textPiece.y=text[i][(text[i].length)-1][1] + textheight*3/4;
+                            
+                            
+                            //text[i][(text[i].length)-1][1]+PIXI.TextMetrics.measureText(prevlines[prevlines.length-1],prevstyle).height + textheight/4;//+// textheight;
+                        }
+*/
+
+
+
+
+
+
+
+
+                        /*
+                        if(text[i][j-1][1] === undefined){
+                            var prevstyle= textstyles.default;
+                        } else {
+                            var prevstyle=text[i][j-1][1];
+                        }
+
+                        var prevlines = PIXI.TextMetrics.measureText(text[i][j-1][0],prevstyle).lines;
+                        var currlines = PIXI.TextMetrics.measureText(text[i][j][0],prevstyle).lines;
+                        if(currlines>1){
+                          //  textPiece.anchor.set(0,0);
+
+                        }
+
+                        //get length of last line of prev text 
+                        textPiece.x = PIXI.TextMetrics.measureText(prevlines[prevlines.length-1],prevstyle).width + text[i][(text[i].length)-1][0];
+                        textPiece.y= text[i][(text[i].length)-1][1] +(prevlines.length*(PIXI.TextMetrics.measureText("l",prevstyle).height));
+                        *
+                        
+                       // textPiece.y=
+                        
+                      //  text[i][(text[i].length)-1][1]+PIXI.TextMetrics.measureText(prevlines[prevlines.length-1],textstyles.default).height;
+                        //} else {
+
+                        
+                        /*
+                        //how many lines is the previous text
+                        var lines = PIXI.TextMetrics.measureText(text[i][j-1][0],textstyles.default).lines;
+                        if(lines.length>1){
+                            textPiece.x = PIXI.TextMetrics.measureText(lines[lines.length-1],textstyles.default).width +15;
+                            textPiece.y= text[i][(text[i].length)-1][1] + PIXI.TextMetrics.measureText(lines[lines.length-1],textstyles.default).width
+
+                            //textbox.width=60;
+
+
+
+                            /*
+                            textPiece.x = PIXI.TextMetrics.measureText(lines[lines.length-1],textstyles.default).width +15;
+                            textPiece.y= text[i][(text[i].length)-1][1] +PIXI.TextMetrics.measureText(lines[lines.length-1],textstyles.default).height;
+                            console.log(textPiece.y)
+                            //text[i][(text[i].length)-1][1] + textheight/2;
+                                */
+                        //} else {
+
+                      //      textPiece.x = textbox.getChildAt(j-1).x + textbox.getChildAt(j-1).width;
+                            //textPiece.y=text[i][(text[i].length)-1][1] + PIXI.TextMetrics.measureText(lines[lines.length-1],textstyles.default).width
+                      //  }
+                       /* console.log(PIXI.TextMetrics.measureText(lines[lines.length-1],textstyles.default).width);
+                        
+                        textPiece.x = textbox.getChildAt(j-1).x + textbox.getChildAt(j-1).width;
+                        //textPiece.x = PIXI.TextMetrics.measureText(lines[lines.length-1],textstyles.default).width +15;
+                        textPiece.y=text[i][(text[i].length)-1][1] + textheight/2;
+                        //console.log(PIXI.TextMetrics.measureText(textbox.getChildAt(j-1),textstyles.default));
+                        */
+                    
                 }
             }
 

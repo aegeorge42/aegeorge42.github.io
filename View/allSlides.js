@@ -48,12 +48,13 @@ export const SlideInstruct = new Slide();
 export const SlideIntro1 = new Slide();
 
     var textIntro1= [
-        [ ["As humans, we take our ability to recognize objects for granted. "], [layout.LEFTBUFFER, 70] ],
-        [ ["Neural networks are a type of machine learning based on the human brain." 
-        + '\n'+"Using a neural network, a computer can learn to recognize and classify data." ], [layout.LEFTBUFFER, 120] ],
+        [ ["As humans, we take our ability to recognize"+ '\n'+"objects"],[" for granted", textstyles.large_bold], [layout.LEFTBUFFER+30, 70] ],
+        [ ["Neural networks are a type of"],[ " machine learning " +'\n',textstyles.large_bold],["based on the human brain."],[layout.LEFTBUFFER, 120] ],
+        //[ ["Neural networks are a type of"],[ "machine learning" +'\n',textstyles.large_bold],["based on the human brain."], [layout.LEFTBUFFER, 120] ],
+       // [ "Using a neural network, a computer can learn to"], ["recognize",textstyles.large_bold], ["and"], ["classify",textstyles.large_bold], ["data." ], [layout.LEFTBUFFER, 120] ],
         [ ["This type of neural network is called a"], [" perceptron.",typewriter_large ], [layout.LEFTBUFFER,200] ],
     ];
-    SlideIntro1.drawText(textIntro1);
+    SlideIntro1.drawText2(textIntro1);
     SlideIntro1.drawTextButtons();
 
 export const SlideIntro1a = new Slide();
@@ -427,7 +428,7 @@ export const SlideNeuron2b = new Slide();
     var textNeuron2b = [
         [neuron_large_actfncover,["Each input is multiplied by a weight. "], [layout.LEFTBUFFER,100]],
         [["Next, we take the sum of all those values. "], [layout.LEFTBUFFER,150]],
-        [["We also add in another number - called the"], [" bias  ", textstyles.ital], [layout.LEFTBUFFER,200]],
+        [["We also add in another number"+'\n'+" - called the"], [" bias  ", textstyles.ital], [layout.LEFTBUFFER,200]],
         [["Hover your mouse over the weights and click the buttons "+'\n'+ " to increase and decrease the weights. "], [layout.LEFTBUFFER-50,250]],
     ];
 
@@ -472,7 +473,7 @@ export const SlideNeuron2c = new Slide();
     sigmoid.y=layout.TOPBUFFER+75;
 
     var textNeuron2c = [
-        [ ["we plug that value from the last step into an"], [" activation function", textstyles.ital], [layout.LEFTBUFFER,layout.TOPBUFFER]],   
+        [ ["we plug that value from the last step into an"+'\n'], [" activation function", textstyles.ital],["fart"], [layout.LEFTBUFFER,layout.TOPBUFFER]],   
         [ sigmoid,["Right now, we're using the sigmoid function: "], [layout.LEFTBUFFER,layout.TOPBUFFER+50]],
         [ ["This squishes our output between 0 and 1"], [layout.LEFTBUFFER,layout.TOPBUFFER+400]],
     ];
@@ -492,7 +493,7 @@ export const SlideNeuron2d = new Slide();
     relu.y=layout.TOPBUFFER+75;
 
     var textNeuron2d = [
-        [ ["Another activation function is called"],[" ReLU", textstyles.large_bold], [layout.LEFTBUFFER,layout.TOPBUFFER]],
+        [ ["Another activation function is called"+'\n'+"blah blah blah"],[" ReLU", textstyles.large_bold], [layout.LEFTBUFFER,layout.TOPBUFFER]],
         [ ["(which stands for",textstyles.medium],
           [" Re",textstyles.medium_bold],
           ["ctified",textstyles.medium],
