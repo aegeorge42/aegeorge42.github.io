@@ -98,14 +98,18 @@ export class Slide{
 
         */
 
-        this.slideContainer.addChild(                                      
+        this.slideContainer.addChild(                     
+                 
                                       this.weightsContainer,
+                                      this.labelsContainer,
+
+                                      this.neuronContainer,
+
                                       this.inputContainer, 
                                     //  this.neuronContainer,
                                    //  this.cardContainer,
                                       this.textContainer,
-                                      this.labelsContainer,
-                                      this.neuronContainer,
+                                      //this.labelsContainer,
 
                                       this.costLabel,
                                       this.graphContainer,
