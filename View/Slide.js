@@ -1344,7 +1344,7 @@ export class Slide{
 
             var targetLabel = new PIXI.Text("target: "+net.target[i],medium);
                 targetLabel.name="targetLabel"+i;
-            console.log(net.target[i])
+          //  console.log(net.target[i])
             targetLabel.x=layout.NEURON_LEFTLIM + (net.layers.length-1)*layout.NEURON_X_DIF + 30;
             targetLabel.y=layout.NEURON_UPPERLIM + (i*layout.NEURON_Y_DIF) + 30;
 
@@ -1420,7 +1420,7 @@ export class Slide{
             costText.name = "costText";
             costText.anchor.set(0.5)
             costText.y=15;
-        console.log(costText)
+       // console.log(costText)
         costBox.addChild(costText);
     }
 

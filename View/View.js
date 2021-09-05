@@ -118,7 +118,7 @@ export class View{
 
 
             app.stage.getChildAt(0).getChildAt(7).position.set(0,0);
-
+            console.log(app.stage.getChildAt(0).getChildAt(9))
 
             /**
              * stuff w locked postion 
@@ -136,8 +136,11 @@ export class View{
             app.stage.getChildAt(0).getChildAt(6).x=window.innerWidth-win.startwidth_nochange;
 
             try{
+
+
                 app.stage.getChildAt(0).getChildAt(9).getChildByName("actfnsbox").y=window.innerHeight-win.startheight_nochange +(layout.BOTTOMBUFFER-100);//(layout.BOTTOMBUFFER-100)+(window.innerHeight-this.h);
-                //app.stage.getChildAt(0).getChildAt(5).y=layout.BOTTOMBUFFER-280
+
+               // app.stage.getChildAt(0).getChildAt(9).getChildByName("actfnsbox").y=window.innerHeight-win.startheight_nochange +(layout.BOTTOMBUFFER-100);//(layout.BOTTOMBUFFER-100)+(window.innerHeight-this.h);
                 //costBox.x=window.innerWidth-80;
                 //costBox.y=layout.BOTTOMBUFFER-280;         // app.stage.getChildAt(0).getChildAt(9).getChildByName("layersbox").y=40//window.innerHeight-win.startheight_nochange +(layout.BOTTOMBUFFER-250);//(layout.BOTTOMBUFFER-100)+(window.innerHeight-this.h);
 
@@ -153,7 +156,7 @@ export class View{
         this.slideList.push(SlideHome,SlideInstruct, //1
                             SlideIntro1,SlideIntro1a,SlideIntro1b,SlideIntro1c,SlideIntro2,SlideIntro3, SlideIntro4, SlideIntro3a, SlideIntro4a, //9
                             SlideNeuronA, SlideNeuronA2, SlideNeuron1,SlideNeuron2,SlideNeuron2b,SlideNeuron2b2,SlideNeuron2c,SlideNeuron2d,SlideNeuron2d2,SlideNeuron2e, //16
-                            SlideNet1, SlideNet1b, SlideNet1b2,SlideNet1c, SlideNet1d, SlideNet1e,SlideNet2, SlideNet3, SlideSandbox);
+                            SlideNet1, SlideNet1b, SlideNet1b2,SlideNet1c, SlideNet1d, SlideNet1e,SlideNet2, SlideNet3);// SlideSandbox);
 
         const opener = new PIXI.Sprite(PIXI.Texture.from('images/opener.png'));
         opener.name="opener";
@@ -164,7 +167,7 @@ export class View{
 
 
 
-        this.currentSlide=15;
+        this.currentSlide=27;
 
 
 
@@ -180,7 +183,9 @@ export class View{
         this.startheight=window.innerHeight;
         this.startwidth=window.innerWidth;
         try{
-            this.app.stage.getChildAt(0).getChildAt(8).getChildByName("actfnsbox").y=window.innerHeight-this.startheight_nochange +(layout.BOTTOMBUFFER-100);//(layout.BOTTOMBUFFER-100)+(window.innerHeight-this.h);
+            this.app.stage.getChildAt(0).getChildAt(9).getChildByName("actfnsbox").y=window.innerHeight-this.startheight_nochange +(layout.BOTTOMBUFFER-100);//(layout.BOTTOMBUFFER-100)+(window.innerHeight-this.h);
+          //this.app.stage.getChildAt(0).getChildAt(9).getChildByName("actfnsbox").y=layout.BOTTOMBUFFER-100;
+            
         }catch{}
 
         if(this.currentSlide==0){
