@@ -11,6 +11,7 @@ import {SlideHome,
     SlideIntro3,
     SlideIntro3a,
     SlideIntro4,
+    SlideIntro4a,
     SlideNeuronA,
     SlideNeuronA2,
     SlideNeuron1,
@@ -30,7 +31,6 @@ import {SlideHome,
     SlideNet2,
     SlideNet3,
     SlideSandbox,
-SlideGraphTest,
 SlideNeuron2e} from "./allSlides.js"
 
 
@@ -112,7 +112,10 @@ export class View{
             app.stage.getChildAt(0).getChildAt(2).position.set(resize_wid,resize_height) //text
             app.stage.getChildAt(0).getChildAt(3).position.set(resize_wid,resize_height) //labels
             app.stage.getChildAt(0).getChildAt(4).position.set(resize_wid,resize_height) //neurons
-            app.stage.getChildAt(0).getChildAt(5).position.set(resize_wid,resize_height) //cost label
+            //app.stage.getChildAt(0).getChildAt(5).position.set(resize_wid,resize_height) //cost label
+            app.stage.getChildAt(0).getChildAt(9).getChildByName("buttonNeuronAddContainer").position.set(resize_wid,resize_height) //cost label
+            app.stage.getChildAt(0).getChildAt(9).getChildByName("buttonNeuronRemContainer").position.set(resize_wid,resize_height) //cost label
+
 
             app.stage.getChildAt(0).getChildAt(7).position.set(0,0);
 
@@ -134,7 +137,9 @@ export class View{
 
             try{
                 app.stage.getChildAt(0).getChildAt(9).getChildByName("actfnsbox").y=window.innerHeight-win.startheight_nochange +(layout.BOTTOMBUFFER-100);//(layout.BOTTOMBUFFER-100)+(window.innerHeight-this.h);
-                app.stage.getChildAt(0).getChildAt(9).getChildByName("layersbox").y=window.innerHeight-win.startheight_nochange +(layout.BOTTOMBUFFER-250);//(layout.BOTTOMBUFFER-100)+(window.innerHeight-this.h);
+                //app.stage.getChildAt(0).getChildAt(5).y=layout.BOTTOMBUFFER-280
+                //costBox.x=window.innerWidth-80;
+                //costBox.y=layout.BOTTOMBUFFER-280;         // app.stage.getChildAt(0).getChildAt(9).getChildByName("layersbox").y=40//window.innerHeight-win.startheight_nochange +(layout.BOTTOMBUFFER-250);//(layout.BOTTOMBUFFER-100)+(window.innerHeight-this.h);
 
             } catch {}
 
@@ -146,9 +151,9 @@ export class View{
         //add premade slides
         this.slideList = [];
         this.slideList.push(SlideHome,SlideInstruct, //1
-                            SlideIntro1,SlideIntro1a,SlideIntro1b,SlideIntro1c,SlideIntro2,SlideIntro3, SlideIntro4,SlideIntro3a, //9
+                            SlideIntro1,SlideIntro1a,SlideIntro1b,SlideIntro1c,SlideIntro2,SlideIntro3, SlideIntro4, SlideIntro3a, SlideIntro4a, //9
                             SlideNeuronA, SlideNeuronA2, SlideNeuron1,SlideNeuron2,SlideNeuron2b,SlideNeuron2b2,SlideNeuron2c,SlideNeuron2d,SlideNeuron2d2,SlideNeuron2e, //16
-                            SlideNet1, SlideNet1b, SlideNet1b2,SlideNet1c, SlideNet1d, SlideNet1e,SlideNet2, SlideNet3, SlideSandbox,SlideGraphTest);
+                            SlideNet1, SlideNet1b, SlideNet1b2,SlideNet1c, SlideNet1d, SlideNet1e,SlideNet2, SlideNet3, SlideSandbox);
 
         const opener = new PIXI.Sprite(PIXI.Texture.from('images/opener.png'));
         opener.name="opener";
@@ -159,7 +164,7 @@ export class View{
 
 
 
-        this.currentSlide=27;
+        this.currentSlide=28;
 
 
 
@@ -189,6 +194,14 @@ export class View{
 
     // handle 1st and last slide diff formats
     caveats(){
+        if(this.slideList[this.currentSlide].sandbox){
+            layout.NEURON_LEFTLIM=SlideNet3.buttonContainer.getChildByName("stylebox").x +450;
+
+        } else {
+            layout.NEURON_LEFTLIM=layout.NEURON_LEFTLIM_INIT;
+
+        }
+
         if (this.currentSlide==0){
             for(var i = 1; i<this.app.stage.children.length-1; i++){
                 this.app.stage.getChildAt(i).visible=false;

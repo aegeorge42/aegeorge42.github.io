@@ -2,7 +2,7 @@ import { Slide } from "./Slide.js"
 import { layout } from "./layout.js";
 import { Net } from "../Model/net.js"
 import { actFns } from "../Model/neuron.js";
-import {fruits, fruits_small, fruits_test, fruits_test2,fruits_test3} from "../Model/data.js"
+import {fruits, fruits_small, fruits_test,fruits_test3, fruits_circle} from "../Model/data.js"
 import {Graph} from "./Graph.js"
 import {small, medium, typewriter, typewriter_large, textstyles} from "./textstyles.js"
 import { Button } from "./Button.js";
@@ -262,7 +262,7 @@ export const SlideIntro3a = new Slide();
         example_blue_char,
        // [ ["roundness is a score from 0-1 "+'\n'+"of how round the object looks", textstyles.medium], [layout.LEFTBUFFER+340,400]],
         [ ["This step is called"],[" data preprocessing.",textstyles.ital], [layout.LEFTBUFFER+400,340 ]],
-        [ ["Now we're ready to start building our neural network.",textstyles.large_bold], [layout.LEFTBUFFER+350,400]]
+      //  [ ["Now we're ready to start building our neural network.",textstyles.large_bold], [layout.LEFTBUFFER+350,400]]
     ];
 
     textwid= PIXI.TextMetrics.measureText(textIntro3a[0][1][0],textstyles.default).width;
@@ -271,6 +271,18 @@ export const SlideIntro3a = new Slide();
     SlideIntro3a.drawText(textIntro3a);
     SlideIntro3a.drawTextButtons();
 
+export const SlideIntro4a = new Slide();
+    var SlideIntroGraph = new Graph(fruits_test3);
+    SlideIntro4a.graphContainer.addChild(SlideIntroGraph.getGraph());
+      var textIntro4a = [
+        [["Here's a graph of all our data"], [layout.LEFTBUFFER+570,70]],
+        [["Because we have 2 inputs, we can plot our data points on a 2d graph"], [layout.LEFTBUFFER,70]],
+        [["(Even though we couldn't plot it there's no limit on how many inputs)"], [layout.LEFTBUFFER,90]],
+        [["The neural network is going to try to find the line that separates the two classes"], [layout.LEFTBUFFER,90]],
+    ];
+     SlideIntro4a.drawText(textIntro4a);
+
+    SlideIntro4a.drawTextButtons();
 
 
 /****************     
@@ -283,30 +295,38 @@ export const SlideIntro3a = new Slide();
 export const SlideNeuronA = new Slide();
 
     var percep_blank2 =new PIXI.Sprite(PIXI.Texture.from('images/percep_blank.png'));
-        percep_blank2.scale.set(1.2)
         percep_blank2.isSprite=true;
 
         percep_blank2.x=layout.LEFTBUFFER + 150;
-        percep_blank2.y=150;
+        percep_blank2.y=100;
 
     var percep_labels =new PIXI.Sprite(PIXI.Texture.from('images/percep_labels.png'));
-        percep_labels.scale.set(1.2)
         percep_labels.isSprite=true;
 
         percep_labels.x=layout.LEFTBUFFER + 150;
-        percep_labels.y=150;
+        percep_labels.y=100;
 
     var textNeuronA = [
         [percep_blank2,["A neural network is made up of "], ["neurons",textstyles.large_bold],[" connected by "], ["weights. ",textstyles.large_bold],[ layout.LEFTBUFFER, 100]],
-        percep_labels
+        percep_labels,
+
     ];
 
     SlideNeuronA.drawText(textNeuronA);
     SlideNeuronA.drawTextButtons();
 
 export const SlideNeuronA2 = new Slide();
+
+    var percep_layers =new PIXI.Sprite(PIXI.Texture.from('images/percep_layers.png'));
+        percep_layers.isSprite=true;
+
+        percep_layers.x=layout.LEFTBUFFER + 150;
+        percep_layers.y=100;
+
     var textNeuronA2 = [
-        [["neurons are organized in layers"],[layout.LEFTBUFFER,layout.TOPBUFFER]]
+        [percep_layers,["neurons are organized in layers"],[layout.LEFTBUFFER,layout.TOPBUFFER]],
+        [["we can have several hidden layers, but only one output layer"],[layout.LEFTBUFFER,layout.TOPBUFFER+100]]
+
     ];
 
     SlideNeuronA2.drawText(textNeuronA2);
@@ -551,11 +571,17 @@ net1.update();
 SlideNet1.draw_init(net1);
 
 var textNet1 = [
-    [["Because we have 2 classes,"+'\n'+ "we need two final neurons"], [layout.LEFTBUFFER+625,70]],
-    [["these are called"], [" output neurons", textstyles.ital], [layout.LEFTBUFFER+625,150]],
-    [["these neurons give us the final answer "], [layout.LEFTBUFFER+625,200]],
-    [["these neurons will always be the final layer, and will only use sigmoid act fn"], [layout.LEFTBUFFER+625,200]],
-    [["(we'll talk about why later)"], [layout.LEFTBUFFER+625,200]],
+    [["Because we have 2 classes,"+'\n'+ "we need two final neurons in our output layer"], [layout.LEFTBUFFER+625,70]],
+    [["when our image is a srawberry, we want THIS neuron to be 1 and THIS neuron to be 0"], [layout.LEFTBUFFER+625,90]],
+    [["we'll call these our target values (draw target"], [layout.LEFTBUFFER+625,100]],
+    [["because the target has to be between 0 and 1, we'll only use sigmoid for neurons in output layer"], [layout.LEFTBUFFER+625,120]],
+
+
+
+ //   [["these are called"], [" output neurons", textstyles.ital], [layout.LEFTBUFFER+625,150]],
+ //   [["these neurons give us the final answer "], [layout.LEFTBUFFER+625,200]],
+ //   [["these neurons will always be the final layer, and will only use sigmoid act fn"], [layout.LEFTBUFFER+625,200]],
+ //   [["(we'll talk about why later)"], [layout.LEFTBUFFER+625,200]],
 
 
 ];
@@ -628,22 +654,24 @@ export const SlideNet1c = new Slide();
 
 export const SlideNet1d = new Slide();
     var textNet1d = [
-        [["let's take a moment to talk about the goal of the neural network"], [layout.LEFTBUFFER,layout.TOPBUFFER]],
+        [["now that we've built our network, we can begin training"], [layout.LEFTBUFFER,layout.TOPBUFFER]],
+      //  [["basically, give training data, see how wrong our net is,"], [layout.LEFTBUFFER,layout.TOPBUFFER]],
+
     ];
     SlideNet1d.drawText(textNet1d);
     SlideNet1d.drawTextButtons();
 
 export const SlideNet1e = new Slide();
     var textNet1e = [
-        [["let's take a moment to talk about the goal of the neural network"], [layout.LEFTBUFFER,layout.TOPBUFFER]],
-        [["Here's a graph of all our data"], [layout.LEFTBUFFER+570,70]],
-        [["Because we have 2 inputs, we can plot our data points on a 2d graph"], [layout.LEFTBUFFER,70]],
-        [["(Even though we couldn't plot it there's no limit on how many inputs)"], [layout.LEFTBUFFER,90]],
-        [["The neural network is going to try to find the line that separates the two classes"], [layout.LEFTBUFFER,90]],
-        [["This line is called the decision boundary"], [layout.LEFTBUFFER,90]],
+        [ ["for each training data we give the net, we want to know how far it is from being correct"],[layout.LEFTBUFFER,layout.TOPBUFFER] ],
+        [ ["then, we can use this info to update our net to move closer to correct"],[layout.LEFTBUFFER,layout.TOPBUFFER] ],
+
+        [ ["to do this, we use a cost formula (MSE img)"],[layout.LEFTBUFFER,layout.TOPBUFFER+50] ],
+        [ ["essentially, for each output, subtract the answer we got from the net from the correct answer"],[layout.LEFTBUFFER,layout.TOPBUFFER+50] ],
+        [ ["the goal of the nn is to make this value as SMALL as possible"],[layout.LEFTBUFFER,layout.TOPBUFFER+50] ]
     ];
-    var SlideNet1eGraph = new Graph(fruits_test3);
-    SlideNet1e.graphContainer.addChild(SlideNet1eGraph.getGraph());
+   // var SlideNet1eGraph = new Graph(fruits_test3);
+   // SlideNet1e.graphContainer.addChild(SlideNet1eGraph.getGraph());
     SlideNet1e.drawText(textNet1e);
     SlideNet1e.drawTextButtons();
 
@@ -653,7 +681,7 @@ export const SlideNet2 = new Slide();
     net1.update();
     SlideNet2.draw_init(net1);
 
-    var SlideNet2Graph = new Graph(fruits);
+    var SlideNet2Graph = new Graph(net1.data);
     SlideNet2.slideContainer.addChild(SlideNet2Graph.getGraph());
     SlideNet2.drawActFnButtons();
     SlideNet2.drawLayerButtons();
@@ -675,13 +703,17 @@ export const SlideNet2 = new Slide();
     SlideNet2.drawTextButtons();
 
 export const SlideNet3 = new Slide();
+    SlideNet3.sandbox=true;
     SlideNet3.slideNet=net1;
-    net1.setNetData(fruits_test3);
+    net1.setNetData(fruits_circle);
 
     net1.update();
+
+    SlideNet3.drawStyleButtons();
+    layout.NEURON_LEFTLIM=SlideNet3.buttonContainer.getChildByName("stylebox").x +450;
     SlideNet3.draw_init(net1);
 
-    var SlideNet2Graph = new Graph(fruits_test3);
+    var SlideNet2Graph = new Graph(net1.data);
     SlideNet3.graphContainer.addChild(SlideNet2Graph.getGraph());
     //SlideNet3.drawButtons(net1,SlideNet2Graph);
     SlideNet3.setVis(SlideNet3.slideContainer.getChildAt(8),false);
@@ -694,20 +726,26 @@ export const SlideNet3 = new Slide();
     SlideNet3.drawActFnButtons();
     SlideNet3.drawLayerButtons();
     SlideNet3.drawLearnButtons(SlideNet2Graph);
+    SlideNet3.drawCost();
+    SlideNet3.drawTarget();
+   // SlideNet3.drawStyleButtons();
+   layout.NEURON_LEFTLIM=layout.NEURON_LEFTLIM_INIT;
+
 
 //SANDBOX
 export const SlideSandbox = new Slide();
+
 var net = new Net();
 SlideSandbox.slideNet=net;
+/*
 
-
-net.setNetData(fruits);
+net.setNetData(fruits_circle);
 net.setLearnRate(0.3);
 net.getLayer(0).addNeuron();
 
 net.setOutLayer();
 net.update();
-var g = new Graph(fruits);
+var g = new Graph(fruits_cir);
 SlideSandbox.graphContainer.addChild(g.getGraph());
 console.log(g.getGraph().y);
 SlideSandbox.draw_init(net);

@@ -7,8 +7,9 @@ export class Graph extends PIXI.Sprite{
         super();
 
         this.axis=new PIXI.Sprite(PIXI.Texture.from('images/axis2.png'));
-        this.axis.x=window.innerWidth-290;
-        this.axis.y=layout.BOTTOMBUFFER-280;
+        this.axis.x=window.innerWidth-240;
+        this.axis.y=layout.BOTTOMBUFFER-230;
+        this.axis.scale.set(0.8)
 
         this.bg = new PIXI.Sprite(PIXI.Texture.from('images/graph.png'));
         this.bg.height=200;
