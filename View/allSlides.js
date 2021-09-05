@@ -2,7 +2,7 @@ import { Slide } from "./Slide.js"
 import { layout } from "./layout.js";
 import { Net } from "../Model/net.js"
 import { actFns } from "../Model/neuron.js";
-import {fruits, fruits_small, fruits_test, fruits_test2} from "../Model/data.js"
+import {fruits, fruits_small, fruits_test, fruits_test2,fruits_test3} from "../Model/data.js"
 import {Graph} from "./Graph.js"
 import {small, medium, typewriter, typewriter_large, textstyles} from "./textstyles.js"
 import { Button } from "./Button.js";
@@ -642,8 +642,8 @@ export const SlideNet1e = new Slide();
         [["The neural network is going to try to find the line that separates the two classes"], [layout.LEFTBUFFER,90]],
         [["This line is called the decision boundary"], [layout.LEFTBUFFER,90]],
     ];
-    var SlideNet1eGraph = new Graph(fruits_test2);
-    SlideNet1e.slideContainer.addChild(SlideNet1eGraph.getGraph());
+    var SlideNet1eGraph = new Graph(fruits_test3);
+    SlideNet1e.graphContainer.addChild(SlideNet1eGraph.getGraph());
     SlideNet1e.drawText(textNet1e);
     SlideNet1e.drawTextButtons();
 
@@ -676,10 +676,12 @@ export const SlideNet2 = new Slide();
 
 export const SlideNet3 = new Slide();
     SlideNet3.slideNet=net1;
+    net1.setNetData(fruits_test3);
+
     net1.update();
     SlideNet3.draw_init(net1);
 
-    var SlideNet2Graph = new Graph(fruits);
+    var SlideNet2Graph = new Graph(fruits_test3);
     SlideNet3.graphContainer.addChild(SlideNet2Graph.getGraph());
     //SlideNet3.drawButtons(net1,SlideNet2Graph);
     SlideNet3.setVis(SlideNet3.slideContainer.getChildAt(8),false);
@@ -691,6 +693,7 @@ export const SlideNet3 = new Slide();
     SlideNet3.drawTextButtons();
     SlideNet3.drawActFnButtons();
     SlideNet3.drawLayerButtons();
+    SlideNet3.drawLearnButtons(SlideNet2Graph);
 
 //SANDBOX
 export const SlideSandbox = new Slide();

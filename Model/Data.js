@@ -95,8 +95,63 @@ export const fruits_test = new Data(0, ["strawberry","blueberry"],["length","rou
 
 
 export const fruits_test2 = new Data(0, ["strawberry","blueberry"],["length","roundness"]);
-    fruits_test2.createSingleDatapoint_train("blueberry", [0.1, 0.9], [0,1]);    
-    fruits_test2.createSingleDatapoint_train("strawberry", [1.0, 0.1], [1,0]);
+    fruits_test2.createSingleDatapoint_train("blueberry", [0.1, 0.5], [0,1]);   
+    fruits_test2.createSingleDatapoint_train("blueberry", [0.2, 0.5], [0,1]);   
+    fruits_test2.createSingleDatapoint_train("blueberry", [0.3, 0.5], [0,1]);   
+    fruits_test2.createSingleDatapoint_train("blueberry", [0.4, 0.5], [0,1]);   
+    fruits_test2.createSingleDatapoint_train("blueberry", [0.5, 0.5], [0,1]);   
+    fruits_test2.createSingleDatapoint_train("blueberry", [0.6, 0.5], [0,1]);   
+    fruits_test2.createSingleDatapoint_train("blueberry", [0.7, 0.5], [0,1]);   
+    fruits_test2.createSingleDatapoint_train("blueberry", [0.8, 0.5], [0,1]);   
+    fruits_test2.createSingleDatapoint_train("blueberry", [0.9, 0.5], [0,1]);   
+    fruits_test2.createSingleDatapoint_train("blueberry", [1.0, 0.5], [0,1]);   
+    fruits_test2.createSingleDatapoint_train("blueberry", [1.1, 0.5], [0,1]);   
+    fruits_test2.createSingleDatapoint_train("blueberry", [1.2, 0.5], [0,1]);   
+    fruits_test2.createSingleDatapoint_train("blueberry", [1.3, 0.5], [0,1]);   
+    fruits_test2.createSingleDatapoint_train("blueberry", [1.4, 0.5], [0,1]);   
+    fruits_test2.createSingleDatapoint_train("blueberry", [1.5, 0.5], [0,1]);   
+    fruits_test2.createSingleDatapoint_train("blueberry", [1.6, 0.5], [0,1]);   
+    fruits_test2.createSingleDatapoint_train("blueberry", [1.7, 0.5], [0,1]);   
+    fruits_test2.createSingleDatapoint_train("blueberry", [1.8, 0.5], [0,1]);   
+    fruits_test2.createSingleDatapoint_train("blueberry", [1.9, 0.5], [0,1]);   
+    fruits_test2.createSingleDatapoint_train("blueberry", [2.0, 0.5], [0,1]);   
+
+    fruits_test2.createSingleDatapoint_train("strawberry", [0.5, 0.1], [1,0]);
+    fruits_test2.createSingleDatapoint_train("strawberry", [0.5, 0.2], [1,0]);
+    fruits_test2.createSingleDatapoint_train("strawberry", [0.5, 0.3], [1,0]);
+    fruits_test2.createSingleDatapoint_train("strawberry", [0.5, 0.4], [1,0]);
+    fruits_test2.createSingleDatapoint_train("strawberry", [0.5, 0.5], [1,0]);
+    fruits_test2.createSingleDatapoint_train("strawberry", [0.5, 0.6], [1,0]);
+    fruits_test2.createSingleDatapoint_train("strawberry", [0.5, 0.7], [1,0]);
+    fruits_test2.createSingleDatapoint_train("strawberry", [0.5, 0.8], [1,0]);
+    fruits_test2.createSingleDatapoint_train("strawberry", [0.5, 0.9], [1,0]);
+    fruits_test2.createSingleDatapoint_train("strawberry", [0.5, 1.0], [1,0]);
+
+
+    export const fruits_test3 = new Data(0, ["strawberry","blueberry"],["length","roundness"]);
+    fruits_test3.createSingleDatapoint_train("blueberry", [0.2, 0.4], [0,1]);   
+    fruits_test3.createSingleDatapoint_train("strawberry", [0.5, 0.1], [1,0]);   
+
+
+    fruits_test3.createSingleDatapoint_train("blueberry", [0.3, 0.5], [0,1]); 
+    fruits_test3.createSingleDatapoint_train("strawberry", [0.6, 0.2], [1,0]);   
+
+    fruits_test3.createSingleDatapoint_train("blueberry", [0.4, 0.6], [0,1]);  
+    fruits_test3.createSingleDatapoint_train("strawberry", [0.7, 0.3], [1,0]);   
+
+    fruits_test3.createSingleDatapoint_train("blueberry", [0.5, 0.7], [0,1]);   
+    fruits_test3.createSingleDatapoint_train("strawberry", [0.8, 0.4], [1,0]);   
+
+    fruits_test3.createSingleDatapoint_train("blueberry", [0.6, 0.8], [0,1]);   
+
+
+    
+    fruits_test3.createSingleDatapoint_train("strawberry", [0.9, 0.5], [1,0]);   
+    
+
+  /*  fruits_test2.createSingleDatapoint_train("strawberry", [1.0, 0.1], [1,0]);
+    fruits_test2.createSingleDatapoint_train("strawberry", [1.8, 0.1], [1,0]);
+*/
 
 
 

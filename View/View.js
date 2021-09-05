@@ -104,23 +104,22 @@ export class View{
 
             } else {
 
-
+            /**
+             * stuff w scaled resize
+             */
             app.stage.getChildAt(0).getChildAt(0).position.set(resize_wid,resize_height) //weights
             app.stage.getChildAt(0).getChildAt(1).position.set(resize_wid,resize_height) //input
             app.stage.getChildAt(0).getChildAt(2).position.set(resize_wid,resize_height) //text
             app.stage.getChildAt(0).getChildAt(3).position.set(resize_wid,resize_height) //labels
             app.stage.getChildAt(0).getChildAt(4).position.set(resize_wid,resize_height) //neurons
             app.stage.getChildAt(0).getChildAt(5).position.set(resize_wid,resize_height) //cost label
-          //  app.stage.getChildAt(0).getChildAt(6).position.set(resize_wid,resize_height) //graph
-            console.log(app.stage.getChildAt(0).getChildAt(6))
-            //app.stage.getChildAt(0).getChildAt(8).position.set(resize_wid,resize_height) 
-
-            
 
             app.stage.getChildAt(0).getChildAt(7).position.set(0,0);
 
 
-            
+            /**
+             * stuff w locked postion 
+             */
             app.stage.getChildByName("button_nextslide").x=window.innerWidth/2 +100;
             app.stage.getChildByName("button_nextslide").y=window.innerHeight-(75/2);
 
@@ -129,14 +128,14 @@ export class View{
 
             app.stage.getChildAt(0).getChildByName("footer").y=window.innerHeight-win.startheight_nochange;
 
+            //graph
+            app.stage.getChildAt(0).getChildAt(6).y=window.innerHeight-win.startheight_nochange;
+            app.stage.getChildAt(0).getChildAt(6).x=window.innerWidth-win.startwidth_nochange;
 
-            app.stage.getChildAt(0).getChildAt(6).y=window.innerHeight-win.startheight_nochange //graph
-            app.stage.getChildAt(0).getChildAt(6).x=window.innerWidth-win.startwidth_nochange//10//window.innerWidth-win.startwidth_nochange //graph
-
-            console.log(app.stage.getChildAt(0).getChildAt(6).x)
             try{
-                
                 app.stage.getChildAt(0).getChildAt(9).getChildByName("actfnsbox").y=window.innerHeight-win.startheight_nochange +(layout.BOTTOMBUFFER-100);//(layout.BOTTOMBUFFER-100)+(window.innerHeight-this.h);
+                app.stage.getChildAt(0).getChildAt(9).getChildByName("layersbox").y=window.innerHeight-win.startheight_nochange +(layout.BOTTOMBUFFER-250);//(layout.BOTTOMBUFFER-100)+(window.innerHeight-this.h);
+
             } catch {}
 
             }

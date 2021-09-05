@@ -169,7 +169,7 @@ export class Slide{
     drawActFnButtons(){
         var actfnsbox = new PIXI.Sprite(PIXI.Texture.from('images/actfnsbox.png'));
             actfnsbox.name="actfnsbox";
-            actfnsbox.x=layout.LEFTBUFFER;
+            actfnsbox.x=0;
             actfnsbox.y=0;
             actfnsbox.y=layout.BOTTOMBUFFER-100;
         this.buttonContainer.addChild(actfnsbox);
@@ -231,7 +231,7 @@ export class Slide{
         //ADD LAYER
         var layersbox = new PIXI.Sprite(PIXI.Texture.from('images/layersbox.png'));
             layersbox.name="layersbox";
-            layersbox.x= layout.LEFTBUFFER;
+            layersbox.x= 0;
             layersbox.y= layout.BOTTOMBUFFER-250; 
         this.buttonContainer.addChild(layersbox);
 
@@ -314,12 +314,55 @@ export class Slide{
 
             slide.buttonContainer.getChildByName("actfnsbox").getChildByName("sigmoid").setTint(tintDown);
             slide.buttonContainer.getChildByName("actfnsbox").getChildByName("relu").setTint(0xFFFFFF);
-
-            //actfnsbox.getChildByName("relu").tint=0xFFFFFF;
-            //actfnsbox.getChildByName("relu").tintDefault();
         });
-
     }
+
+    drawLearnButtons(graph){
+        var slide=this;
+        this.buttonContainer.addChild(new Button("learn_stoch_step",PIXI.Texture.from('images/buttons/button_learnstep.png'),layout.BUTTONS_X,255,true));
+        this.buttonContainer.getChildByName("learn_stoch_step").on('click', function(e){
+            slide.slideNet.learn();
+            slide.draw_update(slide.slideNet);
+            if(graph){graph.updateGraph(slide.slideNet,graph);}
+
+        });
+        
+        this.buttonContainer.addChild(new Button("learn_stoch",PIXI.Texture.from('images/buttons/button_learn.png'),layout.BUTTONS_X,300,true));
+        this.buttonContainer.getChildByName("learn_stoch").on('click', async function(e){
+          var loopcount = 0;
+          var pauselearn=0;
+          while(loopcount<100 && pauselearn==0){
+            slide.slideNet.learn();
+            slide.draw_update(slide.slideNet);
+            
+            if(graph){graph.updateGraph(slide.slideNet,graph);}
+            await slide.sleep(100); //pause to see updates - 100 seems good
+            loopcount=loopcount+1;
+          }
+        });
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     drawButtons(net,graph){
         /*
