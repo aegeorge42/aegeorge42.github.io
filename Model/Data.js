@@ -102,7 +102,19 @@ export const fruits_circle = new Data(0, ["strawberry","blueberry"],["length","r
     fruits_circle.point("strawberry", [1.0, 0.1], [1,0]);   
     fruits_circle.point("strawberry", [2.0, 0.5], [1,0]); 
     fruits_circle.point("strawberry", [1.0, 1.0], [1,0]);  
- 
+
+    fruits_circle.point("strawberry", [0.5, 0.2], [1,0]);   
+    fruits_circle.point("strawberry", [0.5, 0.9], [1,0]);   
+    fruits_circle.point("strawberry", [1.5, 0.9], [1,0]);   
+
+    fruits_circle.point("strawberry", [1.5, 0.2], [1,0]);   
+    fruits_circle.point("strawberry", [2.0, 0.5], [1,0]); 
+    fruits_circle.point("strawberry", [1.0, 1.0], [1,0]); 
+
+    fruits_circle.point("strawberry", [0.2, 0.3], [1,0]); 
+    fruits_circle.point("strawberry", [1.8, 0.3], [1,0]); 
+    fruits_circle.point("strawberry", [0.2, 0.7], [1,0]); 
+    fruits_circle.point("strawberry", [1.8, 0.7], [1,0]); 
 
 
 

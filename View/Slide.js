@@ -348,6 +348,57 @@ export class Slide{
         });
     }
 
+    drawRateButtons(){
+        var slide=this;
+        var ratebox = new PIXI.Sprite(PIXI.Texture.from('images/layersbox.png'));
+
+            ratebox.name="stylebox";
+            ratebox.x= 0;
+            ratebox.y= layout.BOTTOMBUFFER-250; 
+        this.buttonContainer.addChild(ratebox);
+        
+        ratebox.addChild(new Button("inc_rate",PIXI.Texture.from('images/buttons/plus.png'),50,100,true));
+        ratebox.addChild(new Button("dec_rate",PIXI.Texture.from('images/buttons/minus.png'),100,100,true));
+        
+        var rateText = new PIXI.Text(slide.slideNet.learnRate.toFixed(4));
+            rateText.name="rateText";
+            rateText.x=50;
+            rateText.y=50;
+            ratebox.addChild(rateText);
+
+        
+        var rates= [0.0001, 0.001, 0.01, 0.03, 0.1, 0.3, 0.5, 1.0, 10.0];
+        var rate_start=0;
+        for(var i = 0; i<rates.length; i++){
+            if(rates[i] ==slide.slideNet.learnRate){
+                rate_start=i;
+            }
+        }
+
+        var clickcount=0;
+        ratebox.getChildByName("inc_rate").on('click', function(e){
+            if(rates[rate_start+clickcount+1] !==undefined){
+                clickcount++;
+                slide.slideNet.setLearnRate(rates[rate_start+clickcount]);//slide.slideNet.learnRate*10);
+                console.log(slide.slideNet.learnRate);
+                ratebox.getChildByName("rateText").text=slide.slideNet.learnRate.toFixed(4)//"hi"//slide.slideNet.learnRate;
+            }
+        });
+
+        ratebox.getChildByName("dec_rate").on('click', function(e){
+            if(rates[rate_start+clickcount-1] !==undefined){
+                clickcount--;
+
+                slide.slideNet.setLearnRate(rates[rate_start+clickcount]);//slide.slideNet.learnRate*10)
+                console.log(slide.slideNet.learnRate);
+
+                ratebox.getChildByName("rateText").text=slide.slideNet.learnRate.toFixed(4)//"hi"//slide.slideNet.learnRate;
+            }
+                });
+
+
+    }
+
     drawLearnButtons(graph){
         var slide=this;
         var pauselearn=0;
@@ -364,7 +415,7 @@ export class Slide{
         this.buttonContainer.getChildByName("learn_stoch").on('click', async function(e){
           var loopcount = 0;
           pauselearn = 0;
-          while(loopcount<100 && pauselearn==0){
+          while(pauselearn==0){
             slide.slideNet.learn();
             slide.draw_update(slide.slideNet);
             
@@ -399,14 +450,21 @@ export class Slide{
                 slide.slideNet.update();
                 slide.draw_update(slide.slideNet);   
                 //console.log(net.costTot);
-                if(slide.slideNet.costTot<0.05){
-                    break;
-                }
+              //  if(slide.slideNet.costTot<0.05){
+              //      break;
+              //  }
         
                 if(graph){graph.updateGraph(slide.slideNet,graph);}
      
                 loopcount=loopcount+1;
             }
+        });
+
+        this.buttonContainer.addChild(new Button("pause",PIXI.Texture.from('images/buttons/button_pause.png'),layout.BUTTONS_X+100,250,true));
+        var pauselearn=0;
+        this.buttonContainer.getChildByName("pause").on('click', function(e){
+            console.log("PAUSE!!!");
+        pauselearn=1;
         });
 
         
@@ -1377,23 +1435,7 @@ export class Slide{
         target.x = layout.NEURON_LEFTLIM- layout.NEURON_X_DIF -80;
         target.y=layout.NEURON_UPPERLIM +100//layout.NEURON_Y_DIF;
         this.labelsContainer.addChild(target);
-/*
-        var costBox = new PIXI.Sprite(PIXI.Texture.from('images/cost.png'));
-            costBox.name= "costBox";
-            costBox.anchor.set(0.5)
-            costBox.x=550;
-            costBox.y=400;          
-        this.labelsContainer.addChild(costBox);
-    
 
-
-        var costLabel = new PIXI.Text(formatter_long.format(net.costTot),textstyles.large);
-            costLabel.name = "costLabel";
-            costLabel.anchor.set(0.5)
-            costLabel.y=15;
-        
-        costBox.addChild(costLabel);
-        */
     }
 
     drawLabels_init_large(net){

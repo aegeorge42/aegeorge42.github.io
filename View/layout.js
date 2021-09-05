@@ -21,9 +21,6 @@ export const layout = {
     BOTTOMLIM: window.innerHeight*(9/10),
     INNERHEIGHT: window.innerHeight-(50+75),
 
-    //CARDHEIGHT: 444,
-    //CARDWIDTH: 300,
-
     BLUEBERRY_WIDTH: 120,
     
     BUTTONS_X:  Math.max((window.innerWidth-1100)/2,20) +50,
@@ -40,13 +37,13 @@ export const layout = {
 
     NEURON_LARGE_X: Math.max((window.innerWidth-1100)/2,20)+925,
     NEURON_LARGE_Y: 280,
-    //NEURON_LARGE_WIDTH: 250,
 
     NEURON_LARGE_Y_DIF:250,
 
     NEURON_LARGE_LEFTLIM: Math.max((window.innerWidth-1100)/2,20)+525,
-    NEURON_NUDGE: 35
+    NEURON_NUDGE: 35,
 
+   // ACTFNS_X:(window.innerHeight-80)-100,
 
 
 }

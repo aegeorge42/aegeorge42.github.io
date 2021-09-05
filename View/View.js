@@ -118,7 +118,7 @@ export class View{
 
 
             app.stage.getChildAt(0).getChildAt(7).position.set(0,0);
-            console.log(app.stage.getChildAt(0).getChildAt(9))
+            ///console.log(app.stage.getChildAt(0).getChildAt(5))
 
             /**
              * stuff w locked postion 
@@ -135,16 +135,17 @@ export class View{
             app.stage.getChildAt(0).getChildAt(6).y=window.innerHeight-win.startheight_nochange;
             app.stage.getChildAt(0).getChildAt(6).x=window.innerWidth-win.startwidth_nochange;
 
+            //cost
+            app.stage.getChildAt(0).getChildAt(5).y=window.innerHeight-win.startheight_nochange;
+            app.stage.getChildAt(0).getChildAt(5).x=window.innerWidth-win.startwidth_nochange;
+
+
             try{
 
 
-                app.stage.getChildAt(0).getChildAt(9).getChildByName("actfnsbox").y=window.innerHeight-win.startheight_nochange +(layout.BOTTOMBUFFER-100);//(layout.BOTTOMBUFFER-100)+(window.innerHeight-this.h);
-
-               // app.stage.getChildAt(0).getChildAt(9).getChildByName("actfnsbox").y=window.innerHeight-win.startheight_nochange +(layout.BOTTOMBUFFER-100);//(layout.BOTTOMBUFFER-100)+(window.innerHeight-this.h);
-                //costBox.x=window.innerWidth-80;
-                //costBox.y=layout.BOTTOMBUFFER-280;         // app.stage.getChildAt(0).getChildAt(9).getChildByName("layersbox").y=40//window.innerHeight-win.startheight_nochange +(layout.BOTTOMBUFFER-250);//(layout.BOTTOMBUFFER-100)+(window.innerHeight-this.h);
-
-            } catch {}
+                app.stage.getChildAt(0).getChildAt(9).getChildByName("actfnsbox").y=window.innerHeight-win.startheight_nochange +(layout.BOTTOMBUFFER-100);
+    
+               } catch {}
 
             }
         }
@@ -167,7 +168,7 @@ export class View{
 
 
 
-        this.currentSlide=27;
+        this.currentSlide=28;
 
 
 
@@ -182,10 +183,17 @@ export class View{
     resize2(){
         this.startheight=window.innerHeight;
         this.startwidth=window.innerWidth;
+
+        this.app.stage.getChildAt(0).getChildAt(6).y=window.innerHeight-this.startheight_nochange;
+        this.app.stage.getChildAt(0).getChildAt(6).x=window.innerWidth-this.startwidth_nochange;
+        this.app.stage.getChildAt(0).getChildAt(5).y=window.innerHeight-this.startheight_nochange;
+        this.app.stage.getChildAt(0).getChildAt(5).x=window.innerWidth-this.startwidth_nochange;
         try{
-            this.app.stage.getChildAt(0).getChildAt(9).getChildByName("actfnsbox").y=window.innerHeight-this.startheight_nochange +(layout.BOTTOMBUFFER-100);//(layout.BOTTOMBUFFER-100)+(window.innerHeight-this.h);
-          //this.app.stage.getChildAt(0).getChildAt(9).getChildByName("actfnsbox").y=layout.BOTTOMBUFFER-100;
+
             
+            this.app.stage.getChildAt(0).getChildAt(9).getChildByName("actfnsbox").y=window.innerHeight-this.startheight_nochange +(layout.BOTTOMBUFFER-100);
+       
+       
         }catch{}
 
         if(this.currentSlide==0){

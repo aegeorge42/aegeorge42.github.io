@@ -682,7 +682,7 @@ export const SlideNet2 = new Slide();
     SlideNet2.draw_init(net1);
 
     var SlideNet2Graph = new Graph(net1.data);
-    SlideNet2.slideContainer.addChild(SlideNet2Graph.getGraph());
+    SlideNet2.graphContainer.addChild(SlideNet2Graph.getGraph());
     SlideNet2.drawActFnButtons();
     SlideNet2.drawLayerButtons();
 
@@ -726,6 +726,8 @@ export const SlideNet3 = new Slide();
     SlideNet3.drawActFnButtons();
     SlideNet3.drawLayerButtons();
     SlideNet3.drawLearnButtons(SlideNet2Graph);
+    SlideNet3.drawRateButtons();
+
     SlideNet3.drawCost();
     SlideNet3.drawTarget();
    // SlideNet3.drawStyleButtons();
