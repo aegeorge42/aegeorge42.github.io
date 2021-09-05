@@ -94,6 +94,9 @@ export const fruits_test = new Data(0, ["strawberry","blueberry"],["length","rou
     fruits_test.createSingleDatapoint_train("strawberry", [0.99, 0.12], [1,0]);
 
 
+export const fruits_test2 = new Data(0, ["strawberry","blueberry"],["length","roundness"]);
+    fruits_test2.createSingleDatapoint_train("blueberry", [0.1, 0.9], [0,1]);    
+    fruits_test2.createSingleDatapoint_train("strawberry", [1.0, 0.1], [1,0]);
 
 
 

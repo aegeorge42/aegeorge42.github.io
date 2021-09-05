@@ -2,7 +2,7 @@ import { Slide } from "./Slide.js"
 import { layout } from "./layout.js";
 import { Net } from "../Model/net.js"
 import { actFns } from "../Model/neuron.js";
-import {fruits, fruits_small, fruits_test} from "../Model/data.js"
+import {fruits, fruits_small, fruits_test, fruits_test2} from "../Model/data.js"
 import {Graph} from "./Graph.js"
 import {small, medium, typewriter, typewriter_large, textstyles} from "./textstyles.js"
 import { Button } from "./Button.js";
@@ -54,15 +54,15 @@ export const SlideIntro1 = new Slide();
        // [ "Using a neural network, a computer can learn to"], ["recognize",textstyles.large_bold], ["and"], ["classify",textstyles.large_bold], ["data." ], [layout.LEFTBUFFER, 120] ],
         [ ["This type of neural network is called a"], [" perceptron.",typewriter_large ], [layout.LEFTBUFFER,200] ],
     ];
-    SlideIntro1.drawText2(textIntro1);
+    SlideIntro1.drawText(textIntro1);
     SlideIntro1.drawTextButtons();
 
 export const SlideIntro1a = new Slide();
     var percep_blank1 =new PIXI.Sprite(PIXI.Texture.from('images/percep_blank.png'));
     percep_blank1.isSprite=true;
 
-    percep_blank1.x=layout.LEFTBUFFER + 150;
-    percep_blank1.y=200;
+    percep_blank1.x=layout.LEFTBUFFER + 250;
+    percep_blank1.y=100;
 
     var textIntro1a= [
         [percep_blank1,  ["Here's a perceptron that has learned to classify"],
@@ -80,7 +80,7 @@ export const SlideIntro1b = new Slide();
     var percep_blank =new PIXI.Sprite(PIXI.Texture.from('images/percep_blank.png'));
         percep_blank.isSprite=true;
         percep_blank.x=percep_blank1.x;
-        percep_blank.y=percep_blank1.y;
+        percep_blank.y=140;
 
     var textIntro1b= [
         [percep_blank, ["Click on an image to feed it into the perceptron. "], [layout.LEFTBUFFER, 100] ],
@@ -88,18 +88,18 @@ export const SlideIntro1b = new Slide();
 
     var textwid= PIXI.TextMetrics.measureText(textIntro1b[0][1][0],textstyles.default).width;
 
-    var bluex=layout.LEFTBUFFER+textwid+50;
+    var bluex=layout.LEFTBUFFER+textwid;
     var strawx=bluex+150;
     var cherryx=strawx+150;
+    var fruity=30;
 
-    var inx= layout.LEFTBUFFER+150;
-    var iny = percep_blank.y+80;
+    var inx= percep_blank.x;
+    var iny = percep_blank.y+142;
 
     var singleblue =new PIXI.Sprite(PIXI.Texture.from('images/singleblue.png'));
-        singleblue.scale.set(0.8)
         singleblue.isSprite=true;
         singleblue.x=bluex;
-        singleblue.y=50;
+        singleblue.y=fruity;
         singleblue.interactive=true;
         singleblue.buttonMode=true;
         singleblue.on('click', async function(e){
@@ -107,20 +107,19 @@ export const SlideIntro1b = new Slide();
             this.y=iny;
 
             singlestraw.x=strawx;
-            singlestraw.y=50;
+            singlestraw.y=fruity;
             singlecherry.x=cherryx;
-            singlecherry.y=50;
+            singlecherry.y=fruity;
 
             await sleep(500);
-           percep_blank.texture=PIXI.Texture.from('images/percep_blueberry.png');
+           percep_blank.texture=PIXI.Texture.from('images/percep_blueberry.png')
         });
 
 
     var singlestraw =new PIXI.Sprite(PIXI.Texture.from('images/singlestraw.png'));
-        singlestraw.scale.set(0.8)
         singlestraw.isSprite=true;
         singlestraw.x=strawx;
-        singlestraw.y=50;
+        singlestraw.y=fruity;
         singlestraw.interactive=true;
         singlestraw.buttonMode=true;
         singlestraw.on('click', async function(e){
@@ -128,19 +127,18 @@ export const SlideIntro1b = new Slide();
             this.y=iny;
 
             singleblue.x=bluex;
-            singleblue.y=50;
+            singleblue.y=fruity;
             singlecherry.x=cherryx;
-            singlecherry.y=50;
+            singlecherry.y=fruity;
 
             await sleep(500);
-            percep_blank.texture=PIXI.Texture.from('images/percep_strawberry.png');
+            percep_blank.texture=PIXI.Texture.from('images/percep_straw.png')
         });
 
-    var singlecherry =new PIXI.Sprite(PIXI.Texture.from('images/single_cherry.png'));
-        singlecherry.scale.set(0.8)
+    var singlecherry =new PIXI.Sprite(PIXI.Texture.from('images/singleother.png'));
         singlecherry.isSprite=true;
         singlecherry.x=cherryx;
-        singlecherry.y=50;
+        singlecherry.y=fruity;
         singlecherry.interactive=true;
         singlecherry.buttonMode=true;
         singlecherry.on('click', async function(e){
@@ -148,15 +146,15 @@ export const SlideIntro1b = new Slide();
             this.y=iny;
 
             singleblue.x=bluex;
-            singleblue.y=50;
+            singleblue.y=fruity;
             singlestraw.x=strawx;
-            singlestraw.y=50;
+            singlestraw.y=fruity;
 
             await sleep(500);
-            percep_blank.texture=PIXI.Texture.from('images/percep_idk.png');
+            percep_blank.texture=PIXI.Texture.from('images/percep_unknown2.png')
         });
 
-    SlideIntro1b.slideContainer.addChild(singleblue,singlestraw,singlecherry);
+    SlideIntro1b.labelsContainer.addChild(singleblue,singlestraw,singlecherry);
 
     SlideIntro1b.drawText(textIntro1b);
     SlideIntro1b.drawTextButtons();
@@ -473,7 +471,7 @@ export const SlideNeuron2c = new Slide();
     sigmoid.y=layout.TOPBUFFER+75;
 
     var textNeuron2c = [
-        [ ["we plug that value from the last step into an"+'\n'], [" activation function", textstyles.ital],["fart"], [layout.LEFTBUFFER,layout.TOPBUFFER]],   
+        [ ["we plug that value from the last step into an"+'\n'], [" activation function", textstyles.ital],[" test"], [layout.LEFTBUFFER,layout.TOPBUFFER]],   
         [ sigmoid,["Right now, we're using the sigmoid function: "], [layout.LEFTBUFFER,layout.TOPBUFFER+50]],
         [ ["This squishes our output between 0 and 1"], [layout.LEFTBUFFER,layout.TOPBUFFER+400]],
     ];
@@ -566,30 +564,52 @@ SlideNet1.drawTextButtons();
 SlideNet1.drawActFnButtons(SlideNet1.slideNet);
 
 export const SlideNet1b = new Slide();
-    SlideNet1b.slideNet=net1;
-    net1.update();
+    var net2 = new Net();
 
-    net1.addLayer();
-    net1.update();
-    SlideNet1b.draw_init(net1);    
+    SlideNet1b.slideNet=net2;
+
+    net2.setNetData(net1.data);
+    net2.setOutLayer();
+    net2.update();
+    SlideNet1b.draw_init(net2);    
+
     var textNet1b = [
-        [["We can also add layers to our nn."], [layout.LEFTBUFFER+625,70]],
-        [["These are called hidden layers."], [layout.LEFTBUFFER+625,90]],
-        [["notice how the OUTPUT of one layer becomes the INPUT for the next layer"], [layout.LEFTBUFFER+625,90]],
+        [["We can also add hidden layers to our nn."], [layout.LEFTBUFFER+625,70]],
+    //    [["(These are called hidden layers.)"], [layout.LEFTBUFFER+625,90]],
+     //   [["notice how the OUTPUT of one layer becomes the INPUT for the next layer"], [layout.LEFTBUFFER+625,90]],
 
     ];
     SlideNet1b.drawText(textNet1b);
     SlideNet1b.drawTextButtons();
     SlideNet1b.drawActFnButtons();
 
-    //SlideNet1b.drawButtons(SlideNet1b.slideNet);
-    //SlideNet1b.setVis(SlideNet1b.slideContainer.getChildAt(8),false);
+export const SlideNet1b2 = new Slide();
+    var net3 = new Net();
+
+    SlideNet1b2.slideNet=net3;
+    net3.setNetData(net1.data);
+    net3.setOutLayer();
+    net3.update();
+
+    SlideNet1b2.draw_init(net3);    
+    SlideNet1b2.slideNet.getLayer(0).addNeuron();
+    SlideNet1b2.slideNet.update();
+    SlideNet1b2.draw_init(net3);    
+
+    var textNet1b2 = [
+        [["and add neurons to each hidden layer"], [layout.LEFTBUFFER+625,90]],
+        [["notice how the OUTPUT of one layer becomes the INPUT for the next layer"], [layout.LEFTBUFFER+625,150]],
+
+    ];
+    SlideNet1b2.drawText(textNet1b2);
+    SlideNet1b2.drawTextButtons();
+    SlideNet1b2.drawActFnButtons();
+
+    //SlideNet1b2.buttonContainer.getChildByName("buttonNeuronAddContainer").visible=true;
 
 export const SlideNet1c = new Slide();
-    SlideNet1c.slideNet=net1;
-    net1.update();
-    console.log("layers"+net1.layers.length)
-    SlideNet1c.draw_init(net1);    
+    SlideNet1c.slideNet=net3;
+    SlideNet1c.draw_init(net3);    
     var textNet1c = [
         [["use these buttons to add layers"], [layout.LEFTBUFFER,70]],
         [["this process is called feedforward"], [layout.LEFTBUFFER+300,layout.TOPBUFFER+350]],
@@ -600,6 +620,10 @@ export const SlideNet1c = new Slide();
     SlideNet1c.drawActFnButtons();
 
     SlideNet1c.drawLayerButtons();
+    SlideNet1c.buttonContainer.getChildByName("buttonNeuronAddContainer").getChildAt(0).visible=true;
+    SlideNet1c.buttonContainer.getChildByName("buttonNeuronRemContainer").getChildAt(0).visible=true;
+
+
    // SlideNet1c.drawResetButton();
 
 export const SlideNet1d = new Slide();
@@ -618,7 +642,7 @@ export const SlideNet1e = new Slide();
         [["The neural network is going to try to find the line that separates the two classes"], [layout.LEFTBUFFER,90]],
         [["This line is called the decision boundary"], [layout.LEFTBUFFER,90]],
     ];
-    var SlideNet1eGraph = new Graph(fruits);
+    var SlideNet1eGraph = new Graph(fruits_test2);
     SlideNet1e.slideContainer.addChild(SlideNet1eGraph.getGraph());
     SlideNet1e.drawText(textNet1e);
     SlideNet1e.drawTextButtons();
@@ -656,7 +680,7 @@ export const SlideNet3 = new Slide();
     SlideNet3.draw_init(net1);
 
     var SlideNet2Graph = new Graph(fruits);
-    SlideNet3.slideContainer.addChild(SlideNet2Graph.getGraph());
+    SlideNet3.graphContainer.addChild(SlideNet2Graph.getGraph());
     //SlideNet3.drawButtons(net1,SlideNet2Graph);
     SlideNet3.setVis(SlideNet3.slideContainer.getChildAt(8),false);
 
@@ -681,8 +705,8 @@ net.getLayer(0).addNeuron();
 net.setOutLayer();
 net.update();
 var g = new Graph(fruits);
-SlideSandbox.slideContainer.addChild(g.getGraph());
-
+SlideSandbox.graphContainer.addChild(g.getGraph());
+console.log(g.getGraph().y);
 SlideSandbox.draw_init(net);
 SlideSandbox.drawActFnButtons();
 SlideSandbox.drawLayerButtons();

@@ -1,15 +1,19 @@
 import {Data} from "../Model/data.js";
+import { layout } from "./layout.js";
 
 export class Graph extends PIXI.Sprite{
 
     constructor(data){
         super();
 
+        this.axis=new PIXI.Sprite(PIXI.Texture.from('images/axis_temp.png'));
+            this.axis.x=window.innerWidth-260;
+            this.axis.y=layout.BOTTOMBUFFER-260;
         this.bg = new PIXI.Sprite(PIXI.Texture.from('images/graph.png'));
             this.bg.height=200;
             this.bg.width=200;
-            this.bg.x=window.innerWidth-250;
-            this.bg.y=window.innerHeight-300;
+            this.bg.x=50//window.innerWidth-250;
+            this.bg.y=0//window.innerHeight-300;
 
         this.fakedata=new Data(0, ["strawberry","blueberry"],["length","roundness"]);
 
@@ -19,13 +23,15 @@ export class Graph extends PIXI.Sprite{
         for(var i =0; i<numbgpoints;i++){
             for(var j =0; j<numbgpoints;j++){
 
-            this.fakedata.createSingleDatapoint_test([i/numbgpoints,j/numbgpoints]);
+            this.fakedata.createSingleDatapoint_test([(i/numbgpoints)*2,j/numbgpoints]);
             var bgp = new PIXI.Sprite(PIXI.Texture.from('images/bgtest.png'));
                 
                 bgp.x=i*bgpointsize;
                 bgp.y=(this.bg.height-bgpointsize)-(j*bgpointsize);
                 bgp.name= (i/numbgpoints).toString() + (j/numbgpoints).toString();//[bgp.x,bgp.y];
             this.bg.addChild(bgp);
+
+        //    console.log(this.fakedata)
             }
         }
 
@@ -33,7 +39,7 @@ export class Graph extends PIXI.Sprite{
         for(var i =0; i<data.points.length;i++){
             var p = new PIXI.Sprite(PIXI.Texture.from('images/point.png'));
             p.anchor.set(0.5);
-            p.x=(data.points[i].input[0])*this.bg.height;
+            p.x=((data.points[i].input[0])*this.bg.height)/2;
             p.y=this.bg.width-((data.points[i].input[1])*this.bg.width);
             if(data.points[i].expected_text=="strawberry"){
                 p.tint=0xff0000;
@@ -43,10 +49,12 @@ export class Graph extends PIXI.Sprite{
             }
             this.bg.addChild(p);
         }
+
+        this.axis.addChild(this.bg)
     }
 
     getGraph(){
-        return this.bg;
+        return this.axis;
     }
 
     updateGraph(net){
