@@ -144,6 +144,8 @@ export class View{
 
 
                 app.stage.getChildAt(0).getChildAt(9).getChildByName("actfnsbox").y=window.innerHeight-win.startheight_nochange +(layout.BOTTOMBUFFER-100);
+                app.stage.getChildAt(0).getChildAt(9).getChildByName("ratebox").y=window.innerHeight-win.startheight_nochange +(layout.BOTTOMBUFFER-220);
+
     
                } catch {}
 
@@ -158,6 +160,15 @@ export class View{
                             SlideIntro1,SlideIntro1a,SlideIntro1b,SlideIntro1c,SlideIntro2,SlideIntro3, SlideIntro4, SlideIntro3a, SlideIntro4a, //9
                             SlideNeuronA, SlideNeuronA2, SlideNeuron1,SlideNeuron2,SlideNeuron2b,SlideNeuron2b2,SlideNeuron2c,SlideNeuron2d,SlideNeuron2d2,SlideNeuron2e, //16
                             SlideNet1, SlideNet1b, SlideNet1b2,SlideNet1c, SlideNet1d, SlideNet1e,SlideNet2, SlideNet3);// SlideSandbox);
+
+        /*TO DELETE*/
+        for(var i=0; i<this.slideList.length;i++){
+            var currText=new PIXI.Text(i);
+            currText.x=80;
+                currText.y=25;
+            this.slideList[i].slideContainer.addChild(currText);
+            }
+        
 
         const opener = new PIXI.Sprite(PIXI.Texture.from('images/opener.png'));
         opener.name="opener";

@@ -154,7 +154,7 @@ export const SlideIntro1b = new Slide();
             percep_blank.texture=PIXI.Texture.from('images/percep_unknown2.png')
         });
 
-    SlideIntro1b.labelsContainer.addChild(singleblue,singlestraw,singlecherry);
+    SlideIntro1b.inputContainer.addChild(singleblue,singlestraw,singlecherry);
 
     SlideIntro1b.drawText(textIntro1b);
     SlideIntro1b.drawTextButtons();
@@ -281,7 +281,6 @@ export const SlideIntro4a = new Slide();
         [["The neural network is going to try to find the line that separates the two classes"], [layout.LEFTBUFFER,90]],
     ];
      SlideIntro4a.drawText(textIntro4a);
-
     SlideIntro4a.drawTextButtons();
 
 
@@ -569,6 +568,7 @@ net1.setOutLayer();
 net1.removeLayer();
 net1.update();
 SlideNet1.draw_init(net1);
+//console.log(SlideNet1.slideContainer)
 
 var textNet1 = [
     [["Because we have 2 classes,"+'\n'+ "we need two final neurons in our output layer"], [layout.LEFTBUFFER+625,70]],
@@ -588,6 +588,7 @@ var textNet1 = [
 SlideNet1.drawText(textNet1);
 SlideNet1.drawTextButtons();
 SlideNet1.drawActFnButtons(SlideNet1.slideNet);
+SlideNet1.slideContainer.getChildAt(5).visible=false; //costlabel
 
 export const SlideNet1b = new Slide();
     var net2 = new Net();
@@ -608,6 +609,8 @@ export const SlideNet1b = new Slide();
     SlideNet1b.drawText(textNet1b);
     SlideNet1b.drawTextButtons();
     SlideNet1b.drawActFnButtons();
+    SlideNet1b.slideContainer.getChildAt(5).visible=false; //costlabel
+
 
 export const SlideNet1b2 = new Slide();
     var net3 = new Net();
@@ -630,6 +633,8 @@ export const SlideNet1b2 = new Slide();
     SlideNet1b2.drawText(textNet1b2);
     SlideNet1b2.drawTextButtons();
     SlideNet1b2.drawActFnButtons();
+    SlideNet1b2.slideContainer.getChildAt(5).visible=false; //costlabel
+
 
     //SlideNet1b2.buttonContainer.getChildByName("buttonNeuronAddContainer").visible=true;
 
@@ -662,29 +667,41 @@ export const SlideNet1d = new Slide();
     SlideNet1d.drawTextButtons();
 
 export const SlideNet1e = new Slide();
+
+    var seformula=new PIXI.Sprite(PIXI.Texture.from('images/seformula.png'));
+    seformula.isSprite=true;
+    seformula.x=layout.LEFTBUFFER;
+    seformula.y=layout.TOPBUFFER+75;
+
+    var costgraph=new PIXI.Sprite(PIXI.Texture.from('images/costgraph.png'));
+    costgraph.isSprite=true;
+    costgraph.x=layout.LEFTBUFFER;
+    costgraph.y=layout.TOPBUFFER+75;
+
     var textNet1e = [
         [ ["for each training data we give the net, we want to know how far it is from being correct"],[layout.LEFTBUFFER,layout.TOPBUFFER] ],
         [ ["then, we can use this info to update our net to move closer to correct"],[layout.LEFTBUFFER,layout.TOPBUFFER] ],
 
-        [ ["to do this, we use a cost formula (MSE img)"],[layout.LEFTBUFFER,layout.TOPBUFFER+50] ],
-        [ ["essentially, for each output, subtract the answer we got from the net from the correct answer"],[layout.LEFTBUFFER,layout.TOPBUFFER+50] ],
+        [ seformula,["to do this, we use a cost formula (MSE img)"],[layout.LEFTBUFFER,layout.TOPBUFFER+50] ],
+        [ costgraph,["essentially, for each output, subtract the answer we got from the net from the correct answer"],[layout.LEFTBUFFER,layout.TOPBUFFER+50] ],
         [ ["the goal of the nn is to make this value as SMALL as possible"],[layout.LEFTBUFFER,layout.TOPBUFFER+50] ]
     ];
    // var SlideNet1eGraph = new Graph(fruits_test3);
    // SlideNet1e.graphContainer.addChild(SlideNet1eGraph.getGraph());
     SlideNet1e.drawText(textNet1e);
     SlideNet1e.drawTextButtons();
-
+    
 
 export const SlideNet2 = new Slide();
     SlideNet2.slideNet=net1;
     net1.update();
     SlideNet2.draw_init(net1);
 
-    var SlideNet2Graph = new Graph(net1.data);
-    SlideNet2.graphContainer.addChild(SlideNet2Graph.getGraph());
+  //  var SlideNet2Graph = new Graph(net1.data);
+  //  SlideNet2.graphContainer.addChild(SlideNet2Graph.getGraph());
     SlideNet2.drawActFnButtons();
     SlideNet2.drawLayerButtons();
+   // SlideNet2.drawCost();
 
 
     //SlideNet2.drawButtons(net1,SlideNet2Graph);
@@ -693,11 +710,7 @@ export const SlideNet2 = new Slide();
     //SlideNet2.slideContainer.getChildAt(8).getChildByName("remlayer").visible=true;
 
     var textNet2 = [
-        [["p"], [layout.LEFTBUFFER+570,70]],
-        [["pp"], [layout.LEFTBUFFER,70]],
-        [["ppp"], [layout.LEFTBUFFER,90]],
-
-
+        [["here is where we'll keep track of the cost"], [layout.LEFTBUFFER+570,70]],
     ];
     SlideNet2.drawText(textNet2);
     SlideNet2.drawTextButtons();
@@ -729,7 +742,6 @@ export const SlideNet3 = new Slide();
     SlideNet3.drawRateButtons();
 
     SlideNet3.drawCost();
-    SlideNet3.drawTarget();
    // SlideNet3.drawStyleButtons();
    layout.NEURON_LEFTLIM=layout.NEURON_LEFTLIM_INIT;
 

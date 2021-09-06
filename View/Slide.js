@@ -104,11 +104,12 @@ export class Slide{
                                       this.labelsContainer,
 
                                       this.neuronContainer,
+                                      this.textContainer,
 
                                       this.inputContainer, 
                                     //  this.neuronContainer,
                                    //  this.cardContainer,
-                                      this.textContainer,
+                                   //   this.textContainer,
                                       //this.labelsContainer,
 
                                       this.costLabel,
@@ -176,7 +177,6 @@ export class Slide{
 
             actfnsbox.name="actfnsbox";
             actfnsbox.x=0;
-            actfnsbox.y=0;
             actfnsbox.y=layout.BOTTOMBUFFER-100;
         this.buttonContainer.addChild(actfnsbox);
 
@@ -321,7 +321,7 @@ export class Slide{
     drawStyleButtons(){
 
         var slide=this;
-        var stylebox = new PIXI.Sprite(PIXI.Texture.from('images/stylebox.png'));
+        var stylebox = new PIXI.Sprite(PIXI.Texture.from('images/algorithmbox.png'));
 
             stylebox.name="stylebox";
             stylebox.x= 0;
@@ -331,7 +331,14 @@ export class Slide{
         stylebox.addChild(new Button("stochastic",PIXI.Texture.from('images/buttons/stochastic.png'), 75, 70, true));
         stylebox.addChild(new Button("vanilla",PIXI.Texture.from('images/buttons/vanilla.png'), 75, 115,true));
 
-        stylebox.getChildByName("stochastic").on('click', function(e){        
+        stylebox.getChildByName("stochastic").press=true;
+        stylebox.getChildByName("stochastic").setTint(tintDown);
+
+        stylebox.getChildByName("stochastic").on('click', function(e){
+            this.press=true; 
+            slide.buttonContainer.getChildByName("learn_van").pressCount=0;       
+            stylebox.getChildByName("vanilla").press=false;
+
             this.setTint(tintDown);
             stylebox.getChildByName("vanilla").tint=0xFFFFFF;
             stylebox.getChildByName("vanilla").tintDefault();
@@ -339,7 +346,13 @@ export class Slide{
             slide.buttonContainer.getChildByName("learn_van_step").visible=false;
             slide.buttonContainer.getChildByName("learn_van").visible=false;
         });
+
+        stylebox.getChildByName("vanilla").press=false;
         stylebox.getChildByName("vanilla").on('click', function(e){
+            this.press=true;   
+            stylebox.getChildByName("stochastic").press=false;
+            slide.buttonContainer.getChildByName("learn_stoch").pressCount=0;
+     
             this.setTint(tintDown);
             stylebox.getChildByName("stochastic").tint=0xFFFFFF;
             stylebox.getChildByName("stochastic").tintDefault();
@@ -350,20 +363,20 @@ export class Slide{
 
     drawRateButtons(){
         var slide=this;
-        var ratebox = new PIXI.Sprite(PIXI.Texture.from('images/layersbox.png'));
+        var ratebox = new PIXI.Sprite(PIXI.Texture.from('images/ratebox.png'));
 
-            ratebox.name="stylebox";
+            ratebox.name="ratebox";
             ratebox.x= 0;
-            ratebox.y= layout.BOTTOMBUFFER-250; 
+            ratebox.y= layout.BOTTOMBUFFER-220; 
         this.buttonContainer.addChild(ratebox);
         
-        ratebox.addChild(new Button("inc_rate",PIXI.Texture.from('images/buttons/plus.png'),50,100,true));
-        ratebox.addChild(new Button("dec_rate",PIXI.Texture.from('images/buttons/minus.png'),100,100,true));
+        ratebox.addChild(new Button("inc_rate",PIXI.Texture.from('images/buttons/plus.png'),60,95,true));
+        ratebox.addChild(new Button("dec_rate",PIXI.Texture.from('images/buttons/minus.png'),90,95,true));
         
         var rateText = new PIXI.Text(slide.slideNet.learnRate.toFixed(4));
             rateText.name="rateText";
-            rateText.x=50;
-            rateText.y=50;
+            rateText.x=35;
+            rateText.y=45;
             ratebox.addChild(rateText);
 
         
@@ -402,6 +415,8 @@ export class Slide{
     drawLearnButtons(graph){
         var slide=this;
         var pauselearn=0;
+        var pressvan=false;
+        var pressstoch=false;
 
         this.buttonContainer.addChild(new Button("learn_stoch_step",PIXI.Texture.from('images/buttons/button_learnstep.png'),layout.BUTTONS_X,100,true));
         this.buttonContainer.getChildByName("learn_stoch_step").on('click', function(e){
@@ -411,21 +426,34 @@ export class Slide{
 
         });
         
+
         this.buttonContainer.addChild(new Button("learn_stoch",PIXI.Texture.from('images/buttons/button_learn.png'),layout.BUTTONS_X+100,100,true));
+        this.buttonContainer.getChildByName("learn_stoch").pressCount=0;
         this.buttonContainer.getChildByName("learn_stoch").on('click', async function(e){
-          var loopcount = 0;
-          pauselearn = 0;
-          while(pauselearn==0){
-            slide.slideNet.learn();
-            slide.draw_update(slide.slideNet);
-            
-            if(graph){graph.updateGraph(slide.slideNet,graph);}
-            await slide.sleep(100); //pause to see updates - 100 seems good
-            loopcount=loopcount+1;
-          }
+            this.pressCount++;
+            var loopcount = 0;
+            pauselearn = 0;
+
+            //no double clicks
+            if(this.pressCount==1){
+            while(pauselearn==0){
+                slide.slideNet.learn();
+                slide.draw_update(slide.slideNet);
+                
+                if(graph){graph.updateGraph(slide.slideNet,graph);}
+                await slide.sleep(100); //pause to see updates - 100 seems good
+                loopcount=loopcount+1;
+
+                // so you cant do both at the same time
+                if(slide.buttonContainer.getChildByName("stylebox").getChildByName("vanilla").press==true){
+                break;
+                }
+
+            }
+        }
         });
 
-        this.buttonContainer.addChild(new Button("learn_van_step",PIXI.Texture.from('images/buttons/learn_batch_step.png'),layout.BUTTONS_X,150,true));
+        this.buttonContainer.addChild(new Button("learn_van_step",PIXI.Texture.from('images/buttons/learn_batch_step.png'),layout.BUTTONS_X,150,false));
         this.buttonContainer.getChildByName("learn_van_step").on('click', async function(e){
            
             slide.slideNet.learn_batch();
@@ -438,198 +466,44 @@ export class Slide{
 
         });
 
-        this.buttonContainer.addChild(new Button("learn_van",PIXI.Texture.from('images/buttons/learnbatch.png'), layout.BUTTONS_X+100,150,true));
+        this.buttonContainer.addChild(new Button("learn_van",PIXI.Texture.from('images/buttons/learnbatch.png'), layout.BUTTONS_X+100,150,false));
+        this.buttonContainer.getChildByName("learn_van").pressCount=0;
+
         this.buttonContainer.getChildByName("learn_van").on('click', async function(e){
+            this.pressCount++;
             var loopcount = 0;
             pauselearn=0;
 
-            while(pauselearn==0){
+            if(this.pressCount==1){
 
-                await slide.sleep(100);
-                slide.slideNet.learn_batch();
-                slide.slideNet.update();
-                slide.draw_update(slide.slideNet);   
-                //console.log(net.costTot);
-              //  if(slide.slideNet.costTot<0.05){
-              //      break;
-              //  }
-        
-                if(graph){graph.updateGraph(slide.slideNet,graph);}
-     
-                loopcount=loopcount+1;
-            }
-        });
+                while(pauselearn==0){
 
-        this.buttonContainer.addChild(new Button("pause",PIXI.Texture.from('images/buttons/button_pause.png'),layout.BUTTONS_X+100,250,true));
-        var pauselearn=0;
-        this.buttonContainer.getChildByName("pause").on('click', function(e){
-            console.log("PAUSE!!!");
-        pauselearn=1;
-        });
+                    await slide.sleep(100);
+                    slide.slideNet.learn_batch();
+                   // console.log(slide.slideNet.costTot);
 
-        
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    drawButtons(net,graph){
-        /*
-        var slide = this;
-        var buttonNeuronAddContainer = new PIXI.Container();
-            buttonNeuronAddContainer.name="buttonNeuronAddContainer";
-        var buttonNeuronRemContainer = new PIXI.Container();
-            buttonNeuronRemContainer.name="buttonNeuronRemContainer";
-
-
-        this.buttonContainer.addChild(buttonNeuronAddContainer,buttonNeuronRemContainer);
-        // ADD LAYER
-        this.buttonContainer.addChild(new Button("addlayer",PIXI.Texture.from('images/buttons/button_layer.png'), layout.BUTTONS_X, 140,true));
-        this.buttonContainer.getChildByName("addlayer").on('click', function(e){
-            if(net.layers.length<net.maxLayers){
-
-            net.addLayer();
-            net.update();
-            slide.draw_init(net);
-            console.log(net.layers.length)
-            }
-        });
-
-        // REMOVE LAYER
-        this.buttonContainer.addChild(new Button("remlayer",PIXI.Texture.from('images/buttons/button_removelayer.png'), layout.BUTTONS_X, 200, true));
-        this.buttonContainer.getChildByName("remlayer").on('click', function(e){
-            if(net.layers.length>1){
-                net.removeLayer();
-                net.update();
-                slide.draw_init(net);
-            }
-        });
-*/
-        //reset
-        this.buttonContainer.addChild(new Button("reset",PIXI.Texture.from('images/buttons/cat.png'),layout.BUTTONS_X,80,true));
-        this.buttonContainer.getChildByName("reset").on('click', function(e){
-            var newnet = new Net();
-
-            slide.slideNet = newnet;
-            newnet.setNetData(net.data);
-            newnet.removeLayer();
-            newnet.setOutLayer();
-            newnet.update();
-
-            slide.draw_init(newnet);
-
-        });
-
-        // LEARN STOCHASTIC STEP
-        this.buttonContainer.addChild(new Button("learn_stoch_step",PIXI.Texture.from('images/buttons/button_learnstep.png'),layout.BUTTONS_X,255,true));
-        this.buttonContainer.getChildByName("learn_stoch_step").on('click', function(e){
-            net.learn();
-            slide.draw_update(net);
-            if(graph){graph.updateGraph(net,graph);}
-
-        });
-
-        // LEARN STOCHASTIC
-        this.buttonContainer.addChild(new Button("learn_stoch",PIXI.Texture.from('images/buttons/button_learn.png'),layout.BUTTONS_X,300,true));
-        this.buttonContainer.getChildByName("learn_stoch").on('click', async function(e){
-          var loopcount = 0;
-          pauselearn=0;
-          while(loopcount<100 && pauselearn==0){
-            net.learn();
-            slide.draw_update(net);
+                    slide.slideNet.update();
+                    slide.draw_update(slide.slideNet);   
             
-            if(graph){graph.updateGraph(net,graph);}
-            await slide.sleep(100); //pause to see updates - 100 seems good
-            loopcount=loopcount+1;
-          }
-        });
+                    if(graph){graph.updateGraph(slide.slideNet,graph);}
+        
+                    loopcount=loopcount+1;
 
-        this.buttonContainer.addChild(new Button("pause",PIXI.Texture.from('images/buttons/button_pause.png'),layout.BUTTONS_X,350,true));
-        var pauselearn=0;
-        this.buttonContainer.getChildByName("pause").on('click', function(e){
-            console.log("PAUSE!!!");
-        pauselearn=1;
-        });
-
-        // LEARN - VANILLA STEP
-        this.buttonContainer.addChild(new Button("learnbatch_step",PIXI.Texture.from('images/buttons/learn_batch_step.png'),layout.BUTTONS_X,400,true));
-        this.buttonContainer.getChildByName("learnbatch_step").on('click', async function(e){
-            //cycle data points for drawing purposes
-            /*
-
-            for(var i=0; i<net.data.points.length; i++){
-                net.setNetInput(net.data.points[i]);
-                net.update();
-                slide.draw_update(net);
-                if(graph){graph.updateGraph(net,graph);}
-            //    slide.labelsContainer.getChildByName("costLabel").style.fill = 0x6b6b6b;
-                await slide.sleep(100);
-            }
-*/
-       // slide.labelsContainer.getChildByName("costLabel").style.fill = 0x000000;
-        net.learn_batch();
-        await slide.sleep(100);
-
-        net.update();
-        slide.draw_update(net);
-        });
-
-        //LEARN - VANILLA
-        this.buttonContainer.addChild(new Button("learnbatch",PIXI.Texture.from('images/buttons/learnbatch.png'), layout.BUTTONS_X,450,true));
-        this.buttonContainer.getChildByName("learnbatch").on('click', async function(e){
-            var loopcount = 0;
-            pauselearn=0;
-
-            while(pauselearn==0){
-
-/*
-                //cycle data points for drawing purposes, but only for the first few times
-                if(loopcount<0){
-                    for(var i=0; i<net.data.points.length; i++){
-                        net.setNetInput(net.data.points[i]);
-                        net.update();
-                        slide.draw_update(net);
-                        if(graph){graph.updateGraph(net,graph);}
-
-                      //  slide.labelsContainer.getChildByName("costLabel").style.fill = 0x6b6b6b;
-                        await slide.sleep(100);
-                       // slide.labelsContainer.getChildByName("costLabel").style.fill = 0x000000;
-
+                    if(slide.buttonContainer.getChildByName("stylebox").getChildByName("stochastic").press==true){
+                        console.log("stoc press")
+                        break;
                     }
                 }
-*/
-                await slide.sleep(100);
-                net.learn_batch();
-                net.update();
-                slide.draw_update(net);   
-                console.log(net.costTot);
-                if(net.costTot<0.05){
-                    break;
-                }
-        
-                if(graph){graph.updateGraph(net,graph);}
-     
-                loopcount=loopcount+1;
             }
+        });
+
+        this.buttonContainer.addChild(new Button("pause",PIXI.Texture.from('images/buttons/button_pause.png'),layout.BUTTONS_X+100,200,true));
+        var pauselearn=0;
+        this.buttonContainer.getChildByName("pause").on('click', function(e){
+            slide.buttonContainer.getChildByName("learn_stoch").pressCount=0;
+            slide.buttonContainer.getChildByName("learn_van").pressCount=0;
+
+            pauselearn=1;
         });
 
         
@@ -640,6 +514,7 @@ export class Slide{
         this.drawNeurons_init(net);
         this.drawInputs_init(net);
         this.drawLabels_init(net);
+        this.drawCost_update(net);
 
         
         if(this.buttonContainer.getChildByName("buttonNeuronAddContainer") !==null){
@@ -669,6 +544,7 @@ export class Slide{
         this.drawWeights_update(net);
         this.drawInputs_update(net);
         this.drawLabels_update(net);
+        this.drawCost_update(net);
     }
 
     draw_update_large(net){
@@ -1458,30 +1334,33 @@ export class Slide{
             costBox.y=layout.BOTTOMBUFFER-280;          
         this.costLabel.addChild(costBox);
     
-        var costText= new PIXI.Text(formatter_long.format(this.slideNet.costTot),textstyles.large);
+        var costText= new PIXI.Text("",textstyles.large);
+
+        if(this.buttonContainer.getChildByName("stylebox").getChildByName("vanilla").press==true){
+            costText.text=formatter_long.format(this.slideNet.costTot_batch)
+        } else if(this.buttonContainer.getChildByName("stylebox").getChildByName("stochastic").press==true){
+            costText.text=formatter_long.format(this.slideNet.costTot)
+        }
+       // console.log(this.buttonContainer.getChildByName("stylebox").getChildByName("vanilla").press)
+       // console.log(this.buttonContainer.getChildByName("stylebox").getChildByName("stochastic").press)
+
+
+
+        //var costText= new PIXI.Text(formatter_long.format(this.slideNet.costTot),textstyles.large);
             costText.name = "costText";
             costText.anchor.set(0.5)
             costText.y=15;
-       // console.log(costText)
-        costBox.addChild(costText);
+            
+            //console.log
+            //if(this.buttonContainer.getChildByName("learn_van").pressCount=0){
+          //      costText.text="learn_van"
+           // }
+           //if(this.buttonContainer.getChildByName("learn_van_step").visible=false;
+
+
+
+            costBox.addChild(costText);
     }
-
-    drawTarget(){
-        var targetNumBox = new PIXI.Graphics();
-            targetNumBox.drawRect(650,180,50,185);
-
-        var targetNum= new PIXI.Text(this.slideNet.target);
-        targetNum.name = "targetNum";
-        targetNum.anchor.set(0.5)
-        targetNum.x=100;
-        targetNum.y=100;
-
-      //  console.log(this.slideNet.data.points[0].expected)
-        //this.slideContainer.getChildAt(3).addChild(targetNumBox);
-       // console.log(this.slideNet.netInput)
-    }
-
-    drawTarget_update(){}
 
     drawLabels_update(net){
 
@@ -1490,21 +1369,31 @@ export class Slide{
        // console.log(target.texture)
 
 
-       if (net.targetText=="blueberry"){
-        targetimg.texture=PIXI.Texture.from('images/blueberrycard.png');
-       } else if (net.targetText=="strawberry"){
-       targetimg.texture=PIXI.Texture.from('images/strawberrycard.png');
-       }
+            if (net.targetText=="blueberry"){
+                targetimg.texture=PIXI.Texture.from('images/blueberrycard.png');
+            } else if (net.targetText=="strawberry"){
+            targetimg.texture=PIXI.Texture.from('images/strawberrycard.png');
+            }
 
-       if (this.costLabel.getChildByName("costBox") !== null){
-            this.costLabel.getChildByName("costBox").getChildByName("costText").text=formatter_long.format(net.costTot);
-       }
-       
-       if (this.slideContainer.getChildAt(3).getChildByName("targetLabel0") !== null){
+
+
+        if (this.slideContainer.getChildAt(3).getChildByName("targetLabel0") !== null){
         this.slideContainer.getChildAt(3).getChildByName("targetLabel0").text="target: "+this.slideNet.target[0]
         this.slideContainer.getChildAt(3).getChildByName("targetLabel1").text="target: "+this.slideNet.target[1]
 
        }
+    }
+
+    drawCost_update(net){
+        if (this.costLabel.getChildByName("costBox") !== null){
+
+
+            if(this.buttonContainer.getChildByName("stylebox").getChildByName("vanilla").press==true){
+                this.costLabel.getChildByName("costBox").getChildByName("costText").text=formatter_long.format(net.costTot_batch);
+            } else if(this.buttonContainer.getChildByName("stylebox").getChildByName("stochastic").press==true){
+                this.costLabel.getChildByName("costBox").getChildByName("costText").text=formatter_long.format(net.costTot);}   
+        }
+       
     }
 
     drawTextButtons(){
