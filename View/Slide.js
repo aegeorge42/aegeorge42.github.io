@@ -238,7 +238,7 @@ export class Slide{
         var layersbox = new PIXI.Sprite(PIXI.Texture.from('images/layersbox_horz.png'));
             layersbox.name="layersbox";
             layersbox.x= layout.NEURON_LEFTLIM-150;
-            layersbox.y= 40;//layout.BOTTOMBUFFER-450; 
+            layersbox.y= 45;//layout.BOTTOMBUFFER-450; 
         this.buttonContainer.addChild(layersbox);
 
         layersbox.addChild(new Button("addlayer",PIXI.Texture.from('images/buttons/button_layer.png'), 115, 40,true));
@@ -292,32 +292,6 @@ export class Slide{
         });
     }
 
-    drawResetButton(){
-        this.buttonContainer.addChild(new Button("reset",PIXI.Texture.from('images/buttons/cat.png'),layout.BUTTONS_X,80,true));
-
-
-        var slide=this;
-        this.buttonContainer.getChildByName("reset").on('click', function(e){
-            for(var i=0;i<slide.slideNet.layers.length;i++){
-                slide.buttonContainer.getChildByName("buttonNeuronAddContainer").getChildAt(i).visible=false;
-                slide.buttonContainer.getChildByName("buttonNeuronRemContainer").getChildAt(i).visible=false;
-            }
-
-            var newnet = new Net();
-            console.log(slide.slideNet.data)
-            newnet.setNetData(slide.slideNet.data);
-            newnet.removeLayer();
-
-            newnet.setOutLayer();
-            newnet.update();
-            slide.slideNet=newnet;
-            slide.draw_init(newnet);
-
-            slide.buttonContainer.getChildByName("actfnsbox").getChildByName("sigmoid").setTint(tintDown);
-            slide.buttonContainer.getChildByName("actfnsbox").getChildByName("relu").setTint(0xFFFFFF);
-        });
-    }
-
     drawStyleButtons(){
 
         var slide=this;
@@ -345,6 +319,8 @@ export class Slide{
 
             slide.buttonContainer.getChildByName("learnbox").getChildByName("learn_van_step").visible=false;
             slide.buttonContainer.getChildByName("learnbox").getChildByName("learn_van").visible=false;
+            slide.buttonContainer.getChildByName("learnbox").getChildByName("pause").visible=false;
+
         });
 
         stylebox.getChildByName("vanilla").press=false;
@@ -358,6 +334,7 @@ export class Slide{
             stylebox.getChildByName("stochastic").tintDefault();
             slide.buttonContainer.getChildByName("learnbox").getChildByName("learn_van_step").visible=true;
             slide.buttonContainer.getChildByName("learnbox").getChildByName("learn_van").visible=true;
+            slide.buttonContainer.getChildByName("learnbox").getChildByName("pause").visible=false;
         });
     }
 
@@ -421,7 +398,7 @@ export class Slide{
             learnbox.y= 50; 
         this.buttonContainer.addChild(learnbox);
 
-        learnbox.addChild(new Button("learn_stoch_step",PIXI.Texture.from('images/buttons/step.png'),210,60,true));
+        learnbox.addChild(new Button("learn_stoch_step",PIXI.Texture.from('images/buttons/step.png'),212.5,60,true));
         learnbox.getChildByName("learn_stoch_step").on('click', function(e){
             slide.slideNet.learn();
             slide.draw_update(slide.slideNet);
@@ -430,7 +407,7 @@ export class Slide{
         });
         
 
-        learnbox.addChild(new Button("learn_stoch",PIXI.Texture.from('images/buttons/learn.png'),120,60,true));
+        learnbox.addChild(new Button("learn_stoch",PIXI.Texture.from('images/buttons/learn.png'),125,60,true));
         learnbox.getChildByName("learn_stoch").pressCount=0;
         learnbox.getChildByName("learn_stoch").on('click', async function(e){
             this.pressCount++;
@@ -460,7 +437,7 @@ export class Slide{
         }
         });
 
-        learnbox.addChild(new Button("learn_van_step",PIXI.Texture.from('images/buttons/step.png'),210,60,false));
+        learnbox.addChild(new Button("learn_van_step",PIXI.Texture.from('images/buttons/step.png'),212.5,60,false));
         learnbox.getChildByName("learn_van_step").on('click', async function(e){
            
             slide.slideNet.learn_batch();
@@ -473,7 +450,7 @@ export class Slide{
 
         });
 
-        learnbox.addChild(new Button("learn_van",PIXI.Texture.from('images/buttons/learn.png'), 120,60,false));
+        learnbox.addChild(new Button("learn_van",PIXI.Texture.from('images/buttons/learn.png'), 125,60,false));
         learnbox.getChildByName("learn_van").pressCount=0;
 
         learnbox.getChildByName("learn_van").on('click', async function(e){
@@ -509,7 +486,7 @@ export class Slide{
             }
         });
 
-        learnbox.addChild(new Button("pause",PIXI.Texture.from('images/buttons/pause.png'),120,60,false));
+        learnbox.addChild(new Button("pause",PIXI.Texture.from('images/buttons/pause.png'),125,60,false));
         var pauselearn=0;
         learnbox.getChildByName("pause").on('click', function(e){
             slide.buttonContainer.getChildByName("learnbox").getChildByName("learn_stoch").pressCount=0;
@@ -519,7 +496,7 @@ export class Slide{
             this.visible=false;
         });
 
-        learnbox.addChild(new Button("reset",PIXI.Texture.from('images/buttons/reset.png'),35,60,true));
+        learnbox.addChild(new Button("reset",PIXI.Texture.from('images/buttons/reset.png'),38,60,true));
 
         var slide=this;
         learnbox.getChildByName("reset").on('click', function(e){
@@ -539,6 +516,9 @@ export class Slide{
 
             slide.buttonContainer.getChildByName("actfnsbox").getChildByName("sigmoid").setTint(tintDown);
             slide.buttonContainer.getChildByName("actfnsbox").getChildByName("relu").setTint(0xFFFFFF);
+
+            if(graph){graph.clearGraph();}
+
         });
 
         

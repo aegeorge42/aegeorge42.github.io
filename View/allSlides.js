@@ -602,9 +602,6 @@ export const SlideNet1b = new Slide();
 
     var textNet1b = [
         [["We can also add hidden layers to our nn."], [layout.LEFTBUFFER+625,70]],
-    //    [["(These are called hidden layers.)"], [layout.LEFTBUFFER+625,90]],
-     //   [["notice how the OUTPUT of one layer becomes the INPUT for the next layer"], [layout.LEFTBUFFER+625,90]],
-
     ];
     SlideNet1b.drawText(textNet1b);
     SlideNet1b.drawTextButtons();
@@ -613,13 +610,26 @@ export const SlideNet1b = new Slide();
 
 
 export const SlideNet1b2 = new Slide();
+  //  SlideNet1b2.slideNet=net2;
+
     var net3 = new Net();
 
-    SlideNet1b2.slideNet=net3;
     net3.setNetData(net1.data);
     net3.setOutLayer();
+
+    var w000= net2.getLayer(0).getNeuron(0).getWeight(0);
+    var w001= net2.getLayer(0).getNeuron(0).getWeight(1);
+    var w100= net2.getLayer(1).getNeuron(0).getWeight(0);
+    var w110= net2.getLayer(1).getNeuron(1).getWeight(0);
+
+    net3.getLayer(0).getNeuron(0).setWeight(0,w000);
+    net3.getLayer(0).getNeuron(0).setWeight(1,w001);
+    net3.getLayer(1).getNeuron(0).setWeight(0,w100);
+    net3.getLayer(1).getNeuron(1).setWeight(0,w110);
+
     net3.update();
 
+    SlideNet1b2.slideNet=net3;
     SlideNet1b2.draw_init(net3);    
     SlideNet1b2.slideNet.getLayer(0).addNeuron();
     SlideNet1b2.slideNet.update();
@@ -628,6 +638,8 @@ export const SlideNet1b2 = new Slide();
     var textNet1b2 = [
         [["and add neurons to each hidden layer"], [layout.LEFTBUFFER+625,90]],
         [["notice how the OUTPUT of one layer becomes the INPUT for the next layer"], [layout.LEFTBUFFER+625,150]],
+        [["when we talk about the output of the whole net, we are talking about the outputs," 
+        +"or activation, of the neurons in the output layer "], [layout.LEFTBUFFER+625,250]],
 
     ];
     SlideNet1b2.drawText(textNet1b2);
@@ -643,7 +655,7 @@ export const SlideNet1c = new Slide();
     SlideNet1c.draw_init(net3);    
     var textNet1c = [
         [["use these buttons to add layers"], [layout.LEFTBUFFER,70]],
-        [["this process is called feedforward"], [layout.LEFTBUFFER+300,layout.TOPBUFFER+350]],
+        [["this process is called forward propogation"], [layout.LEFTBUFFER+300,layout.TOPBUFFER+350]],
 
     ];
     SlideNet1c.drawText(textNet1c);
@@ -659,12 +671,30 @@ export const SlideNet1c = new Slide();
 
 export const SlideNet1d = new Slide();
     var textNet1d = [
-        [["now that we've built our network, we can begin training"], [layout.LEFTBUFFER,layout.TOPBUFFER]],
-      //  [["basically, give training data, see how wrong our net is,"], [layout.LEFTBUFFER,layout.TOPBUFFER]],
+        [["Now that we've built our network, we can begin training it."], [layout.LEFTBUFFER,layout.TOPBUFFER]],
+        [["(this is what we mean when we say a neural network is 'learning'"], [layout.LEFTBUFFER,layout.TOPBUFFER+100]],
+        [["In order to 'learn', the network uses an algorithm called"], [" backpropogation",textstyles.large_bold], [layout.LEFTBUFFER,layout.TOPBUFFER+200]],
+
 
     ];
     SlideNet1d.drawText(textNet1d);
     SlideNet1d.drawTextButtons();
+
+export const SlideNet1d2 = new Slide();
+    var textNet1d2 = [
+        [["Backpropogation has 3 steps:"], [layout.LEFTBUFFER,layout.TOPBUFFER]],
+        [["1. Forward propogation               " +'\n'],
+         [     "like we did before - give the net an input and calculate the output"], [layout.LEFTBUFFER,layout.TOPBUFFER+100]],
+        [["2. Error calculation               " +'\n'],
+         [     "how far off was my actual output value from my target value"], [layout.LEFTBUFFER,layout.TOPBUFFER+200]],
+         [["3. Update               " +'\n'],
+         [     "adjust the weights and biases of the neural network to get closer to that target value"], [layout.LEFTBUFFER,layout.TOPBUFFER+300]],
+         [ ["since we've already gone thru step 1, we can move on to..."],[layout.LEFTBUFFER,layout.TOPBUFFER] ],
+
+
+    ];
+    SlideNet1d2.drawText(textNet1d2);
+    SlideNet1d2.drawTextButtons();
 
 export const SlideNet1e = new Slide();
 
@@ -679,17 +709,26 @@ export const SlideNet1e = new Slide();
     costgraph.y=layout.TOPBUFFER+75;
 
     var textNet1e = [
+        [ [" Step 2: Error calculation",textstyles.large_bold],[layout.LEFTBUFFER,layout.TOPBUFFER] ],
         [ ["for each training data we give the net, we want to know how far it is from being correct"],[layout.LEFTBUFFER,layout.TOPBUFFER] ],
         [ ["then, we can use this info to update our net to move closer to correct"],[layout.LEFTBUFFER,layout.TOPBUFFER] ],
 
-        [ seformula,["to do this, we use a cost formula (MSE img)"],[layout.LEFTBUFFER,layout.TOPBUFFER+50] ],
-        [ costgraph,["essentially, for each output, subtract the answer we got from the net from the correct answer"],[layout.LEFTBUFFER,layout.TOPBUFFER+50] ],
-        [ ["the goal of the nn is to make this value as SMALL as possible"],[layout.LEFTBUFFER,layout.TOPBUFFER+50] ]
+        [ seformula,["to do this, we use a cost formula"],[layout.LEFTBUFFER,layout.TOPBUFFER+50] ],
+
+        [ ["For each output neuron, subtract the actual output from the target output"+'\n'
+            +"then add these values together"],[layout.LEFTBUFFER,layout.TOPBUFFER+50] ],
+        [ ["the goal of the nn is to make this value as SMALL as possible"],[layout.LEFTBUFFER,layout.TOPBUFFER+50] ],    
+        [ costgraph,["here's a graph of the cost function "],[layout.LEFTBUFFER,layout.TOPBUFFER+50] ]    
+
+   
     ];
    // var SlideNet1eGraph = new Graph(fruits_test3);
    // SlideNet1e.graphContainer.addChild(SlideNet1eGraph.getGraph());
     SlideNet1e.drawText(textNet1e);
     SlideNet1e.drawTextButtons();
+
+export const SlideNet1f = new Slide();
+
     
 
 export const SlideNet2 = new Slide();

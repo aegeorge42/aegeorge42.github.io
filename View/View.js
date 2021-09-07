@@ -24,9 +24,9 @@ import {SlideHome,
     SlideNet1,
     SlideNet1b,
     SlideNet1b2,
-
     SlideNet1c,
     SlideNet1d,
+    SlideNet1d2,
     SlideNet1e,
     SlideNet2,
     SlideNet3,
@@ -113,9 +113,7 @@ export class View{
             app.stage.getChildAt(0).getChildAt(3).position.set(resize_wid,resize_height) //labels
             app.stage.getChildAt(0).getChildAt(4).position.set(resize_wid,resize_height) //neurons
             //app.stage.getChildAt(0).getChildAt(5).position.set(resize_wid,resize_height) //cost label
-            app.stage.getChildAt(0).getChildAt(9).getChildByName("buttonNeuronAddContainer").position.set(resize_wid,resize_height) //cost label
-            app.stage.getChildAt(0).getChildAt(9).getChildByName("buttonNeuronRemContainer").position.set(resize_wid,resize_height) //cost label
-
+            
 
             app.stage.getChildAt(0).getChildAt(7).position.set(0,0);
             ///console.log(app.stage.getChildAt(0).getChildAt(5))
@@ -139,16 +137,19 @@ export class View{
             app.stage.getChildAt(0).getChildAt(5).y=window.innerHeight-win.startheight_nochange;
             app.stage.getChildAt(0).getChildAt(5).x=window.innerWidth-win.startwidth_nochange;
 
+            if(app.stage.getChildAt(0).getChildAt(9).getChildByName("buttonNeuronAddContainer") !== null){
+                app.stage.getChildAt(0).getChildAt(9).getChildByName("buttonNeuronAddContainer").position.set(resize_wid,resize_height) //cost label
+                app.stage.getChildAt(0).getChildAt(9).getChildByName("buttonNeuronRemContainer").position.set(resize_wid,resize_height) //cost label
+            }
 
-            try{
-
-
+            if(app.stage.getChildAt(0).getChildAt(9).getChildByName("actfnsbox") !== null){
                 app.stage.getChildAt(0).getChildAt(9).getChildByName("actfnsbox").y=window.innerHeight-win.startheight_nochange +(layout.BOTTOMBUFFER-100);
+            }
+
+            if(app.stage.getChildAt(0).getChildAt(9).getChildByName("ratebox") !== null){
                 app.stage.getChildAt(0).getChildAt(9).getChildByName("ratebox").y=window.innerHeight-win.startheight_nochange +(layout.BOTTOMBUFFER-220);
-
+            }
     
-               } catch {}
-
             }
         }
 
@@ -159,7 +160,7 @@ export class View{
         this.slideList.push(SlideHome,SlideInstruct, //1
                             SlideIntro1,SlideIntro1a,SlideIntro1b,SlideIntro1c,SlideIntro2,SlideIntro3, SlideIntro4, SlideIntro3a, SlideIntro4a, //9
                             SlideNeuronA, SlideNeuronA2, SlideNeuron1,SlideNeuron2,SlideNeuron2b,SlideNeuron2b2,SlideNeuron2c,SlideNeuron2d,SlideNeuron2d2,SlideNeuron2e, //16
-                            SlideNet1, SlideNet1b, SlideNet1b2,SlideNet1c, SlideNet1d, SlideNet1e,SlideNet2, SlideNet3);// SlideSandbox);
+                            SlideNet1, SlideNet1b, SlideNet1b2,SlideNet1c, SlideNet1d,SlideNet1d2, SlideNet1e,SlideNet2, SlideNet3);// SlideSandbox);
 
         /*TO DELETE*/
         for(var i=0; i<this.slideList.length;i++){
@@ -179,7 +180,7 @@ export class View{
 
 
 
-        this.currentSlide=28;
+        this.currentSlide=22;
 
 
 
@@ -199,14 +200,11 @@ export class View{
         this.app.stage.getChildAt(0).getChildAt(6).x=window.innerWidth-this.startwidth_nochange;
         this.app.stage.getChildAt(0).getChildAt(5).y=window.innerHeight-this.startheight_nochange;
         this.app.stage.getChildAt(0).getChildAt(5).x=window.innerWidth-this.startwidth_nochange;
-        try{
-
-            
+        
+        if(app.stage.getChildAt(0).getChildAt(9).getChildByName("actfnsbox") !== null){
             this.app.stage.getChildAt(0).getChildAt(9).getChildByName("actfnsbox").y=window.innerHeight-this.startheight_nochange +(layout.BOTTOMBUFFER-100);
+        }
        
-       
-        }catch{}
-
         if(this.currentSlide==0){
         this.app.stage.getChildAt(0).getChildByName("opener").x=window.innerWidth/2;
                 this.app.stage.getChildAt(0).getChildByName("opener").y=((window.innerHeight)/3)+50;
