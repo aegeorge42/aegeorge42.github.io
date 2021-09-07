@@ -27,6 +27,7 @@ import {SlideHome,
     SlideNet1c,
     SlideNet1d,
     SlideNet1d2,
+    SlideNet1d3,
     SlideNet1e,
     SlideNet2,
     SlideNet3,
@@ -160,7 +161,7 @@ export class View{
         this.slideList.push(SlideHome,SlideInstruct, //1
                             SlideIntro1,SlideIntro1a,SlideIntro1b,SlideIntro1c,SlideIntro2,SlideIntro3, SlideIntro4, SlideIntro3a, SlideIntro4a, //9
                             SlideNeuronA, SlideNeuronA2, SlideNeuron1,SlideNeuron2,SlideNeuron2b,SlideNeuron2b2,SlideNeuron2c,SlideNeuron2d,SlideNeuron2d2,SlideNeuron2e, //16
-                            SlideNet1, SlideNet1b, SlideNet1b2,SlideNet1c, SlideNet1d,SlideNet1d2, SlideNet1e,SlideNet2, SlideNet3);// SlideSandbox);
+                            SlideNet1, SlideNet1b, SlideNet1b2,SlideNet1c, SlideNet1d,SlideNet1d2,SlideNet1d3, SlideNet1e,SlideNet2, SlideNet3);// SlideSandbox);
 
         /*TO DELETE*/
         for(var i=0; i<this.slideList.length;i++){
@@ -180,7 +181,7 @@ export class View{
 
 
 
-        this.currentSlide=22;
+        this.currentSlide=27;
 
 
 
@@ -201,7 +202,7 @@ export class View{
         this.app.stage.getChildAt(0).getChildAt(5).y=window.innerHeight-this.startheight_nochange;
         this.app.stage.getChildAt(0).getChildAt(5).x=window.innerWidth-this.startwidth_nochange;
         
-        if(app.stage.getChildAt(0).getChildAt(9).getChildByName("actfnsbox") !== null){
+        if(this.app.stage.getChildAt(0).getChildAt(9).getChildByName("actfnsbox") !== null){
             this.app.stage.getChildAt(0).getChildAt(9).getChildByName("actfnsbox").y=window.innerHeight-this.startheight_nochange +(layout.BOTTOMBUFFER-100);
         }
        
@@ -216,13 +217,15 @@ export class View{
 
     // handle 1st and last slide diff formats
     caveats(){
-        if(this.slideList[this.currentSlide].sandbox){
+        /*if(this.slideList[this.currentSlide].sandbox){
             layout.NEURON_LEFTLIM=SlideNet3.buttonContainer.getChildByName("stylebox").x +450;
-
+        }else if(this.slideList[this.currentSlide].leftnet){
+            
+            layout.NEURON_LEFTLIM=0;
         } else {
             layout.NEURON_LEFTLIM=layout.NEURON_LEFTLIM_INIT;
 
-        }
+        }*/
 
         if (this.currentSlide==0){
             for(var i = 1; i<this.app.stage.children.length-1; i++){

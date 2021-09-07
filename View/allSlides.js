@@ -594,7 +594,6 @@ export const SlideNet1b = new Slide();
     var net2 = new Net();
 
     SlideNet1b.slideNet=net2;
-
     net2.setNetData(net1.data);
     net2.setOutLayer();
     net2.update();
@@ -610,7 +609,6 @@ export const SlideNet1b = new Slide();
 
 
 export const SlideNet1b2 = new Slide();
-  //  SlideNet1b2.slideNet=net2;
 
     var net3 = new Net();
 
@@ -622,10 +620,18 @@ export const SlideNet1b2 = new Slide();
     var w100= net2.getLayer(1).getNeuron(0).getWeight(0);
     var w110= net2.getLayer(1).getNeuron(1).getWeight(0);
 
+    var b00 =net2.getLayer(0).getNeuron(0).bias;
+    var b10 =net2.getLayer(1).getNeuron(0).bias;
+    var b11 =net2.getLayer(1).getNeuron(1).bias;
+
     net3.getLayer(0).getNeuron(0).setWeight(0,w000);
     net3.getLayer(0).getNeuron(0).setWeight(1,w001);
     net3.getLayer(1).getNeuron(0).setWeight(0,w100);
     net3.getLayer(1).getNeuron(1).setWeight(0,w110);
+
+    net3.getLayer(0).getNeuron(0).setBias(b00);
+    net3.getLayer(1).getNeuron(0).setBias(b10);
+    net3.getLayer(1).getNeuron(1).setBias(b11);
 
     net3.update();
 
@@ -696,31 +702,74 @@ export const SlideNet1d2 = new Slide();
     SlideNet1d2.drawText(textNet1d2);
     SlideNet1d2.drawTextButtons();
 
-export const SlideNet1e = new Slide();
+export const SlideNet1d3 = new Slide();
 
-    var seformula=new PIXI.Sprite(PIXI.Texture.from('images/seformula.png'));
-    seformula.isSprite=true;
-    seformula.x=layout.LEFTBUFFER;
-    seformula.y=layout.TOPBUFFER+75;
+var seformula=new PIXI.Sprite(PIXI.Texture.from('images/seformula.png'));
+seformula.isSprite=true;
+seformula.x=0//layout.NEURON_LEFTLIM+180;
+seformula.y=layout.TOPBUFFER+75;
+
+var costgraph=new PIXI.Sprite(PIXI.Texture.from('images/costgraph.png'));
+costgraph.isSprite=true;
+costgraph.x=layout.LEFTBUFFER;
+costgraph.y=layout.TOPBUFFER+75;
+
+var textNet1d3 = [
+    
+
+    [ [" Step 2: Error calculation",textstyles.large_bold],[layout.LEFTBUFFER,layout.TOPBUFFER] ],
+    [ ["for each training data we give the net, we want to know"+'\n'+ "how far it is from being correct"],[layout.LEFTBUFFER,layout.TOPBUFFER] ],
+
+    [ seformula,["to do this, we use a cost formula"],[layout.LEFTBUFFER,layout.TOPBUFFER+50] ],
+    [["the goal of the neural network is to make the output of this formula as small as possible"], [layout.LEFTBUFFER,layout.TOPBUFFER+200] ],
+    [ costgraph,["when we graph this formula, we can see that our output is minimized when actual and target are the same value"],[layout.LEFTBUFFER,layout.TOPBUFFER+200] ]
+
+
+];
+SlideNet1d3.drawText(textNet1d3);
+SlideNet1d3.drawTextButtons();
+
+export const SlideNet1e = new Slide();
+    SlideNet1e.leftnet=true;
+    var net1e = new Net();
+    SlideNet1e.slideNet=net1e;
+    layout.NEURON_LEFTLIM=300;
+    layout.NEURON_UPPERLIM=150;
+
+
+    net1e.setNetData(fruits_small);
+    net1e.setOutLayer();
+    net1e.removeLayer();
+    net1e.update();
+    SlideNet1e.draw_init(net1e);
+
 
     var costgraph=new PIXI.Sprite(PIXI.Texture.from('images/costgraph.png'));
     costgraph.isSprite=true;
     costgraph.x=layout.LEFTBUFFER;
     costgraph.y=layout.TOPBUFFER+75;
 
+    SlideNet1e.drawActFnButtons();
+    SlideNet1e.drawStyleButtons();
+    SlideNet1e.drawCost();
+    SlideNet1e.costLabel.getChildByName("costBox").x=500;
+
+    SlideNet1e.buttonContainer.visible=false;
+    
+
     var textNet1e = [
         [ [" Step 2: Error calculation",textstyles.large_bold],[layout.LEFTBUFFER,layout.TOPBUFFER] ],
-        [ ["for each training data we give the net, we want to know how far it is from being correct"],[layout.LEFTBUFFER,layout.TOPBUFFER] ],
-        [ ["then, we can use this info to update our net to move closer to correct"],[layout.LEFTBUFFER,layout.TOPBUFFER] ],
+        [ [" Here's the cost calculated for this one example "],[layout.NEURON_LEFTLIM+180,layout.TOPBUFFER] ],
+      //  [ ["then, we can use this info to update our net to move closer to correct"],[layout.LEFTBUFFER,layout.TOPBUFFER] ],
 
-        [ seformula,["to do this, we use a cost formula"],[layout.LEFTBUFFER,layout.TOPBUFFER+50] ],
-
+       // [ seformula,["to do this, we use a cost formula"],[layout.NEURON_LEFTLIM+180,layout.TOPBUFFER+50] ],
+/*
         [ ["For each output neuron, subtract the actual output from the target output"+'\n'
             +"then add these values together"],[layout.LEFTBUFFER,layout.TOPBUFFER+50] ],
         [ ["the goal of the nn is to make this value as SMALL as possible"],[layout.LEFTBUFFER,layout.TOPBUFFER+50] ],    
         [ costgraph,["here's a graph of the cost function "],[layout.LEFTBUFFER,layout.TOPBUFFER+50] ]    
 
-   
+   */
     ];
    // var SlideNet1eGraph = new Graph(fruits_test3);
    // SlideNet1e.graphContainer.addChild(SlideNet1eGraph.getGraph());
