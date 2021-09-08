@@ -369,8 +369,8 @@ export const SlideNeuron1 = new Slide();
         [neuron_example0,["Here's a neuron. ", textstyles.large_bold], [ layout.LEFTBUFFER, 120]],
         [ neuron_example1,["A neuron takes in some inputs... " ], [ layout.LEFTBUFFER, 200] ],
         [ ["(each input is a single number)", textstyles.medium ], [ layout.LEFTBUFFER+20, 250] ],
-        [ neuron_example2,["...some math happens... " ], [ layout.LEFTBUFFER+500, 450]],
-        [ neuron_example3,["...and spits out a single output. " ], [ layout.LEFTBUFFER+760, 350]],
+        //[ neuron_example2,["...some math happens... " ], [ layout.LEFTBUFFER+500, 450]],
+       // [ neuron_example3,["...and spits out a single output. " ], [ layout.LEFTBUFFER+760, 350]],
     ];
 
     var textwid= PIXI.TextMetrics.measureText(textNeuron1[1][1][0],textstyles.default).width;
@@ -381,6 +381,30 @@ export const SlideNeuron1 = new Slide();
 
     SlideNeuron1.drawText(textNeuron1);
     SlideNeuron1.drawTextButtons();
+
+export const SlideNeuron1a = new Slide();
+    var textNeuron1a = [
+        [neuron_example0,["Here's a neuron. ", textstyles.large_bold], [ layout.LEFTBUFFER, 120]],
+        [ neuron_example1,["A neuron takes in some inputs... " ], [ layout.LEFTBUFFER, 200] ],
+        [ ["(each input is a single number)", textstyles.medium ], [ layout.LEFTBUFFER+20, 250] ],
+        [ neuron_example2,["...some math happens... " ], [ layout.LEFTBUFFER+500, 450]],
+        [ neuron_example3,["...and spits out a single output. " ], [ layout.LEFTBUFFER+760, 350]],
+    ];
+
+    SlideNeuron1a.drawText(textNeuron1a);
+    SlideNeuron1a.drawTextButtons();
+
+export const SlideNeuron1b = new Slide();
+var textNeuron1b = [
+    [ neuron_example3,["...and spits out a single output. " ], [ layout.LEFTBUFFER+760, 350]],
+];
+    SlideNeuron1b.drawText(textNeuron1b);
+    SlideNeuron1b.drawTextButtons();
+
+export const SlideNeuron1c = new Slide();
+
+
+
 
 //INTERACTIVE NEURON
 export const SlideNeuron2 = new Slide();
@@ -777,7 +801,7 @@ SlideNet1d4.drawText(textNet1d4);
 export const SlideNet1e = new Slide();
     SlideNet1e.leftnet=true;
     layout.NEURON_LEFTLIM=350;
-    layout.NEURON_UPPERLIM=200;
+    layout.NEURON_UPPERLIM=170;
 
    
     var costexample=new PIXI.Sprite(PIXI.Texture.from('images/costexample.png'));
@@ -808,7 +832,7 @@ export const SlideNet1e = new Slide();
        // costexample,
         [ [" Step 2: Error calculation",textstyles.large_bold],[layout.LEFTBUFFER,layout.TOPBUFFER] ],
         [ [" Here's how the cost is calculated for this example."],[layout.LEFTBUFFER,layout.TOPBUFFER+50] ],
-       [ ["update the weights of the neural network to change the cost."],[layout.LEFTBUFFER+550,layout.TOPBUFFER+30] ],
+       [ ["Notice how changing the weights " +'\n'+"of the neural network " +'\n'+"changes the cost."],[layout.NEURON_LEFTLIM+500,layout.TOPBUFFER+100] ],
 
        // [ seformula,["to do this, we use a cost formula"],[layout.NEURON_LEFTLIM+180,layout.TOPBUFFER+50] ],
 /*

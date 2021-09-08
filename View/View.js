@@ -15,6 +15,9 @@ import {SlideHome,
     SlideNeuronA,
     SlideNeuronA2,
     SlideNeuron1,
+    SlideNeuron1a,
+    SlideNeuron1b,
+    SlideNeuron1c,
     SlideNeuron2,
     SlideNeuron2b,
     SlideNeuron2b2,
@@ -162,7 +165,7 @@ export class View{
         this.slideList = [];
         this.slideList.push(SlideHome,SlideInstruct, //1
                             SlideIntro1,SlideIntro1a,SlideIntro1b,SlideIntro1c,SlideIntro2,SlideIntro3, SlideIntro4, SlideIntro3a, SlideIntro4a, //9
-                            SlideNeuronA, SlideNeuronA2, SlideNeuron1,SlideNeuron2,SlideNeuron2b,SlideNeuron2b2,SlideNeuron2c,SlideNeuron2d,SlideNeuron2d2,SlideNeuron2e, //16
+                            SlideNeuronA, SlideNeuronA2, SlideNeuron1,SlideNeuron1a,SlideNeuron1b,SlideNeuron2,SlideNeuron2b,SlideNeuron2b2,SlideNeuron2c,SlideNeuron2d,SlideNeuron2d2,SlideNeuron2e, //16
                             SlideNet1, SlideNet1b, SlideNet1b2,SlideNet1c, SlideNet1d,SlideNet1d2,SlideNet1d3, SlideNet1d4,SlideNet1e,SlideNet1f,/*SlideNet2,*/ SlideNet3);// SlideSandbox);
 
         /*TO DELETE*/
@@ -196,7 +199,7 @@ export class View{
 
 
 
-        this.currentSlide=29;
+        this.currentSlide=31;
 
 
 
