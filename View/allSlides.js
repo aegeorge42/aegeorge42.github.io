@@ -230,12 +230,15 @@ export const SlideIntro4 = new Slide();
         examples2.y=80;
 
     var textIntro4 = [
-        [examples1, ["Once our net is finished learning, "+'\n'+ "we'll give it some unlabeled data"+'\n'+
+       // examples1,
+        [["The neural net uses these examples to learn how to separate the data"],[layout.LEFTBUFFER,200]],
+        [ ["Once our net is finished learning, "+'\n'+ "we'll give it some unlabeled data"+'\n'+
         "to test if it works."],[layout.LEFTBUFFER,100]],
         examples2
     ];
 
-    var textwid= PIXI.TextMetrics.measureText(textIntro4[0][1][0],textstyles.default).width;
+    //var textwid= PIXI.TextMetrics.measureText(textIntro4[0][1][0],textstyles.default).width;
+    var textwid=0;
     examples1.x=examples1.x+textwid;
     examples2.x=examples2.x+textwid;
 
@@ -276,9 +279,9 @@ export const SlideIntro4a = new Slide();
     SlideIntro4a.graphContainer.addChild(SlideIntroGraph.getGraph());
       var textIntro4a = [
         [["Here's a graph of all our data"], [layout.LEFTBUFFER+570,70]],
-        [["Because we have 2 inputs, we can plot our data points on a 2d graph"], [layout.LEFTBUFFER,70]],
-        [["(Even though we couldn't plot it there's no limit on how many inputs)"], [layout.LEFTBUFFER,90]],
-        [["The neural network is going to try to find the line that separates the two classes"], [layout.LEFTBUFFER,90]],
+        [["Because we have 2 inputs, we can plot our data points on a 2d graph"], [layout.LEFTBUFFER,150]],
+        [["(Even though we couldn't plot it there's no limit on how many inputs)"], [layout.LEFTBUFFER,220]],
+        [["The neural network is going to try to find the line that separates the two classes"], [layout.LEFTBUFFER,300]],
     ];
      SlideIntro4a.drawText(textIntro4a);
     SlideIntro4a.drawTextButtons();
@@ -325,6 +328,7 @@ export const SlideNeuronA2 = new Slide();
     var textNeuronA2 = [
         [percep_layers,["neurons are organized in layers"],[layout.LEFTBUFFER,layout.TOPBUFFER]],
         [["we can have several hidden layers, but only one output layer"],[layout.LEFTBUFFER,layout.TOPBUFFER+100]]
+      //  [["we can also add neurons to our hidden layers, but "],[layout.LEFTBUFFER,layout.TOPBUFFER+100]]
 
     ];
 
@@ -416,7 +420,7 @@ export const SlideNeuron2 = new Slide();
     SlideNeuron2.slideContainer.addChild(inputexample);
 
     var textNeuron2 = [
-        [neuron_large_over,["Let's start with this image. "], [layout.LEFTBUFFER,80]],
+        [neuron_large_over,["We'll give our network one datapoint at a time."], [layout.LEFTBUFFER,80]],
         [["The two values that we found earlier "+'\n'+"become our inputs "], [layout.LEFTBUFFER,465]],
     ];
 
@@ -507,21 +511,22 @@ export const SlideNeuron2d = new Slide();
     var relu=new PIXI.Sprite(PIXI.Texture.from('images/relu_graph.png'));
     relu.isSprite=true;
     relu.x=layout.LEFTBUFFER;
-    relu.y=layout.TOPBUFFER+75;
+    relu.y=layout.TOPBUFFER+100;
 
     var textNeuron2d = [
-        [ ["Another activation function is called"+'\n'+"blah blah blah"],[" ReLU", textstyles.large_bold], [layout.LEFTBUFFER,layout.TOPBUFFER]],
-        [ ["(which stands for",textstyles.medium],
-          [" Re",textstyles.medium_bold],
-          ["ctified",textstyles.medium],
-          [" L",textstyles.medium_bold],
-          ["inear",textstyles.medium],
-          [" U",textstyles.medium_bold],
-          ["nit)",textstyles.medium],
-          [layout.LEFTBUFFER,layout.TOPBUFFER+50]],
-          
+       [ ["Another activation function is called a"+'\n'],[layout.LEFTBUFFER,layout.TOPBUFFER]],
+        [ [" Re",textstyles.large_bold],
+          ["ctified"],
+          [" L",textstyles.large_bold],
+          ["inear"],
+          [" U",textstyles.large_bold],
+          ["nit                     "],
+          [layout.LEFTBUFFER,layout.TOPBUFFER+29]],
+          [ ["Or ReLU for short"], [layout.LEFTBUFFER,layout.TOPBUFFER+80]],
+
         relu,
-        [ ["this function returns 0 if the input is 0 or below, or returns the input if it's greater than 0."], [layout.LEFTBUFFER,200]],
+       // [ ["this function returns 0 if the input is 0 or below, or returns the input if it's greater than 0."], [layout.LEFTBUFFER,200]],
+    
     ];
     SlideNeuron2d.drawText(textNeuron2d);
     SlideNeuron2d.drawTextButtons();  
@@ -560,7 +565,11 @@ export const SlideNeuron2e = new Slide();
     
 
 export const SlideNet1 = new Slide();
-//SlideNet1.largenet=1;
+SlideNet1.leftnet=true;
+layout.NEURON_LEFTLIM=350;
+layout.NEURON_UPPERLIM=100;
+
+
 var net1 = new Net();
 SlideNet1.slideNet=net1;
 net1.setNetData(fruits_small);
@@ -571,10 +580,11 @@ SlideNet1.draw_init(net1);
 //console.log(SlideNet1.slideContainer)
 
 var textNet1 = [
-    [["Because we have 2 classes,"+'\n'+ "we need two final neurons in our output layer"], [layout.LEFTBUFFER+625,70]],
-    [["when our image is a srawberry, we want THIS neuron to be 1 and THIS neuron to be 0"], [layout.LEFTBUFFER+625,90]],
-    [["we'll call these our target values (draw target"], [layout.LEFTBUFFER+625,100]],
-    [["because the target has to be between 0 and 1, we'll only use sigmoid for neurons in output layer"], [layout.LEFTBUFFER+625,120]],
+    [["Because we have 2 classes,"+'\n'+ "we need two final neurons in our output layer"], [layout.LEFTBUFFER+500,70]],
+    [["when our image is a srawberry, we want " +'\n' +"THIS neuron to be 1 and "+'\n'+ "THIS neuron to be 0"], [layout.LEFTBUFFER+500,150]],
+   // [["we'll call these our target values (draw target"], [layout.LEFTBUFFER+625,200]],
+    [["because the target has to be between 0 and 1,"+'\n'+" we'll only use sigmoid for neurons in output layer"], [layout.LEFTBUFFER+625,250]],
+    [["This process of going from input -> output is called forward propogation"], [layout.LEFTBUFFER+425,350]],
 
 
 
@@ -591,6 +601,8 @@ SlideNet1.drawActFnButtons(SlideNet1.slideNet);
 SlideNet1.slideContainer.getChildAt(5).visible=false; //costlabel
 
 export const SlideNet1b = new Slide();
+    SlideNet1b.leftnet=true;
+    layout.NEURON_LEFTLIM=300;
     var net2 = new Net();
 
     SlideNet1b.slideNet=net2;
@@ -609,6 +621,9 @@ export const SlideNet1b = new Slide();
 
 
 export const SlideNet1b2 = new Slide();
+    SlideNet1b2.leftnet=1;
+    layout.NEURON_LEFTLIM=300;
+
 
     var net3 = new Net();
 
@@ -657,11 +672,15 @@ export const SlideNet1b2 = new Slide();
     //SlideNet1b2.buttonContainer.getChildByName("buttonNeuronAddContainer").visible=true;
 
 export const SlideNet1c = new Slide();
+    layout.NEURON_LEFTLIM=layout.NEURON_LEFTLIM_INIT;
+    layout.NEURON_UPPERLIM=layout.NEURON_UPPERLIM_INIT;
+
+
     SlideNet1c.slideNet=net3;
     SlideNet1c.draw_init(net3);    
     var textNet1c = [
         [["use these buttons to add layers"], [layout.LEFTBUFFER,70]],
-        [["this process is called forward propogation"], [layout.LEFTBUFFER+300,layout.TOPBUFFER+350]],
+       // [["this process is called forward propogation"], [layout.LEFTBUFFER+300,layout.TOPBUFFER+350]],
 
     ];
     SlideNet1c.drawText(textNet1c);
@@ -689,13 +708,13 @@ export const SlideNet1d = new Slide();
 export const SlideNet1d2 = new Slide();
     var textNet1d2 = [
         [["Backpropogation has 3 steps:"], [layout.LEFTBUFFER,layout.TOPBUFFER]],
-        [["1. Forward propogation               " +'\n'],
+        [["1. Forward propogation               " +'\n', textstyles.large_bold],
          [     "like we did before - give the net an input and calculate the output"], [layout.LEFTBUFFER,layout.TOPBUFFER+100]],
-        [["2. Error calculation               " +'\n'],
+        [["2. Error calculation               " +'\n', textstyles.large_bold],
          [     "how far off was my actual output value from my target value"], [layout.LEFTBUFFER,layout.TOPBUFFER+200]],
-         [["3. Update               " +'\n'],
+         [["3. Update the Net              " +'\n', textstyles.large_bold],
          [     "adjust the weights and biases of the neural network to get closer to that target value"], [layout.LEFTBUFFER,layout.TOPBUFFER+300]],
-         [ ["since we've already gone thru step 1, we can move on to..."],[layout.LEFTBUFFER,layout.TOPBUFFER] ],
+     //    [ ["since we've already gone thru step 1, we can move on to..."],[layout.LEFTBUFFER,layout.TOPBUFFER] ],
 
 
     ];
@@ -706,61 +725,90 @@ export const SlideNet1d3 = new Slide();
 
 var seformula=new PIXI.Sprite(PIXI.Texture.from('images/seformula.png'));
 seformula.isSprite=true;
-seformula.x=0//layout.NEURON_LEFTLIM+180;
-seformula.y=layout.TOPBUFFER+75;
+seformula.x=layout.LEFTBUFFER;
+seformula.y=layout.TOPBUFFER+150;
 
 var costgraph=new PIXI.Sprite(PIXI.Texture.from('images/costgraph.png'));
 costgraph.isSprite=true;
-costgraph.x=layout.LEFTBUFFER;
+costgraph.x=layout.LEFTBUFFER+500;
 costgraph.y=layout.TOPBUFFER+75;
+
+var small_ital = new PIXI.TextStyle({
+    fontFamily: 'Helvetica',
+    fontWeight: 400,
+    fontSize: 18,
+    fontStyle: 'italic'
+});
 
 var textNet1d3 = [
     
 
     [ [" Step 2: Error calculation",textstyles.large_bold],[layout.LEFTBUFFER,layout.TOPBUFFER] ],
-    [ ["for each training data we give the net, we want to know"+'\n'+ "how far it is from being correct"],[layout.LEFTBUFFER,layout.TOPBUFFER] ],
+    [ ["For each piece of data we give the net, we want to know"+'\n'+ "how far off the output is from being correct."],[layout.LEFTBUFFER,layout.TOPBUFFER+50] ],
 
-    [ seformula,["to do this, we use a cost formula"],[layout.LEFTBUFFER,layout.TOPBUFFER+50] ],
-    [["the goal of the neural network is to make the output of this formula as small as possible"], [layout.LEFTBUFFER,layout.TOPBUFFER+200] ],
-    [ costgraph,["when we graph this formula, we can see that our output is minimized when actual and target are the same value"],[layout.LEFTBUFFER,layout.TOPBUFFER+200] ]
+    [ seformula,["To do this, we use a"],[" cost formula: ",textstyles.ital],[layout.LEFTBUFFER,layout.TOPBUFFER+120] ],
+    //[ ["For each neuron in the output layer, subtract the target value from the actual output value", small_], [layout.LEFTBUFFER,layout.TOPBUFFER+350]]
+     [["the goal of the neural network is to make the cost"+'\n'+"as small as possible"], [layout.LEFTBUFFER,layout.TOPBUFFER+350] ],
+    //[ costgraph,["when we graph this formula, we can see that our output is minimized when actual and target are the same value"],[layout.LEFTBUFFER,layout.TOPBUFFER+200] ]
 
 
 ];
 SlideNet1d3.drawText(textNet1d3);
 SlideNet1d3.drawTextButtons();
 
-export const SlideNet1e = new Slide();
-    SlideNet1e.leftnet=true;
-    var net1e = new Net();
-    SlideNet1e.slideNet=net1e;
-    layout.NEURON_LEFTLIM=300;
-    layout.NEURON_UPPERLIM=150;
-
-
-    net1e.setNetData(fruits_small);
-    net1e.setOutLayer();
-    net1e.removeLayer();
-    net1e.update();
-    SlideNet1e.draw_init(net1e);
-
+export const SlideNet1d4 = new Slide();
+    var seformula2=new PIXI.Sprite(PIXI.Texture.from('images/seformula.png'));
+    seformula2.scale.set(0.6)
+    seformula2.isSprite=true;
+    seformula2.x=layout.LEFTBUFFER;//layout.NEURON_LEFTLIM+180;
+    seformula2.y=layout.TOPBUFFER-25;
 
     var costgraph=new PIXI.Sprite(PIXI.Texture.from('images/costgraph.png'));
     costgraph.isSprite=true;
     costgraph.x=layout.LEFTBUFFER;
-    costgraph.y=layout.TOPBUFFER+75;
+    costgraph.y=layout.TOPBUFFER+100;
 
-    SlideNet1e.drawActFnButtons();
+    var textNet1d4 = [
+        seformula2,
+        [ costgraph,["when we graph this formula, we can see that our output is minimized "+'\n'+"when our actual and target values are the same"],[layout.LEFTBUFFER +450,layout.TOPBUFFER+200] ]
+    ];
+SlideNet1d4.drawText(textNet1d4);
+
+export const SlideNet1e = new Slide();
+    SlideNet1e.leftnet=true;
+    layout.NEURON_LEFTLIM=350;
+    layout.NEURON_UPPERLIM=200;
+
+   
+    var costexample=new PIXI.Sprite(PIXI.Texture.from('images/costexample.png'));
+    costexample.isSprite=true;
+    costexample.x=100;
+
+    costexample.y=100;
+
+    var nete = new Net();
+    SlideNet1e.slideNet=nete;
+    nete.setNetData(net1.data);
+    nete.setOutLayer();
+    nete.update();
+    nete.removeLayer();
+    nete.update();
+    SlideNet1e.draw_init(nete)
+
     SlideNet1e.drawStyleButtons();
-    SlideNet1e.drawCost();
-    SlideNet1e.costLabel.getChildByName("costBox").x=500;
+    SlideNet1e.drawRateButtons();
+
+    SlideNet1e.costSteps=true;
+    SlideNet1e.drawCost_steps();
 
     SlideNet1e.buttonContainer.visible=false;
     
 
     var textNet1e = [
+       // costexample,
         [ [" Step 2: Error calculation",textstyles.large_bold],[layout.LEFTBUFFER,layout.TOPBUFFER] ],
-        [ [" Here's the cost calculated for this one example "],[layout.NEURON_LEFTLIM+180,layout.TOPBUFFER] ],
-      //  [ ["then, we can use this info to update our net to move closer to correct"],[layout.LEFTBUFFER,layout.TOPBUFFER] ],
+        [ [" Here's how the cost is calculated for this example."],[layout.LEFTBUFFER,layout.TOPBUFFER+50] ],
+       [ ["update the weights of the neural network to change the cost."],[layout.LEFTBUFFER+550,layout.TOPBUFFER+30] ],
 
        // [ seformula,["to do this, we use a cost formula"],[layout.NEURON_LEFTLIM+180,layout.TOPBUFFER+50] ],
 /*
@@ -773,14 +821,38 @@ export const SlideNet1e = new Slide();
     ];
    // var SlideNet1eGraph = new Graph(fruits_test3);
    // SlideNet1e.graphContainer.addChild(SlideNet1eGraph.getGraph());
+   
     SlideNet1e.drawText(textNet1e);
     SlideNet1e.drawTextButtons();
 
 export const SlideNet1f = new Slide();
 
+  /*  var netf = new Net();
+    SlideNet1f.slideNet=netf;
+    netf.setNetData(net1.data);
+    netf.setOutLayer();
+    netf.update();
+    netf.removeLayer();
+    netf.update();
+    SlideNet1f.draw_init(netf)
+
+    SlideNet1f.drawStyleButtons();
+    SlideNet1f.drawRateButtons();
+    SlideNet1f.drawCost();
+*/
+    SlideNet1f.buttonContainer.visible=false;
+var textNet1f = [
+    [ [" Step 3: Update ",textstyles.large_bold],[layout.LEFTBUFFER,layout.TOPBUFFER] ],
+    [ [" The neural network can decrease the cost by changing the weights and biases of the neurons"],[layout.LEFTBUFFER,layout.TOPBUFFER+60] ],
+    [ [" The neural network figures out how to update these values through another algorithm called gradient descent"],[layout.LEFTBUFFER,layout.TOPBUFFER+60] ],
+
+];
+
+    SlideNet1f.drawText(textNet1f);
     
 
 export const SlideNet2 = new Slide();
+/*
     SlideNet2.slideNet=net1;
     net1.update();
     SlideNet2.draw_init(net1);
@@ -802,7 +874,7 @@ export const SlideNet2 = new Slide();
     ];
     SlideNet2.drawText(textNet2);
     SlideNet2.drawTextButtons();
-
+*/
 export const SlideNet3 = new Slide();
     SlideNet3.sandbox=true;
     SlideNet3.slideNet=net1;
@@ -812,6 +884,8 @@ export const SlideNet3 = new Slide();
 
     SlideNet3.drawStyleButtons();
     layout.NEURON_LEFTLIM=SlideNet3.buttonContainer.getChildByName("stylebox").x +450;
+    layout.NEURON_UPPERLIM=layout.NEURON_UPPERLIM_INIT;
+
     SlideNet3.draw_init(net1);
 
     var SlideNet2Graph = new Graph(net1.data);
@@ -831,7 +905,7 @@ export const SlideNet3 = new Slide();
 
     SlideNet3.drawCost();
    // SlideNet3.drawStyleButtons();
-   layout.NEURON_LEFTLIM=layout.NEURON_LEFTLIM_INIT;
+   //layout.NEURON_LEFTLIM=layout.NEURON_LEFTLIM_INIT;
 
 
 //SANDBOX

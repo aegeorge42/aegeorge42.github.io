@@ -28,8 +28,10 @@ import {SlideHome,
     SlideNet1d,
     SlideNet1d2,
     SlideNet1d3,
+    SlideNet1d4,
     SlideNet1e,
-    SlideNet2,
+    SlideNet1f,
+   // SlideNet2,
     SlideNet3,
     SlideSandbox,
 SlideNeuron2e} from "./allSlides.js"
@@ -161,7 +163,7 @@ export class View{
         this.slideList.push(SlideHome,SlideInstruct, //1
                             SlideIntro1,SlideIntro1a,SlideIntro1b,SlideIntro1c,SlideIntro2,SlideIntro3, SlideIntro4, SlideIntro3a, SlideIntro4a, //9
                             SlideNeuronA, SlideNeuronA2, SlideNeuron1,SlideNeuron2,SlideNeuron2b,SlideNeuron2b2,SlideNeuron2c,SlideNeuron2d,SlideNeuron2d2,SlideNeuron2e, //16
-                            SlideNet1, SlideNet1b, SlideNet1b2,SlideNet1c, SlideNet1d,SlideNet1d2,SlideNet1d3, SlideNet1e,SlideNet2, SlideNet3);// SlideSandbox);
+                            SlideNet1, SlideNet1b, SlideNet1b2,SlideNet1c, SlideNet1d,SlideNet1d2,SlideNet1d3, SlideNet1d4,SlideNet1e,SlideNet1f,/*SlideNet2,*/ SlideNet3);// SlideSandbox);
 
         /*TO DELETE*/
         for(var i=0; i<this.slideList.length;i++){
@@ -181,7 +183,35 @@ export class View{
 
 
 
-        this.currentSlide=27;
+
+
+
+
+
+
+
+
+
+
+
+
+
+        this.currentSlide=29;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -217,15 +247,18 @@ export class View{
 
     // handle 1st and last slide diff formats
     caveats(){
-        /*if(this.slideList[this.currentSlide].sandbox){
+        if(this.slideList[this.currentSlide].sandbox){
             layout.NEURON_LEFTLIM=SlideNet3.buttonContainer.getChildByName("stylebox").x +450;
-        }else if(this.slideList[this.currentSlide].leftnet){
-            
+        }
+        else if(this.slideList[this.currentSlide].leftnet){
+            layout.NEURON_UPPERLIM=100;
             layout.NEURON_LEFTLIM=0;
         } else {
             layout.NEURON_LEFTLIM=layout.NEURON_LEFTLIM_INIT;
+            layout.NEURON_UPPERLIM=layout.NEURON_UPPERLIM_INIT;
 
-        }*/
+
+        }
 
         if (this.currentSlide==0){
             for(var i = 1; i<this.app.stage.children.length-1; i++){

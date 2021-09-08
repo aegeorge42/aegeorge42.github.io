@@ -31,6 +31,10 @@ export const layout = {
     NEURON_LEFTLIM_SANDBOX: Math.max((window.innerWidth-1100)/2,15) +350,
 
     NEURON_UPPERLIM: 210,
+    NEURON_UPPERLIM_INIT: 210,
+
+    NEURON_UPPERLIM_LARGE:150,
+
 
     NEURON_X_DIF: 150,
     NEURON_Y_DIF: 125,

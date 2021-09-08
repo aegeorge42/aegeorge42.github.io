@@ -732,7 +732,7 @@ export class Slide{
                     var startx = layout.NEURON_LARGE_X;//layout.NEURON_LARGE_LEFTLIM //+ (i*layout.NEURON_X_DIF);
                     var starty = layout.NEURON_LARGE_Y;//layout.NEURON_UPPERLIM + (j*layout.NEURON_Y_DIF);
                     var endx = layout.NEURON_LARGE_LEFTLIM;//layout.NEURON_LEFTLIM + (i*layout.NEURON_X_DIF) - layout.NEURON_X_DIF;
-                    var endy = layout.NEURON_UPPERLIM + (k*layout.NEURON_LARGE_Y_DIF);
+                    var endy = layout.NEURON_UPPERLIM_LARGE + (k*layout.NEURON_LARGE_Y_DIF);
                     
                     var hitbuffer = 10;
                     weightSprite.interactive=true;
@@ -1262,7 +1262,7 @@ export class Slide{
                 inputBase.anchor.set(0.5);
                 inputBase.name = i.toString();
                 inputBase.x= layout.NEURON_LARGE_LEFTLIM //- layout.NEURON_X_DIF;//leftlim;
-                inputBase.y= (i * layout.NEURON_LARGE_Y_DIF) + layout.NEURON_UPPERLIM; //+ layout.NEURON_NUDGE;//(i*(inputHeight+buffer))+upperlim+buffer;
+                inputBase.y= (i * layout.NEURON_LARGE_Y_DIF) + layout.NEURON_UPPERLIM_LARGE; //+ layout.NEURON_NUDGE;//(i*(inputHeight+buffer))+upperlim+buffer;
             this.inputContainer.addChild(inputBase);
 
             var inputText = new PIXI.Text(net.netInput[i].toFixed(2),medium);
@@ -1335,9 +1335,42 @@ export class Slide{
             var inputLabel = new PIXI.Text(net.data.labels[i],medium);
                 inputLabel.anchor.set(0.5);
                 inputLabel.x = layout.NEURON_LARGE_LEFTLIM;
-                inputLabel.y = layout.NEURON_UPPERLIM + (i*layout.NEURON_LARGE_Y_DIF) +50;
+                inputLabel.y = layout.NEURON_UPPERLIM_LARGE + (i*layout.NEURON_LARGE_Y_DIF) +50;
             this.labelsContainer.addChild(inputLabel);
         }
+
+    }
+
+    drawCost_steps(){
+        var costBox = new PIXI.Sprite(PIXI.Texture.from('images/cost.png'));
+            costBox.name= "costBox";
+            costBox.anchor.set(0.5)
+            costBox.x=window.innerWidth-80;
+            costBox.y=layout.BOTTOMBUFFER-280;          
+        this.costLabel.addChild(costBox);
+    
+        var costText= new PIXI.Text("",textstyles.large);
+        costText.text=formatter_long.format(this.slideNet.costTot)
+
+        costText.name = "costText";
+        costText.anchor.set(0.5)
+        costText.y=15;
+        
+        costBox.addChild(costText);
+
+        var cost0= new PIXI.Text("1/2 * (" +this.slideNet.netOut[0].toFixed(2)+"-"+this.slideNet.target[0] + ")^2")
+        cost0.name="cost0"
+        cost0.x=layout.NEURON_LEFTLIM +175;
+        cost0.y=layout.NEURON_UPPERLIM;
+
+        var cost1= new PIXI.Text("1/2 * (" +this.slideNet.netOut[1].toFixed(2)+"-"+this.slideNet.target[1] + ")^2")
+        cost1.name="cost1"
+        cost1.x=layout.NEURON_LEFTLIM +175;
+        cost1.y=layout.NEURON_UPPERLIM+100;
+
+        //add to labels cont for resize purposes
+        this.labelsContainer.addChild(cost0,cost1);
+
 
     }
 
@@ -1408,10 +1441,16 @@ export class Slide{
             } else if(this.buttonContainer.getChildByName("stylebox").getChildByName("stochastic").press==true){
                 this.costLabel.getChildByName("costBox").getChildByName("costText").text=formatter_long.format(net.costTot);}   
         }
+
+        if (this.costSteps){
+            this.labelsContainer.getChildByName("cost0").text="1/2 * (" +this.slideNet.netOut[0].toFixed(2)+"-"+this.slideNet.target[0] + ")^2";
+            this.labelsContainer.getChildByName("cost1").text="1/2 * (" +this.slideNet.netOut[1].toFixed(2)+"-"+this.slideNet.target[1] + ")^2";
+        }
        
     }
 
     drawTextButtons(){
+        /*
         this.textbuttonContainer.addChild(new Button("nexttext",PIXI.Texture.from('images/buttons/next.png'),layout.NEXTSLIDE_X,layout.NEXTSLIDE_Y,true));
         this.textbuttonContainer.addChild(new Button("prevtext",PIXI.Texture.from('images/buttons/back.png'), layout.PREVSLIDE_X,layout.NEXTSLIDE_Y,false));
 
@@ -1443,7 +1482,7 @@ export class Slide{
             if(slide.textcount<slide.textContainer.children.length-1){
                 slide.textbuttonContainer.getChildByName("nexttext").visible=true;
             }
-        });
+        });*/
     }
 
     /*
@@ -1596,13 +1635,11 @@ export class Slide{
                 }
             }
         }
-
+/*
         for (var i =0; i<this.textContainer.children.length; i++){
             this.textContainer.getChildAt(i).visible=false;
         }
         this.textContainer.getChildAt(0).visible=true;
+        */
     }
- 
-    
-
 }
