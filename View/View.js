@@ -2,7 +2,8 @@
 import {Button} from "./Button.js"
 import {layout} from "./layout.js"
 import {SlideHome,
-    SlideInstruct,
+    SlideInstruct1,
+    SlideInstruct2,
     SlideIntro1,
     SlideIntro1a,
     SlideIntro1b,
@@ -34,7 +35,8 @@ import {SlideHome,
     SlideNet1d4,
     SlideNet1e,
     SlideNet1f,
-   // SlideNet2,
+    SlideBackA,
+    SlideNet2,
     SlideNet3,
     SlideSandbox,
 SlideNeuron2e} from "./allSlides.js"
@@ -163,10 +165,10 @@ export class View{
 
         //add premade slides
         this.slideList = [];
-        this.slideList.push(SlideHome,SlideInstruct, //1
+        this.slideList.push(SlideHome,SlideInstruct1, SlideInstruct2, //1
                             SlideIntro1,SlideIntro1a,SlideIntro1b,SlideIntro1c,SlideIntro2,SlideIntro3, SlideIntro4, SlideIntro3a, SlideIntro4a, //9
                             SlideNeuronA, SlideNeuronA2, SlideNeuron1,SlideNeuron1a,SlideNeuron1b,SlideNeuron2,SlideNeuron2b,SlideNeuron2b2,SlideNeuron2c,SlideNeuron2d,SlideNeuron2d2,SlideNeuron2e, //16
-                            SlideNet1, SlideNet1b, SlideNet1b2,SlideNet1c, SlideNet1d,SlideNet1d2,SlideNet1d3, SlideNet1d4,SlideNet1e,SlideNet1f,/*SlideNet2,*/ SlideNet3);// SlideSandbox);
+                            SlideNet1, SlideNet1b, SlideNet1b2,SlideNet1c, SlideNet1d,SlideNet1d2,SlideNet1d3, SlideNet1d4,SlideNet1e,SlideNet1f,SlideBackA,/*SlideNet2,*/ SlideNet3);// SlideSandbox);
 
         /*TO DELETE*/
         for(var i=0; i<this.slideList.length;i++){
@@ -199,7 +201,7 @@ export class View{
 
 
 
-        this.currentSlide=31;
+        this.currentSlide=1;
 
 
 
@@ -397,10 +399,22 @@ export class View{
         this.app.stage.addChild(gotoneuron);
         this.app.stage.getChildByName("gotoneuron").on('click', function(e){ 
             
-            if (vst.currentSlide!=10){
+            if (vst.currentSlide!=13){
                 vst.app.stage.removeChild(vst.slideList[vst.currentSlide].textbuttonContainer);
 
-                vst.currentSlide=10;
+                vst.currentSlide=13;
+                vst.drawSlide();
+            }
+        });
+
+        var gotonet = new Button("gotonet",PIXI.Texture.from('images/buttons/gotoneuron.png'),500,layout.HEADER_HEIGHT/2,false)
+        this.app.stage.addChild(gotonet);
+        this.app.stage.getChildByName("gotonet").on('click', function(e){ 
+            
+            if (vst.currentSlide!=23){
+                vst.app.stage.removeChild(vst.slideList[vst.currentSlide].textbuttonContainer);
+
+                vst.currentSlide=23;
                 vst.drawSlide();
             }
         });

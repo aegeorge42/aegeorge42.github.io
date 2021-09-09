@@ -39,7 +39,7 @@ export const textstyles = {
   small: new PIXI.TextStyle({
     fontFamily: 'Helvetica',
     fontWeight: 400,
-    fontSize: 14
+    fontSize: 11
   }),
 
   medium_bold: new PIXI.TextStyle({
@@ -88,6 +88,12 @@ export const textstyles = {
     fontFamily: 'Arial',
     fontWeight: 600,
     fontSize: 35
-  })
+  }),
 
+  instruct: new PIXI.TextStyle({
+    fontFamily: 'Helvetica',
+    fontWeight: 400,
+    fontSize: 20,
+    fill: 0x610005
+  }),
 }

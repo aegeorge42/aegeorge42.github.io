@@ -913,30 +913,53 @@ export class Slide{
                     str=str+ins[ii][0]+" × "+ins[ii][1]+'\n'+"+";
                 }
             }
-            str=str+formatter.format(net.getLayer(i).neurons[j].bias)+"\n━━━━━"+"\n   "+formatter.format(net.getLayer(i).neurons[j].output_nofn)
+            str=str+formatter.format(net.getLayer(i).neurons[j].bias)+"\n  ━━━━━";//+"\n   "+formatter.format(net.getLayer(i).neurons[j].output_nofn)
 
-            var overText = new PIXI.Text(str,small);
-            overText.anchor.set(0,0.5);
-            overText.x=-65;
+            var overText0 = new PIXI.Text(str,textstyles.small);
+            overText0.anchor.set(0,0.5);
+            overText0.x=-69;
 
-            var overText2 = new PIXI.Text(" 𝑓("+formatter.format(net.getLayer(i).neurons[j].output_nofn)+")="+"\n\n  "+formatter.format(net.getLayer(i).neurons[j].output),
-            new PIXI.TextStyle({
-                fontFamily: 'Arial',
-                fontWeight: 500,
-                fontSize: 14,
-            }));
+            var overneuron_small =   new PIXI.TextStyle({
+                fontFamily: 'Helvetica',
+                fontWeight: 400,
+                fontSize: 15,
+                fill:  0x00ad09
+            });
+
+            var overneuron_large=   new PIXI.TextStyle({
+                fontFamily: 'Helvetica',
+                fontWeight: 400,
+                fontSize: 24,
+                fill:  0x7c00ad
+            });
+
+            var overText1 = new PIXI.Text(formatter.format(net.getLayer(i).neurons[j].output_nofn),overneuron_small)
+            overText1.anchor.set(0,0.5);
+            overText1.x=-50;
+            overText1.y=35;
+
+            var overText15 = new PIXI.Text(" 𝑓(        )=",textstyles.medium);
+            overText15.anchor.set(0,0.5);
+            overText15.x=0;
+              
+            var overText2 = new PIXI.Text(formatter.format(net.getLayer(i).neurons[j].output_nofn),overneuron_small);
             overText2.anchor.set(0,0.5);
-            overText2.x=5;
+            overText2.x=20;
 
+            var overText3 = new PIXI.Text(formatter.format(net.getLayer(i).neurons[j].output),overneuron_large)
+            overText3.anchor.set(0,0.5);
+            overText3.x=10;
+            overText3.y=25;
+            
 
-            var neuronOver = new PIXI.Sprite(PIXI.Texture.from('images/overneuron.png'));
+            var neuronOver = new PIXI.Sprite(PIXI.Texture.from('images/overneuron1.png'));
                 neuronOver.anchor.set(0.5);
                 neuronOver.scale.set(1.5);
                 neuronOver.name = neuronBase.name;
                 neuronOver.x=neuronBase.x;
                 neuronOver.y=neuronBase.y;
                 neuronOver.alpha=0;
-            neuronOver.addChild(overText,overText2);
+            neuronOver.addChild(overText0,overText1,overText15,overText2,overText3);
 
 
 
@@ -1013,7 +1036,7 @@ export class Slide{
                     fontFamily: 'Arial',
                     fontWeight: 500,
                     fontSize: 30,
-                    fill: 0x00FF00
+                    fill: 0x00ad09
                 })
             );
             overText_outnofn.anchor.set(1,0.5);
@@ -1040,7 +1063,7 @@ export class Slide{
                 fontFamily: 'Arial',
                 fontWeight: 500,
                 fontSize: 30,
-                fill: 0x00FF00
+                fill:  0x00ad09
             }));
             overText_actfn.anchor.set(1,0.5);
             overText_actfn.x=115;
@@ -1050,7 +1073,7 @@ export class Slide{
                 fontFamily: 'Arial',
                 fontWeight: 500,
                 fontSize: 40,
-                fill: 0xFF0000,
+                fill: 0x7c00ad,
             }));
             overText_actfn_out.anchor.set(1,0.5);
             overText_actfn_out.x=105;
@@ -1159,16 +1182,12 @@ export class Slide{
                         str=str+ins[ii][0]+" × "+ins[ii][1]+'\n'+"+";
                     }
                 }
-                str=str+formatter.format(net.getLayer(i).neurons[j].bias)+"\n━━━━━"+"\n   "+formatter.format(net.getLayer(i).neurons[j].output_nofn);
+                str=str+formatter.format(net.getLayer(i).neurons[j].bias)+"\n━━━━━";
     
                 this.neuronContainer.getChildByName("neuronOvers").getChildByName(name).getChildAt(0).text = str;
-                this.neuronContainer.getChildByName("neuronOvers").getChildByName(name).getChildAt(1).text = " 𝑓("+formatter.format(net.getLayer(i).neurons[j].output_nofn)+")="+"\n\n  "+formatter.format(net.getLayer(i).neurons[j].output);
-
-                /*"i: " + this.formatList(net.getLayer(i).neurons[j].inputs) + '\n'
-                + "w: " + this.formatList(net.getLayer(i).neurons[j].weights) + '\n'
-                + "b: " + formatter.format(net.getLayer(i).neurons[j].bias) +'\n'
-                + "o: " + formatter.format(net.getLayer(i).neurons[j].output_nofn) + '\n'
-                + "   " + formatter.format(net.getLayer(i).neurons[j].output) + '\n' ;*/
+                this.neuronContainer.getChildByName("neuronOvers").getChildByName(name).getChildAt(1).text = formatter.format(net.getLayer(i).neurons[j].output_nofn);
+                this.neuronContainer.getChildByName("neuronOvers").getChildByName(name).getChildAt(3).text = formatter.format(net.getLayer(i).neurons[j].output_nofn);
+                this.neuronContainer.getChildByName("neuronOvers").getChildByName(name).getChildAt(4).text = formatter.format(net.getLayer(i).neurons[j].output);``
             }
         }
     }
