@@ -1,4 +1,4 @@
-export const small = new PIXI.TextStyle({
+/*export const small = new PIXI.TextStyle({
     fontFamily: 'Arial',
     fontWeight: 500,
     fontSize: 10
@@ -20,7 +20,7 @@ export const typewriter = new PIXI.TextStyle({
     fontFamily: 'American Typewriter',
     fontWeight: 600,
     fontSize: 35
-  });
+  });*/
 
 export const textstyles = {
   default: new PIXI.TextStyle({
@@ -33,7 +33,7 @@ export const textstyles = {
   medium: new PIXI.TextStyle({
     fontFamily: 'Helvetica',
     fontWeight: 400,
-    fontSize: 16
+    fontSize: 18
   }),
 
   small: new PIXI.TextStyle({
@@ -93,7 +93,7 @@ export const textstyles = {
   instruct: new PIXI.TextStyle({
     fontFamily: 'Helvetica',
     fontWeight: 400,
-    fontSize: 20,
-    fill: 0x610005
+    fontSize: 18,
+    fill: 0xa3001e
   }),
 }

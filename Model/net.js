@@ -388,9 +388,6 @@ export class Net{
         this.costTot=batchCost/this.data.points.length;
         this.costTot_batch=batchCost/this.data.points.length;
 
-        console.log(costs)
-        console.log(this.costTot_batch)
-
         //sum of gradients
         for(var i=this.layers.length-1; i>-1; i--){
             var currentLayer=this.getLayer(i);

@@ -2,10 +2,12 @@ import { Slide } from "./Slide.js"
 import { layout } from "./layout.js";
 import { Net } from "../Model/net.js"
 import { actFns } from "../Model/neuron.js";
-import {fruits, fruits_small, fruits_test,fruits_test3, fruits_circle} from "../Model/data.js"
+import {fruits, fruits_circle} from "../Model/data.js"
 import {Graph} from "./Graph.js"
-import {small, medium, typewriter, typewriter_large, textstyles} from "./textstyles.js"
+import {textstyles} from "./textstyles.js"
 import { Button } from "./Button.js";
+import {viewst} from "../Controller.js"
+
 
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
@@ -297,6 +299,8 @@ export const SlideIntro4a = new Slide();
         [["Because we have 2 inputs, we can plot our data points on a 2-D graph"], [layout.LEFTBUFFER+400,150]],
         [["(Even though we couldn't plot it there's no limit on how many inputs)"], [layout.LEFTBUFFER+400,220]],
         [["The neural network is going to try to find the line that separates the two classes"], [layout.LEFTBUFFER+400,300]],
+        [["Now we're ready to start building out neural net."], [layout.LEFTBUFFER+400,400]],
+
     ];
     SlideIntro4a.drawText(textIntro4a);
     SlideIntro4a.drawTextButtons();
@@ -640,7 +644,7 @@ layout.NEURON_UPPERLIM=100;
 
 var net1 = new Net();
 SlideNet1.slideNet=net1;
-net1.setNetData(fruits_small);
+net1.setNetData(fruits);
 net1.setOutLayer();
 net1.removeLayer();
 net1.update();
@@ -772,9 +776,9 @@ export const SlideNet1d2 = new Slide();
         [["1. Forward propogation               " +'\n', textstyles.large_bold],
          [     "like we did before - give the net an input and calculate the output"], [layout.LEFTBUFFER,layout.TOPBUFFER+100]],
         [["2. Error calculation               " +'\n', textstyles.large_bold],
-         [     "how far off was my actual output value from my target value"], [layout.LEFTBUFFER,layout.TOPBUFFER+200]],
+         [     "how far off were my actual output values from my target values"], [layout.LEFTBUFFER,layout.TOPBUFFER+200]],
          [["3. Update the Net              " +'\n', textstyles.large_bold],
-         [     "adjust the weights and biases of the neural network to get closer to that target value"], [layout.LEFTBUFFER,layout.TOPBUFFER+300]],
+         [     "adjust the weights and biases of the neural network to get closer to those target values"], [layout.LEFTBUFFER,layout.TOPBUFFER+300]],
      //    [ ["since we've already gone thru step 1, we can move on to..."],[layout.LEFTBUFFER,layout.TOPBUFFER] ],
 
 
@@ -808,8 +812,8 @@ var textNet1d3 = [
     [ ["For each piece of data we give the net, we want to know"+'\n'+ "how far off the output is from being correct."],[layout.LEFTBUFFER,layout.TOPBUFFER+50] ],
 
     [ seformula,["To do this, we use a"],[" cost formula: ",textstyles.ital],[layout.LEFTBUFFER,layout.TOPBUFFER+120] ],
-    [ ["For each neuron in the output layer,"+'\n'+" subtract the target value from the actual output value", small_ital], [layout.LEFTBUFFER+600,layout.TOPBUFFER+150]],
-     [["the goal of the neural network is to make the cost"+'\n'+"as small as possible"], [layout.LEFTBUFFER,layout.TOPBUFFER+350] ],
+    [ ["For each neuron in the output layer,"+'\n'+" subtract the target value from the actual output value", small_ital], [layout.LEFTBUFFER,layout.TOPBUFFER+350]],
+  //  [ [" Our cost formula is a function that takes in the output and target values and returns the cost. "],[layout.LEFTBUFFER,layout.TOPBUFFER+350] ],
     //[ costgraph,["when we graph this formula, we can see that our output is minimized when actual and target are the same value"],[layout.LEFTBUFFER,layout.TOPBUFFER+200] ]
 
 
@@ -831,7 +835,10 @@ export const SlideNet1d4 = new Slide();
 
     var textNet1d4 = [
         seformula2,
-        [ costgraph,["when we graph this formula, we can see that our output is minimized "+'\n'+"when our actual and target values are the same"],[layout.LEFTBUFFER +450,layout.TOPBUFFER+200] ]
+        [ ["The ultimate goal of the neural network"+'\n'+ " is to make the cost as small as possible.  ",textstyles.large_bold], [layout.LEFTBUFFER+450,layout.TOPBUFFER+100]],
+
+        [ costgraph,["When we graph this formula, we can see that our output is minimized "+'\n'+" when our output and target values are the same. "],[layout.LEFTBUFFER +450,layout.TOPBUFFER+200] ]
+
     ];
 SlideNet1d4.drawText(textNet1d4);
 
@@ -839,13 +846,6 @@ export const SlideNet1e = new Slide();
     SlideNet1e.leftnet=true;
     layout.NEURON_LEFTLIM=350;
     layout.NEURON_UPPERLIM=170;
-
-   
-    var costexample=new PIXI.Sprite(PIXI.Texture.from('images/costexample.png'));
-    costexample.isSprite=true;
-    costexample.x=100;
-
-    costexample.y=100;
 
     var nete = new Net();
     SlideNet1e.slideNet=nete;
@@ -867,9 +867,12 @@ export const SlideNet1e = new Slide();
 
     var textNet1e = [
        // costexample,
-        [ [" Step 2: Error calculation",textstyles.large_bold],[layout.LEFTBUFFER,layout.TOPBUFFER] ],
+       // [ [" Step 2: Error calculation",textstyles.large_bold],[layout.LEFTBUFFER,layout.TOPBUFFER] ],
         [ [" Here's how the cost is calculated for one example."],[layout.LEFTBUFFER,layout.TOPBUFFER+50] ],
-       [ ["Notice how changing the weights " +'\n'+"of the neural network " +'\n'+"changes the cost."],[layout.NEURON_LEFTLIM+500,layout.TOPBUFFER+100] ],
+        [ [" Reminder: click weights to change,"+'\n'+ "click image to see new example",textstyles.instruct],[layout.LEFTBUFFER,layout.TOPBUFFER+350] ],
+
+       [ ["Notice how changing the weights " +'\n'+"of the neural network "+
+            '\n'+"changes the output" +'\n'+"which changes the cost."],[layout.NEURON_LEFTLIM+500,layout.TOPBUFFER+100] ],
 
        // [ seformula,["to do this, we use a cost formula"],[layout.NEURON_LEFTLIM+180,layout.TOPBUFFER+50] ],
 /*
@@ -886,63 +889,153 @@ export const SlideNet1e = new Slide();
     SlideNet1e.drawText(textNet1e);
     SlideNet1e.drawTextButtons();
 
+export const SlideBack1 = new Slide();
+
+    /*var costformula1=new PIXI.Sprite(PIXI.Texture.from('images/seformula.png'));
+        costformula1.isSprite=true;
+        costformula1.scale.set(0.7)
+        costformula1.x=layout.LEFTBUFFER;
+        costformula1.y=layout.TOPBUFFER+20;*/
+
+    var outputformula=new PIXI.Sprite(PIXI.Texture.from('images/outputformula.png'));
+        outputformula.isSprite=true;
+        outputformula.scale.set(0.8)
+        outputformula.x=layout.LEFTBUFFER;
+        outputformula.y=layout.TOPBUFFER+90;
+
+    var textBack1 = [
+       // costformula1,
+        outputformula,
+        [ ["The output is dependant on the weights and biases of the network.",textstyles.large_bold],[layout.LEFTBUFFER,layout.TOPBUFFER] ],
+
+      //  [ [" Our cost formula is a function that takes in the output and target values and returns the cost. "],[layout.LEFTBUFFER,layout.TOPBUFFER] ],
+        [ ["We can also think of our neural network itself as a function - "+'\n'+" one that takes in all the weights and biases and returns an output."],[layout.LEFTBUFFER,layout.TOPBUFFER +50] ],
+      //  [ [" output = f( [weights and biases] ) "],[layout.LEFTBUFFER,layout.TOPBUFFER+200] ],
+
+   
+    ];
+    SlideBack1.drawText(textBack1);
+
+export const SlideBack2 = new Slide();
+
+    var outputformula1=new PIXI.Sprite(PIXI.Texture.from('images/outputformula.png'));
+        outputformula1.isSprite=true;
+        outputformula1.scale.set(0.8)
+        outputformula1.x=layout.LEFTBUFFER;
+        outputformula1.y=layout.TOPBUFFER+90;    
+
+    var targetfunction=new PIXI.Sprite(PIXI.Texture.from('images/targetfunction.png'));
+        targetfunction.isSprite=true;
+        targetfunction.scale.set(0.8)
+        targetfunction.x=layout.LEFTBUFFER;
+        targetfunction.y=layout.TOPBUFFER+320;
+
+    var costgraph_new=new PIXI.Sprite(PIXI.Texture.from('images/costgraph_new.png'));
+        costgraph_new.isSprite=true;
+        costgraph_new.x=layout.LEFTBUFFER;
+        costgraph_new.y=layout.TOPBUFFER+100;
+
+    var textBack2 = [
+        outputformula1,
+        targetfunction,
+      //  costgraph_new,
+      [ ["The output is dependant on the weights and biases of the network.",textstyles.large_bold],[layout.LEFTBUFFER,layout.TOPBUFFER] ],
+
+        [ ["We can also think of our neural network itself as a function - "+'\n'+" one that takes in all the weights and biases and returns an output."],[layout.LEFTBUFFER,layout.TOPBUFFER+50] ],
+        [ ["There also exists a perfect combination of weights and biases" +'\n'+" that will give us our target values. "],[layout.LEFTBUFFER,layout.TOPBUFFER+280] ],
+        //  [ [" What we want to do is find these ideal weights and biases "],[layout.LEFTBUFFER,layout.TOPBUFFER+150] ],
+        //  [ [" so, we can rewrite our cost function like this: "],[layout.LEFTBUFFER,layout.TOPBUFFER+200] ],
+        //  [ [" if our actual w and b = ideal w and b, our cost will be minimized "],[layout.LEFTBUFFER,layout.TOPBUFFER+250] ],
+
+     //   [ [" this tells us that there exists a combination of w and b that will give us a cost of 0 ",textstyles.large_bold],[layout.LEFTBUFFER,layout.TOPBUFFER+50] ],
+      //  [ [" So, we know -the cost, - the actual w and b"],[layout.LEFTBUFFER,layout.TOPBUFFER+50] ],
+       // [ [ " what we want to find i"]]
+    ];
+    SlideBack2.drawText(textBack2);
+
+export const SlideBack3 = new Slide();
+var costgraph_new=new PIXI.Sprite(PIXI.Texture.from('images/costgraph_new.png'));
+costgraph_new.isSprite=true;
+costgraph_new.x=layout.LEFTBUFFER;
+costgraph_new.y=layout.TOPBUFFER+80;
+
+
+    var textBack3 = [
+        costgraph_new,
+        [ ["Now we can rewrite our cost function using these terms.",textstyles.large_bold],[layout.LEFTBUFFER,layout.TOPBUFFER+20] ],
+           /*   [ ["We know the cost and current weights and biases." + '\n'
+            + " but we don't know the ideal weights and biases"],[layout.LEFTBUFFER+500,layout.TOPBUFFER+100] ],*/
+        [ ["To minimize our cost, we want to adjust our actual weights and biases" +'\n'+" to be equal to the ideal weights and biases."],[layout.LEFTBUFFER+470,layout.TOPBUFFER+100] ],
+        [ ["Some values will have to be decreased, others will have to be increased",textstyles.medium],[layout.LEFTBUFFER+470,layout.TOPBUFFER+170] ],
+
+        [ ["However, we don't know what the ideal values are."],[layout.LEFTBUFFER+500,layout.TOPBUFFER+250] ],
+        [ ["The net will have to use another algorithm to determine"] ,[" how  ",textstyles.ital],[layout.LEFTBUFFER+500,layout.TOPBUFFER+350] ],
+        [ ["to update the weights and biases."],[layout.LEFTBUFFER+500,layout.TOPBUFFER+380] ],
+
+    //    [ ["This tells us that our cost is dependant on the current weights and biases as well as the ideal weights and biases."],[layout.LEFTBUFFER,layout.TOPBUFFER] ],
+    //    [ ["how do we find out ideal w and b?"],[layout.LEFTBUFFER,layout.TOPBUFFER+50] ],
+
+    ];
+    SlideBack3.drawText(textBack3);
+
 export const SlideNet1f = new Slide();
 
-  /*  var netf = new Net();
-    SlideNet1f.slideNet=netf;
-    netf.setNetData(net1.data);
-    netf.setOutLayer();
-    netf.update();
-    netf.removeLayer();
-    netf.update();
-    SlideNet1f.draw_init(netf)
-
-    SlideNet1f.drawStyleButtons();
-    SlideNet1f.drawRateButtons();
-    SlideNet1f.drawCost();
-*/
-    SlideNet1f.buttonContainer.visible=false;
     var textNet1f = [
-    [ [" Step 3: Update ",textstyles.large_bold],[layout.LEFTBUFFER,layout.TOPBUFFER] ],
-    [ [" The neural network can decrease the cost by changing the weights and biases of the neurons"],[layout.LEFTBUFFER,layout.TOPBUFFER+60] ],
-    [ [" It figures out"], [" how ",textstyles.ital], ["to update these values through another algorithm called"],[layout.LEFTBUFFER,layout.TOPBUFFER+100] ],
-    [ ["                         gradient descent", textstyles.large_bold],[layout.LEFTBUFFER,layout.TOPBUFFER+135] ],
-    /*[ ["There are 2 main types of gradient descent: ", textstyles.large_bold],[layout.LEFTBUFFER,layout.TOPBUFFER+200] ],
-    [ ["Stochastic gradient descent", textstyles.large_bold],[layout.LEFTBUFFER,layout.TOPBUFFER+250] ],
-    [ ["'Vanilla' gradient descent", textstyles.large_bold],[layout.LEFTBUFFER,layout.TOPBUFFER+300] ],
-*/
+       // costgraph_point,
+      //  mountain,
+        [ [" Step 3: Update ",textstyles.large_bold],[layout.LEFTBUFFER,layout.TOPBUFFER] ],
+        [ [" To determine how to update the weights and biases, the neural network uses an algorithm called"],[layout.LEFTBUFFER,layout.TOPBUFFER+60]],
+        [ [" gradient descent. ", new PIXI.TextStyle({
+            fontFamily: 'Helvetica',
+            fontWeight: 600,
+            fontSize: 35
+          })],[layout.LEFTBUFFER,layout.TOPBUFFER+120]],
 
+    /* [ [" Step 3: Update ",textstyles.large_bold],[layout.LEFTBUFFER,layout.TOPBUFFER] ],
+      [ [" The neural network can decrease the cost by changing the weights and biases of the neurons"],[layout.LEFTBUFFER,layout.TOPBUFFER+60] ],
+      [ [" It figures out"], [" how ",textstyles.ital], ["to update these values through another algorithm called"],[layout.LEFTBUFFER,layout.TOPBUFFER+100] ],
+      [ ["                         gradient descent", textstyles.large_bold],[layout.LEFTBUFFER,layout.TOPBUFFER+135] ],
+      /*[ ["There are 2 main types of gradient descent: ", textstyles.large_bold],[layout.LEFTBUFFER,layout.TOPBUFFER+200] ],
+      [ ["Stochastic gradient descent", textstyles.large_bold],[layout.LEFTBUFFER,layout.TOPBUFFER+250] ],
+      [ ["'Vanilla' gradient descent", textstyles.large_bold],[layout.LEFTBUFFER,layout.TOPBUFFER+300] ],
+      */
+  
+    ];
+  SlideNet1f.drawText(textNet1f);
 
-];
-
-    SlideNet1f.drawText(textNet1f);
 
 export const SlideBackA = new Slide();
-    var gd1=new PIXI.Sprite(PIXI.Texture.from('images/gd1.png'));
+    /*var gd1=new PIXI.Sprite(PIXI.Texture.from('images/gd1.png'));
     gd1.isSprite=true;
     gd1.x=layout.LEFTBUFFER;
+    gd1.y=200;*/
 
-    gd1.y=200;
+    var mountainx=layout.LEFTBUFFER-30;
+    var mountainy=layout.TOPBUFFER+50;
+    var mountainscale=0.9;
+
+    var costgraph_point=new PIXI.Sprite(PIXI.Texture.from('images/costgraph_point1.png'));
+    costgraph_point.isSprite=true;
+    costgraph_point.x=mountainx;
+    costgraph_point.y=mountainy;
+    costgraph_point.scale.set(mountainscale);
 
     var textBackA = [
+        costgraph_point,
+        [ [" Step 3: Update - Gradient Descent",textstyles.large_bold],[layout.LEFTBUFFER,layout.TOPBUFFER] ],
+        [ [" We can plot our current cost as a point on our cost function."],[layout.LEFTBUFFER,layout.TOPBUFFER+50] ],
+
+    
+        //mountain
+        /*
         gd1,
         [ [" Step 3: Update - Gradient Descent",textstyles.large_bold],[layout.LEFTBUFFER,layout.TOPBUFFER] ],
         [ [" Imagine our current cost as a ball resting on the cost function"],[layout.LEFTBUFFER,layout.TOPBUFFER+50] ],
         [ [" In order to find the minimum of the cost function, we can roll the ball down the hill." ], [layout.LEFTBUFFER+100,layout.TOPBUFFER+150]],
+    */
     ];
 
     SlideBackA.drawText(textBackA);
-
-
-export const SlideBackB = new Slide();
-    var textBackB = [
-        [ [" Step 3: Update - Gradient Descent",textstyles.large_bold],[layout.LEFTBUFFER,layout.TOPBUFFER] ],
-        [ [" Using calculus, we can find out how much each weight contributes to the overall cost"],[layout.LEFTBUFFER,layout.TOPBUFFER+50] ],
-
-    ];
-
-SlideBackA.drawText(textBackA);
-
 
 export const SlideNet2 = new Slide();
 /*
@@ -962,44 +1055,132 @@ export const SlideNet2 = new Slide();
   //  SlideNet2.slideContainer.getChildAt(8).getChildByName("addlayer").visible=true;
     //SlideNet2.slideContainer.getChildAt(8).getChildByName("remlayer").visible=true;
 */
+    var mountain=new PIXI.Sprite(PIXI.Texture.from('images/mountain0.png'));
+        mountain.isSprite=true;
+        mountain.x=mountainx;
+        mountain.y=mountainy;
+        mountain.scale.set(mountainscale)
+
     var textNet2 = [
-        [["In stochastic gradient descent, we feed in one piece of data, calculate the error, then update the net"], [layout.LEFTBUFFER,70]],
+        mountain,
+        [ [" Imagine the cost function as a valley between two mountains," +'\n'+"and you're standing on that point."],[layout.LEFTBUFFER+580,layout.TOPBUFFER+50] ],
+        [ [" You want to get to the bottom of the valley," +'\n'+"but it's too foggy to see."],[layout.LEFTBUFFER+580,layout.TOPBUFFER+130] ],
+        [ [" How do you know which way to walk to get to the bottom?"],[layout.LEFTBUFFER+580,layout.TOPBUFFER+250] ],
+
+    /*    [["In stochastic gradient descent, we feed in one piece of data, calculate the error, then update the net"], [layout.LEFTBUFFER,70]],
         [["In vanilla gradient descent, we feed in one piece of data and calculate the error, then continue to to this for each piece of data."+'\n'+
         " We take the average cost across all examples and update baesd on that"], [layout.LEFTBUFFER,270]],
-
+*/
     ];
     SlideNet2.drawText(textNet2);
     SlideNet2.drawTextButtons();
 
-export const SlideNet3 = new Slide();
-    SlideNet3.sandbox=true;
-    SlideNet3.slideNet=net1;
-    net1.setNetData(fruits_circle);
+export const SlideBackB = new Slide();
 
-    net1.update();
+    var mountain1=new PIXI.Sprite(PIXI.Texture.from('images/mountain1.png'));
+        mountain1.isSprite=true;
+        mountain1.x=mountainx;
+        mountain1.y=mountainy;
+        mountain1.scale.set(mountainscale);
+
+    var textBackB = [
+        mountain1,
+        [ [" By feeling the slope of the mountain at the point where you stand," +'\n'+"you can determine which way to walk to go downhill."],[layout.LEFTBUFFER,layout.TOPBUFFER] ],
+    /*    [ [" Using calculus, we can find out how much each weight contributes to the overall cost"],[layout.LEFTBUFFER,layout.TOPBUFFER+50] ],
+        */
+    ];
+
+    SlideBackB.drawText(textBackB);
+
+export const SlideBackC = new Slide();
+
+    var mountain2=new PIXI.Sprite(PIXI.Texture.from('images/mountain2.png'));
+        mountain2.isSprite=true;
+        mountain2.x=mountainx;
+        mountain2.y=mountainy;
+        mountain2.scale.set(mountainscale);
+
+    var textBackC = [
+        mountain2,
+    ];
+    SlideBackC.drawText(textBackC);
+
+export const SlideBackD = new Slide();
+var mountain3=new PIXI.Sprite(PIXI.Texture.from('images/mountain3.png'));
+        mountain3.isSprite=true;
+        mountain3.x=mountainx;
+        mountain3.y=mountainy;
+        mountain3.scale.set(mountainscale);
+    var textBackD = [
+        mountain3,
+        [ ["...until our slope is 0 and we're at the bottom."],[layout.LEFTBUFFER,layout.TOPBUFFER] ],
+
+    ];
+    SlideBackD.drawText(textBackD);
+
+export const SlideBackE = new Slide();
+    var textBackE = [
+       [ [" Gradient descent is just finding way to get to the minimum of our cost function."],[layout.LEFTBUFFER,layout.TOPBUFFER] ],
+       [ [" Using calculus, we can find out exactly how much each weight and bias affects our cost at a certain point."],[layout.LEFTBUFFER,layout.TOPBUFFER+50] ],
+       [ [" as well as if we should increase or decrease that specific weight to move our location on the cost function downhill"],[layout.LEFTBUFFER,layout.TOPBUFFER+100] ],
+       [ ["formula: new weight = current weight * a(-deltaC)"],[layout.LEFTBUFFER,layout.TOPBUFFER+100] ],
+       [ ["formula: w = w * a(-deltaC)"],[layout.LEFTBUFFER,layout.TOPBUFFER+100] ],
+
+
+    ];
+    SlideBackE.drawText(textBackE);
+
+export const SlideBackF = new Slide();
+
+    var gotocalc=new Button("gotocalc",PIXI.Texture.from('images/buttons/calculus.png'), 200,200,true);
+    gotocalc.on('click', function(e){
+        if (viewst.currentSlide!=35){
+
+            viewst.currentSlide=35;
+            viewst.drawSlide();
+        }
+    });
+    SlideBackF.buttonContainer.addChild(gotocalc);
+
+
+    var textBackF = [
+        [ [" ....."],[layout.LEFTBUFFER,layout.TOPBUFFER] ],
+    ];
+       
+    SlideBackF.drawText(textBackF);
+
+
+
+export const SlideNet3 = new Slide();
+    var netSand=new Net();
+    SlideNet3.sandbox=true;
+    SlideNet3.slideNet=netSand;
+    netSand.setNetData(fruits);
+    netSand.setOutLayer();
+    netSand.removeLayer();
+
+    netSand.update();
 
     SlideNet3.drawStyleButtons();
     layout.NEURON_LEFTLIM=SlideNet3.buttonContainer.getChildByName("stylebox").x +450;
     layout.NEURON_UPPERLIM=layout.NEURON_UPPERLIM_INIT;
 
-    SlideNet3.draw_init(net1);
+    SlideNet3.draw_init(netSand);
 
-    var SlideNet2Graph = new Graph(net1.data);
+    var SlideNet2Graph = new Graph(netSand.data);
     SlideNet3.graphContainer.addChild(SlideNet2Graph.getGraph());
     //SlideNet3.drawButtons(net1,SlideNet2Graph);
     SlideNet3.setVis(SlideNet3.slideContainer.getChildAt(8),false);
 
-    var textNet3 = [
-        [["fffff"], [layout.LEFTBUFFER+570,70]],
-    ];
-    SlideNet3.drawText(textNet3);
-    SlideNet3.drawTextButtons();
+  //  SlideNet3.drawText(textNet3);
+  //  SlideNet3.drawTextButtons();
     SlideNet3.drawActFnButtons();
     SlideNet3.drawLayerButtons();
     SlideNet3.drawLearnButtons(SlideNet2Graph);
     SlideNet3.drawRateButtons();
 
     SlideNet3.drawCost();
+    SlideNet3.drawDataButtons(SlideNet2Graph);
    // SlideNet3.drawStyleButtons();
    //layout.NEURON_LEFTLIM=layout.NEURON_LEFTLIM_INIT;
 

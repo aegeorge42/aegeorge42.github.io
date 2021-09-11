@@ -34,9 +34,17 @@ import {SlideHome,
     SlideNet1d3,
     SlideNet1d4,
     SlideNet1e,
+    SlideBack1,
+    SlideBack2,
+    SlideBack3,
     SlideNet1f,
     SlideBackA,
     SlideNet2,
+    SlideBackB,
+    SlideBackC,
+    SlideBackD,
+    SlideBackE,
+SlideBackF,
     SlideNet3,
     SlideSandbox,
 SlideNeuron2e} from "./allSlides.js"
@@ -168,7 +176,9 @@ export class View{
         this.slideList.push(SlideHome,SlideInstruct1, SlideInstruct2, //1
                             SlideIntro1,SlideIntro1a,SlideIntro1b,SlideIntro1c,SlideIntro2,SlideIntro3, SlideIntro4, SlideIntro3a, SlideIntro4a, //9
                             SlideNeuronA, SlideNeuronA2, SlideNeuron1,SlideNeuron1a,SlideNeuron1b,SlideNeuron2,SlideNeuron2b,SlideNeuron2b2,SlideNeuron2c,SlideNeuron2d,SlideNeuron2d2,SlideNeuron2e, //16
-                            SlideNet1, SlideNet1b, SlideNet1b2,SlideNet1c, SlideNet1d,SlideNet1d2,SlideNet1d3, SlideNet1d4,SlideNet1e,SlideNet1f,SlideBackA,/*SlideNet2,*/ SlideNet3);// SlideSandbox);
+                            SlideNet1, SlideNet1b, SlideNet1b2,SlideNet1c, SlideNet1d,SlideNet1d2,SlideNet1d3, SlideNet1d4,SlideNet1e,
+                            /*SlideBack1,*/SlideBack2,SlideBack3,SlideNet1f,SlideBackA,SlideNet2,SlideBackB, SlideBackC, SlideBackD,SlideBackE, SlideBackF,
+                            SlideNet3);// SlideSandbox);
 
         /*TO DELETE*/
         for(var i=0; i<this.slideList.length;i++){
@@ -201,7 +211,7 @@ export class View{
 
 
 
-        this.currentSlide=1;
+        this.currentSlide=43;
 
 
 

@@ -3,8 +3,9 @@ import {layout} from "./layout.js"
 import {actFns} from "../../Model/actfns.js"
 import {Data} from "../Model/data.js"
 import {viewst} from "../Controller.js"
-import {small, medium, typewriter, textstyles} from "./textstyles.js"
+import {textstyles} from "./textstyles.js"
 import { Net } from "../Model/net.js"
+import { Graph } from "./Graph.js"
 
 
 const formatter = new Intl.NumberFormat('en-US', {
@@ -176,7 +177,7 @@ export class Slide{
         //actfnsbox.scale.set(0.9)
 
             actfnsbox.name="actfnsbox";
-            actfnsbox.x=0;
+            actfnsbox.x=5;
             actfnsbox.y=layout.BOTTOMBUFFER-100;
         this.buttonContainer.addChild(actfnsbox);
 
@@ -305,8 +306,7 @@ export class Slide{
         stylebox.addChild(new Button("stochastic",PIXI.Texture.from('images/buttons/stochastic.png'), 75, 70, true));
         stylebox.addChild(new Button("vanilla",PIXI.Texture.from('images/buttons/vanilla.png'), 75, 115,true));
 
-        stylebox.getChildByName("stochastic").press=true;
-        stylebox.getChildByName("stochastic").setTint(tintDown);
+        stylebox.getChildByName("stochastic").press=false;
 
         stylebox.getChildByName("stochastic").on('click', function(e){
             this.press=true; 
@@ -323,7 +323,9 @@ export class Slide{
 
         });
 
-        stylebox.getChildByName("vanilla").press=false;
+        stylebox.getChildByName("vanilla").press=true;
+        stylebox.getChildByName("vanilla").setTint(tintDown);
+
         stylebox.getChildByName("vanilla").on('click', function(e){
             this.press=true;   
             stylebox.getChildByName("stochastic").press=false;
@@ -388,6 +390,7 @@ export class Slide{
 
     }
 
+
     drawLearnButtons(graph){
         var slide=this;
         var pauselearn=0;
@@ -437,7 +440,7 @@ export class Slide{
         }
         });
 
-        learnbox.addChild(new Button("learn_van_step",PIXI.Texture.from('images/buttons/step.png'),212.5,60,false));
+        learnbox.addChild(new Button("learn_van_step",PIXI.Texture.from('images/buttons/step.png'),212.5,60,true));
         learnbox.getChildByName("learn_van_step").on('click', async function(e){
            
             slide.slideNet.learn_batch();
@@ -450,7 +453,7 @@ export class Slide{
 
         });
 
-        learnbox.addChild(new Button("learn_van",PIXI.Texture.from('images/buttons/learn.png'), 125,60,false));
+        learnbox.addChild(new Button("learn_van",PIXI.Texture.from('images/buttons/learn.png'), 125,60,true));
         learnbox.getChildByName("learn_van").pressCount=0;
 
         learnbox.getChildByName("learn_van").on('click', async function(e){
@@ -496,33 +499,76 @@ export class Slide{
             this.visible=false;
         });
 
-        learnbox.addChild(new Button("reset",PIXI.Texture.from('images/buttons/reset.png'),38,60,true));
-
-        var slide=this;
+        learnbox.addChild(new Button("reset",PIXI.Texture.from('images/buttons/reset.png'),38,60,true));        
         learnbox.getChildByName("reset").on('click', function(e){
+            graph.clearGraph(slide.slideNet.data);
+
             for(var i=0;i<slide.slideNet.layers.length;i++){
                 slide.buttonContainer.getChildByName("buttonNeuronAddContainer").getChildAt(i).visible=false;
                 slide.buttonContainer.getChildByName("buttonNeuronRemContainer").getChildAt(i).visible=false;
             }
 
             var newnet = new Net();
-            newnet.setNetData(slide.slideNet.data);
-            newnet.removeLayer();
+            var newdata = new Data(0,["strawberry","blueberry"],["length", "roundness"]);
 
+            if(slide.isCircle){
+                newdata.makefruits_circle();
+
+            } else if(slide.isLinear){
+                newdata.makefruits_linear();
+            }
+            
+            newnet.setNetData(newdata);
+            newnet.setNetActFn(slide.slideNet.netActFn)
+            newnet.removeLayer();
             newnet.setOutLayer();
             newnet.update();
             slide.slideNet=newnet;
             slide.draw_init(newnet);
 
-            slide.buttonContainer.getChildByName("actfnsbox").getChildByName("sigmoid").setTint(tintDown);
-            slide.buttonContainer.getChildByName("actfnsbox").getChildByName("relu").setTint(0xFFFFFF);
-
-            if(graph){graph.clearGraph();}
+            graph.populateGraph(newdata);
+            console.log(graph)
 
         });
-
-        
     }
+
+    drawDataButtons(graph){
+        var slide=this;
+
+        this.isCircle=false;
+        this.buttonContainer.addChild(new Button("circle",PIXI.Texture.from('images/buttons/cat.png'),400,200,true));   
+        this.buttonContainer.getChildByName("circle").on('click', function(e){
+            graph.clearGraph(slide.slideNet.data);
+
+            var newdata = new Data(0,["strawberry","blueberry"],["length", "roundness"]);
+            newdata.makefruits_circle();
+            slide.slideNet.setNetData(newdata);
+            slide.slideNet.update();
+
+            graph.populateGraph(newdata);
+
+            slide.isLinear=false;
+            slide.isCircle=true;
+        });
+
+        this.isLinear=true;
+        this.buttonContainer.addChild(new Button("linear",PIXI.Texture.from('images/buttons/treasure.png'),450,200,true));   
+        this.buttonContainer.getChildByName("linear").on('click', function(e){
+            graph.clearGraph(slide.slideNet.data);
+
+            var newdata = new Data(0,["strawberry","blueberry"],["length", "roundness"]);
+            newdata.makefruits_linear();
+            slide.slideNet.setNetData(newdata);
+            slide.slideNet.update();
+
+            graph.populateGraph(newdata);
+
+            slide.isLinear=true;
+            slide.isCircle=false;
+        });
+
+    }
+
 
     draw_init(net){
         this.drawWeights_init(net);
@@ -684,6 +730,8 @@ export class Slide{
                       net.getLayer(this.parent.idx[0]).getNeuron(this.parent.idx[1]).setWeight(this.parent.idx[2],currWeight+0.1);
                       net.update();
                       slide.draw_update(net);
+                      console.log(net.dataIdx)
+                      console.log(net.netInput)
                       //this.parent.getChildByName("weightText").text=net.getLayer(this.parent.idx[0]).getNeuron(this.parent.idx[1]).getWeight(this.parent.idx[2]).toFixed(2);
                         //console.log(this.parent.getChildByName("weightText"))
                     });
@@ -938,7 +986,7 @@ export class Slide{
             overText1.x=-50;
             overText1.y=35;
 
-            var overText15 = new PIXI.Text(" 𝑓(        )=",textstyles.medium);
+            var overText15 = new PIXI.Text(" 𝑓(        )=",textstyles.default);
             overText15.anchor.set(0,0.5);
             overText15.x=0;
               
@@ -1284,7 +1332,7 @@ export class Slide{
                 inputBase.y= (i * layout.NEURON_LARGE_Y_DIF) + layout.NEURON_UPPERLIM_LARGE; //+ layout.NEURON_NUDGE;//(i*(inputHeight+buffer))+upperlim+buffer;
             this.inputContainer.addChild(inputBase);
 
-            var inputText = new PIXI.Text(net.netInput[i].toFixed(2),medium);
+            var inputText = new PIXI.Text(net.netInput[i].toFixed(2),textstyles.default);
                 inputText.anchor.set(0.5);
                 inputText.name = inputBase.name;
             inputBase.addChild(inputText);
@@ -1306,12 +1354,12 @@ export class Slide{
         for(var i = 0; i<net.data.type.length; i++){
 
             //final output type labels ex strawberry, blueberry
-            var typeLabel = new PIXI.Text(net.data.type[i],medium);
+            var typeLabel = new PIXI.Text(net.data.type[i],textstyles.default);
                 typeLabel.x=layout.NEURON_LEFTLIM + (net.layers.length-1)*layout.NEURON_X_DIF + 30;
                 typeLabel.y=layout.NEURON_UPPERLIM + (i*layout.NEURON_Y_DIF) + 5;
 
             //target value
-            var targetLabel = new PIXI.Text("target: "+net.target[i],medium);
+            var targetLabel = new PIXI.Text("target: "+net.target[i],textstyles.medium);
                 targetLabel.name="targetLabel"+i;
                 targetLabel.x=layout.NEURON_LEFTLIM + (net.layers.length-1)*layout.NEURON_X_DIF + 30;
                 targetLabel.y=layout.NEURON_UPPERLIM + (i*layout.NEURON_Y_DIF) + 30;
@@ -1323,7 +1371,7 @@ export class Slide{
         for(var i=0; i<net.data.labels.length; i++){
 
             // input types ex. length, roundness
-            var inputLabel = new PIXI.Text(net.data.labels[i],medium);
+            var inputLabel = new PIXI.Text(net.data.labels[i],textstyles.default);
                 inputLabel.anchor.set(0.5);
                 inputLabel.x = layout.NEURON_LEFTLIM - layout.NEURON_X_DIF;
                 inputLabel.y = layout.NEURON_UPPERLIM + (i*layout.NEURON_Y_DIF) + 70;
@@ -1368,7 +1416,7 @@ export class Slide{
     drawLabels_init_large(net){
         for(var i=0; i<net.data.labels.length; i++){
             // input types ex. length, roundness
-            var inputLabel = new PIXI.Text(net.data.labels[i],medium);
+            var inputLabel = new PIXI.Text(net.data.labels[i],textstyles.default);
                 inputLabel.anchor.set(0.5);
                 inputLabel.x = layout.NEURON_LARGE_LEFTLIM;
                 inputLabel.y = layout.NEURON_UPPERLIM_LARGE + (i*layout.NEURON_LARGE_Y_DIF) +50;
@@ -1384,7 +1432,7 @@ export class Slide{
             costBox.anchor.set(0.5)
             costBox.x=layout.NEURON_LEFTLIM +330;//window.innerWidth-170;
             costBox.y=layout.BOTTOMBUFFER-80;          
-        this.costLabel.addChild(costBox);
+        this.labelsContainer.addChild(costBox);
 
         var costText= new PIXI.Text("",textstyles.large);
             costText.text=formatter_long.format(this.slideNet.costTot)
@@ -1436,7 +1484,12 @@ export class Slide{
         var costText= new PIXI.Text("",textstyles.large);
 
         if(this.buttonContainer.getChildByName("stylebox").getChildByName("vanilla").press==true){
+            if(this.slideNet.costTot_batch!=undefined){
             costText.text=formatter_long.format(this.slideNet.costTot_batch)
+            } else {
+                costText.text=formatter_long.format(this.slideNet.costTot)
+
+            }
         } else if(this.buttonContainer.getChildByName("stylebox").getChildByName("stochastic").press==true){
             costText.text=formatter_long.format(this.slideNet.costTot)
         }
@@ -1475,7 +1528,7 @@ export class Slide{
             }
 
 
-            console.log(this.slideContainer.getChildAt(1))
+        
         if (this.slideContainer.getChildAt(1).getChildByName("targetLabel0") !== null){
         this.slideContainer.getChildAt(1).getChildByName("targetLabel0").text="target: "+this.slideNet.target[0]
         this.slideContainer.getChildAt(1).getChildByName("targetLabel1").text="target: "+this.slideNet.target[1]
@@ -1488,14 +1541,30 @@ export class Slide{
 
 
             if(this.buttonContainer.getChildByName("stylebox").getChildByName("vanilla").press==true){
-                this.costLabel.getChildByName("costBox").getChildByName("costText").text=formatter_long.format(net.costTot_batch);
+               // if(net.costTot_batch !== undefined ){
+                if(this.buttonContainer.getChildByName("learnbox").getChildByName("learn_van").pressCount!=0){
+                    this.costLabel.getChildByName("costBox").getChildByName("costText").text=formatter_long.format(net.costTot_batch);
+                } else {
+                    this.costLabel.getChildByName("costBox").getChildByName("costText").text=formatter_long.format(net.costTot);
+
+                }
             } else if(this.buttonContainer.getChildByName("stylebox").getChildByName("stochastic").press==true){
-                this.costLabel.getChildByName("costBox").getChildByName("costText").text=formatter_long.format(net.costTot);}   
+                //console.log(net.costTot);
+              //  if(net.costTot !== undefined ){
+                    this.costLabel.getChildByName("costBox").getChildByName("costText").text=formatter_long.format(net.costTot);
+            //    }
+            }   
         }
 
         if (this.costSteps){
             this.labelsContainer.getChildByName("cost1box").getChildByName("cost1").text=this.slideNet.netOut[0].toFixed(2)+" - "+this.slideNet.target[0]
             this.labelsContainer.getChildByName("cost2box").getChildByName("cost2").text=this.slideNet.netOut[1].toFixed(2)+" - "+this.slideNet.target[1]
+            
+            if(this.labelsContainer.getChildByName("costbox") !== undefined){
+                this.labelsContainer.getChildByName("costBox").getChildByName("costText").text=formatter_long.format(net.costTot);
+
+            }
+        
         }
        
     }
