@@ -2,7 +2,7 @@ import { Slide } from "./Slide.js"
 import { layout } from "./layout.js";
 import { Net } from "../Model/net.js"
 import { actFns } from "../Model/neuron.js";
-import {fruits, fruits_circle} from "../Model/data.js"
+import {fruits} from "../Model/data.js"
 import {Graph} from "./Graph.js"
 import {textstyles} from "./textstyles.js"
 import { Button } from "./Button.js";
@@ -55,6 +55,7 @@ export const SlideInstruct2 = new Slide();
         [ ["Here is the tool that I needed to learn about neural networks." + '\n' +
         "                                                          I hope it helps you! "], [layout.LEFTBUFFER, layout.BOTTOMBUFFER-100]],
         [ ["use these buttons to jump ahead to different sections"], [layout.LEFTBUFFER+300, layout.TOPBUFFER+100]],
+        [ ["just want to play with a pre-built neural network? click here"], [layout.LEFTBUFFER+400, layout.TOPBUFFER+150]],
 
     ];    
     SlideInstruct2.drawText(textInstruct2);
@@ -264,7 +265,6 @@ export const SlideIntro3a = new Slide();
         example_blue_no.x= layout.LEFTBUFFER;
         example_blue_no.y= 50;//(window.innerHeight/2);
 
-        console.log("WIDTH"+example_blue_no.width)
     var example_blue_char=new PIXI.Sprite(PIXI.Texture.from('images/example1_label.png'));
         example_blue_char.isSprite=true;
         example_blue_char.x= layout.LEFTBUFFER
@@ -439,7 +439,7 @@ export const SlideNeuron2 = new Slide();
     SlideNeuron2.slideNet=net_neuron;
 
     const train_input2 = {
-        input: [0.2,1.0],
+        input: [2,10],
         expected: [1],
         expected_text: ["blueberry"]
     }
@@ -454,6 +454,7 @@ export const SlideNeuron2 = new Slide();
     SlideNeuron2.slideNet.setOutLayer();
     SlideNeuron2.slideNet.update();
     SlideNeuron2.draw_init_large(SlideNeuron2.slideNet);
+    SlideNeuron2.slideNet.getLayer(0).getNeuron(0).bias=0.21;
 
     var neuron_large_over=new PIXI.Sprite(PIXI.Texture.from('images/neuron_large_over.png'));
         neuron_large_over.isSprite=true;
@@ -1149,103 +1150,250 @@ export const SlideBackF = new Slide();
        
     SlideBackF.drawText(textBackF);
 
+export const SlideBackCalc0 = new Slide();
+
+    var netBack0 = new Net();
+    SlideBackCalc0.slideNet=netBack0;
+    netBack0.setNetData(fruits);
+    netBack0.setOutLayer();
+    netBack0.getLayer(0).addNeuron();
+    netBack0.update();
+
+    SlideBackCalc0.backprop=true;
+    SlideBackCalc0.backprop_labels=true;
+
+   // SlideBackCalc0.backprop_steps=true;
+
+//    layout.NEURON_X_DIF=175;
+  //  layout.NEURON_Y_DIF=150;
+    //layout.NEURON_LEFTLIM=layout.NEURON_LEFTLIM_BACKPROP;
+
+    layout.NEURON_X_DIF=175;
+    layout.NEURON_Y_DIF=150;
+
+    SlideBackCalc0.backprop=true;
+    SlideBackCalc0.draw_init(netBack0);
+
+    SlideBackCalc0.drawCost_steps();
+
+    SlideBackCalc0.labelsContainer.getChildByName("cost1box").visible=false;
+    SlideBackCalc0.labelsContainer.getChildByName("cost2box").visible=false;
+    SlideBackCalc0.labelsContainer.getChildByName("costplus").visible=false;
+    SlideBackCalc0.labelsContainer.getChildByName("costBox").y=layout.NEURON_UPPERLIM + layout.NEURON_Y_DIF/2 +20;
+    SlideBackCalc0.labelsContainer.getChildByName("costBox").getChildByName("costText").text="C1+C2"
+
+    var textBackCalc0 = [
+        [ ["First, we'll go ahead and label each component of our net."],[layout.LEFTBUFFER,layout.TOPBUFFER] ],
+        [ ["activation is a, but we also need to look at the value "+'\n'+"that we get before applying actfn"],[layout.LEFTBUFFER + layout.NEURON_LEFTLIM+layout.NEURON_X_DIF,layout.TOPBUFFER] ],
+
+    ];    
+    SlideBackCalc0.drawText(textBackCalc0);
+    
+/*
+
+    layout.NEURON_X_DIF=250;
+    layout.NEURON_Y_DIF=225;
+    layout.NEURON_UPPERLIM= 200;
+    layout.NEURON_LEFTLIM=layout.NEURON_LEFTLIM+50;
+
+    SlideBackCalc0.backprop=true;
+    SlideBackCalc0.draw_init(netBack);
+    SlideBackCalc0.labelsContainer.getChildByName("typeLabel0").visible=false;
+    SlideBackCalc0.labelsContainer.getChildByName("typeLabel1").visible=false;
+    SlideBackCalc0.labelsContainer.getChildByName("targetLabel0").visible=false;
+    SlideBackCalc0.labelsContainer.getChildByName("targetLabel1").visible=false;
+
+    layout.NEURON_X_DIF=150;
+    layout.NEURON_Y_DIF=125;
+    layout.NEURON_UPPERLIM= 175;
+*/
+
+export const SlideBackCalc1 = new Slide();
+   
+    SlideBackCalc1.slideNet=netBack0;
+
+    SlideBackCalc1.backprop=true;
+    SlideBackCalc1.backprop_steps=true;
+
+    layout.NEURON_X_DIF=175;
+    layout.NEURON_Y_DIF=150;
+
+    var i=1;
+    var j=0;
+    var k=0;
+    var startx = layout.NEURON_LEFTLIM + (i*layout.NEURON_X_DIF);
+    var startyf = layout.NEURON_UPPERLIM + (j*layout.NEURON_Y_DIF) + layout.NEURON_NUDGE;
+    var endx = layout.NEURON_LEFTLIM + (i*layout.NEURON_X_DIF) - layout.NEURON_X_DIF;
+    var endy =  layout.NEURON_UPPERLIM + (k*layout.NEURON_Y_DIF);
+
+    var hilite = new PIXI.Graphics();
+        hilite.lineStyle(40, 0x8aff8a);
+        hilite.drawPolygon(startx, startyf, endx, endy);
+    SlideBackCalc1.weightsContainer.addChild(hilite)
+
+    SlideBackCalc1.draw_init(netBack0);
+
+    SlideBackCalc1.layernum=1;
+    SlideBackCalc1.neuronnum=0;
+    SlideBackCalc1.weightsnum=0;
+
+    SlideBackCalc1.drawBackprop(SlideBackCalc1.layernum,SlideBackCalc1.neuronnum,SlideBackCalc1.weightsnum);
+    SlideBackCalc1.costSteps=true;
+    SlideBackCalc1.drawCost_steps();
+
+    SlideBackCalc1.labelsContainer.getChildByName("cost1box").visible=false;
+    SlideBackCalc1.labelsContainer.getChildByName("cost2box").visible=false;
+    SlideBackCalc1.labelsContainer.getChildByName("costplus").visible=false;
+    SlideBackCalc1.labelsContainer.getChildByName("costBox").y=layout.NEURON_UPPERLIM + layout.NEURON_Y_DIF/2 +20;
 
 
-export const SlideNet3 = new Slide();
+
+
+export const SlideBackCalc2 = new Slide();
+    SlideBackCalc2.slideNet=netBack0;
+    SlideBackCalc2.backprop=true;
+    var hilite2 = new PIXI.Graphics();
+        hilite2.lineStyle(40, 0x8aff8a);
+        hilite2.drawPolygon(startx, startyf, endx, endy);
+    SlideBackCalc2.weightsContainer.addChild(hilite2);
+    SlideBackCalc2.draw_init(netBack0);
+
+    SlideBackCalc2.costSteps=true;
+    SlideBackCalc2.drawCost_steps();
+    SlideBackCalc2.labelsContainer.getChildByName("cost1box").visible=false;
+    SlideBackCalc2.labelsContainer.getChildByName("cost2box").visible=false;
+    SlideBackCalc2.labelsContainer.getChildByName("costplus").visible=false;
+    SlideBackCalc2.labelsContainer.getChildByName("costBox").y=layout.NEURON_UPPERLIM + layout.NEURON_Y_DIF/2 +20;
+
+    var textBackCalc2 = [
+        [ ["what I want to know is how much does this weight influence the cost"],[layout.LEFTBUFFER,layout.TOPBUFFER] ],
+        [ ["dcdw"],[layout.LEFTBUFFER,layout.TOPBUFFER+20] ],
+
+    ];    
+    SlideBackCalc2.drawText(textBackCalc2);
+
+
+
+export const SlideBackCalc3 = new Slide();
+SlideBackCalc3.slideNet=netBack0;
+    SlideBackCalc3.backprop=true;
+    var hilite3 = new PIXI.Graphics();
+        hilite3.lineStyle(40, 0x8aff8a);
+        hilite3.drawPolygon(startx, startyf, endx, endy);
+    SlideBackCalc3.weightsContainer.addChild(hilite3);
+    SlideBackCalc3.draw_init(netBack0);
+
+    SlideBackCalc3.costSteps=true;
+    SlideBackCalc3.drawCost_steps();
+    SlideBackCalc3.labelsContainer.getChildByName("cost1box").visible=false;
+    SlideBackCalc3.labelsContainer.getChildByName("cost2box").visible=false;
+    SlideBackCalc3.labelsContainer.getChildByName("costplus").visible=false;
+    SlideBackCalc3.labelsContainer.getChildByName("costBox").y=layout.NEURON_UPPERLIM + layout.NEURON_Y_DIF/2 +20;
+
+    var textBackCalc3 = [
+        [ ["Because the weight doesn't DIRECTLY affect cost, I have to break it down a little bit more"],[layout.LEFTBUFFER,layout.TOPBUFFER] ],
+        [ ["1. how much does w5 affect z3"],[layout.LEFTBUFFER,layout.TOPBUFFER] ],
+        [ ["2. how much does z3 affect a3"],[layout.LEFTBUFFER,layout.TOPBUFFER] ],
+        [ ["3. how much does a3 affect cost"],[layout.LEFTBUFFER,layout.TOPBUFFER] ],
+        // NOTE TO SELF: WALK THRU EACH ONE SEPARATELY
+    
+    ];    
+    SlideBackCalc3.drawText(textBackCalc3);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+export const SlideSandbox = new Slide();
     var netSand=new Net();
-    SlideNet3.sandbox=true;
-    SlideNet3.slideNet=netSand;
+    SlideSandbox.sandbox=true;
+    SlideSandbox.slideNet=netSand;
     netSand.setNetData(fruits);
     netSand.setOutLayer();
-    netSand.removeLayer();
+    netSand.update();
+
+    netSand.getLayer(0).addNeuron();
+    netSand.getLayer(0).addNeuron();
 
     netSand.update();
 
-    SlideNet3.drawStyleButtons();
-    layout.NEURON_LEFTLIM=SlideNet3.buttonContainer.getChildByName("stylebox").x +450;
+    SlideSandbox.drawStyleButtons();
+    layout.NEURON_LEFTLIM=SlideSandbox.buttonContainer.getChildByName("stylebox").x +450;
     layout.NEURON_UPPERLIM=layout.NEURON_UPPERLIM_INIT;
+    layout.NEURON_X_DIF=150;
+    layout.NEURON_Y_DIF=125;
 
-    SlideNet3.draw_init(netSand);
+    SlideSandbox.slideNet.setNetActFn(actFns.RELU);
+    SlideSandbox.slideNet.update();
+
+    SlideSandbox.draw_init(netSand);
 
     var SlideNet2Graph = new Graph(netSand.data);
-    SlideNet3.graphContainer.addChild(SlideNet2Graph.getGraph());
-    //SlideNet3.drawButtons(net1,SlideNet2Graph);
-    SlideNet3.setVis(SlideNet3.slideContainer.getChildAt(8),false);
+    SlideSandbox.graphContainer.addChild(SlideNet2Graph.getGraph());
+    SlideSandbox.setVis(SlideSandbox.slideContainer.getChildAt(8),false);
 
-  //  SlideNet3.drawText(textNet3);
-  //  SlideNet3.drawTextButtons();
-    SlideNet3.drawActFnButtons();
-    SlideNet3.drawLayerButtons();
-    SlideNet3.drawLearnButtons(SlideNet2Graph);
-    SlideNet3.drawRateButtons();
+    SlideSandbox.drawActFnButtons();
+    SlideSandbox.drawLayerButtons();
+    SlideSandbox.drawLearnButtons(SlideNet2Graph);
+    SlideSandbox.drawRateButtons();
 
-    SlideNet3.drawCost();
-    SlideNet3.drawDataButtons(SlideNet2Graph);
-   // SlideNet3.drawStyleButtons();
-   //layout.NEURON_LEFTLIM=layout.NEURON_LEFTLIM_INIT;
+    SlideSandbox.buttonContainer.getChildByName("buttonNeuronAddContainer").getChildAt(0).visible=true;
+    SlideSandbox.buttonContainer.getChildByName("buttonNeuronRemContainer").getChildAt(0).visible=true;
+
+    SlideSandbox.drawCost();
+    SlideSandbox.drawDataButtons(SlideNet2Graph);
 
 
-//SANDBOX
-export const SlideSandbox = new Slide();
-
-var net = new Net();
-SlideSandbox.slideNet=net;
-/*
-
-net.setNetData(fruits_circle);
-net.setLearnRate(0.3);
-net.getLayer(0).addNeuron();
-
-net.setOutLayer();
-net.update();
-var g = new Graph(fruits_cir);
-SlideSandbox.graphContainer.addChild(g.getGraph());
-console.log(g.getGraph().y);
-SlideSandbox.draw_init(net);
-SlideSandbox.drawActFnButtons();
-SlideSandbox.drawLayerButtons();
-
-var textInstruct2 = [    
-    [ ["SASGSGREGSGS"], [50, 350]]
-];
-SlideSandbox.drawText(textInstruct2);
-SlideSandbox.drawTextButtons();
-
-//SlideSandbox.drawLearnButtons(net);
-
-//g.updateGraph( SlideSandbox.slideNet);
-//SlideSandbox.addGraphFns(SlideSandbox.slideNet,g);
-
-
-//GRAPH TEST
-export const SlideGraphTest = new Slide();
-/*
-var netGraph=new Net();
-    netGraph.setNetData(fruits);
-    netGraph.setOutLayer();
-    netGraph.getLayer(0).addNeuron();
-
-    netGraph.getLayer(0).getNeuron(0).setWeight(0,1);
-    netGraph.getLayer(0).getNeuron(0).setWeight(1,-1);
-
-    netGraph.getLayer(0).getNeuron(1).setWeight(0,-1);
-    netGraph.getLayer(0).getNeuron(1).setWeight(1,1);
-
-    netGraph.getLayer(1).getNeuron(0).setWeight(0,1);
-    netGraph.getLayer(1).getNeuron(0).setWeight(1,-1);
-
-    netGraph.getLayer(1).getNeuron(1).setWeight(0,-1);
-    netGraph.getLayer(1).getNeuron(1).setWeight(1,1);
-
-    netGraph.update();
-    SlideGraphTest.draw_init(netGraph);
-
-var g = new Graph(fruits);
-
-SlideGraphTest.drawButtons(netGraph,g);
-
-SlideGraphTest.slideContainer.addChild(g.getGraph());
-g.updateGraph(netGraph);
-SlideGraphTest.addGraphFns(netGraph,g);
-netGraph.setNetData(fruits);
-*/

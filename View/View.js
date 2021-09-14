@@ -25,6 +25,7 @@ import {SlideHome,
     SlideNeuron2c,
     SlideNeuron2d,
     SlideNeuron2d2,
+    SlideNeuron2e,
     SlideNet1,
     SlideNet1b,
     SlideNet1b2,
@@ -45,9 +46,11 @@ import {SlideHome,
     SlideBackD,
     SlideBackE,
 SlideBackF,
-    SlideNet3,
-    SlideSandbox,
-SlideNeuron2e} from "./allSlides.js"
+SlideBackCalc0,
+SlideBackCalc1,
+SlideBackCalc2,
+SlideBackCalc3,
+SlideSandbox} from "./allSlides.js"
 
 
 
@@ -178,7 +181,9 @@ export class View{
                             SlideNeuronA, SlideNeuronA2, SlideNeuron1,SlideNeuron1a,SlideNeuron1b,SlideNeuron2,SlideNeuron2b,SlideNeuron2b2,SlideNeuron2c,SlideNeuron2d,SlideNeuron2d2,SlideNeuron2e, //16
                             SlideNet1, SlideNet1b, SlideNet1b2,SlideNet1c, SlideNet1d,SlideNet1d2,SlideNet1d3, SlideNet1d4,SlideNet1e,
                             /*SlideBack1,*/SlideBack2,SlideBack3,SlideNet1f,SlideBackA,SlideNet2,SlideBackB, SlideBackC, SlideBackD,SlideBackE, SlideBackF,
-                            SlideNet3);// SlideSandbox);
+                            
+                            SlideBackCalc0,SlideBackCalc1,SlideBackCalc2,SlideBackCalc3,
+                            SlideSandbox);//SlideNet3);//SlideSandbox);// SlideSandbox);
 
         /*TO DELETE*/
         for(var i=0; i<this.slideList.length;i++){
@@ -263,7 +268,7 @@ export class View{
     // handle 1st and last slide diff formats
     caveats(){
         if(this.slideList[this.currentSlide].sandbox){
-            layout.NEURON_LEFTLIM=SlideNet3.buttonContainer.getChildByName("stylebox").x +450;
+            layout.NEURON_LEFTLIM=SlideSandbox.buttonContainer.getChildByName("stylebox").x +450;
         }
         else if(this.slideList[this.currentSlide].leftnet){
             layout.NEURON_UPPERLIM=100;

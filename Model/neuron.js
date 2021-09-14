@@ -26,7 +26,7 @@ export class Neuron{
 
 
     constructor(){
-        this.bias = Math.random() * 2 - 1 //bias between -1 and 1
+        this.bias = 0//Math.random() * 2 - 1 //bias between -1 and 1
         this.inputs = [];
         this.actFun = [];
         this.weights = [];
@@ -68,9 +68,13 @@ export class Neuron{
         if(this.weights === undefined){
             this.weights=[];
             for(var i =0; i<this.inputs.length; i++){
-            this.weights[i]= Math.random() * 2 - 1;
- //           this.weights[i]= 0; 
+            this.weights[i]=
+             //(Math.random());
 
+            // (Math.random() * (0.5- -0.5)) + -0.5;    
+             (Math.random() * (0.5- -0.5)) + -0.5;    
+
+            //Math.random() * 2 - 1;
            }
         }
 
@@ -78,7 +82,11 @@ export class Neuron{
         //because another neuron was added in the prev layer
         if(this.weights.length < v.length){
             for(var i=this.weights.length; i<v.length; i++){
-              this.weights[i]=Math.random() * 2 - 1;
+              this.weights[i]= 
+              //Math.random() * 2 - 1;
+              (Math.random() * (0.5- -0.5)) + -0.5;  
+           // Math.random()
+
 //                this.weights[i]= 0; 
             }
         }

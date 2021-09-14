@@ -1,27 +1,3 @@
-/*export const small = new PIXI.TextStyle({
-    fontFamily: 'Arial',
-    fontWeight: 500,
-    fontSize: 10
-});
-
-export const medium = new PIXI.TextStyle({
-  fontFamily: 'Arial',
-  fontWeight: 300,
-  fontSize: 20
-});
-
-export const typewriter = new PIXI.TextStyle({
-    fontFamily: 'Helvetica',
-    fontWeight: 400,
-    fontSize: 20
-  });
-
-  export const typewriter_large = new PIXI.TextStyle({
-    fontFamily: 'American Typewriter',
-    fontWeight: 600,
-    fontSize: 35
-  });*/
-
 export const textstyles = {
   default: new PIXI.TextStyle({
     fontFamily: 'Helvetica',
@@ -29,7 +5,6 @@ export const textstyles = {
     fontSize: 20
   }),
   
-
   medium: new PIXI.TextStyle({
     fontFamily: 'Helvetica',
     fontWeight: 400,
@@ -60,8 +35,6 @@ export const textstyles = {
     fontFamily: 'Helvetica',
     fontWeight: 600,
     fontSize: 25,
-    //fontStyle: 'bold'
-
   }),
 
   default_blue: new PIXI.TextStyle({
@@ -84,11 +57,12 @@ export const textstyles = {
     fontSize: 24
   }),
 
-  neuron_large: new PIXI.TextStyle({
-    fontFamily: 'Arial',
-    fontWeight: 600,
-    fontSize: 35
+  cost: new PIXI.TextStyle({
+    fontFamily: 'Menlo',
+    fontWeight: 400,
+    fontSize: 24,
   }),
+
 
   instruct: new PIXI.TextStyle({
     fontFamily: 'Helvetica',
@@ -96,4 +70,17 @@ export const textstyles = {
     fontSize: 18,
     fill: 0xa3001e
   }),
+
+  label_large: new PIXI.TextStyle({
+    fontFamily: 'Menlo',
+    fontWeight: 500,
+    fontSize: 25,
+  }),
+
+  label_med: new PIXI.TextStyle({
+    fontFamily: 'Menlo',
+    fontWeight: 500,
+    fontSize: 20,
+  }),
+
 }

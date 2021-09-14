@@ -269,29 +269,6 @@ export class Net{
                     }
                 }
 
-                /*switch(this.netActFn){
-                    case(actFns.LINEAR):
-                    console.log("hi");
-
-                        currentNeuron.da_dz=1;
-                    break;
-                    case(actFns.SIGMOID):
-                    console.log("hi");
-
-                        currentNeuron.da_dz=(currentNeuron.output)*(1-currentNeuron.output);
-                    case(actFns.ReLU):
-                    console.log("hi");
-
-                    console.log(currentNeuron.output);
-
-                        if(currentNeuron.output<=0){
-                            currentNeuron.da_dz=0;
-                        } else {
-                            currentNeuron.da_dz=1;
-                        }
-                    break;
-                }*/
-
                 //for each weight
                 for(var k=0; k<currentNeuron.weights.length; k++){
                 
@@ -334,11 +311,7 @@ export class Net{
                     currentNeuron.wgrad[k] = this.learnRate*(currentNeuron.dc_dw[k]);
                     
                 }
-             //   console.log(currentNeuron.wgrad);
 
-   //             console.log("layer: "+currentLayer.layerNumber 
-     //                               + " neuron: " + currentNeuron.neuronNumber
-       //                              + '\n' + "wgrad: "+ currentNeuron.wgrad);
                 /**** UPDATE BIAS *****/
                 // dc_db = dc_da * da_dz * dz_db
                 // but dz_db always = 1

@@ -5,8 +5,8 @@ export class Graph extends PIXI.Sprite{
 
     constructor(data){
         super();
-     //   this.data=data;
-        this.axis=new PIXI.Sprite(PIXI.Texture.from('images/axis2.png'));
+
+        this.axis=new PIXI.Sprite(PIXI.Texture.from('images/axis.png'));
         this.axis.x=window.innerWidth-240;
         this.axis.y=layout.BOTTOMBUFFER-230;
         this.axis.scale.set(0.8);
@@ -16,7 +16,7 @@ export class Graph extends PIXI.Sprite{
         this.bg.height=200;
         this.bg.width=200;
 
-        this.bg.x=67//60;
+        this.bg.x=67;
         this.bg.y=15;
         
         this.pointslength = data.points.length;
@@ -26,26 +26,78 @@ export class Graph extends PIXI.Sprite{
 
         this.fakedata=new Data(0, ["strawberry","blueberry"],["length","roundness"]);
 
-        var bgpointsize = 20;
-        var numbgpoints = 200/bgpointsize;
-        for(var i =1; i<numbgpoints+1;i++){
-            for(var j =1; j<numbgpoints+1;j++){        
-               // console.log((i/10)*2,j/10);
+        this.bgpointsize = 20;
+        this.numbgpoints = 200/this.bgpointsize;
 
-                this.fakedata.createSingleDatapoint_test([(i/numbgpoints),j/numbgpoints]);
-              //  console.log(this.fakedata);
-              
+
+        this.posAxis()
+
+        this.populateGraph(data);
+    }
+
+    getGraph(){
+        return this.axis;
+    }
+
+    posAxis(){
+
+        this.fakedata=new Data(0, ["strawberry","blueberry"],["length","roundness"]);
+
+        for(var i =1; i<this.numbgpoints+1;i++){
+            for(var j =1; j<this.numbgpoints+1;j++){        
+
+                this.fakedata.createSingleDatapoint_test([(i*10/this.numbgpoints),j*10/this.numbgpoints]);
+            
                 var bgp = new PIXI.Sprite(PIXI.Texture.from('images/bgtest.png'));
                 bgp.anchor.set(0.5);
-                bgp.x=(i*20) 
-                bgp.y=(-j*20)+200//0//(this.bg.height-bgpointsize)-(j*bgpointsize)
-                bgp.name= ((i/numbgpoints)).toString() + (j/numbgpoints).toString();//[bgp.x,bgp.y];
+                bgp.x=(i*this.bgpointsize) 
+                bgp.y=(-j*this.bgpointsize)+this.bg.width; 
+                bgp.name= i.toString()+j.toString();
 
                 this.bg.addChild(bgp);
 
-                var xname=(i/10);
-                var yname=j/10;
 
+                // TO DELETE
+                /*var xname=i
+                var yname=j;
+
+                var text = new PIXI.Text(xname,
+                                    
+                    new PIXI.TextStyle({
+                        fontFamily: 'Helvetica',
+                        fontWeight: 400,
+                        fontSize: 12,
+                        fill: 0x0000FF
+                    }));
+
+                    text.anchor.set(0.5)
+                     bgp.addChild(text)
+                */
+                }
+            }
+            
+
+    }
+
+    negAxis(){
+        this.fakedata=new Data(0, ["strawberry","blueberry"],["length","roundness"]);
+
+        for(var i =-4; i<(this.numbgpoints/2)+1;i++){
+            for(var j =-4; j<(this.numbgpoints/2)+1;j++){        
+
+                this.fakedata.createSingleDatapoint_test([(i*10/this.numbgpoints),j*10/this.numbgpoints]);
+                var bgp = new PIXI.Sprite(PIXI.Texture.from('images/bgtest.png'));
+                bgp.anchor.set(0.5);
+                bgp.x=(i*this.bgpointsize)+ (5*this.bgpointsize)
+                bgp.y=(-j*this.bgpointsize)+this.bg.width-(5*this.bgpointsize); 
+                bgp.name= i.toString()+j.toString();
+
+                this.bg.addChild(bgp);
+
+                var xname=i
+                var yname=j;
+
+                /*
                 var text = new PIXI.Text(yname,
                                     
                     new PIXI.TextStyle({
@@ -56,31 +108,13 @@ export class Graph extends PIXI.Sprite{
                     }));
 
                     text.anchor.set(0.5)
-                  //  bgp.addChild(text)
-                }
-        }
-
-
-        /*for(var i =0; i<data.points.length;i++){
-            var p = new PIXI.Sprite(PIXI.Texture.from('images/point.png'));
-            p.anchor.set(0.5);
-            p.x=((data.points[i].input[0])*this.bg.height)/2;
-            p.y=this.bg.width-((data.points[i].input[1])*this.bg.width);
-            if(data.points[i].expected_text=="strawberry"){
-                p.tint=0xff0000;
-
-            } else if(data.points[i].expected_text=="blueberry"){
-                p.tint=0x0000ff;
+                  bgp.addChild(text)
+                */
             }
-            this.bg.addChild(p);
-        }*/
-        this.populateGraph(data);
+        }
     }
 
-    getGraph(){
-        return this.axis;
-    }
-
+    // remove points but not bg
     clearGraph(data){
         for(var i=0;i<this.fakedata.points.length;i++){
             this.bg.getChildAt(i).tint=0xFFFFFF;
@@ -90,17 +124,42 @@ export class Graph extends PIXI.Sprite{
         }
     }
 
+    clearGraphBg(){
+        for(var i=0;i<this.fakedata.points.length;i++){
+            this.bg.getChildAt(i).tint=0xFFFFFF;
+        }
+    }
+
+    clearGraph_all(data){
+        for(var j =0; j<data.points.length;j++){
+            this.bg.removeChildAt(100);
+        }
+
+        for(var i=0; i<100; i++){
+            this.bg.removeChildAt(0);
+        }    
+    }
+
     populateGraph(data){
         for(var i =0; i<data.points.length;i++){
-            var p = new PIXI.Sprite(PIXI.Texture.from('images/point.png'));
+            var p = new PIXI.Sprite(PIXI.Texture.from('images/point3.png'));
             p.anchor.set(0.5);
-            p.x=((data.points[i].input[0])*this.bg.height);
-            p.y=this.bg.width-((data.points[i].input[1])*this.bg.width);
+           
+
+            if (data.large){
+                p.x=(((data.points[i].input[0])*this.bg.height/10)) +this.bg.height/2 ;
+                p.y=this.bg.width-((data.points[i].input[1])*this.bg.width/10) -this.bg.width/2 ;
+            } else{
+                p.x=((data.points[i].input[0])*this.bg.height/10);
+                p.y=this.bg.width-((data.points[i].input[1])*this.bg.width/10);
+            }
+
+
             if(data.points[i].expected_text=="strawberry"){
-                p.tint=0xff0000;
+                p.tint=0xff121a;
 
             } else if(data.points[i].expected_text=="blueberry"){
-                p.tint=0x0000ff;
+                p.tint=0x3e1fcc;
             }
             this.bg.addChild(p);
         }
@@ -108,34 +167,61 @@ export class Graph extends PIXI.Sprite{
 
     // feed in each point from the graph and calculate results
     updateGraph(net){
+
         net.setNetInput_test(this.fakedata.points[0]);
         net.update();
 
+        console.log(this.fakedata.points.length);
         for(var i=0;i<this.fakedata.points.length;i++){
             net.setNetInput_test(this.fakedata.points[i]);
             net.update();
 
+            //this.bg.getChildByName(net.netInput[0].toString() + net.netInput[1].toString()).tint=0xff0000;
             //strawberry
-            if(net.netOut[0]>0.5 && net.netOut[1]<=0.5){
-                this.bg.getChildByName(net.netInput[0].toString() + net.netInput[1].toString()).tint=0xff0000;
-            }
+    
 
-            //probably strawberry
-            if(net.netOut[0]>0.5 && net.netOut[1]>0.5 && net.netOut[0]>net.netOut[1] || 
-                net.netOut[0]<=0.5 && net.netOut[1]<=0.5 && net.netOut[0]>net.netOut[1]){
-                this.bg.getChildByName(net.netInput[0].toString() + net.netInput[1].toString()).tint=0xffcccb;
+            if(net.netOut[0]>0.5 && net.netOut[1]<=0.5){
+
+                if(net.netOut[0]>0.9){
+                    this.bg.getChildByName(net.netInput[0].toString() + net.netInput[1].toString()).tint=0xff0000;
+
+                }else if(net.netOut[0]>0.8){
+                    this.bg.getChildByName(net.netInput[0].toString() + net.netInput[1].toString()).tint=0xff4c3f;
+
+                }else if(net.netOut[0]>0.7){
+                    this.bg.getChildByName(net.netInput[0].toString() + net.netInput[1].toString()).tint=0xff756c;
+
+                }else if(net.netOut[0]>0.6){
+                    this.bg.getChildByName(net.netInput[0].toString() + net.netInput[1].toString()).tint=0xff9995;
+
+                } else{
+                    this.bg.getChildByName(net.netInput[0].toString() + net.netInput[1].toString()).tint=0xffbbbb;
+                }
             }
 
             //blueberry
             if(net.netOut[1]>0.5 && net.netOut[0]<=0.5){
-                this.bg.getChildByName(net.netInput[0].toString() + net.netInput[1].toString()).tint=0x0000ff;
-            }
 
-            //probably blueberry
-            if(net.netOut[1]>0.5 && net.netOut[0]>0.5 && net.netOut[1]>net.netOut[0] || 
-                net.netOut[1]<=0.5 && net.netOut[0]<=0.5 && net.netOut[1]>net.netOut[0]){
-                this.bg.getChildByName(net.netInput[0].toString() + net.netInput[1].toString()).tint=0xadd8e6;
+               if(net.netOut[1]>0.9){
+                this.bg.getChildByName(net.netInput[0].toString() + net.netInput[1].toString()).tint=0x0000ff;
+
+                }else if(net.netOut[1]>0.8){
+                    this.bg.getChildByName(net.netInput[0].toString() + net.netInput[1].toString()).tint=0x5149ff;
+
+                }else if(net.netOut[1]>0.7){
+                    this.bg.getChildByName(net.netInput[0].toString() + net.netInput[1].toString()).tint=0x7a75ff;
+
+                }else if(net.netOut[1]>0.6){
+                    this.bg.getChildByName(net.netInput[0].toString() + net.netInput[1].toString()).tint=0x9f9dff;
+
+                } else{
+                    this.bg.getChildByName(net.netInput[0].toString() + net.netInput[1].toString()).tint=0xc4c4ff;
+
+                }
+
             }
+            
+            
         }
 
         net.setNetInput(net.data.points[net.dataIdx]);

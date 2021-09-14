@@ -3,13 +3,11 @@ export const layout = {
     HEADER_HEIGHT:50,
     FOOTER_HEIGHT:75,
 
-    //LEFTBUFFER: window.innerWidth/2 - window.innerWidth*(3/8),
 
     LEFTBUFFER: Math.max((window.innerWidth-1100)/2,15),
     BOTTOMBUFFER: window.innerHeight-80,
     TOPBUFFER: 70,
     MAXHEIGHT: 470,
-
 
     CENTER: Math.max((window.innerWidth-1100)/2,20)+window.innerWidth/2,
 
@@ -25,16 +23,19 @@ export const layout = {
     
     BUTTONS_X:  Math.max((window.innerWidth-1100)/2,20) +50,
 
+
+    /****** NEURONS ******/
     NEURON_LEFTLIM_INIT: Math.max((window.innerWidth-1100)/2,15) +500,
     NEURON_LEFTLIM: Math.max((window.innerWidth-1100)/2,15) +500,
 
+    NEURON_LEFTLIM_BACKPROP: Math.max((window.innerWidth-1100)/2,15) +250,
+    NEURON_LARGE_LEFTLIM: Math.max((window.innerWidth-1100)/2,20)+525,
     NEURON_LEFTLIM_SANDBOX: Math.max((window.innerWidth-1100)/2,15) +350,
 
     NEURON_UPPERLIM: 210,
     NEURON_UPPERLIM_INIT: 210,
 
     NEURON_UPPERLIM_LARGE:150,
-
 
     NEURON_X_DIF: 150,
     NEURON_Y_DIF: 125,
@@ -44,7 +45,6 @@ export const layout = {
 
     NEURON_LARGE_Y_DIF:250,
 
-    NEURON_LARGE_LEFTLIM: Math.max((window.innerWidth-1100)/2,20)+525,
     NEURON_NUDGE: 35,
 
    // ACTFNS_X:(window.innerHeight-80)-100,
