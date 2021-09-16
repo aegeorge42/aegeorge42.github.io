@@ -471,9 +471,14 @@ export class Net{
     }
 
     clone(){
-        //for (var i =0;i<this.layers.length;i++){
-       //     var currentLayer=this.getLayer(i);
-       // }
+        for (var i =0;i<this.layers.length;i++){
+            var currentLayer=this.getLayer(i);
+
+            for(var j=0; j<currentLayer.neurons.length; j++){
+                var currentNeuron = currentLayer.getNeuron(j);
+
+            }
+        }
 
         
 

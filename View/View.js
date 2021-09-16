@@ -50,6 +50,10 @@ SlideBackCalc0,
 SlideBackCalc1,
 SlideBackCalc2,
 SlideBackCalc3,
+SlideBackCalc4,
+SlideBackCalc5,
+SlideBackCalc6,
+
 SlideSandbox} from "./allSlides.js"
 
 
@@ -65,32 +69,18 @@ export class View{
           autoResize: true,
           width: window.innerWidth,
           height: window.innerHeight,
-          backgroundColor: 0xe7e9ff
+          backgroundColor: 0xf5f6ff
         });
 
+        const loader = PIXI.loader;
+        loader.add("images/button_down.png")
+            .load(setup);
+
+        
         this.app=app;
 
-        window.addEventListener('resize', resize); 
-/*
-        this.w= window.innerWidth;  
-        this.h=window.innerHeight;
+        window.addEventListener('resize', resize);
 
-        var initw = window.innerWidth;  
-
-        var w=window.innerWidth;    
-        var h=window.innerHeight;
-
-        var bufferx=0;
-        this.buffery=0;
-        var buffery=0;
-        var buffery2=0;
-
-        var b =0;        
-        this.h2=window.innerHeight;
-        this.w2=window.innerWidth;
-        var win=this;
-
-        */
 
         this.startwidth = window.innerWidth;
         this.startheight = window.innerHeight;
@@ -177,12 +167,12 @@ export class View{
         //add premade slides
         this.slideList = [];
         this.slideList.push(SlideHome,SlideInstruct1, SlideInstruct2, //1
-                            SlideIntro1,SlideIntro1a,SlideIntro1b,SlideIntro1c,SlideIntro2,SlideIntro3, SlideIntro4, SlideIntro3a, SlideIntro4a, //9
+                            SlideIntro1,/*SlideIntro1a,*/SlideIntro1b,SlideIntro1c,SlideIntro2,SlideIntro3, SlideIntro4, SlideIntro3a, SlideIntro4a, //9
                             SlideNeuronA, SlideNeuronA2, SlideNeuron1,SlideNeuron1a,SlideNeuron1b,SlideNeuron2,SlideNeuron2b,SlideNeuron2b2,SlideNeuron2c,SlideNeuron2d,SlideNeuron2d2,SlideNeuron2e, //16
                             SlideNet1, SlideNet1b, SlideNet1b2,SlideNet1c, SlideNet1d,SlideNet1d2,SlideNet1d3, SlideNet1d4,SlideNet1e,
                             /*SlideBack1,*/SlideBack2,SlideBack3,SlideNet1f,SlideBackA,SlideNet2,SlideBackB, SlideBackC, SlideBackD,SlideBackE, SlideBackF,
                             
-                            SlideBackCalc0,SlideBackCalc1,SlideBackCalc2,SlideBackCalc3,
+                            SlideBackCalc0,SlideBackCalc1,SlideBackCalc2,SlideBackCalc3,SlideBackCalc4,SlideBackCalc5,SlideBackCalc6,
                             SlideSandbox);//SlideNet3);//SlideSandbox);// SlideSandbox);
 
         /*TO DELETE*/
@@ -191,9 +181,13 @@ export class View{
             currText.x=80;
                 currText.y=25;
             this.slideList[i].slideContainer.addChild(currText);
-            }
-        
+        }
 
+        //maybe come back to this to cutdown on startup time
+        function setup() {
+            const cat = new PIXI.Sprite(loader.resources["images/button_down.png"].texture);
+        }
+           
         const opener = new PIXI.Sprite(PIXI.Texture.from('images/opener.png'));
         opener.name="opener";
         opener.anchor.set(0.5);
@@ -216,7 +210,7 @@ export class View{
 
 
 
-        this.currentSlide=43;
+        this.currentSlide=49;
 
 
 

@@ -48,7 +48,7 @@ export class Graph extends PIXI.Sprite{
 
                 this.fakedata.createSingleDatapoint_test([(i*10/this.numbgpoints),j*10/this.numbgpoints]);
             
-                var bgp = new PIXI.Sprite(PIXI.Texture.from('images/bgtest.png'));
+                var bgp = new PIXI.Sprite(PIXI.Texture.from('images/bgtest2.png'));
                 bgp.anchor.set(0.5);
                 bgp.x=(i*this.bgpointsize) 
                 bgp.y=(-j*this.bgpointsize)+this.bg.width; 
@@ -86,7 +86,7 @@ export class Graph extends PIXI.Sprite{
             for(var j =-4; j<(this.numbgpoints/2)+1;j++){        
 
                 this.fakedata.createSingleDatapoint_test([(i*10/this.numbgpoints),j*10/this.numbgpoints]);
-                var bgp = new PIXI.Sprite(PIXI.Texture.from('images/bgtest.png'));
+                var bgp = new PIXI.Sprite(PIXI.Texture.from('images/bgtest2.png'));
                 bgp.anchor.set(0.5);
                 bgp.x=(i*this.bgpointsize)+ (5*this.bgpointsize)
                 bgp.y=(-j*this.bgpointsize)+this.bg.width-(5*this.bgpointsize); 

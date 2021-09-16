@@ -6,7 +6,7 @@ export const layout = {
 
     LEFTBUFFER: Math.max((window.innerWidth-1100)/2,15),
     BOTTOMBUFFER: window.innerHeight-80,
-    TOPBUFFER: 70,
+    TOPBUFFER: 80,
     MAXHEIGHT: 470,
 
     CENTER: Math.max((window.innerWidth-1100)/2,20)+window.innerWidth/2,
@@ -32,8 +32,8 @@ export const layout = {
     NEURON_LARGE_LEFTLIM: Math.max((window.innerWidth-1100)/2,20)+525,
     NEURON_LEFTLIM_SANDBOX: Math.max((window.innerWidth-1100)/2,15) +350,
 
-    NEURON_UPPERLIM: 210,
-    NEURON_UPPERLIM_INIT: 210,
+    NEURON_UPPERLIM: 240,
+    NEURON_UPPERLIM_INIT: 240,
 
     NEURON_UPPERLIM_LARGE:150,
 
