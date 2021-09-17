@@ -1107,7 +1107,7 @@ export class Slide{
             var overneuron_small =   new PIXI.TextStyle({
                 fontFamily: 'Helvetica',
                 fontWeight: 400,
-                fontSize: 15,
+                fontSize: 14,
                 fill:  0x00ad09
             });
 

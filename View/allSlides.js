@@ -100,12 +100,14 @@ export const SlideIntro1a = new Slide();
 
 // INTRO - example percep - INTERACTIVE
 export const SlideIntro1b = new Slide();
-    var percep_blank =new PIXI.Sprite(PIXI.Texture.from('images/percep_blank.png'));
+    var percep_blank =new PIXI.Sprite(PIXI.Texture.from('images/percep_blank_new.png'));
         percep_blank.isSprite=true;
         percep_blank.x=layout.LEFTBUFFER + 300;
         percep_blank.y=100;
 
     var textIntro1b= [percep_blank,
+        [ ["Once our net is finished learning, "+'\n'+ "we'll give it some unlabeled data"+'\n'+
+        "to test if it works."],[layout.LEFTBUFFER,200]],
         [["Here's a neural network that has learned to classify"+'\n'],
         ["     strawberries ", textstyles.default_red],
         ["and                               "],
@@ -327,11 +329,11 @@ export const SlideNeuronA = new Slide();
 
 export const SlideNeuronA2 = new Slide();
 
-    var percep_layers =new PIXI.Sprite(PIXI.Texture.from('images/percep_layers.png'));
+    var percep_layers =new PIXI.Sprite(PIXI.Texture.from('images/intro/percep_layers.png'));
         percep_layers.isSprite=true;
 
         percep_layers.x=layout.LEFTBUFFER + 200;
-        percep_layers.y=110;
+        percep_layers.y=40;
 
     var textNeuronA2 = [
         [percep_layers,["Neurons are organized in"], [" layers. ",textstyles.large_bold],[ layout.LEFTBUFFER+50, layout.TOPBUFFER+30]],
@@ -460,7 +462,7 @@ export const SlideNeuron2 = new Slide();
 
     var textNeuron2 = [
         [neuron_large_over,["We give our network one piece of data at a time."], [layout.LEFTBUFFER,80]],
-        [["The two values that we determined earlier"+'\n'+" become our inputs. "], [layout.LEFTBUFFER,465]],
+        [["The two values that we determined earlier"+'\n'+" become our "], ["inputs. ", textstyles.large_bold], [layout.LEFTBUFFER,465]],
     ];
 
     SlideNeuron2.drawText(textNeuron2);
@@ -535,7 +537,7 @@ export const SlideNeuron2b2 = new Slide();
         [["Weights",textstyles.large_bold], [" tell us the importance of each input."], [layout.LEFTBUFFER,layout.TOPBUFFER]],
         [["The"],[" bias ", textstyles.large_bold], ["changes the sensitivity of the neuron."], [layout.LEFTBUFFER,layout.TOPBUFFER+70]],
 
-        [["To begin, our weights are random, "+ '\n' + "while our biases start at 0."],[layout.LEFTBUFFER,300]],
+        [["When we first create our net, our weights are random, "+ '\n' + "while our biases start at 0."],[layout.LEFTBUFFER,300]],
     ];
 
     SlideNeuron2b2.drawText(textNeuron2b2);
