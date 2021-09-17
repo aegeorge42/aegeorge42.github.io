@@ -30,10 +30,13 @@ export const layout = {
 
     NEURON_LEFTLIM_BACKPROP: Math.max((window.innerWidth-1100)/2,15) +250,
     NEURON_LARGE_LEFTLIM: Math.max((window.innerWidth-1100)/2,20)+525,
-    NEURON_LEFTLIM_SANDBOX: Math.max((window.innerWidth-1100)/2,15) +350,
+    NEURON_LEFTLIM_SANDBOX: 460,//Math.max((window.innerWidth-1100)/2,15) +350,
 
     NEURON_UPPERLIM: 240,
     NEURON_UPPERLIM_INIT: 240,
+    NEURON_UPPERLIM_SANDBOX: 230,
+
+
 
     NEURON_UPPERLIM_LARGE:150,
 

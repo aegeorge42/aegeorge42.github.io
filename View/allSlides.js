@@ -1265,9 +1265,9 @@ export const SlideBackCalc3 = new Slide();
     SlideBackCalc3.drawCost_steps();
 
     var arrows= new PIXI.Sprite(PIXI.Texture.from('images/backprop/arrows.png'));
-    arrows.isSprite=true;
-    arrows.x=layout.NEURON_LEFTLIM -layout.NEURON_X_DIF/2 +100;
-    arrows.y=layout.NEURON_UPPERLIM-160;
+        arrows.isSprite=true;
+        arrows.x=layout.NEURON_LEFTLIM -layout.NEURON_X_DIF/2 +100;
+        arrows.y=layout.NEURON_UPPERLIM-160;
     SlideBackCalc3.labelsContainer.addChild(arrows);
 
     var dcdwform= new PIXI.Sprite(PIXI.Texture.from('images/backprop/dcdwform.png'));
@@ -1324,8 +1324,13 @@ export const SlideBackCalc4 = new Slide();
         dz3dwform.x=backpropx_cost;
         dz3dwform.y=200;
 
+    var dzdwarrow= new PIXI.Sprite(PIXI.Texture.from('images/backprop/dzdwarrow.png'));
+        dzdwarrow.isSprite=true;
+        dzdwarrow.x=layout.NEURON_LEFTLIM -layout.NEURON_X_DIF/2 +100;
+        dzdwarrow.y=layout.NEURON_UPPERLIM-160;
+
     var textBackCalc4 = [
-        z3form, dz3dwform,
+        z3form, dz3dwform,dzdwarrow,
         [ ["DZDw"],[backpropx_cost,layout.TOPBUFFER] ],
     ];
     SlideBackCalc4.drawText(textBackCalc4);
@@ -1343,14 +1348,25 @@ export const SlideBackCalc5 = new Slide();
     SlideBackCalc5.costSteps=true;
     SlideBackCalc5.drawCost_steps();
 
+    var a3form= new PIXI.Sprite(PIXI.Texture.from('images/backprop/a3form.png'));
+        a3form.isSprite=true;
+        a3form.scale.set(0.7)
+        a3form.x=backpropx_cost;
+        a3form.y=100;
+
     var dadzform= new PIXI.Sprite(PIXI.Texture.from('images/backprop/dadzform.png'));
         dadzform.isSprite=true;
         dadzform.scale.set(0.7)
         dadzform.x=backpropx_cost;
         dadzform.y=200;
 
+    var dadzarrow= new PIXI.Sprite(PIXI.Texture.from('images/backprop/dadzarrow.png'));
+        dadzarrow.isSprite=true;
+        dadzarrow.x=layout.NEURON_LEFTLIM -layout.NEURON_X_DIF/2 +100;
+        dadzarrow.y=layout.NEURON_UPPERLIM-160;
+
     var textBackCalc5 = [
-        dadzform,
+        dadzform,dadzarrow,a3form,
         [ ["DADZ"],[backpropx_cost,layout.TOPBUFFER] ],
     ];
     SlideBackCalc5.drawText(textBackCalc5);
@@ -1368,14 +1384,26 @@ export const SlideBackCalc6 = new Slide();
     SlideBackCalc6.costSteps=true;
     SlideBackCalc6.drawCost_steps();
 
+
     var dcdaform= new PIXI.Sprite(PIXI.Texture.from('images/backprop/dcdaform.png'));
         dcdaform.isSprite=true;
         dcdaform.scale.set(0.7)
         dcdaform.x=backpropx_cost;
         dcdaform.y=200;
 
+    var dcdaarrow= new PIXI.Sprite(PIXI.Texture.from('images/backprop/dcdaarrow.png'));
+        dcdaarrow.isSprite=true;
+        dcdaarrow.x=layout.NEURON_LEFTLIM -layout.NEURON_X_DIF/2 +100;
+        dcdaarrow.y=layout.NEURON_UPPERLIM-160;
+
+    var ctotform= new PIXI.Sprite(PIXI.Texture.from('images/backprop/ctotform.png'));
+    ctotform.isSprite=true;
+    ctotform.scale.set(0.7)
+    ctotform.x=backpropx_cost;
+    ctotform.y=100;
+
     var textBackCalc6 = [
-        dcdaform,
+        dcdaform,dcdaarrow,ctotform,
         [ ["DCDA"],[backpropx_cost,layout.TOPBUFFER] ],
     ];
     SlideBackCalc6.drawText(textBackCalc6);

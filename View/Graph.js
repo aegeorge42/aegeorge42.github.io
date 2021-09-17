@@ -171,7 +171,6 @@ export class Graph extends PIXI.Sprite{
         net.setNetInput_test(this.fakedata.points[0]);
         net.update();
 
-        console.log(this.fakedata.points.length);
         for(var i=0;i<this.fakedata.points.length;i++){
             net.setNetInput_test(this.fakedata.points[i]);
             net.update();

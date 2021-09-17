@@ -171,6 +171,7 @@ export class Net{
                 neuron.calcOut();
             });
 
+
             //all outputs from layer i become inputs for layer i+1
             this.getLayer(i+1).setLayerIns(this.getLayer(i).getLayerOuts());
         }

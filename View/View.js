@@ -160,7 +160,7 @@ export class View{
         //add premade slides
         this.slideList = [];
         this.slideList.push(SlideHome,SlideInstruct1, SlideInstruct2, //1
-                            SlideIntro1,/*SlideIntro1a,*/SlideIntro1b,SlideIntro1c,SlideIntro2,SlideIntro3, SlideIntro4, SlideIntro3a, SlideIntro4a, //9
+                            SlideIntro1,/*SlideIntro1a,SlideIntro1b,*/SlideIntro1c,SlideIntro2,SlideIntro3, SlideIntro1b, SlideIntro3a, SlideIntro4a, //9
                             SlideNeuronA, SlideNeuronA2, SlideNeuron1,SlideNeuron1a,SlideNeuron1b,SlideNeuron2,SlideNeuron2b,SlideNeuron2b2,SlideNeuron2c,SlideNeuron2d,SlideNeuron2d2,SlideNeuron2e, //16
                             SlideNet1, SlideNet1b, SlideNet1b2,SlideNet1c, SlideNet1d,SlideNet1d2,SlideNet1d3, SlideNet1d4,SlideNet1e,
                             /*SlideBack1,*/SlideBack2,SlideBack3,SlideNet1f,SlideBackA,SlideNet2,SlideBackB, SlideBackC, SlideBackD,SlideBackE, SlideBackF,
@@ -203,7 +203,7 @@ export class View{
 
 
 
-        this.currentSlide=49;
+        this.currentSlide=45;
 
 
 
@@ -246,6 +246,10 @@ export class View{
         if(this.app.stage.getChildAt(0).getChildAt(9).getChildByName("ratebox") !== null){
             this.app.stage.getChildAt(0).getChildAt(9).getChildByName("ratebox").y=window.innerHeight-this.startheight_nochange +(layout.BOTTOMBUFFER-220);
         }
+
+        if(this.app.stage.getChildAt(0).getChildAt(9).getChildByName("databox") !== null){
+            this.app.stage.getChildAt(0).getChildAt(9).getChildByName("databox").x=window.innerWidth-260;
+        }
        
         if(this.currentSlide==0){
         this.app.stage.getChildAt(0).getChildByName("opener").x=window.innerWidth/2;
@@ -259,7 +263,9 @@ export class View{
     // handle 1st and last slide diff formats
     caveats(){
         if(this.slideList[this.currentSlide].sandbox){
-        //    layout.NEURON_LEFTLIM=SlideSandbox.buttonContainer.getChildByName("stylebox").x +450;
+            layout.NEURON_LEFTLIM=layout.NEURON_LEFTLIM_SANDBOX;
+            layout.NEURON_UPPERLIM=layout.NEURON_UPPERLIM_SANDBOX;
+
         }
         else if(this.slideList[this.currentSlide].leftnet){
             layout.NEURON_UPPERLIM=100;

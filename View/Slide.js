@@ -353,12 +353,18 @@ export class Slide{
         
         ratebox.addChild(new Button("inc_rate",PIXI.Texture.from('images/buttons/plus.png'),60,95,true));
         ratebox.addChild(new Button("dec_rate",PIXI.Texture.from('images/buttons/minus.png'),90,95,true));
+
+        var rateback = new PIXI.Graphics();
+            rateback.beginFill(0xFFFFFF)
+            rateback.drawRect(25,45,100,35);
+            ratebox.addChild(rateback);
+
         
         var rateText = new PIXI.Text(slide.slideNet.learnRate.toFixed(4));
             rateText.name="rateText";
             rateText.x=35;
-            rateText.y=45;
-            ratebox.addChild(rateText);
+            rateText.y=49;
+        ratebox.addChild(rateText);
 
         
         var rates= [0.0001, 0.001, 0.01, 0.03, 0.1, 0.3, 0.5, 1.0, 10.0];
@@ -408,11 +414,20 @@ export class Slide{
         this.buttonContainer.addChild(learnbox);
 
         var epoch = new PIXI.Text("0");
+            epoch.anchor.set(0.5,0)
             epoch.name="epoch"
 
-            epoch.x=window.innerWidth-200;
-            epoch.y=layout.BOTTOMBUFFER-280;
-        slide.costLabel.addChild(epoch);    
+            epoch.x=0
+            epoch.y=0
+
+        var epochbox = new PIXI.Sprite(PIXI.Texture.from('images/epochbox.png'));
+            epochbox.name="epochbox";
+            epochbox.anchor.set(0.5)
+            epochbox.x=window.innerWidth-200;
+            epochbox.y=layout.BOTTOMBUFFER-280;
+            slide.costLabel.addChild(epochbox);    
+
+        epochbox.addChild(epoch);    
 
         learnbox.addChild(new Button("learn_stoch_step",PIXI.Texture.from('images/buttons/step.png'),212.5,60,true));
         learnbox.getChildByName("learn_stoch_step").on('click', function(e){
@@ -444,7 +459,7 @@ export class Slide{
 
                 slide.loopcount=slide.loopcount+1;
 
-                slide.costLabel.getChildByName("epoch").text=slide.loopcount;
+                slide.costLabel.getChildByName("epochbox").getChildByName("epoch").text=slide.loopcount;
                 // so you cant do both at the same time
                 if(slide.buttonContainer.getChildByName("stylebox").getChildByName("vanilla").press==true){
                 break;
@@ -493,7 +508,7 @@ export class Slide{
                     if(graph){graph.updateGraph(slide.slideNet,graph);}
         
                     slide.loopcount=slide.loopcount+1;
-                    slide.costLabel.getChildByName("epoch").text=slide.loopcount;
+                    slide.costLabel.getChildByName("epochbox").getChildByName("epoch").text=slide.loopcount;
 
 
                     if(slide.buttonContainer.getChildByName("stylebox").getChildByName("stochastic").press==true){
@@ -517,7 +532,7 @@ export class Slide{
         learnbox.addChild(new Button("reset",PIXI.Texture.from('images/buttons/reset.png'),38,60,true));        
         learnbox.getChildByName("reset").on('click', function(e){
             slide.loopcount=0;
-            slide.costLabel.getChildByName("epoch").text=slide.loopcount;
+            slide.costLabel.getChildByName("epochbox").getChildByName("epoch").text=slide.loopcount;
             graph.clearGraphBg();
 
             for(var i=0;i<slide.slideNet.layers.length;i++){
@@ -556,7 +571,7 @@ export class Slide{
         databox.getChildByName("newdata").on('click', function(e){
             graph.clearGraph_all(slide.slideNet.data);
             slide.loopcount=0;
-            slide.costLabel.getChildByName("epoch").text=0;    
+            slide.costLabel.getChildByName("epochbox").getChildByName("epoch").text=slide.loopcount;
 
             graph.posAxis();
             graph.axis.texture=PIXI.Texture.from('images/axis.png');
@@ -590,7 +605,7 @@ export class Slide{
         databox.getChildByName("newdata_circle").on('click', function(e){
             graph.clearGraph_all(slide.slideNet.data);
             slide.loopcount=0;
-            slide.costLabel.getChildByName("epoch").text=0;    
+            slide.costLabel.getChildByName("epochbox").getChildByName("epoch").text=slide.loopcount;
 
 
             graph.negAxis();
@@ -606,6 +621,17 @@ export class Slide{
             slide.slideNet.update();
             slide.draw_update(slide.slideNet);
             graph.populateGraph(newdata);
+
+            var newnet = new Net();
+            
+            newnet.setNetData(slide.slideNet.data);
+            newnet.setNetActFn(slide.slideNet.netActFn);
+            newnet.getLayer(0).addNeuron();
+            newnet.getLayer(0).addNeuron();
+            newnet.setOutLayer();
+            newnet.update();
+            slide.slideNet=newnet;
+            slide.draw_init(newnet);
 
         });
 
