@@ -92,6 +92,7 @@ export class View{
         var win = this;
 
         function resize(){
+            
 
             var resize_wid = (window.innerWidth-win.startwidth)/4;
             var resize_height = (window.innerHeight-win.startheight)/6;
@@ -112,54 +113,46 @@ export class View{
                 app.stage.getChildByName("button_start").y=((window.innerHeight)/3) +350;
 
             } else {
+  
+                //rescale text?
+                //app.stage.getChildAt(0).getChildAt(3).position.set(resize_wid,resize_height)     
+                
+                
+                //LOCKED
+                app.stage.getChildByName("button_nextslide").x=window.innerWidth/2 +100;
+                app.stage.getChildByName("button_nextslide").y=window.innerHeight-(75/2);
 
-            /**
-             * stuff w scaled resize
-             */
-            app.stage.getChildAt(0).getChildAt(0).position.set(resize_wid,resize_height) //weights
-            app.stage.getChildAt(0).getChildAt(1).position.set(resize_wid,resize_height) //input
-            app.stage.getChildAt(0).getChildAt(2).position.set(resize_wid,resize_height) //text
-            app.stage.getChildAt(0).getChildAt(3).position.set(resize_wid,resize_height) //labels
-            app.stage.getChildAt(0).getChildAt(4).position.set(resize_wid,resize_height) //neurons
-            //app.stage.getChildAt(0).getChildAt(5).position.set(resize_wid,resize_height) //cost label
+                app.stage.getChildByName("button_prevslide").x=window.innerWidth/2 -100,
+                app.stage.getChildByName("button_prevslide").y=window.innerHeight-(75/2);
+
+                app.stage.getChildAt(0).getChildByName("footer").y=window.innerHeight-win.startheight_nochange;
+
+                //graph
+                app.stage.getChildAt(0).getChildAt(6).y=window.innerHeight-win.startheight_nochange;
+                app.stage.getChildAt(0).getChildAt(6).x=window.innerWidth-win.startwidth_nochange;
+
+                //cost
+                app.stage.getChildAt(0).getChildAt(5).y=window.innerHeight-win.startheight_nochange;
+                app.stage.getChildAt(0).getChildAt(5).x=window.innerWidth-win.startwidth_nochange;
+
+
+                if(app.stage.getChildAt(0).getChildAt(9).getChildByName("actfnsbox") !== null){
+                    app.stage.getChildAt(0).getChildAt(9).getChildByName("actfnsbox").y=window.innerHeight-win.startheight_nochange +(layout.BOTTOMBUFFER-100);
+                }
+
+                if(app.stage.getChildAt(0).getChildAt(9).getChildByName("ratebox") !== null){
+                    app.stage.getChildAt(0).getChildAt(9).getChildByName("ratebox").y=window.innerHeight-win.startheight_nochange +(layout.BOTTOMBUFFER-220);
+                }
+                
+                if(app.stage.getChildAt(0).getChildAt(9).getChildByName("layersbox") !== null){
+                    app.stage.getChildAt(0).getChildAt(9).getChildByName("layersbox").x=window.innerWidth/2//window.innerWidth-win.startwidth_nochange +(window.innerWidth/2-100);
+                }
+
+                if(app.stage.getChildAt(0).getChildAt(9).getChildByName("databox") !== null){
+                    app.stage.getChildAt(0).getChildAt(9).getChildByName("databox").x=window.innerWidth-260;//window.innerWidth-win.startwidth_nochange +(window.innerWidth/2-100);
+                }
+            }
             
-
-            app.stage.getChildAt(0).getChildAt(7).position.set(0,0);
-            ///console.log(app.stage.getChildAt(0).getChildAt(5))
-
-            /**
-             * stuff w locked postion 
-             */
-            app.stage.getChildByName("button_nextslide").x=window.innerWidth/2 +100;
-            app.stage.getChildByName("button_nextslide").y=window.innerHeight-(75/2);
-
-            app.stage.getChildByName("button_prevslide").x=window.innerWidth/2 -100,
-            app.stage.getChildByName("button_prevslide").y=window.innerHeight-(75/2);
-
-            app.stage.getChildAt(0).getChildByName("footer").y=window.innerHeight-win.startheight_nochange;
-
-            //graph
-            app.stage.getChildAt(0).getChildAt(6).y=window.innerHeight-win.startheight_nochange;
-            app.stage.getChildAt(0).getChildAt(6).x=window.innerWidth-win.startwidth_nochange;
-
-            //cost
-            app.stage.getChildAt(0).getChildAt(5).y=window.innerHeight-win.startheight_nochange;
-            app.stage.getChildAt(0).getChildAt(5).x=window.innerWidth-win.startwidth_nochange;
-
-            if(app.stage.getChildAt(0).getChildAt(9).getChildByName("buttonNeuronAddContainer") !== null){
-                app.stage.getChildAt(0).getChildAt(9).getChildByName("buttonNeuronAddContainer").position.set(resize_wid,resize_height) //cost label
-                app.stage.getChildAt(0).getChildAt(9).getChildByName("buttonNeuronRemContainer").position.set(resize_wid,resize_height) //cost label
-            }
-
-            if(app.stage.getChildAt(0).getChildAt(9).getChildByName("actfnsbox") !== null){
-                app.stage.getChildAt(0).getChildAt(9).getChildByName("actfnsbox").y=window.innerHeight-win.startheight_nochange +(layout.BOTTOMBUFFER-100);
-            }
-
-            if(app.stage.getChildAt(0).getChildAt(9).getChildByName("ratebox") !== null){
-                app.stage.getChildAt(0).getChildAt(9).getChildByName("ratebox").y=window.innerHeight-win.startheight_nochange +(layout.BOTTOMBUFFER-220);
-            }
-    
-            }
         }
 
         document.body.appendChild(this.app.view);
@@ -249,6 +242,10 @@ export class View{
         if(this.app.stage.getChildAt(0).getChildAt(9).getChildByName("actfnsbox") !== null){
             this.app.stage.getChildAt(0).getChildAt(9).getChildByName("actfnsbox").y=window.innerHeight-this.startheight_nochange +(layout.BOTTOMBUFFER-100);
         }
+
+        if(this.app.stage.getChildAt(0).getChildAt(9).getChildByName("ratebox") !== null){
+            this.app.stage.getChildAt(0).getChildAt(9).getChildByName("ratebox").y=window.innerHeight-this.startheight_nochange +(layout.BOTTOMBUFFER-220);
+        }
        
         if(this.currentSlide==0){
         this.app.stage.getChildAt(0).getChildByName("opener").x=window.innerWidth/2;
@@ -262,7 +259,7 @@ export class View{
     // handle 1st and last slide diff formats
     caveats(){
         if(this.slideList[this.currentSlide].sandbox){
-            layout.NEURON_LEFTLIM=SlideSandbox.buttonContainer.getChildByName("stylebox").x +450;
+        //    layout.NEURON_LEFTLIM=SlideSandbox.buttonContainer.getChildByName("stylebox").x +450;
         }
         else if(this.slideList[this.currentSlide].leftnet){
             layout.NEURON_UPPERLIM=100;

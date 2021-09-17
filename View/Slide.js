@@ -240,12 +240,13 @@ export class Slide{
         //ADD LAYER
         var layersbox = new PIXI.Sprite(PIXI.Texture.from('images/layersbox_horz.png'));
             layersbox.name="layersbox";
-            layersbox.x= layout.NEURON_LEFTLIM-150;
-            layersbox.y= 45;//layout.BOTTOMBUFFER-450; 
+            layersbox.anchor.set(0.5)
+            layersbox.x= window.innerWidth/2;//layout.NEURON_LEFTLIM-150;
+            layersbox.y= 90;//layout.BOTTOMBUFFER-450; 
         this.buttonContainer.addChild(layersbox);
 
-        layersbox.addChild(new Button("addlayer",PIXI.Texture.from('images/buttons/button_layer.png'), 115, 40,true));
-        layersbox.addChild(new Button("remlayer",PIXI.Texture.from('images/buttons/button_removelayer.png'), 225, 40, true));
+        layersbox.addChild(new Button("addlayer",PIXI.Texture.from('images/buttons/button_layer.png'), -30, 0,true));
+        layersbox.addChild(new Button("remlayer",PIXI.Texture.from('images/buttons/button_removelayer.png'), 80, 0, true));
 
         layersbox.getChildByName("addlayer").on('click', function(e){
             if(slide.slideNet.layers.length<slide.slideNet.maxLayers){
@@ -539,23 +540,28 @@ export class Slide{
 
     
     drawDataButtons(graph){
-        
 
-
-        //costBox.x=layout.NEURON_LEFTLIM +330;//window.innerWidth-170;
-        //costBox.y=layout.BOTTOMBUFFER-80;      
-        var newdatax= window.innerWidth-50;
-        var newdatay= layout.TOPBUFFER+20
+        var newdatax=window.innerWidth-260;
+        var newdatay= 50
         var slide=this;
+        
+        var databox= new PIXI.Sprite(PIXI.Texture.from('images/databox.png'));
+        databox.name="databox"
+            databox.x=newdatax
+            databox.y=newdatay
+        this.buttonContainer.addChild(databox);//new Button("newdata_circle",PIXI.Texture.from('images/buttons/datacircle1.png'),newdatax,newdatay,true));   
 
-        this.costLabel.addChild(new Button("newdata",PIXI.Texture.from('images/buttons/cat.png'),newdatax-100,newdatay,true));   
-        this.costLabel.getChildByName("newdata").on('click', function(e){
+
+        databox.addChild(new Button("newdata",PIXI.Texture.from('images/buttons/datalin.png'),100,60,true));   
+        databox.getChildByName("newdata").on('click', function(e){
             graph.clearGraph_all(slide.slideNet.data);
-            this.loopcount=0;
+            slide.loopcount=0;
             slide.costLabel.getChildByName("epoch").text=0;    
 
             graph.posAxis();
             graph.axis.texture=PIXI.Texture.from('images/axis.png');
+
+            
 
             var newdata = new Data(0,["strawberry","blueberry"],["length", "roundness"]);
             newdata.makefruits_linear();
@@ -566,14 +572,24 @@ export class Slide{
             slide.draw_update(slide.slideNet);
             graph.populateGraph(newdata);
 
+            var newnet = new Net();
+            
+            newnet.setNetData(slide.slideNet.data);
+            newnet.setNetActFn(slide.slideNet.netActFn);
+            newnet.getLayer(0).addNeuron();
+            newnet.getLayer(0).addNeuron();
+            newnet.setOutLayer();
+            newnet.update();
+            slide.slideNet=newnet;
+            slide.draw_init(newnet);
+
 
         });
 
-        this.costLabel.addChild(new Button("newdata_circle",PIXI.Texture.from('images/buttons/datacircle.png'),newdatax,newdatay,true));   
-        this.costLabel.getChildByName("newdata_circle").scale.set(0.8)
-        this.costLabel.getChildByName("newdata_circle").on('click', function(e){
+        databox.addChild(new Button("newdata_circle",PIXI.Texture.from('images/buttons/datacircle.png'),195,60,true));   
+        databox.getChildByName("newdata_circle").on('click', function(e){
             graph.clearGraph_all(slide.slideNet.data);
-            this.loopcount=0;
+            slide.loopcount=0;
             slide.costLabel.getChildByName("epoch").text=0;    
 
 

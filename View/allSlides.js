@@ -1450,8 +1450,8 @@ export const SlideSandbox = new Slide();
     netSand.update();
 
     SlideSandbox.drawStyleButtons();
-    layout.NEURON_LEFTLIM=SlideSandbox.buttonContainer.getChildByName("stylebox").x +450;
-    layout.NEURON_UPPERLIM=layout.NEURON_UPPERLIM_INIT;
+    layout.NEURON_LEFTLIM=460;
+    layout.NEURON_UPPERLIM=230;
     layout.NEURON_X_DIF=150;
     layout.NEURON_Y_DIF=125;
 
