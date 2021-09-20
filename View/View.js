@@ -49,12 +49,17 @@ SlideBackF,
 SlideBackCalc0,
 SlideBackCalc1,
 SlideBackCalc2,
+SlideBackCalc2b,
 SlideBackCalc3,
 SlideBackCalc4,
 SlideBackCalc5,
 SlideBackCalc6,
+SlideBackCalc7,
+SlideBackCalc8,
+SlideBackCalc9,
 
 SlideSandbox} from "./allSlides.js"
+import { Slide } from "./Slide.js";
 
 
 
@@ -165,7 +170,8 @@ export class View{
                             SlideNet1, SlideNet1b, SlideNet1b2,SlideNet1c, SlideNet1d,SlideNet1d2,/*SlideNet1d3, SlideNet1d4,SlideNet1e,
                             SlideBack1,SlideBack2,SlideBack3,SlideNet1f,SlideBackA,SlideNet2,SlideBackB, SlideBackC, SlideBackD,SlideBackE, SlideBackF,
                             */
-                            SlideBackCalc0,SlideBackCalc1,SlideBackCalc2,SlideBackCalc3,SlideBackCalc4,SlideBackCalc5,SlideBackCalc6,
+                            SlideBackCalc0,SlideBackCalc1,SlideBackCalc2,SlideBackCalc2b,SlideBackCalc3,SlideBackCalc4,SlideBackCalc5,SlideBackCalc6,
+                            SlideBackCalc7,SlideBackCalc8,SlideBackCalc9,
                             SlideSandbox);//SlideNet3);//SlideSandbox);// SlideSandbox);
 
         /*TO DELETE*/
@@ -203,7 +209,7 @@ export class View{
 
 
 
-        this.currentSlide=7;
+        this.currentSlide=35;
 
 
 

@@ -100,7 +100,7 @@ export const SlideIntro1a = new Slide();
 
 // INTRO - example percep - INTERACTIVE
 export const SlideIntro1b = new Slide();
-    var percep_blank =new PIXI.Sprite(PIXI.Texture.from('images/percep_blank_new.png'));
+    var percep_blank =new PIXI.Sprite(PIXI.Texture.from('images/intro/percep_blank.png'));
         percep_blank.isSprite=true;
         percep_blank.x=layout.LEFTBUFFER + 300;
         percep_blank.y=100;
@@ -217,7 +217,7 @@ export const SlideIntro3 = new Slide();
 
     var textIntro3 = [
         [ captcha,["If you've ever had to solve a puzzle like this to get into a website..."], [layout.LEFTBUFFER,80]],
-        [ ["...you were probably helping label data to train a neural network"], [layout.LEFTBUFFER +500, 380]]
+        [ ["...you were probably helping label data" +'\n'+" to train a neural network"], [layout.LEFTBUFFER +500, 380]]
     ];
 
     SlideIntro3.drawText(textIntro3);
@@ -306,20 +306,20 @@ export const SlideIntro4a = new Slide();
 
 export const SlideNeuronA = new Slide();
 
-    var percep_blank2 =new PIXI.Sprite(PIXI.Texture.from('images/percep_blank.png'));
+    var percep_blank2 =new PIXI.Sprite(PIXI.Texture.from('images/intro/percep_blank.png'));
         percep_blank2.isSprite=true;
 
         percep_blank2.x=layout.LEFTBUFFER + 200;
         percep_blank2.y=110;
 
-    var percep_labels =new PIXI.Sprite(PIXI.Texture.from('images/percep_labels.png'));
+    var percep_labels =new PIXI.Sprite(PIXI.Texture.from('images/intro/percep_weights.png'));
         percep_labels.isSprite=true;
 
         percep_labels.x=layout.LEFTBUFFER + 200;
         percep_labels.y=110;
 
     var textNeuronA = [
-        [percep_blank2,["A neural network is made up of "], ["neurons",textstyles.large_bold],[" connected by "], ["weights. ",textstyles.large_bold],[ layout.LEFTBUFFER, layout.TOPBUFFER+10]],
+        [["A neural network is made up of "], ["neurons",textstyles.large_bold],[" connected by "], ["weights. ",textstyles.large_bold],[ layout.LEFTBUFFER, layout.TOPBUFFER+10]],
         percep_labels,
 
     ];
@@ -333,7 +333,7 @@ export const SlideNeuronA2 = new Slide();
         percep_layers.isSprite=true;
 
         percep_layers.x=layout.LEFTBUFFER + 200;
-        percep_layers.y=40;
+        percep_layers.y=110;
 
     var textNeuronA2 = [
         [percep_layers,["Neurons are organized in"], [" layers. ",textstyles.large_bold],[ layout.LEFTBUFFER+50, layout.TOPBUFFER+30]],
@@ -1208,7 +1208,9 @@ export const SlideBackCalc1 = new Slide();
 
     var textBackCalc1 = [
         [ ["We'll also need:"],[backpropx_cost,layout.TOPBUFFER] ],
-        [ ["target value"],[backpropx_cost,layout.TOPBUFFER+50] ],
+        [ ["y : the target value for each output neuron"],[backpropx_cost,layout.TOPBUFFER+50] ],
+        [ ["C : the cost for each output neuron, and the total cost of the net."],[backpropx_cost,layout.TOPBUFFER+50] ],
+
 
     ];    
     SlideBackCalc1.drawText(textBackCalc1);
@@ -1218,6 +1220,7 @@ export const SlideBackCalc2 = new Slide();
     SlideBackCalc2.slideNet=netBack0;
     SlideBackCalc2.backprop=true;
     SlideBackCalc2.backprop_labels=true;
+    SlideBackCalc2.weight="w5";
 
     var i=1;
     var j=0;
@@ -1248,9 +1251,29 @@ export const SlideBackCalc2 = new Slide();
         [ ["This value is the part der cost wrt w5 "],[backpropx_cost,layout.TOPBUFFER+70] ],
         [ ["write it as dcdw "],[backpropx_cost,layout.TOPBUFFER+100] ],
 
-        [ ["Since w5 doesnt /directly/ affect cost, we need to break down this formula"],[backpropx_cost,layout.TOPBUFFER+150] ],
+       // [ ["Since w5 doesnt /directly/ affect cost, we need to break down this formula"],[backpropx_cost,layout.TOPBUFFER+150] ],
     ];    
     SlideBackCalc2.drawText(textBackCalc2);
+
+export const SlideBackCalc2b = new Slide();
+    SlideBackCalc2b.slideNet=netBack0;
+    SlideBackCalc2b.backprop=true;
+    SlideBackCalc2b.backprop_labels=true;
+
+    /*var hilite6 = new PIXI.Graphics();
+        hilite6.lineStyle(hiliteWeight, hiliteColor);
+        hilite6.drawPolygon(startx, startyf, endx, endy);
+    SlideBackCalc7.weightsContainer.addChild(hilite6);*/
+    SlideBackCalc2b.draw_init(netBack0);
+    SlideBackCalc2b.costSteps=true;
+    SlideBackCalc2b.drawCost_steps();
+
+    var textBackCalc2b = [
+        [ ["multiply by learn rate and subtract from current weight to get new weight"],[backpropx_cost,layout.TOPBUFFER] ],
+     
+    ];    
+    SlideBackCalc2b.drawText(textBackCalc2b);
+
 
 export const SlideBackCalc3 = new Slide();
     SlideBackCalc3.slideNet=netBack0;
@@ -1412,6 +1435,66 @@ export const SlideBackCalc6 = new Slide();
     
 
 
+
+
+
+
+
+export const SlideBackCalc7 = new Slide();
+    SlideBackCalc7.slideNet=netBack0;
+    SlideBackCalc7.backprop=true;
+    SlideBackCalc7.backprop_steps=true;
+
+    /*var hilite6 = new PIXI.Graphics();
+        hilite6.lineStyle(hiliteWeight, hiliteColor);
+        hilite6.drawPolygon(startx, startyf, endx, endy);
+    SlideBackCalc7.weightsContainer.addChild(hilite6);*/
+    SlideBackCalc7.draw_init(netBack0);
+    SlideBackCalc7.costSteps=true;
+    SlideBackCalc7.drawCost_steps();
+
+
+    var dcdw5_fin= new PIXI.Sprite(PIXI.Texture.from('images/backprop/dcdw5_fin.png'));
+    dcdw5_fin.isSprite=true;
+    dcdw5_fin.scale.set(0.5)
+    dcdw5_fin.x=backpropx_cost;
+    dcdw5_fin.y=100;
+    dcdw5_fin
+    var textBackCalc7 = [
+        dcdw5_fin,
+  //      [ ["DCDA"],[backpropx_cost,layout.TOPBUFFER] ],
+    ];
+    SlideBackCalc7.drawText(textBackCalc7);
+    SlideBackCalc7.layernum=1;
+    SlideBackCalc7.neuronnum=0;
+    SlideBackCalc7.weightsnum=0;
+    SlideBackCalc7.drawBackprop(1,0,0);
+
+export const SlideBackCalc8 = new Slide();
+    SlideBackCalc8.slideNet=netBack0;
+    SlideBackCalc8.backprop=true;
+    SlideBackCalc8.backprop_labels=true;
+
+    /*var hilite6 = new PIXI.Graphics();
+        hilite6.lineStyle(hiliteWeight, hiliteColor);
+        hilite6.drawPolygon(startx, startyf, endx, endy);
+    SlideBackCalc7.weightsContainer.addChild(hilite6);*/
+    SlideBackCalc8.draw_init(netBack0);
+    SlideBackCalc8.costSteps=true;
+    SlideBackCalc8.drawCost_steps();
+
+export const SlideBackCalc9 = new Slide();
+    SlideBackCalc9.slideNet=netBack0;
+    SlideBackCalc9.backprop=true;
+    SlideBackCalc9.backprop_labels=true;
+
+    /*var hilite6 = new PIXI.Graphics();
+        hilite6.lineStyle(hiliteWeight, hiliteColor);
+        hilite6.drawPolygon(startx, startyf, endx, endy);
+    SlideBackCalc7.weightsContainer.addChild(hilite6);*/
+    SlideBackCalc9.draw_init(netBack0);
+    SlideBackCalc9.costSteps=true;
+    SlideBackCalc9.drawCost_steps();
 
 
 

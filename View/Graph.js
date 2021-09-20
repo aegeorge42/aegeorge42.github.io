@@ -222,7 +222,9 @@ export class Graph extends PIXI.Sprite{
             
             
         }
-
-        net.setNetInput(net.data.points[net.dataIdx]);
+        console.log("GRAPH "+net.dataIdx);
+        net.setNetInput(net.data.points[0]);//[net.dataIdx]);
+        
     }
+    
 } 
