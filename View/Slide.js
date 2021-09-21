@@ -511,7 +511,6 @@ export class Slide{
                     slide.draw_update(slide.slideNet);   
             
                     if(graph){graph.updateGraph(slide.slideNet,graph);}
-                    await slide.sleep(1000);
 
         
                     slide.loopcount=slide.loopcount+1;
@@ -768,15 +767,15 @@ export class Slide{
                         var w2=new PIXI.Sprite(PIXI.Texture.from('images/backprop/w2.png'));
                             w2.anchor.set(0.5)
                             w2.x=x;
-                            w2.y=y+40
+                            w2.y=y+45
                         var w3=new PIXI.Sprite(PIXI.Texture.from('images/backprop/w3.png'));
                             w3.anchor.set(0.5)
-                            w3.x=x +20;
-                            w3.y=y+100;
+                            w3.x=x +25;
+                            w3.y=y+118;
                         var w4=new PIXI.Sprite(PIXI.Texture.from('images/backprop/w4.png'));
                             w4.anchor.set(0.5)
                             w4.x=x;
-                            w4.y=y+150;
+                            w4.y=y+170;
                         
                         var w5=new PIXI.Sprite(PIXI.Texture.from('images/backprop/w5.png'));
                             w5.anchor.set(0.5)
@@ -788,20 +787,19 @@ export class Slide{
                             }
                         var w6=new PIXI.Sprite(PIXI.Texture.from('images/backprop/w6.png'));
                             w6.anchor.set(0.5)
-                            w6.x=x+180;
-                            w6.y=y+50;
+                            w6.x=x+175;
+                            w6.y=y+60;
                         var w7=new PIXI.Sprite(PIXI.Texture.from('images/backprop/w7.png'));
                             w7.anchor.set(0.5)
                             w7.x=x+210;
-                            w7.y=y+120;
+                            w7.y=y+140;
                         var w8=new PIXI.Sprite(PIXI.Texture.from('images/backprop/w8.png'));
                             w8.anchor.set(0.5)
                             w8.x=x+180;
-                            w8.y=y+160;
+                            w8.y=y+180;
                         
                         this.weightsContainer.addChild(w1,w2,w3,w4,w5,w6,w7,w8)
-            
-                    }
+                    }                    
 
                     weightSprite.interactive=true;
 
@@ -1200,13 +1198,13 @@ export class Slide{
                     neuronText.text="";     
 
                     if(i==0 && j==0){
-                        var z1=new PIXI.Sprite(PIXI.Texture.from('images/backprop/z1.png'));
+                        var z1=new PIXI.Sprite(PIXI.Texture.from('images/backprop/z11.png'));
                         z1.anchor.set(0.5)
                         z1.x=-26;
                         z1.y=10;    
                         neuronText.addChild(z1);
 
-                        var a1=new PIXI.Sprite(PIXI.Texture.from('images/backprop/a1.png'));
+                        var a1=new PIXI.Sprite(PIXI.Texture.from('images/backprop/a11.png'));
                         a1.anchor.set(0.5)
                         a1.x=35;
                         a1.y=10;    
@@ -1214,13 +1212,13 @@ export class Slide{
                 
                     } else if(i==1 && j==0){
 
-                        var z3=new PIXI.Sprite(PIXI.Texture.from('images/backprop/z3.png'));
+                        var z3=new PIXI.Sprite(PIXI.Texture.from('images/backprop/z21.png'));
                         z3.anchor.set(0.5)
                         z3.x=-28;
                         z3.y=10;    
                         neuronText.addChild(z3);
 
-                        var a3=new PIXI.Sprite(PIXI.Texture.from('images/backprop/a3.png'));
+                        var a3=new PIXI.Sprite(PIXI.Texture.from('images/backprop/a21.png'));
                         a3.anchor.set(0.5)
                         a3.x=32;
                         a3.y=10;    
@@ -1228,26 +1226,26 @@ export class Slide{
                         
 
                     } else if(i==0 && j==1){
-                        var z2=new PIXI.Sprite(PIXI.Texture.from('images/backprop/z2.png'));
+                        var z2=new PIXI.Sprite(PIXI.Texture.from('images/backprop/z12.png'));
                         z2.anchor.set(0.5)
                         z2.x=-28;
                         z2.y=10;    
                         neuronText.addChild(z2);
 
-                        var a2=new PIXI.Sprite(PIXI.Texture.from('images/backprop/a2.png'));
+                        var a2=new PIXI.Sprite(PIXI.Texture.from('images/backprop/a12.png'));
                         a2.anchor.set(0.5)
                         a2.x=32;
                         a2.y=10;    
                         neuronText.addChild(a2);
 
                     } else if(i==1 && j==1){
-                        var z4=new PIXI.Sprite(PIXI.Texture.from('images/backprop/z4.png'));
+                        var z4=new PIXI.Sprite(PIXI.Texture.from('images/backprop/z22.png'));
                         z4.anchor.set(0.5)
                         z4.x=-26;
                         z4.y=10;    
                         neuronText.addChild(z4);
 
-                        var a4=new PIXI.Sprite(PIXI.Texture.from('images/backprop/a4.png'));
+                        var a4=new PIXI.Sprite(PIXI.Texture.from('images/backprop/a22.png'));
                         a4.anchor.set(0.5)
                         a4.x=32;
                         a4.y=10;    
@@ -1255,54 +1253,6 @@ export class Slide{
 
                     }
 
-                    /*
-                    neuronText.scale.set(1.5)
-                    neuronText.anchor.set(0,0)
-                    neuronText.text="a";     
-                    neuronText.style.fill = 0x6903a3;
-
-                    neuronText.x=5;
-                    neuronText.y=-18;
-
-                    var anum = new PIXI.Text(1, new PIXI.TextStyle({
-                        fontFamily: 'Helvetica',
-                        fontWeight: 400,
-                        fontSize: 15,
-                        fill: 0x6903a3
-
-                    }),);
-                    
-                    anum.x=15;
-                    anum.y=15;
-
-                    var neuronText2=new PIXI.Text("z");
-                        neuronText2.anchor.set(0,0)
-                        neuronText2.style.fill = 0x009603;
-                        neuronText2.x=-30;
-                        neuronText2.y=0;
-
-                    neuronText.addChild(neuronText2,anum)
-
-                    var znum = new PIXI.Text(1, new PIXI.TextStyle({
-                        fontFamily: 'Helvetica',
-                        fontWeight: 400,
-                        fontSize: 15,
-                        fill: 0x009603
-                    }),);
-                    
-                    znum.x=15;
-                    znum.y=15;
-
-                    if(i==0 && j==1){
-                        znum.text=2;
-                    } else if(i==1 && j==0){
-                        znum.text=3;
-                    } else if(i==1 && j==1){
-                        znum.text=4;
-                    }
-                    anum.text=znum.text;
-                    neuronText2.addChild(znum);
-                    */
                 }
             }
 

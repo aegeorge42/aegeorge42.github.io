@@ -22,6 +22,16 @@ export class Data{
         this.points.push(dp);
     }
 
+    point_front(expected_text, input, expected){
+        var dp = {
+            input: input,
+            expected: expected,
+            expected_text: expected_text
+
+        }
+        this.points.unshift(dp);
+    }
+
     createSingleDatapoint_test(input){
         var dp = {
             input: input
@@ -182,6 +192,8 @@ export class Data{
 export const fruits = new Data(0,["strawberry","blueberry"],["length", "roundness"]);
 fruits.makefruits_linear();
 fruits.shuffle();
+fruits.point_front("blueberry", [2, 10], [0,1]);
+
 
 export const fruits_circle = new Data(0, ["strawberry","blueberry"],["length","roundness"]);
 fruits_circle.makefruits_circle_newaxis();
