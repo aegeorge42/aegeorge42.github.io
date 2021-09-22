@@ -107,12 +107,6 @@ export class View{
 
             app.renderer.resize(window.innerWidth, window.innerHeight);
 
-            app.stage.getChildByName("button_nextslide").x=window.innerWidth/2 +100;
-            app.stage.getChildByName("button_nextslide").y=window.innerHeight-(75/2);
-
-            app.stage.getChildByName("button_prevslide").x=window.innerWidth/2 -100,
-            app.stage.getChildByName("button_prevslide").y=window.innerHeight-(75/2);
-
             if(vst.currentSlide==0){
                 app.stage.getChildAt(0).getChildByName("opener").x=window.innerWidth/2;
                 app.stage.getChildAt(0).getChildByName("opener").y=((window.innerHeight)/3)+50;
@@ -121,10 +115,6 @@ export class View{
                 app.stage.getChildByName("button_start").y=((window.innerHeight)/3) +350;
 
             } else {
-  
-                //rescale text?
-                //app.stage.getChildAt(0).getChildAt(3).position.set(resize_wid,resize_height)     
-                
                 
                 //LOCKED
                 app.stage.getChildByName("button_nextslide").x=window.innerWidth/2 +100;
@@ -133,7 +123,7 @@ export class View{
                 app.stage.getChildByName("button_prevslide").x=window.innerWidth/2 -100,
                 app.stage.getChildByName("button_prevslide").y=window.innerHeight-(75/2);
 
-                app.stage.getChildAt(0).getChildByName("footer").y=window.innerHeight-win.startheight_nochange;
+                app.stage.getChildByName("gotosand").x=window.innerWidth -100,
 
                 //graph
                 app.stage.getChildAt(0).getChildAt(6).y=window.innerHeight-win.startheight_nochange;
@@ -212,7 +202,7 @@ export class View{
 
 
 
-        this.currentSlide=36;
+        this.currentSlide=37;
 
 
 
@@ -436,6 +426,18 @@ export class View{
                 vst.app.stage.removeChild(vst.slideList[vst.currentSlide].textbuttonContainer);
 
                 vst.currentSlide=23;
+                vst.drawSlide();
+            }
+        });
+
+        var gotosand = new Button("gotosand",PIXI.Texture.from('images/buttons/sand.png'),window.innerWidth-100,layout.HEADER_HEIGHT/2 +2,false)
+        this.app.stage.addChild(gotosand);
+        this.app.stage.getChildByName("gotosand").on('click', function(e){ 
+            
+            if (vst.currentSlide!=41){
+                //vst.app.stage.removeChild(vst.slideList[vst.currentSlide].textbuttonContainer);
+
+                vst.currentSlide=41;
                 vst.drawSlide();
             }
         });

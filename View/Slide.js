@@ -1016,6 +1016,32 @@ export class Slide{
 
                     if(this.backprop_steps){
                         this.slideNet.backprop();
+
+                        this.textContainer.getChildByName("dzdw_num").text="= "+this.slideNet.getLayer(this.layernum).getNeuron(this.neuronnum).dz_dw[this.weightsnum].toFixed(2);
+                        this.textContainer.getChildByName("dadz_num").text="= "+this.slideNet.getLayer(this.layernum).getNeuron(this.neuronnum).output.toFixed(2)+
+                                                                            " × " + "(1 - " +this.slideNet.getLayer(this.layernum).getNeuron(this.neuronnum).output.toFixed(2) +")" +
+                                                                            '\n'+"= "+this.slideNet.getLayer(this.layernum).getNeuron(this.neuronnum).da_dz.toFixed(5);
+                        this.textContainer.getChildByName("dcda_num").text="= "+this.slideNet.netOut[0].toFixed(2) +" - " +this.slideNet.target[0] 
+                        + '\n'+ "= "+this.slideNet.getLayer(this.layernum).getNeuron(this.neuronnum).dc_da.toFixed(2);
+
+
+
+/*
+                        dadz_num.text="= "+this.slideNet.getLayer(layernum).getNeuron(neuronnum).output.toFixed(2) + 
+                              " × " + "(1 - " +this.slideNet.getLayer(layernum).getNeuron(neuronnum).output.toFixed(2) +")" +
+                              '\n'+"= "+this.slideNet.getLayer(layernum).getNeuron(neuronnum).da_dz.toFixed(5);
+                
+                        dcda_num.text="= "+this.slideNet.netOut[0].toFixed(2) +" - " +this.slideNet.target[0] 
+                            + '\n'+ "= "+this.slideNet.getLayer(layernum).getNeuron(neuronnum).dc_da.toFixed(2);
+                        */
+
+
+
+
+
+
+                
+                        /*
                         this.textContainer.getChildByName("dzdw_form").text= this.slideNet.getLayer(this.layernum-1).getNeuron(this.neuronnum).output.toFixed(5);
                         this.textContainer.getChildByName("dzdw_num").text=this.slideNet.getLayer(this.layernum).getNeuron(this.neuronnum).dz_dw[this.weightsnum].toFixed(5);
                         
@@ -1033,6 +1059,7 @@ export class Slide{
                                 this.textContainer.getChildByName("dadz_num").text + " × " +
                                 this.textContainer.getChildByName("dcda_num").text;
                         //dzdw_num.text+" × "+dadz_num.text+" × "+dcda_num.text;
+                        */
 
                     }
                 }
@@ -1190,12 +1217,13 @@ export class Slide{
             // backprop neuron bases have both z and a showing
             if(this.backprop){
                 neuronBase.texture=PIXI.Texture.from('images/neuron_backprop.png');
-                neuronBase.tint=0xFFFFFF;
 
                 if(this.backprop_steps){
                     neuronText.text=formatter.format(net.getLayer(i).neurons[j].output_nofn)+"  "+formatter.format(net.getLayer(i).neurons[j].output);
                 } else {
                     neuronText.text="";     
+                    neuronBase.tint=0xFFFFFF;
+
 
                     if(i==0 && j==0){
                         var z1=new PIXI.Sprite(PIXI.Texture.from('images/backprop/z11.png'));
@@ -1621,30 +1649,33 @@ export class Slide{
             var targetLabel0= this.labelsContainer.getChildByName("targetLabel0");
             var typeLabel0= this.labelsContainer.getChildByName("typeLabel0");
 
+            var y1 = new PIXI.Sprite(PIXI.Texture.from('images/backprop/y1.png'));
+            targetLabel0.addChild(y1);
+
             targetLabel0.text="     = "+net.target[0];
-            typeLabel0.text="";
+            typeLabel0.text="     = "+net.cost[0].toFixed(4);
+            typeLabel0.style=targetLabel0.style;
+
             targetLabel0.x=layout.NEURON_LEFTLIM + (net.layers.length-1)*layout.NEURON_X_DIF +60;
             targetLabel0.y=layout.NEURON_UPPERLIM //+ (layout.NEURON_Y_DIF);
+            typeLabel0.x=targetLabel0.x;
+            typeLabel0.y=targetLabel0.y+30;
 
-            /*
-            var cost1=new PIXI.Text("C1 = 1/2 (a3 - y1)^2",textstyles.default)
-            cost1.x=0;
-            cost1.y=25;
-            targetLabel0.addChild(cost1);
-*/
             var targetLabel1= this.labelsContainer.getChildByName("targetLabel1");
             var typeLabel1= this.labelsContainer.getChildByName("typeLabel1");
 
+            var y2 = new PIXI.Sprite(PIXI.Texture.from('images/backprop/y2.png'));
+            targetLabel1.addChild(y2);
+
             targetLabel1.text="     = "+net.target[1];
-            typeLabel1.text="";
+            typeLabel1.text="     = "+net.cost[1].toFixed(4);
+            typeLabel1.style=targetLabel1.style;
+
             targetLabel1.x=layout.NEURON_LEFTLIM + (net.layers.length-1)*layout.NEURON_X_DIF +60;
             targetLabel1.y=layout.NEURON_UPPERLIM + (layout.NEURON_Y_DIF);
-/*
-            var cost2=new PIXI.Text("C2 = 1/2 (a4 - y2)^2",textstyles.default)
-            cost2.x=0;
-            cost2.y=25;
-            targetLabel1.addChild(cost2);
-*/
+            typeLabel1.x=targetLabel1.x;
+            typeLabel1.y=targetLabel1.y+30;
+
             if(this.backprop_labels){
                 targetLabel0.text="     = target";
                 
@@ -1653,7 +1684,7 @@ export class Slide{
                 c1.scale.set(0.55)
                 c1.x=-10;
                 c1.y=10;
-                targetLabel0.addChild(y1,c1);
+                targetLabel0.addChild(c1);
 
                 targetLabel1.text="     = target";
 
@@ -1662,7 +1693,11 @@ export class Slide{
                 c2.scale.set(0.55)
                 c2.x=-10;
                 c2.y=10;
-                targetLabel1.addChild(y2,c2);
+                targetLabel1.addChild(c2);
+
+                typeLabel0.text="";
+                typeLabel1.text="";
+
             } else if (this.backprop_labels1){
                 targetLabel0.text="";
                 targetLabel1.text="";
@@ -1866,6 +1901,14 @@ export class Slide{
             this.slideContainer.getChildAt(1).getChildByName("targetLabel1").text="     = target";
         }
 
+        if(this.backprop_steps){
+            this.slideContainer.getChildAt(1).getChildByName("typeLabel0").text="     = "+net.cost[0].toFixed(4);
+            this.slideContainer.getChildAt(1).getChildByName("typeLabel1").text="     = "+net.cost[1].toFixed(4);
+
+
+        }
+
+
     }
 
     drawCost_update(net){
@@ -1900,64 +1943,31 @@ export class Slide{
     drawBackprop(layernum,neuronnum,weightnum){
 
         var x = 850;
-
+        
         //dz_dw
-        var dzdw= new PIXI.Text("dzdw=");
-            dzdw.x=x;
-            dzdw.y=100;
-        this.textContainer.addChild(dzdw);
-
         var dzdw_num= new PIXI.Text("",textstyles.label_med);
             dzdw_num.anchor.set(1,0)
             dzdw_num.name="dzdw_num";
-            dzdw_num.x=dzdw.x+180;
-            dzdw_num.y=dzdw.y;
+            dzdw_num.x=x+20;
+            dzdw_num.y=layout.DZDW-10;
         this.textContainer.addChild(dzdw_num);
 
-        var dzdw_form= new PIXI.Text("",textstyles.label_med);
-            dzdw_form.name="dzdw_form";
-            dzdw_form.x=dzdw.x;
-            dzdw_form.y=dzdw.y+30;
-        this.textContainer.addChild(dzdw_form);
-
         //da_dz
-        var dadz= new PIXI.Text("dadz=");
-            dadz.x=x;
-            dadz.y=180;
-        this.textContainer.addChild(dadz);
-
         var dadz_num= new PIXI.Text("",textstyles.label_med);
             dadz_num.anchor.set(1,0)
             dadz_num.name="dadz_num";
-            dadz_num.x=dadz.x+180;
-            dadz_num.y=dadz.y;
+            dadz_num.x=x+180;
+            dadz_num.y=layout.DADZ-10;
         this.textContainer.addChild(dadz_num);
 
-        var dadz_form= new PIXI.Text("",textstyles.label_med);
-            dadz_form.name="dadz_form";
-            dadz_form.x=dadz.x;
-            dadz_form.y=dadz.y+30;
-        this.textContainer.addChild(dadz_form);
-
         //dc_da
-        var dcda= new PIXI.Text("dcda=");
-            dcda.x=x;
-            dcda.y=280;
-        this.textContainer.addChild(dcda);
-
         var dcda_num= new PIXI.Text("",textstyles.label_med);
             dcda_num.anchor.set(1,0)
 
             dcda_num.name="dcda_num";
-            dcda_num.x=dcda.x+180;
-            dcda_num.y=dcda.y;
+            dcda_num.x=x+80;
+            dcda_num.y=layout.DCDA-10;
         this.textContainer.addChild(dcda_num);
-
-        var dcda_form= new PIXI.Text("",textstyles.label_med);
-            dcda_form.name="dcda_form";
-            dcda_form.x=dcda.x;
-            dcda_form.y=dcda.y+30;
-        this.textContainer.addChild(dcda_form);
 
         //DC_DW
         var dcdw= new PIXI.Text("dcdw=");
@@ -1981,20 +1991,24 @@ export class Slide{
 
         this.slideNet.backprop();
 
-       // console.log(this.slideNet.getLayer(layernum).getNeuron(neuronnum))
-        dzdw_form.text= this.slideNet.getLayer(layernum-1).getNeuron(neuronnum).output.toFixed(5);
-        dzdw_num.text=this.slideNet.getLayer(layernum).getNeuron(neuronnum).dz_dw[weightnum].toFixed(5);
+        dzdw_num.text="= "+this.slideNet.getLayer(layernum).getNeuron(neuronnum).dz_dw[weightnum].toFixed(2);
+        dadz_num.text="= "+this.slideNet.getLayer(layernum).getNeuron(neuronnum).output.toFixed(2) + 
+              " × " + "(1 - " +this.slideNet.getLayer(layernum).getNeuron(neuronnum).output.toFixed(2) +")" +
+              '\n'+"= "+this.slideNet.getLayer(layernum).getNeuron(neuronnum).da_dz.toFixed(5);
 
-        dadz_form.text=this.slideNet.getLayer(layernum).getNeuron(neuronnum).output.toFixed(5) + 
-            " × " + "(1-" +this.slideNet.getLayer(layernum).getNeuron(neuronnum).output.toFixed(5) +")";
-        dadz_num.text=this.slideNet.getLayer(layernum).getNeuron(neuronnum).da_dz.toFixed(5);
+        dcda_num.text="= "+this.slideNet.netOut[0].toFixed(2) +" - " +this.slideNet.target[0] 
+            + '\n'+ "= "+this.slideNet.getLayer(layernum).getNeuron(neuronnum).dc_da.toFixed(2);
 
-        dcda_form.text="("+this.slideNet.getLayer(layernum-1).getNeuron(neuronnum).output.toFixed(5)+
-                        "-"+this.slideNet.target[neuronnum]+")";
-        dcda_num.text=this.slideNet.getLayer(layernum).getNeuron(neuronnum).dc_da.toFixed(5);
 
-        dcdw_form.text=dzdw_num.text+" × "+dadz_num.text+" × "+dcda_num.text;
-        dcdw_num.text=this.slideNet.getLayer(layernum).getNeuron(neuronnum).dc_dw[weightnum].toFixed(5);
+
+
+
+
+
+
+
+      //  dcdw_form.text=dzdw_num.text+" × "+dadz_num.text+" × "+dcda_num.text;
+        dcdw_num.text="hi"+this.slideNet.getLayer(layernum).getNeuron(neuronnum).dc_dw[weightnum].toFixed(5);
 
         
           

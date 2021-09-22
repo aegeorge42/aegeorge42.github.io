@@ -1294,13 +1294,14 @@ export const SlideBackCalc2 = new Slide();
 
 
     var textBackCalc2 = [
-        dctot,
         [ ["What we want to know is:"],[backpropx_cost,layout.TOPBUFFER] ],
         [ ["How much does     "+'\n'+"influence the total cost?", textstyles.large_bold],[backpropx_cost,layout.TOPBUFFER+50] ],
         w5,
         [ ["This value is"], [" the partial derivative of the cost "+'\n'+"with respect to   ",textstyles.ital],[backpropx_cost,layout.TOPBUFFER+150] ],
         w52,
-        // [ ["write it as dcdw "],[backpropx_cost,layout.TOPBUFFER+100] ],
+         [ ["This is written as      "],[backpropx_cost,layout.TOPBUFFER+100] ],
+         dctot,
+
 
        // [ ["Since w5 doesnt /directly/ affect cost, we need to break down this formula"],[backpropx_cost,layout.TOPBUFFER+150] ],
     ];    
@@ -1353,21 +1354,21 @@ export const SlideBackCalc3 = new Slide();
         dctot_small.x=backpropx_cost+150;
         dctot_small.y=layout.TOPBUFFER-20;
 
-        var dzdw5_small= new PIXI.Sprite(PIXI.Texture.from('images/backprop/dzdw5.png'));
-            dzdw5_small.scale.set(0.45)
-            dzdw5_small.anchor.set(0.5)
-            dzdw5_small.isSprite=true;
-            dzdw5_small.x=backpropx_cost+10;
-            dzdw5_small.y=layout.TOPBUFFER+110;
+    var dzdw5_small= new PIXI.Sprite(PIXI.Texture.from('images/backprop/dzdw5.png'));
+        dzdw5_small.scale.set(0.45)
+        dzdw5_small.anchor.set(0.5)
+        dzdw5_small.isSprite=true;
+        dzdw5_small.x=backpropx_cost+10;
+        dzdw5_small.y=layout.TOPBUFFER+110;
 
-        var dadz21_small= new PIXI.Sprite(PIXI.Texture.from('images/backprop/dadz21.png'));
+    var dadz21_small= new PIXI.Sprite(PIXI.Texture.from('images/backprop/dadz21.png'));
         dadz21_small.scale.set(0.45)
         dadz21_small.anchor.set(0.5)
         dadz21_small.isSprite=true;
         dadz21_small.x=backpropx_cost+10;
         dadz21_small.y=layout.TOPBUFFER+200;
 
-        var dcda21_small= new PIXI.Sprite(PIXI.Texture.from('images/backprop/dcda21.png'));
+    var dcda21_small= new PIXI.Sprite(PIXI.Texture.from('images/backprop/dcda21.png'));
         dcda21_small.scale.set(0.45)
         dcda21_small.anchor.set(0.5)
         dcda21_small.isSprite=true;
@@ -1417,6 +1418,9 @@ export const SlideBackCalc3a = new Slide();
 
     var textBackCalc3a = [
           dcdw5,    
+          [ ["Using the chain rule of calculus," +'\n'+"we multiply these values to get dcdw5"],[backpropx_cost,layout.TOPBUFFER] ],
+          [ ["Now we can calculate each of these components."],[backpropx_cost-50,layout.TOPBUFFER+300] ],
+
       ];    
       SlideBackCalc3a.drawText(textBackCalc3a);
 
@@ -1538,6 +1542,9 @@ export const SlideBackCalc6a = new Slide();
 
     var textBackCalc6a = [
         dctot_final,
+        [ ["Next, we'll walk through an example with numbers."],[backpropx_cost,layout.TOPBUFFER] ],
+        [ ["it may help to write down or take a screenshot of this page."],[backpropx_cost,layout.TOPBUFFER] ],
+
     ];
     SlideBackCalc6a.drawText(textBackCalc6a);
     
@@ -1546,17 +1553,21 @@ export const SlideBackCalc6a = new Slide();
 
 
 
-
-layout.NEURON_LEFTLIM =  Math.max((window.innerWidth-1100)/2,15) +250;
+//INTERACTVE BACKPROP
+//layout.NEURON_LEFTLIM =  Math.max((window.innerWidth-1100)/2,15) +250;
 export const SlideBackCalc7 = new Slide();
     SlideBackCalc7.slideNet=netBack0;
     SlideBackCalc7.backprop=true;
     SlideBackCalc7.backprop_steps=true;
 
-    /*var hilite6 = new PIXI.Graphics();
-        hilite6.lineStyle(hiliteWeight, hiliteColor);
-        hilite6.drawPolygon(startx, startyf, endx, endy);
-    SlideBackCalc7.weightsContainer.addChild(hilite6);*/
+    startx = layout.NEURON_LEFTLIM + (i*layout.NEURON_X_DIF);
+    startyf = layout.NEURON_UPPERLIM + (j*layout.NEURON_Y_DIF) + layout.NEURON_NUDGE;
+    endx = layout.NEURON_LEFTLIM + (i*layout.NEURON_X_DIF) - layout.NEURON_X_DIF;
+    endy =  layout.NEURON_UPPERLIM + (k*layout.NEURON_Y_DIF);
+    var hilite7 = new PIXI.Graphics();
+        hilite7.lineStyle(hiliteWeight, hiliteColor);
+        hilite7.drawPolygon(startx, startyf, endx, endy);
+    SlideBackCalc7.weightsContainer.addChild(hilite7);
     SlideBackCalc7.draw_init(netBack0);
     SlideBackCalc7.costSteps=true;
     SlideBackCalc7.drawCost_steps();
@@ -1567,9 +1578,35 @@ export const SlideBackCalc7 = new Slide();
     dctot_final.scale.set(0.5)
     dctot_final.x=backpropx_cost;
     dctot_final.y=100;
-    dctot_final
+   
+    var dzdw5_small= new PIXI.Sprite(PIXI.Texture.from('images/backprop/dzdw5.png'));
+        dzdw5_small.scale.set(0.45)
+        dzdw5_small.anchor.set(0.5)
+        dzdw5_small.isSprite=true;
+        dzdw5_small.x=backpropx_cost+10;
+        dzdw5_small.y=layout.DZDW;
+
+    var dadz21_small= new PIXI.Sprite(PIXI.Texture.from('images/backprop/dadz21.png'));
+        dadz21_small.scale.set(0.45)
+        dadz21_small.anchor.set(0.5)
+        dadz21_small.isSprite=true;
+        dadz21_small.x=backpropx_cost+10;
+        dadz21_small.y=layout.DADZ;
+
+    var dcda21_small= new PIXI.Sprite(PIXI.Texture.from('images/backprop/dcda21.png'));
+        dcda21_small.scale.set(0.45)
+        dcda21_small.anchor.set(0.5)
+        dcda21_small.isSprite=true;
+        dcda21_small.x=backpropx_cost+10;
+        dcda21_small.y=layout.DCDA;
+
+
+
+
+
+
     var textBackCalc7 = [
-    //    dctot_final,
+         dzdw5_small,dadz21_small,dcda21_small,
   //      [ ["DCDA"],[backpropx_cost,layout.TOPBUFFER] ],
     ];
     SlideBackCalc7.drawText(textBackCalc7);
