@@ -9,7 +9,8 @@ export const layout = {
     TOPBUFFER: 80,
     MAXHEIGHT: 470,
 
-    CENTER: Math.max((window.innerWidth-1100)/2,20)+window.innerWidth/2,
+    CENTER: window.innerHeight/2 -50,
+    //CENTER: Math.max((window.innerWidth-1100)/2,20)+window.innerWidth/2,
 
     NEXTSLIDE_X: (window.innerWidth/2) +100,
     PREVSLIDE_X: (window.innerWidth/2) -100,
@@ -25,12 +26,12 @@ export const layout = {
 
 
     /****** NEURONS ******/
-    NEURON_LEFTLIM_INIT: Math.max((window.innerWidth-1100)/2,15) +500,
-    NEURON_LEFTLIM: Math.max((window.innerWidth-1100)/2,15) +500,
+    NEURON_LEFTLIM_INIT: Math.max((window.innerWidth-1100)/2,15) +440,
+    NEURON_LEFTLIM: Math.max((window.innerWidth-1100)/2,15) +440,
 
     NEURON_LEFTLIM_BACKPROP: Math.max((window.innerWidth-1100)/2,15) +250,
     NEURON_LARGE_LEFTLIM: Math.max((window.innerWidth-1100)/2,20)+525,
-    NEURON_LEFTLIM_SANDBOX: 460,//Math.max((window.innerWidth-1100)/2,15) +350,
+    NEURON_LEFTLIM_SANDBOX: 440,//Math.max((window.innerWidth-1100)/2,15) +350,
 
     NEURON_UPPERLIM: 240,
     NEURON_UPPERLIM_INIT: 240,

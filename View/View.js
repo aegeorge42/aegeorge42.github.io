@@ -33,6 +33,18 @@ import {SlideHome,
     SlideNet1d,
     SlideNet1d2,
     SlideNet1d3,
+
+
+    SlideError1,
+    SlideError2,
+    SlideError3,
+    SlideError4,
+    SlideError5,
+    SlideError6,
+    SlideError7,
+
+
+
     SlideNet1d4,
     SlideNet1e,
     SlideBack1,
@@ -135,11 +147,11 @@ export class View{
 
 
                 if(app.stage.getChildAt(0).getChildAt(9).getChildByName("actfnsbox") !== null){
-                    app.stage.getChildAt(0).getChildAt(9).getChildByName("actfnsbox").y=window.innerHeight-win.startheight_nochange +(layout.BOTTOMBUFFER-100);
+                //    app.stage.getChildAt(0).getChildAt(9).getChildByName("actfnsbox").y=window.innerHeight-win.startheight_nochange +(layout.BOTTOMBUFFER-100);
                 }
 
                 if(app.stage.getChildAt(0).getChildAt(9).getChildByName("ratebox") !== null){
-                    app.stage.getChildAt(0).getChildAt(9).getChildByName("ratebox").y=window.innerHeight-win.startheight_nochange +(layout.BOTTOMBUFFER-220);
+                //    app.stage.getChildAt(0).getChildAt(9).getChildByName("ratebox").y=window.innerHeight-win.startheight_nochange +(layout.BOTTOMBUFFER-220);
                 }
                 
                 if(app.stage.getChildAt(0).getChildAt(9).getChildByName("layersbox") !== null){
@@ -160,7 +172,10 @@ export class View{
         this.slideList.push(SlideHome,SlideInstruct1, SlideInstruct2, //1
                             SlideIntro1,/*SlideIntro1a,SlideIntro1b,SlideIntro1c,*/SlideIntro2,SlideIntro3, SlideIntro1b, SlideIntro3a, SlideIntro4a, //9
                             SlideNeuronA, SlideNeuronA2, SlideNeuron1,SlideNeuron1a,SlideNeuron1b,SlideNeuron2,SlideNeuron2b,SlideNeuron2b2,SlideNeuron2c,SlideNeuron2d,SlideNeuron2d2,SlideNeuron2e, //16
-                            SlideNet1, SlideNet1b, SlideNet1b2,SlideNet1c, SlideNet1d,SlideNet1d2,/*SlideNet1d3, SlideNet1d4,SlideNet1e,
+                            SlideNet1, SlideNet1b, SlideNet1b2,SlideNet1c, SlideNet1d,SlideNet1d2,/*SlideNet1d3, */
+                            
+                            SlideError1,SlideError2,SlideNet1e,SlideError3,SlideError4,SlideError5,SlideError6,SlideError7,
+                            /*SlideNet1d4,SlideNet1e,
                             SlideBack1,SlideBack2,SlideBack3,SlideNet1f,SlideBackA,SlideNet2,SlideBackB, SlideBackC, SlideBackD,SlideBackE, SlideBackF,
                             */
                             SlideBackCalc0,SlideBackCalc1,SlideBackCalc2,SlideBackCalc2b,SlideBackCalc3,SlideBackCalc3a,SlideBackCalc4,SlideBackCalc5,SlideBackCalc6,SlideBackCalc6a,
@@ -202,7 +217,7 @@ export class View{
 
 
 
-        this.currentSlide=37;
+        this.currentSlide=49;
 
 
 
@@ -239,11 +254,11 @@ export class View{
         this.app.stage.getChildAt(0).getChildAt(5).x=window.innerWidth-this.startwidth_nochange;
         
         if(this.app.stage.getChildAt(0).getChildAt(9).getChildByName("actfnsbox") !== null){
-            this.app.stage.getChildAt(0).getChildAt(9).getChildByName("actfnsbox").y=window.innerHeight-this.startheight_nochange +(layout.BOTTOMBUFFER-100);
+        //    this.app.stage.getChildAt(0).getChildAt(9).getChildByName("actfnsbox").y=window.innerHeight-this.startheight_nochange +(layout.BOTTOMBUFFER-100);
         }
 
         if(this.app.stage.getChildAt(0).getChildAt(9).getChildByName("ratebox") !== null){
-            this.app.stage.getChildAt(0).getChildAt(9).getChildByName("ratebox").y=window.innerHeight-this.startheight_nochange +(layout.BOTTOMBUFFER-220);
+         //   this.app.stage.getChildAt(0).getChildAt(9).getChildByName("ratebox").y=window.innerHeight-this.startheight_nochange +(layout.BOTTOMBUFFER-220);
         }
 
         if(this.app.stage.getChildAt(0).getChildAt(9).getChildByName("databox") !== null){

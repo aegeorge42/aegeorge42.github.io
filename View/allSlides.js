@@ -453,14 +453,15 @@ export const SlideNeuron2 = new Slide();
         neuron_large_over.x=layout.NEURON_LARGE_X;
         neuron_large_over.y=layout.NEURON_LARGE_Y;
 
-    var inputexample=new PIXI.Sprite(PIXI.Texture.from('images/example_blue_attrib.png'));
+    var inputexample=new PIXI.Sprite(PIXI.Texture.from('images/intro/input_example.png'));
         inputexample.isSprite=true;
         inputexample.scale.set(0.7);
         inputexample.x= layout.LEFTBUFFER+50;
         inputexample.y= 120;
-    SlideNeuron2.slideContainer.addChild(inputexample);
+    //SlideNeuron2.slideContainer.addChild(inputexample);
 
     var textNeuron2 = [
+        inputexample,
         [neuron_large_over,["We give our network one piece of data at a time."], [layout.LEFTBUFFER,80]],
         [["The two values that we determined earlier"+'\n'+" become our "], ["inputs. ", textstyles.large_bold], [layout.LEFTBUFFER,465]],
     ];
@@ -812,6 +813,221 @@ var small_ital = new PIXI.TextStyle({
     fontSize: 18,
     fontStyle: 'italic'
 });
+
+
+
+
+
+
+
+
+
+
+
+
+export const SlideError1 = new Slide();
+    var costform = new PIXI.Sprite(PIXI.Texture.from('images/cost/costform.png'));
+        costform.scale.set(0.8)
+        costform.anchor.set(0.5)
+
+        costform.isSprite=true;
+        costform.x=window.innerWidth/2 +50;//layout.LEFTBUFFER;//layout.NEURON_LEFTLIM+180;
+        costform.y=layout.CENTER;//layout.TOPBUFFER+100;
+
+    var textError1 = [
+        costform,
+        [["We want to know how how far off the output of our net is from our target values."], [layout.LEFTBUFFER,layout.TOPBUFFER]],
+        [["To do this, we use a"],[" cost function.",textstyles.large_bold], [layout.LEFTBUFFER,layout.TOPBUFFER+50]],
+
+        [["this tells us to: "+'\n'+" 1. For each output neuron, square the difference of the target output and the actual activation."
+            + '\n'+ " 2. sum up these values for all output neurons. " 
+            + '\n' + " 3. Do this for each piece of data, then find the mean."], [layout.LEFTBUFFER,layout.TOPBUFFER+200]],
+       // [["Sum up for all output neurons."], [layout.LEFTBUFFER,layout.TOPBUFFER+100]],
+       // [["Do this for our whole data set, then take the average."], [layout.LEFTBUFFER,layout.TOPBUFFER+150]],
+       // [["The ultimate goal of the neural network is to make the cost as small as possible.", textstyles.large_bold], [layout.LEFTBUFFER,layout.TOPBUFFER+300]],
+
+    ];
+    SlideError1.drawText(textError1);
+
+
+export const SlideError2 = new Slide();
+
+    var costformwb = new PIXI.Sprite(PIXI.Texture.from('images/cost/costformwb.png'));
+    costformwb.scale.set(0.8)
+    costformwb.anchor.set(0.5)
+    costformwb.isSprite=true;
+    costformwb.x=window.innerWidth/2 +50;//layout.LEFTBUFFER;//layout.NEURON_LEFTLIM+180;
+    costformwb.y=layout.CENTER;//layout.TOPBUFFER+100;
+
+    var textError2 = [
+        costformwb,
+        [["The activation of the output neurons depends on the current weights and biases of the network."], [layout.LEFTBUFFER,layout.TOPBUFFER]],
+        [["So, we can think of our cost function as a function of the weights and biases of the network. "], [layout.LEFTBUFFER,layout.TOPBUFFER+50]],
+
+    ];
+    SlideError2.drawText(textError2);
+
+export const SlideError3 = new Slide();
+    var costgraph = new PIXI.Sprite(PIXI.Texture.from('images/cost/costgraph.png'));
+   // costgraph.scale.set(0.8)
+    costgraph.anchor.set(0.5)
+    costgraph.isSprite=true;
+    costgraph.x=layout.LEFTBUFFER+150//window.innerWidth/2 +50;//layout.LEFTBUFFER;//layout.NEURON_LEFTLIM+180;
+    costgraph.y=layout.CENTER +100;//layout.TOPBUFFER+100;
+
+    var textError3 = [
+        costgraph,
+        [["Let's look at a single weight."], [layout.LEFTBUFFER,layout.TOPBUFFER]],
+        [["Its relationship to the cost may look something like this."], [layout.LEFTBUFFER,layout.TOPBUFFER+50]],
+        [["We want to find the value of w "+'\n'+"that will make the cost the smallest.",textstyles.large_bold], [layout.LEFTBUFFER+500,layout.TOPBUFFER+100]],
+        [["While this may look like an easy task,"+'\n'+" remember the neural network will have multiple weights and biases," 
+            +'\n'+"and therefore more than one variable affecting the cost"], [layout.LEFTBUFFER+500,layout.TOPBUFFER+250]],
+        [["(We just quickly run out of dimensions to visualize it in.)"], [layout.LEFTBUFFER+500,layout.TOPBUFFER+350]],
+    ];
+    SlideError3.drawText(textError3);
+
+export const SlideError4 = new Slide();
+    var costgraph_point = new PIXI.Sprite(PIXI.Texture.from('images/cost/costgraph_point.png'));
+    // costgraph.scale.set(0.8)
+    costgraph_point.anchor.set(0.5)
+    costgraph_point.isSprite=true;
+    costgraph_point.x=layout.LEFTBUFFER+150//window.innerWidth/2 +50;//layout.LEFTBUFFER;//layout.NEURON_LEFTLIM+180;
+    costgraph_point.y=layout.CENTER +100;//layout.TOPBUFFER+100;
+
+
+    var textError4 = [
+        costgraph_point,
+        [["Step 3 - update the net"], [layout.LEFTBUFFER,layout.TOPBUFFER]],
+        [["The neural network adjusts its weights and biases to minimize the cost using an algorithm called"+'\n'],["gradient descent", textstyles.large_bold], [layout.LEFTBUFFER,layout.TOPBUFFER+50]],
+        [["First, we can plot our current weight and cost on our graph."], [layout.LEFTBUFFER+500,layout.TOPBUFFER+100]],
+
+
+    ];
+    SlideError4.drawText(textError4);
+
+export const SlideError5 = new Slide();
+    var costgraph_slope = new PIXI.Sprite(PIXI.Texture.from('images/cost/costgraph_point.png'));
+        costgraph_slope.anchor.set(0.5)
+        costgraph_slope.isSprite=true;
+        costgraph_slope.x=layout.LEFTBUFFER+150
+        costgraph_slope.y=layout.CENTER +100;
+
+
+    var textError5 = [
+        costgraph_slope,
+        [["Next, we find the slope, or /gradient/, of the graph at this point."], [layout.LEFTBUFFER+500,layout.TOPBUFFER+100]],
+        [["This is sometimes written as nablaC"], [layout.LEFTBUFFER+500,layout.TOPBUFFER+150]],
+        [["We know that we want to move in the downhill direction, or -namblaC"], [layout.LEFTBUFFER+500,layout.TOPBUFFER+150]],
+        [["We find the magnitude of change by multiplying -namblaC by a value called the learning rate"], [layout.LEFTBUFFER+500,layout.TOPBUFFER+200]],
+        [["This is a number we set beforehand - usually a number between 0 and 1."], [layout.LEFTBUFFER+500,layout.TOPBUFFER+250]],
+        [["The final formula for updating our weight is:"], [layout.LEFTBUFFER+500,layout.TOPBUFFER+300]],
+
+
+    ];
+    SlideError5.drawText(textError5);
+
+export const SlideError6 = new Slide();
+    var textError6 = [
+        [["We keep repeating these steps until our slope is 0."], [layout.LEFTBUFFER+500,layout.TOPBUFFER+100]],
+      //  [["We find the magnitude of change by multiplying -namblaC by a value called the learning rate"], [layout.LEFTBUFFER+500,layout.TOPBUFFER+100]],
+     //   [["This is a number we set beforehand - usually a number between 0 and 1."], [layout.LEFTBUFFER+500,layout.TOPBUFFER+100]],
+
+
+
+
+    ];
+    SlideError6.drawText(textError6);
+
+export const SlideError7 = new Slide();
+    var textError7 = [
+        [["And that's it! We continue to repeat these steps for each weight and bias in the net until our cost is 0 (or small enough)"], [layout.LEFTBUFFER,layout.TOPBUFFER]],
+        [["A neural network's 'learning' is just the process of minimizing the cost using gradient descent"], [layout.LEFTBUFFER,layout.TOPBUFFER+50]],
+
+        [["If you're interested in walking through the calculus behind gradient descent, click here"], [layout.LEFTBUFFER,layout.TOPBUFFER+50]],
+        [["Otherwise, you've reached the end of the tutorial!"], [layout.LEFTBUFFER,layout.TOPBUFFER+50]],
+        [["Click next to move on to the sandbox!"], [layout.LEFTBUFFER,layout.TOPBUFFER+50]],
+
+
+
+
+
+    ];
+    SlideError7.drawText(textError7);
+
+    export const SlideCredit = new Slide();
+    var textError7 = [
+        [["Created by Allison George"], [layout.LEFTBUFFER,layout.TOPBUFFER]],
+       // [["email: aegeorge@udel.edu"], [layout.LEFTBUFFER,layout.TOPBUFFER]],
+
+
+    ];
+    SlideError7.drawText(textError7);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 var textNet1d3 = [
     
@@ -1856,7 +2072,7 @@ export const SlideSandbox = new Slide();
     netSand.update();
 
     SlideSandbox.drawStyleButtons();
-    layout.NEURON_LEFTLIM=460;
+    layout.NEURON_LEFTLIM=440;
     layout.NEURON_UPPERLIM=230;
     layout.NEURON_X_DIF=150;
     layout.NEURON_Y_DIF=125;

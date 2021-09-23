@@ -172,16 +172,16 @@ export class Slide{
     }
 
     drawActFnButtons(){
-        var actfnsbox = new PIXI.Sprite(PIXI.Texture.from('images/actfnsbox.png'));
+        var actfnsbox = new PIXI.Sprite(PIXI.Texture.from('images/buttons/actfnsbox.png'));
         //actfnsbox.scale.set(0.9)
 
             actfnsbox.name="actfnsbox";
-            actfnsbox.x=5;
-            actfnsbox.y=layout.BOTTOMBUFFER-100;
+            actfnsbox.x=0//5;
+            actfnsbox.y=155;//layout.BOTTOMBUFFER-100;
         this.buttonContainer.addChild(actfnsbox);
 
         var slide=this;
-        actfnsbox.addChild(new Button("sigmoid",PIXI.Texture.from('images/buttons/sigmoid.png'), 70,65,true));
+        actfnsbox.addChild(new Button("sigmoid",PIXI.Texture.from('images/buttons/sigmoid.png'), 75,90,true));
         actfnsbox.getChildByName("sigmoid").on('click', function(e){
 
             this.setTint(tintDown);
@@ -201,7 +201,7 @@ export class Slide{
 
         });
 
-        actfnsbox.addChild(new Button("relu",PIXI.Texture.from('images/buttons/relu.png'), 180, 65,true));
+        actfnsbox.addChild(new Button("relu",PIXI.Texture.from('images/buttons/relu.png'), 75, 135,true));
         actfnsbox.getChildByName("relu").on('click', function(e){
 
             this.setTint(tintDown);
@@ -296,8 +296,10 @@ export class Slide{
         });
     }
 
+    // I have functionality for stochastic gradient descent, but didn't want to overcomplicate.
+    // maybe I'll add it back in later
     drawStyleButtons(){
-
+    /*
         var slide=this;
         var stylebox = new PIXI.Sprite(PIXI.Texture.from('images/algorithmbox.png'));
 
@@ -341,6 +343,7 @@ export class Slide{
             slide.buttonContainer.getChildByName("learnbox").getChildByName("learn_van").visible=true;
             slide.buttonContainer.getChildByName("learnbox").getChildByName("pause").visible=false;
         });
+        */
     }
 
     drawRateButtons(){
@@ -348,7 +351,7 @@ export class Slide{
         var ratebox = new PIXI.Sprite(PIXI.Texture.from('images/ratebox.png'));
             ratebox.name="ratebox";
             ratebox.x= 0;
-            ratebox.y= layout.BOTTOMBUFFER-220; 
+            ratebox.y= 315//layout.BOTTOMBUFFER-220; 
         this.buttonContainer.addChild(ratebox);
         
         ratebox.addChild(new Button("inc_rate",PIXI.Texture.from('images/buttons/plus.png'),60,95,true));
@@ -471,6 +474,9 @@ export class Slide{
 
         learnbox.addChild(new Button("learn_van_step",PIXI.Texture.from('images/buttons/step.png'),212.5,60,true));
         learnbox.getChildByName("learn_van_step").on('click', async function(e){
+            slide.loopcount=slide.loopcount+1;
+            slide.costLabel.getChildByName("epochbox").getChildByName("epoch").text=slide.loopcount;
+
            
             slide.slideNet.learn_batch();
             await slide.sleep(100);
@@ -517,9 +523,9 @@ export class Slide{
                     slide.costLabel.getChildByName("epochbox").getChildByName("epoch").text=slide.loopcount;
 
 
-                    if(slide.buttonContainer.getChildByName("stylebox").getChildByName("stochastic").press==true){
-                        break;
-                    }
+                    //if(slide.buttonContainer.getChildByName("stylebox").getChildByName("stochastic").press==true){
+                     //   break;
+                   // }
 
                    // this.slideNet.setNetInput(this.slideNet.data.points[this.slideNet.dataIdx]);
 
@@ -1846,9 +1852,9 @@ export class Slide{
             costBox.y=layout.BOTTOMBUFFER-280;          
         this.costLabel.addChild(costBox);
     
-        var costText= new PIXI.Text("",textstyles.large);
+        var costText= new PIXI.Text("-",textstyles.large);
 
-        if(this.buttonContainer.getChildByName("stylebox") !== null){
+        /*if(this.buttonContainer.getChildByName("stylebox") !== null){
             if(this.buttonContainer.getChildByName("stylebox").getChildByName("vanilla").press==true){
                 if(this.slideNet.costTot_batch!=undefined){
                 costText.text=formatter_long.format(this.slideNet.costTot_batch)
@@ -1859,7 +1865,7 @@ export class Slide{
             } else if(this.buttonContainer.getChildByName("stylebox").getChildByName("stochastic").press==true){
                 costText.text=formatter_long.format(this.slideNet.costTot)
             }
-        }
+        }*/
         costText.name = "costText";
         costText.anchor.set(0.5)
         costText.y=15;
