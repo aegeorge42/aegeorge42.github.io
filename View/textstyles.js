@@ -72,13 +72,13 @@ export const textstyles = {
   }),
 
   label_large: new PIXI.TextStyle({
-    fontFamily: 'Menlo',
+    fontFamily: 'Helvetica',
     fontWeight: 500,
     fontSize: 25,
   }),
 
   label_med: new PIXI.TextStyle({
-    fontFamily: 'Menlo',
+    fontFamily: 'Helvetica',
     fontWeight: 500,
     fontSize: 20,
   }),

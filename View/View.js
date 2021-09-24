@@ -41,6 +41,7 @@ import {SlideHome,
     SlideError4,
     SlideError5,
     SlideError6,
+    SlideError6a,
     SlideError7,
 
 
@@ -142,9 +143,10 @@ export class View{
                 app.stage.getChildAt(0).getChildAt(6).x=window.innerWidth-win.startwidth_nochange;
 
                 //cost
-                app.stage.getChildAt(0).getChildAt(5).y=window.innerHeight-win.startheight_nochange;
-                app.stage.getChildAt(0).getChildAt(5).x=window.innerWidth-win.startwidth_nochange;
-
+                if(app.stage.getChildAt(0).getChildAt(9).getChildByName("databox")){
+                    app.stage.getChildAt(0).getChildAt(5).y=window.innerHeight-win.startheight_nochange;
+                    app.stage.getChildAt(0).getChildAt(5).x=window.innerWidth-win.startwidth_nochange;
+                }
 
                 if(app.stage.getChildAt(0).getChildAt(9).getChildByName("actfnsbox") !== null){
                 //    app.stage.getChildAt(0).getChildAt(9).getChildByName("actfnsbox").y=window.innerHeight-win.startheight_nochange +(layout.BOTTOMBUFFER-100);
@@ -171,10 +173,10 @@ export class View{
         this.slideList = [];
         this.slideList.push(SlideHome,SlideInstruct1, SlideInstruct2, //1
                             SlideIntro1,/*SlideIntro1a,SlideIntro1b,SlideIntro1c,*/SlideIntro2,SlideIntro3, SlideIntro1b, SlideIntro3a, SlideIntro4a, //9
-                            SlideNeuronA, SlideNeuronA2, SlideNeuron1,SlideNeuron1a,SlideNeuron1b,SlideNeuron2,SlideNeuron2b,SlideNeuron2b2,SlideNeuron2c,SlideNeuron2d,SlideNeuron2d2,SlideNeuron2e, //16
+                            SlideNeuronA, SlideNeuronA2, SlideNeuron1,SlideNeuron1a,SlideNeuron1b,SlideNeuron2,SlideNeuron2b,/*SlideNeuron2b2,*/SlideNeuron2c,SlideNeuron2d,SlideNeuron2d2,SlideNeuron2e, //16
                             SlideNet1, SlideNet1b, SlideNet1b2,SlideNet1c, SlideNet1d,SlideNet1d2,/*SlideNet1d3, */
                             
-                            SlideError1,SlideError2,SlideNet1e,SlideError3,SlideError4,SlideError5,SlideError6,SlideError7,
+                            SlideError1,/*SlideError2,*/SlideNet1e,SlideError3,SlideError4,SlideError5,SlideError6,SlideError6a,SlideError7,
                             /*SlideNet1d4,SlideNet1e,
                             SlideBack1,SlideBack2,SlideBack3,SlideNet1f,SlideBackA,SlideNet2,SlideBackB, SlideBackC, SlideBackD,SlideBackE, SlideBackF,
                             */
@@ -217,7 +219,7 @@ export class View{
 
 
 
-        this.currentSlide=49;
+        this.currentSlide=44;
 
 
 
@@ -250,9 +252,10 @@ export class View{
 
         this.app.stage.getChildAt(0).getChildAt(6).y=window.innerHeight-this.startheight_nochange;
         this.app.stage.getChildAt(0).getChildAt(6).x=window.innerWidth-this.startwidth_nochange;
-        this.app.stage.getChildAt(0).getChildAt(5).y=window.innerHeight-this.startheight_nochange;
-        this.app.stage.getChildAt(0).getChildAt(5).x=window.innerWidth-this.startwidth_nochange;
+        //this.app.stage.getChildAt(0).getChildAt(5).y=window.innerHeight-this.startheight_nochange;
+        //this.app.stage.getChildAt(0).getChildAt(5).x=window.innerWidth-this.startwidth_nochange;
         
+
         if(this.app.stage.getChildAt(0).getChildAt(9).getChildByName("actfnsbox") !== null){
         //    this.app.stage.getChildAt(0).getChildAt(9).getChildByName("actfnsbox").y=window.innerHeight-this.startheight_nochange +(layout.BOTTOMBUFFER-100);
         }
@@ -263,7 +266,15 @@ export class View{
 
         if(this.app.stage.getChildAt(0).getChildAt(9).getChildByName("databox") !== null){
             this.app.stage.getChildAt(0).getChildAt(9).getChildByName("databox").x=window.innerWidth-260;
+
+           this.app.stage.getChildAt(0).getChildAt(5).getChildByName("costBox").x=window.innerWidth-80;
+           this.app.stage.getChildAt(0).getChildAt(5).getChildByName("epochbox").x=window.innerWidth-200;
+
+  
+
         }
+
+        
        
         if(this.currentSlide==0){
         this.app.stage.getChildAt(0).getChildByName("opener").x=window.innerWidth/2;

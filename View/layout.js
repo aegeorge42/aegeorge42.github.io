@@ -54,10 +54,8 @@ export const layout = {
    // ACTFNS_X:(window.innerHeight-80)-100,
 
    /******BACKPROP */
-
-
-   DZDW:100,
-   DADZ:180,
-   DCDA:260,
+   DZDW:50,
+   DADZ:50,
+   DCDA:50,
 
 }

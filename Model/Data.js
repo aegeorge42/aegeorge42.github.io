@@ -194,6 +194,9 @@ fruits.makefruits_linear();
 fruits.shuffle();
 fruits.point_front("blueberry", [2, 10], [0,1]);
 
+export const fruits_single = new Data(0,["strawberry","blueberry"],["length", "roundness"]);
+fruits_single.point("blueberry", [2, 10], [0,1]);
+
 
 export const fruits_circle = new Data(0, ["strawberry","blueberry"],["length","roundness"]);
 fruits_circle.makefruits_circle_newaxis();

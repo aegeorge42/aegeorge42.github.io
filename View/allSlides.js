@@ -2,7 +2,7 @@ import { Slide } from "./Slide.js"
 import { layout } from "./layout.js";
 import { Net } from "../Model/net.js"
 import { actFns } from "../Model/neuron.js";
-import {fruits} from "../Model/data.js"
+import {fruits, fruits_single} from "../Model/data.js"
 import {Graph} from "./Graph.js"
 import {textstyles} from "./textstyles.js"
 import { Button } from "./Button.js";
@@ -49,6 +49,8 @@ export const SlideInstruct2 = new Slide();
 
     arrow1.x=layout.LEFTBUFFER + 800;
     arrow1.y=80;
+
+
 
     var textInstruct2 = [    
         arrow1,
@@ -337,10 +339,12 @@ export const SlideNeuronA2 = new Slide();
 
     var textNeuronA2 = [
         [percep_layers,["Neurons are organized in"], [" layers. ",textstyles.large_bold],[ layout.LEFTBUFFER+50, layout.TOPBUFFER+30]],
-        [["processing occurs in the hidden layers"+'\n'+"while the output layer gives us"+'\n'+" the net's 'final answer'"],[layout.LEFTBUFFER+700,layout.TOPBUFFER+200]],
+        [["Calculations happen in the hidden and output layers'"],[layout.LEFTBUFFER+700,layout.TOPBUFFER+100]],
+
+        [["Though the output layer also gives us"+'\n'+" the net's 'final answer'"],[layout.LEFTBUFFER+700,layout.TOPBUFFER+200]],
 
 
-        [["we can have several hidden layers,"+'\n'+" but only one output layer. "],[layout.LEFTBUFFER+700,layout.TOPBUFFER+350]]
+        [["We can have several hidden layers,"+'\n'+" but only one output layer. "],[layout.LEFTBUFFER+700,layout.TOPBUFFER+350]]
       //  [["we can also add neurons to our hidden layers, but "],[layout.LEFTBUFFER,layout.TOPBUFFER+100]]
 
     ];
@@ -504,12 +508,14 @@ export const SlideNeuron2b = new Slide();
         fill:0x344EE8
     });
     var textNeuron2b = [
-        [neuron_large_actfncover,["Each input is multiplied by a weight. "], [layout.LEFTBUFFER,layout.TOPBUFFER]],
+        [neuron_large_actfncover,["Each input is multiplied by a"],[" weight. ",textstyles.large_bold], [layout.LEFTBUFFER,layout.TOPBUFFER]],
         [["Next, we take the sum of all those values. "], [layout.LEFTBUFFER,layout.TOPBUFFER+50]],
         [["Finally, we add in another number"+'\n'+" - called the"], [" bias  ", textstyles.large_bold], [layout.LEFTBUFFER,layout.TOPBUFFER+100]],
         [["Hover your mouse over the weights." +'\n'+" Click to increase and decrease their values.",textstyles.instruct], [layout.LEFTBUFFER,layout.TOPBUFFER+200]],
         [["orange ",orange], ["weights are negative;",textstyles.medium],
              [" blue ",blue], ["weights are positive",textstyles.medium], [layout.LEFTBUFFER+20,layout.TOPBUFFER+280]],
+             [["When we first create our net, our weights are random, "+ '\n' + "while our biases start at 0."],[layout.LEFTBUFFER,350]],
+
 
     
     ];
@@ -537,6 +543,8 @@ export const SlideNeuron2b2 = new Slide();
         neuron_large_actfncover2,
         [["Weights",textstyles.large_bold], [" tell us the importance of each input."], [layout.LEFTBUFFER,layout.TOPBUFFER]],
         [["The"],[" bias ", textstyles.large_bold], ["changes the sensitivity of the neuron."], [layout.LEFTBUFFER,layout.TOPBUFFER+70]],
+        [["The"],[" bias ", textstyles.large_bold], ["changes the sensitivity of the neuron."], [layout.LEFTBUFFER,layout.TOPBUFFER+70]],
+
 
         [["When we first create our net, our weights are random, "+ '\n' + "while our biases start at 0."],[layout.LEFTBUFFER,300]],
     ];
@@ -834,14 +842,24 @@ export const SlideError1 = new Slide();
         costform.x=window.innerWidth/2 +50;//layout.LEFTBUFFER;//layout.NEURON_LEFTLIM+180;
         costform.y=layout.CENTER;//layout.TOPBUFFER+100;
 
+        var ital_sm= new PIXI.TextStyle({
+            fontFamily: 'Helvetica',
+            fontWeight: 400,
+            fontSize: 18,
+            fontStyle: 'italic'
+        
+          });
+
     var textError1 = [
         costform,
         [["We want to know how how far off the output of our net is from our target values."], [layout.LEFTBUFFER,layout.TOPBUFFER]],
         [["To do this, we use a"],[" cost function.",textstyles.large_bold], [layout.LEFTBUFFER,layout.TOPBUFFER+50]],
 
-        [["this tells us to: "+'\n'+" 1. For each output neuron, square the difference of the target output and the actual activation."
+        [[" 1. For each output neuron, square the difference of the target output and the actual activation."
             + '\n'+ " 2. sum up these values for all output neurons. " 
-            + '\n' + " 3. Do this for each piece of data, then find the mean."], [layout.LEFTBUFFER,layout.TOPBUFFER+200]],
+            + '\n' + " 3. Do this for each piece of data, then find the mean.",ital_sm], [layout.LEFTBUFFER,layout.TOPBUFFER+200]],
+        [["The activation of the output neurons depends on the current weights and biases of the network."], [layout.LEFTBUFFER,layout.TOPBUFFER+300]],
+        [["So, we can think of our cost function as a function of the weights and biases of the network. "], [layout.LEFTBUFFER,layout.TOPBUFFER+350]],
        // [["Sum up for all output neurons."], [layout.LEFTBUFFER,layout.TOPBUFFER+100]],
        // [["Do this for our whole data set, then take the average."], [layout.LEFTBUFFER,layout.TOPBUFFER+150]],
        // [["The ultimate goal of the neural network is to make the cost as small as possible.", textstyles.large_bold], [layout.LEFTBUFFER,layout.TOPBUFFER+300]],
@@ -888,7 +906,6 @@ export const SlideError3 = new Slide();
 
 export const SlideError4 = new Slide();
     var costgraph_point = new PIXI.Sprite(PIXI.Texture.from('images/cost/costgraph_point.png'));
-    // costgraph.scale.set(0.8)
     costgraph_point.anchor.set(0.5)
     costgraph_point.isSprite=true;
     costgraph_point.x=layout.LEFTBUFFER+150//window.innerWidth/2 +50;//layout.LEFTBUFFER;//layout.NEURON_LEFTLIM+180;
@@ -906,7 +923,7 @@ export const SlideError4 = new Slide();
     SlideError4.drawText(textError4);
 
 export const SlideError5 = new Slide();
-    var costgraph_slope = new PIXI.Sprite(PIXI.Texture.from('images/cost/costgraph_point.png'));
+    var costgraph_slope = new PIXI.Sprite(PIXI.Texture.from('images/cost/costgraph_slope1.png'));
         costgraph_slope.anchor.set(0.5)
         costgraph_slope.isSprite=true;
         costgraph_slope.x=layout.LEFTBUFFER+150
@@ -927,7 +944,13 @@ export const SlideError5 = new Slide();
     SlideError5.drawText(textError5);
 
 export const SlideError6 = new Slide();
+    var costgraph_slope2 = new PIXI.Sprite(PIXI.Texture.from('images/cost/costgraph_slope2.png'));
+        costgraph_slope2.anchor.set(0.5)
+        costgraph_slope2.isSprite=true;
+        costgraph_slope2.x=layout.LEFTBUFFER+150
+        costgraph_slope2.y=layout.CENTER +100;
     var textError6 = [
+        costgraph_slope2,
         [["We keep repeating these steps until our slope is 0."], [layout.LEFTBUFFER+500,layout.TOPBUFFER+100]],
       //  [["We find the magnitude of change by multiplying -namblaC by a value called the learning rate"], [layout.LEFTBUFFER+500,layout.TOPBUFFER+100]],
      //   [["This is a number we set beforehand - usually a number between 0 and 1."], [layout.LEFTBUFFER+500,layout.TOPBUFFER+100]],
@@ -938,14 +961,51 @@ export const SlideError6 = new Slide();
     ];
     SlideError6.drawText(textError6);
 
-export const SlideError7 = new Slide();
-    var textError7 = [
-        [["And that's it! We continue to repeat these steps for each weight and bias in the net until our cost is 0 (or small enough)"], [layout.LEFTBUFFER,layout.TOPBUFFER]],
-        [["A neural network's 'learning' is just the process of minimizing the cost using gradient descent"], [layout.LEFTBUFFER,layout.TOPBUFFER+50]],
+export const SlideError6a = new Slide();
+var costgraph_lrsmall = new PIXI.Sprite(PIXI.Texture.from('images/cost/costgraph_lrsmall.png'));
+    costgraph_lrsmall.anchor.set(0.5)
+    costgraph_lrsmall.scale.set(0.8)
 
-        [["If you're interested in walking through the calculus behind gradient descent, click here"], [layout.LEFTBUFFER,layout.TOPBUFFER+50]],
-        [["Otherwise, you've reached the end of the tutorial!"], [layout.LEFTBUFFER,layout.TOPBUFFER+50]],
-        [["Click next to move on to the sandbox!"], [layout.LEFTBUFFER,layout.TOPBUFFER+50]],
+    costgraph_lrsmall.isSprite=true;
+    costgraph_lrsmall.x=layout.LEFTBUFFER+150
+    costgraph_lrsmall.y=layout.CENTER;
+
+    var costgraph_lrlarge = new PIXI.Sprite(PIXI.Texture.from('images/cost/costgraph_lrlarge.png'));
+    costgraph_lrlarge.anchor.set(0.5)
+    costgraph_lrlarge.scale.set(0.8)
+
+    costgraph_lrlarge.isSprite=true;
+    costgraph_lrlarge.x=layout.LEFTBUFFER+550
+    costgraph_lrlarge.y=layout.CENTER;
+
+
+var textError6a = [
+    costgraph_lrsmall,costgraph_lrlarge,
+    [["The size of the learning rate is imporant."], [layout.LEFTBUFFER,layout.TOPBUFFER]],
+    [["Too small, and it will take ages to reach the minimum."], [layout.LEFTBUFFER,layout.TOPBUFFER+300]],
+    [["Too large, and we may end up jumping past the minimum."], [layout.LEFTBUFFER,layout.TOPBUFFER+350]]
+];
+SlideError6a.drawText(textError6a);
+
+
+export const SlideError7 = new Slide();
+    var gotocalc=new Button("gotocalc",PIXI.Texture.from('images/buttons/calculus.png'), 200,200,true);
+    gotocalc.on('click', function(e){
+        if (viewst.currentSlide!=35){
+
+            viewst.currentSlide=35;
+            viewst.drawSlide();
+        }
+    });
+    SlideError7.buttonContainer.addChild(gotocalc);
+
+    var textError7 = [
+        [["And that's it!", textstyles.large_bold], [layout.LEFTBUFFER,layout.TOPBUFFER]],
+        [["A neural network's 'learning' is just the process of minimizing the cost using gradient descent"], [layout.LEFTBUFFER,layout.TOPBUFFER+50]],
+        [["If you're interested in walking through the calculus behind gradient descent, click here"], [layout.LEFTBUFFER,layout.TOPBUFFER+100]],
+        
+        [["Otherwise, you've reached the end of the tutorial!"], [layout.LEFTBUFFER,layout.TOPBUFFER+150]],
+        [["Click next to move on to the sandbox!"], [layout.LEFTBUFFER,layout.TOPBUFFER+250]],
 
 
 
@@ -955,13 +1015,13 @@ export const SlideError7 = new Slide();
     SlideError7.drawText(textError7);
 
     export const SlideCredit = new Slide();
-    var textError7 = [
+    var textCredit = [
         [["Created by Allison George"], [layout.LEFTBUFFER,layout.TOPBUFFER]],
        // [["email: aegeorge@udel.edu"], [layout.LEFTBUFFER,layout.TOPBUFFER]],
 
 
     ];
-    SlideError7.drawText(textError7);
+    SlideCredit.drawText(textCredit);
 
 
 
@@ -1234,7 +1294,7 @@ export const SlideBackA = new Slide();
     costgraph_point.isSprite=true;
     costgraph_point.x=mountainx;
     costgraph_point.y=mountainy;
-    costgraph_point.scale.set(mountainscale);
+   
 
     var textBackA = [
         costgraph_point,
@@ -1376,8 +1436,8 @@ export const SlideBackF = new Slide();
 /*********     CALCULUS    *********** */   
 layout.NEURON_X_DIF = 175;
 layout.NEURON_Y_DIF = 175;
-layout.NEURON_UPPERLIM = 175;
-layout.NEURON_LEFTLIM =  Math.max((window.innerWidth-1100)/2,15) +200;
+layout.NEURON_UPPERLIM = 190//window.innerHeight/2 -120   //150//window.innerHeight/2 -50 -100;
+layout.NEURON_LEFTLIM =  230//Math.max((window.innerWidth-1100)/2,15) +200;
 var backpropx_cost= layout.LEFTBUFFER + layout.NEURON_LEFTLIM+layout.NEURON_X_DIF +200;
 
 
@@ -1390,9 +1450,8 @@ export const SlideBackCalc0 = new Slide();
 
     var netBack0 = new Net();
     SlideBackCalc0.slideNet=netBack0;
-    netBack0.setNetData(fruits);
+    netBack0.setNetData(fruits_single);
     netBack0.setOutLayer();
-    netBack0.getLayer(0).addNeuron();
     netBack0.update();
 
     SlideBackCalc0.backprop=true;
@@ -1447,8 +1506,8 @@ export const SlideBackCalc1 = new Slide();
     SlideBackCalc1.backprop_labels=true;
     SlideBackCalc1.draw_init(netBack0);
 
-    SlideBackCalc1.costSteps=true;
-    SlideBackCalc1.drawCost_steps();
+ //   SlideBackCalc1.costSteps=true;
+    SlideBackCalc1.drawCost();
 
 
     var backpropx_cost= layout.LEFTBUFFER + layout.NEURON_LEFTLIM+layout.NEURON_X_DIF +200;
@@ -1475,7 +1534,7 @@ export const SlideBackCalc2 = new Slide();
     var startx = layout.NEURON_LEFTLIM + (i*layout.NEURON_X_DIF);
     var startyf = layout.NEURON_UPPERLIM + (j*layout.NEURON_Y_DIF) + layout.NEURON_NUDGE;
     var endx = layout.NEURON_LEFTLIM + (i*layout.NEURON_X_DIF) - layout.NEURON_X_DIF;
-    var endy =  layout.NEURON_UPPERLIM + (k*layout.NEURON_Y_DIF);
+    var endy =  layout.NEURON_UPPERLIM + (k*layout.NEURON_Y_DIF) +100;
     var hiliteWeight = 20;
     var hiliteColor = 0x8fffd6//0xb3e7ff
 
@@ -1485,8 +1544,8 @@ export const SlideBackCalc2 = new Slide();
     SlideBackCalc2.weightsContainer.addChild(hilite)
 
     SlideBackCalc2.draw_init(netBack0);
-    SlideBackCalc2.costSteps=true;
-    SlideBackCalc2.drawCost_steps();
+ //   SlideBackCalc2.costSteps=true;
+    SlideBackCalc2.drawCost();
 
     var arrow1= new PIXI.Sprite(PIXI.Texture.from('images/backprop/arrow1.png'));
         arrow1.x=layout.NEURON_LEFTLIM -layout.NEURON_X_DIF/2 +100;
@@ -1533,11 +1592,11 @@ export const SlideBackCalc2b = new Slide();
         hilite6.drawPolygon(startx, startyf, endx, endy);
     SlideBackCalc7.weightsContainer.addChild(hilite6);*/
     SlideBackCalc2b.draw_init(netBack0);
-    SlideBackCalc2b.costSteps=true;
-    SlideBackCalc2b.drawCost_steps();
+ //   SlideBackCalc2b.costSteps=true;
+    SlideBackCalc2b.drawCost();
 
     var textBackCalc2b = [
-        [ ["multiply by learn rate and subtract from current weight to get new weight"],[backpropx_cost,layout.TOPBUFFER] ],
+        [ ["We'll calculate this value for each of our datapoints."],[backpropx_cost,layout.TOPBUFFER] ],
      
     ];    
     SlideBackCalc2b.drawText(textBackCalc2b);
@@ -1554,8 +1613,8 @@ export const SlideBackCalc3 = new Slide();
     SlideBackCalc3.weightsContainer.addChild(hilite3);
     SlideBackCalc3.draw_init(netBack0);
 
-    SlideBackCalc3.costSteps=true;
-    SlideBackCalc3.drawCost_steps();
+ //   SlideBackCalc3.costSteps=true;
+    SlideBackCalc3.drawCost();
 
     var arrows= new PIXI.Sprite(PIXI.Texture.from('images/backprop/arrows.png'));
         arrows.isSprite=true;
@@ -1615,9 +1674,7 @@ export const SlideBackCalc3a = new Slide();
         hilite3a.drawPolygon(startx, startyf, endx, endy);
         SlideBackCalc3a.weightsContainer.addChild(hilite3a);
         SlideBackCalc3a.draw_init(netBack0);
-
-        SlideBackCalc3a.costSteps=true;
-        SlideBackCalc3a.drawCost_steps();
+        SlideBackCalc3a.drawCost();
 
    var arrows3a= new PIXI.Sprite(PIXI.Texture.from('images/backprop/arrows.png'));
    arrows3a.isSprite=true;
@@ -1634,7 +1691,7 @@ export const SlideBackCalc3a = new Slide();
 
     var textBackCalc3a = [
           dcdw5,    
-          [ ["Using the chain rule of calculus," +'\n'+"we multiply these values to get dcdw5"],[backpropx_cost,layout.TOPBUFFER] ],
+          [ ["Using the calculus chain rule," +'\n'+"we multiply these values to get dcdw5"],[backpropx_cost,layout.TOPBUFFER] ],
           [ ["Now we can calculate each of these components."],[backpropx_cost-50,layout.TOPBUFFER+300] ],
 
       ];    
@@ -1650,8 +1707,7 @@ export const SlideBackCalc4 = new Slide();
         hilite4.drawPolygon(startx, startyf, endx, endy);
     SlideBackCalc4.weightsContainer.addChild(hilite4);
     SlideBackCalc4.draw_init(netBack0);
-    SlideBackCalc4.costSteps=true;
-    SlideBackCalc4.drawCost_steps();
+    SlideBackCalc4.drawCost();
 
     var dz12form= new PIXI.Sprite(PIXI.Texture.from('images/backprop/dz12form.png'));
         dz12form.isSprite=true;
@@ -1679,8 +1735,8 @@ export const SlideBackCalc5 = new Slide();
         hilite5.drawPolygon(startx, startyf, endx, endy);
     SlideBackCalc5.weightsContainer.addChild(hilite5);
     SlideBackCalc5.draw_init(netBack0);
-    SlideBackCalc5.costSteps=true;
-    SlideBackCalc5.drawCost_steps();
+ //   SlideBackCalc5.costSteps=true;
+ //   SlideBackCalc5.drawCost_steps();
 
     var dadz12form= new PIXI.Sprite(PIXI.Texture.from('images/backprop/dadz12form.png'));
     dadz12form.isSprite=true;
@@ -1710,8 +1766,8 @@ export const SlideBackCalc6 = new Slide();
         hilite6.drawPolygon(startx, startyf, endx, endy);
     SlideBackCalc6.weightsContainer.addChild(hilite6);
     SlideBackCalc6.draw_init(netBack0);
-    SlideBackCalc6.costSteps=true;
-    SlideBackCalc6.drawCost_steps();
+  //  SlideBackCalc6.costSteps=true;
+  //  SlideBackCalc6.drawCost_steps();
 
 
     var dcdaarrow= new PIXI.Sprite(PIXI.Texture.from('images/backprop/dcdaarrow.png'));
@@ -1740,8 +1796,8 @@ export const SlideBackCalc6a = new Slide();
         hilite6a.drawPolygon(startx, startyf, endx, endy);
         SlideBackCalc6a.weightsContainer.addChild(hilite6a);
         SlideBackCalc6a.draw_init(netBack0);
-        SlideBackCalc6a.costSteps=true;
-        SlideBackCalc6a.drawCost_steps();
+    //    SlideBackCalc6a.costSteps=true;
+    //    SlideBackCalc6a.drawCost_steps();
 
     var arrows6a= new PIXI.Sprite(PIXI.Texture.from('images/backprop/arrows.png'));
     arrows6a.isSprite=true;
@@ -1759,7 +1815,7 @@ export const SlideBackCalc6a = new Slide();
     var textBackCalc6a = [
         dctot_final,
         [ ["Next, we'll walk through an example with numbers."],[backpropx_cost,layout.TOPBUFFER] ],
-        [ ["it may help to write down or take a screenshot of this page."],[backpropx_cost,layout.TOPBUFFER] ],
+        //[ ["it may help to write down or take a screenshot of this page."],[backpropx_cost,layout.TOPBUFFER] ],
 
     ];
     SlideBackCalc6a.drawText(textBackCalc6a);
@@ -1776,45 +1832,57 @@ export const SlideBackCalc7 = new Slide();
     SlideBackCalc7.backprop=true;
     SlideBackCalc7.backprop_steps=true;
 
+
     startx = layout.NEURON_LEFTLIM + (i*layout.NEURON_X_DIF);
     startyf = layout.NEURON_UPPERLIM + (j*layout.NEURON_Y_DIF) + layout.NEURON_NUDGE;
     endx = layout.NEURON_LEFTLIM + (i*layout.NEURON_X_DIF) - layout.NEURON_X_DIF;
-    endy =  layout.NEURON_UPPERLIM + (k*layout.NEURON_Y_DIF);
+    endy =  layout.NEURON_UPPERLIM + (k*layout.NEURON_Y_DIF)+100;
     var hilite7 = new PIXI.Graphics();
         hilite7.lineStyle(hiliteWeight, hiliteColor);
         hilite7.drawPolygon(startx, startyf, endx, endy);
     SlideBackCalc7.weightsContainer.addChild(hilite7);
     SlideBackCalc7.draw_init(netBack0);
-    SlideBackCalc7.costSteps=true;
-    SlideBackCalc7.drawCost_steps();
+    SlideBackCalc7.drawRateButtons();
 
+
+
+
+       /* var dark = new PIXI.Graphics();
+        dark.drawRect(0,50,window.innerWidth,window.innerHeight);
+        dark.alpha=0.5;
+        SlideBackCalc7.graphContainer.addChild(dark);
+        */
 
     var dctot_final= new PIXI.Sprite(PIXI.Texture.from('images/backprop/dctot_final.png'));
     dctot_final.isSprite=true;
     dctot_final.scale.set(0.5)
     dctot_final.x=backpropx_cost;
     dctot_final.y=100;
+
+    var DZDW=100
+    var DADZ=200;
+    var DCDA=300;
    
     var dzdw5_small= new PIXI.Sprite(PIXI.Texture.from('images/backprop/dzdw5.png'));
         dzdw5_small.scale.set(0.45)
         dzdw5_small.anchor.set(0.5)
         dzdw5_small.isSprite=true;
         dzdw5_small.x=backpropx_cost+10;
-        dzdw5_small.y=layout.DZDW;
+        dzdw5_small.y=DZDW;
 
     var dadz21_small= new PIXI.Sprite(PIXI.Texture.from('images/backprop/dadz21.png'));
         dadz21_small.scale.set(0.45)
         dadz21_small.anchor.set(0.5)
         dadz21_small.isSprite=true;
         dadz21_small.x=backpropx_cost+10;
-        dadz21_small.y=layout.DADZ;
+        dadz21_small.y=DADZ;
 
     var dcda21_small= new PIXI.Sprite(PIXI.Texture.from('images/backprop/dcda21.png'));
         dcda21_small.scale.set(0.45)
         dcda21_small.anchor.set(0.5)
         dcda21_small.isSprite=true;
         dcda21_small.x=backpropx_cost+10;
-        dcda21_small.y=layout.DCDA;
+        dcda21_small.y=DCDA;
 
 
 
@@ -1830,6 +1898,7 @@ export const SlideBackCalc7 = new Slide();
     SlideBackCalc7.neuronnum=0;
     SlideBackCalc7.weightsnum=0;
     SlideBackCalc7.drawBackprop(1,0,0);
+    SlideBackCalc7.drawLearnButtons();
 
 
 
@@ -1842,27 +1911,31 @@ export const SlideBackCalc7 = new Slide();
 
 // WEIGHT W1
 
-layout.NEURON_LEFTLIM =  Math.max((window.innerWidth-1100)/2,15) +200;
+//layout.NEURON_LEFTLIM =  Math.max((window.innerWidth-1100)/2,15) +200;
 
 export const SlideBackCalc8 = new Slide();
     SlideBackCalc8.slideNet=netBack0;
     SlideBackCalc8.backprop=true;
     SlideBackCalc8.backprop_labels=true;
+    SlideBackCalc8.w1=true;
 
     var w1arrow= new PIXI.Sprite(PIXI.Texture.from('images/backprop/w1arrow.png'));
     w1arrow.isSprite=true;
     w1arrow.x=layout.NEURON_LEFTLIM -layout.NEURON_X_DIF/2 -55;
     w1arrow.y=layout.NEURON_UPPERLIM-200;
 
-    var i=0;
-    var j=0;
-    var k=0;
-    var startx = layout.NEURON_LEFTLIM + (i*layout.NEURON_X_DIF);
-    var starty = layout.NEURON_UPPERLIM + (j*layout.NEURON_Y_DIF);
-    var startyf = layout.NEURON_UPPERLIM + (j*layout.NEURON_Y_DIF) + layout.NEURON_NUDGE;
-    var endx = layout.NEURON_LEFTLIM + (i*layout.NEURON_X_DIF) - layout.NEURON_X_DIF;
-    var endy0 = layout.NEURON_UPPERLIM + (k*layout.NEURON_Y_DIF) + layout.NEURON_NUDGE;
-    var endy =  layout.NEURON_UPPERLIM + (k*layout.NEURON_Y_DIF);
+    i=0;
+    j=0;
+    k=0;
+    startx = layout.NEURON_LEFTLIM + (i*layout.NEURON_X_DIF);
+    startyf = layout.NEURON_UPPERLIM + (j*layout.NEURON_Y_DIF) + layout.NEURON_NUDGE;
+    endx = layout.NEURON_LEFTLIM + (i*layout.NEURON_X_DIF) - layout.NEURON_X_DIF;
+    endy =  layout.NEURON_UPPERLIM + (k*layout.NEURON_Y_DIF);
+
+     var starty = layout.NEURON_UPPERLIM + (j*layout.NEURON_Y_DIF)+100;
+     var endy0 = layout.NEURON_UPPERLIM + (k*layout.NEURON_Y_DIF) + layout.NEURON_NUDGE;
+
+
 
     var hilitew11 = new PIXI.Graphics();
         hilitew11.lineStyle(hiliteWeight, hiliteColor);
@@ -1906,13 +1979,15 @@ export const SlideBackCalc8 = new Slide();
 
     SlideBackCalc8.drawText(textBackCalc8);
     SlideBackCalc8.draw_init(netBack0);
-    SlideBackCalc8.costSteps=true;
-    SlideBackCalc8.drawCost_steps();
+ //   SlideBackCalc8.costSteps=true;
+ //   SlideBackCalc8.drawCost_steps();
 
 export const SlideBackCalc9 = new Slide();
     SlideBackCalc9.slideNet=netBack0;
     SlideBackCalc9.backprop=true;
     SlideBackCalc9.backprop_labels=true;
+    SlideBackCalc9.w1_all=true;
+
 
     var hilitew12 = new PIXI.Graphics();
         hilitew12.lineStyle(hiliteWeight, hiliteColor);
@@ -1924,7 +1999,7 @@ export const SlideBackCalc9 = new Slide();
         startx = layout.NEURON_LEFTLIM + (i*layout.NEURON_X_DIF);
         startyf = layout.NEURON_UPPERLIM + (j*layout.NEURON_Y_DIF) + layout.NEURON_NUDGE;
         endx = layout.NEURON_LEFTLIM + (i*layout.NEURON_X_DIF) - layout.NEURON_X_DIF;
-        endy =  layout.NEURON_UPPERLIM + (k*layout.NEURON_Y_DIF);
+        endy =  layout.NEURON_UPPERLIM + (k*layout.NEURON_Y_DIF) +100;
 
         hilitew12.drawPolygon(startx, startyf, endx, endy);
 
@@ -1934,7 +2009,7 @@ export const SlideBackCalc9 = new Slide();
         startx = layout.NEURON_LEFTLIM + (i*layout.NEURON_X_DIF);
         startyf = layout.NEURON_UPPERLIM + (j*layout.NEURON_Y_DIF) + layout.NEURON_NUDGE;
         endx = layout.NEURON_LEFTLIM + (i*layout.NEURON_X_DIF) - layout.NEURON_X_DIF;
-        endy =  layout.NEURON_UPPERLIM + (k*layout.NEURON_Y_DIF);
+        endy =  layout.NEURON_UPPERLIM + (k*layout.NEURON_Y_DIF)+100;
         hilitew12.drawPolygon(startx, startyf, endx, endy);
 
     SlideBackCalc9.weightsContainer.addChild(hilitew12);
@@ -1952,14 +2027,14 @@ export const SlideBackCalc9 = new Slide();
     dcda1f.y=370;
 
     var textBackCalc9 = [
-        dcda1,dcda1f,
-       // [ ["However, a1 affects both a3 and a4"],[backpropx_cost,layout.TOPBUFFER] ],
+       // dcda1,dcda1f,
+        [ ["However, a1 affects both a3 and a4" +'\n' +"so we need to break it down even further."],[backpropx_cost,layout.TOPBUFFER] ],
     ];
 
     SlideBackCalc9.drawText(textBackCalc9);
     SlideBackCalc9.draw_init(netBack0);
-    SlideBackCalc9.costSteps=true;
-    SlideBackCalc9.drawCost_steps();
+  //  SlideBackCalc9.costSteps=true;
+  //  SlideBackCalc9.drawCost_steps();
 
 
 
@@ -1985,7 +2060,7 @@ export const SlideBackCalc9 = new Slide();
         startx = layout.NEURON_LEFTLIM + (i*layout.NEURON_X_DIF);
         startyf = layout.NEURON_UPPERLIM + (j*layout.NEURON_Y_DIF) + layout.NEURON_NUDGE;
         endx = layout.NEURON_LEFTLIM + (i*layout.NEURON_X_DIF) - layout.NEURON_X_DIF;
-        endy =  layout.NEURON_UPPERLIM + (k*layout.NEURON_Y_DIF);
+        endy =  layout.NEURON_UPPERLIM + (k*layout.NEURON_Y_DIF)+100;
 
         hilitew13.drawPolygon(startx, startyf, endx, endy);
 
@@ -1995,7 +2070,7 @@ export const SlideBackCalc9 = new Slide();
         startx = layout.NEURON_LEFTLIM + (i*layout.NEURON_X_DIF);
         startyf = layout.NEURON_UPPERLIM + (j*layout.NEURON_Y_DIF) + layout.NEURON_NUDGE;
         endx = layout.NEURON_LEFTLIM + (i*layout.NEURON_X_DIF) - layout.NEURON_X_DIF;
-        endy =  layout.NEURON_UPPERLIM + (k*layout.NEURON_Y_DIF);
+        endy =  layout.NEURON_UPPERLIM + (k*layout.NEURON_Y_DIF)+100;
         hilitew13.drawPolygon(startx, startyf, endx, endy);
 
     SlideBackCalc10.weightsContainer.addChild(hilitew13);
@@ -2006,8 +2081,8 @@ export const SlideBackCalc9 = new Slide();
 
     SlideBackCalc10.drawText(textBackCalc10);
     SlideBackCalc10.draw_init(netBack0);
-    SlideBackCalc10.costSteps=true;
-    SlideBackCalc10.drawCost_steps();
+  //  SlideBackCalc10.costSteps=true;
+  //  SlideBackCalc10.drawCost_steps();
 
 
 
