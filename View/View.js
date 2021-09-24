@@ -219,7 +219,7 @@ export class View{
 
 
 
-        this.currentSlide=44;
+        this.currentSlide=34;
 
 
 
@@ -349,7 +349,6 @@ export class View{
     drawSlide(){
         this.app.stage.removeChildAt(0);
         this.app.stage.addChildAt(this.slideList[this.currentSlide].slideContainer,0);
-        this.app.stage.addChild(this.slideList[this.currentSlide].textbuttonContainer);
         this.caveats();
         this.resize2();
     }

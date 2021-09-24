@@ -1485,6 +1485,17 @@ export const SlideBackCalc0 = new Slide();
     a21example.y=320;
 
     var backpropx= layout.LEFTBUFFER + layout.NEURON_LEFTLIM+layout.NEURON_X_DIF +50;
+    
+    SlideBackCalc0.slideContainer.addChild(new Button("backfromcalc",PIXI.Texture.from('images/buttons/pause.png'),100,window.innerHeight-60,true));
+    SlideBackCalc0.slideContainer.getChildByName("backfromcalc").on('click', function(e){
+        if (viewst.currentSlide!=30){
+
+            viewst.currentSlide=30;
+            viewst.drawSlide();
+        }
+    });
+    
+
     var textBackCalc0 = [
         a21example,
         [ ["First, we need to label each component of our net."],[backpropx,layout.TOPBUFFER] ],
@@ -1511,6 +1522,8 @@ export const SlideBackCalc1 = new Slide();
 
 
     var backpropx_cost= layout.LEFTBUFFER + layout.NEURON_LEFTLIM+layout.NEURON_X_DIF +200;
+
+
 
     var textBackCalc1 = [
         [ ["We'll also need:"],[backpropx_cost,layout.TOPBUFFER] ],
@@ -1596,7 +1609,15 @@ export const SlideBackCalc2b = new Slide();
     SlideBackCalc2b.drawCost();
 
     var textBackCalc2b = [
-        [ ["We'll calculate this value for each of our datapoints."],[backpropx_cost,layout.TOPBUFFER] ],
+        [ ["To find our new w5"],[backpropx_cost,layout.TOPBUFFER] ],
+
+        [ ["We'll calculate (dcdw) for each of our datapoints." +'\n'+"then take the average."],[backpropx_cost,layout.TOPBUFFER+50] ],
+        [ ["We mulitply (dcdw) by the learning rate (n thing)"],[backpropx_cost,layout.TOPBUFFER+150] ],
+        [ ["and subtract it from our current weight"],[backpropx_cost,layout.TOPBUFFER+200] ],
+        [ ["Our final formula for our new weight is"],[backpropx_cost,layout.TOPBUFFER+250] ],
+
+
+
      
     ];    
     SlideBackCalc2b.drawText(textBackCalc2b);
@@ -2171,5 +2192,15 @@ export const SlideSandbox = new Slide();
 
     SlideSandbox.drawCost();
     SlideSandbox.drawDataButtons(SlideNet2Graph);
+
+    SlideSandbox.slideContainer.addChild(new Button("tocredits",PIXI.Texture.from('images/buttons/pause.png'),100,window.innerHeight-60,true));
+    SlideSandbox.slideContainer.getChildByName("tocredits").on('click', function(e){
+        if (viewst.currentSlide!=30){
+
+            viewst.currentSlide=30;
+            viewst.drawSlide();
+        }
+    });
+    
 
 

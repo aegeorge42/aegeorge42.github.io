@@ -444,7 +444,7 @@ export class Slide{
             epochbox.x=window.innerWidth-200;
             epochbox.y=layout.BOTTOMBUFFER-280;
 
-        if(this.sandbox){
+        if(slide.sandbox){
             slide.costLabel.addChild(epochbox);    
             epochbox.addChild(epoch);  
         }  
@@ -479,7 +479,7 @@ export class Slide{
 
                 slide.loopcount=slide.loopcount+1;
 
-                if(this.sandbox){
+                if(slide.sandbox){
                 slide.costLabel.getChildByName("epochbox").getChildByName("epoch").text=slide.loopcount;
                 }
                 // so you cant do both at the same time
@@ -494,7 +494,7 @@ export class Slide{
         learnbox.addChild(new Button("learn_van_step",PIXI.Texture.from('images/buttons/step.png'),212.5,60,true));
         learnbox.getChildByName("learn_van_step").on('click', async function(e){
             slide.loopcount=slide.loopcount+1;
-            if(this.sandbox){
+            if(slide.sandbox){
             slide.costLabel.getChildByName("epochbox").getChildByName("epoch").text=slide.loopcount;
             }
            
@@ -540,7 +540,7 @@ export class Slide{
 
         
                     slide.loopcount=slide.loopcount+1;
-                    if(this.sandbox){
+                    if(slide.sandbox){
                     slide.costLabel.getChildByName("epochbox").getChildByName("epoch").text=slide.loopcount;
                     }
 
@@ -2065,7 +2065,10 @@ export class Slide{
             if(this.sandbox){
                 costBox.x=window.innerWidth-80;
                 costBox.y=layout.BOTTOMBUFFER-280;      
-            }   
+            } if(this.costSteps){
+                costBox.x=500;
+                costBox.y=layout.BOTTOMBUFFER-280;      
+            }
         this.costLabel.addChild(costBox);
     
         var costText= new PIXI.Text(" - ",textstyles.large);
@@ -2140,7 +2143,7 @@ export class Slide{
                 this.costLabel.getChildByName("cost2box").getChildByName("cost2").text=this.slideNet.netOut[1].toFixed(2)+"  -  "+this.slideNet.target[1]
 
             } else {
-                if(!this.backprop_labels){
+                if(!this.backprop_labels && !this.costSteps){
                     if(net.costTot_batch){
                         this.costLabel.getChildByName("costBox").getChildByName("costText").text=formatter_long.format(net.costTot_batch);
                     }
