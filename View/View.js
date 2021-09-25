@@ -42,6 +42,7 @@ import {SlideHome,
     SlideError5,
     SlideError6,
     SlideError6a,
+    SlideError6b,
     SlideError7,
 
 
@@ -74,7 +75,9 @@ SlideBackCalc8,
 SlideBackCalc9,
 SlideBackCalc10,
 
-SlideSandbox} from "./allSlides.js"
+SlideSandbox,
+
+SlideCredit} from "./allSlides.js"
 import { Slide } from "./Slide.js";
 
 
@@ -137,31 +140,36 @@ export class View{
                 app.stage.getChildByName("button_prevslide").y=window.innerHeight-(75/2);
 
                 app.stage.getChildByName("gotosand").x=window.innerWidth -100,
+                
 
                 //graph
-                app.stage.getChildAt(0).getChildAt(6).y=window.innerHeight-win.startheight_nochange;
-                app.stage.getChildAt(0).getChildAt(6).x=window.innerWidth-win.startwidth_nochange;
+                app.stage.getChildAt(0).getChildAt(7).y=window.innerHeight-win.startheight_nochange;
+                app.stage.getChildAt(0).getChildAt(7).x=window.innerWidth-win.startwidth_nochange;
 
                 //cost
-                if(app.stage.getChildAt(0).getChildAt(9).getChildByName("databox")){
-                    app.stage.getChildAt(0).getChildAt(5).y=window.innerHeight-win.startheight_nochange;
-                    app.stage.getChildAt(0).getChildAt(5).x=window.innerWidth-win.startwidth_nochange;
+                if(app.stage.getChildAt(0).getChildAt(2).getChildByName("databox")){
+                    app.stage.getChildAt(0).getChildAt(6).y=window.innerHeight-win.startheight_nochange;
+                    app.stage.getChildAt(0).getChildAt(6).x=window.innerWidth-win.startwidth_nochange;
                 }
 
-                if(app.stage.getChildAt(0).getChildAt(9).getChildByName("actfnsbox") !== null){
-                //    app.stage.getChildAt(0).getChildAt(9).getChildByName("actfnsbox").y=window.innerHeight-win.startheight_nochange +(layout.BOTTOMBUFFER-100);
+                if(vst.slideList[vst.currentSlide].backfromcalc){
+                    app.stage.getChildAt(0).getChildAt(10).getChildByName("backfromcalc").x=window.innerWidth/2 -100;
                 }
 
-                if(app.stage.getChildAt(0).getChildAt(9).getChildByName("ratebox") !== null){
-                //    app.stage.getChildAt(0).getChildAt(9).getChildByName("ratebox").y=window.innerHeight-win.startheight_nochange +(layout.BOTTOMBUFFER-220);
+                if(app.stage.getChildAt(0).getChildAt(2).getChildByName("actfnsbox") !== null && !vst.slideList[vst.currentSlide].sandbox){
+                    app.stage.getChildAt(0).getChildAt(2).getChildByName("actfnsbox").y=window.innerHeight-win.startheight_nochange +(win.startheight_nochange-250);
                 }
-                
-                if(app.stage.getChildAt(0).getChildAt(9).getChildByName("layersbox") !== null){
-                    app.stage.getChildAt(0).getChildAt(9).getChildByName("layersbox").x=window.innerWidth/2//window.innerWidth-win.startwidth_nochange +(window.innerWidth/2-100);
+/*
+                if(app.stage.getChildAt(0).getChildAt(2).getChildByName("ratebox") !== null){
+                //    app.stage.getChildAt(0).getChildAt(2).getChildByName("ratebox").y=window.innerHeight-win.startheight_nochange +(layout.BOTTOMBUFFER-220);
+                }
+*/
+                if(app.stage.getChildAt(0).getChildAt(2).getChildByName("layersbox") !== null){
+                    app.stage.getChildAt(0).getChildAt(2).getChildByName("layersbox").x=window.innerWidth/2//window.innerWidth-win.startwidth_nochange +(window.innerWidth/2-100);
                 }
 
-                if(app.stage.getChildAt(0).getChildAt(9).getChildByName("databox") !== null){
-                    app.stage.getChildAt(0).getChildAt(9).getChildByName("databox").x=window.innerWidth-260;//window.innerWidth-win.startwidth_nochange +(window.innerWidth/2-100);
+                if(app.stage.getChildAt(0).getChildAt(2).getChildByName("databox") !== null){
+                    app.stage.getChildAt(0).getChildAt(2).getChildByName("databox").x=window.innerWidth-260;//window.innerWidth-win.startwidth_nochange +(window.innerWidth/2-100);
                 }
             }
             
@@ -176,13 +184,13 @@ export class View{
                             SlideNeuronA, SlideNeuronA2, SlideNeuron1,SlideNeuron1a,SlideNeuron1b,SlideNeuron2,SlideNeuron2b,/*SlideNeuron2b2,*/SlideNeuron2c,SlideNeuron2d,SlideNeuron2d2,SlideNeuron2e, //16
                             SlideNet1, SlideNet1b, SlideNet1b2,SlideNet1c, SlideNet1d,SlideNet1d2,/*SlideNet1d3, */
                             
-                            SlideError1,/*SlideError2,*/SlideNet1e,SlideError3,SlideError4,SlideError5,SlideError6,SlideError6a,SlideError7,
+                            SlideError1,/*SlideError2,*/SlideNet1e,SlideError3,SlideError4,SlideError5,SlideError6,SlideError6a,SlideError7,SlideError6b,
                             /*SlideNet1d4,SlideNet1e,
                             SlideBack1,SlideBack2,SlideBack3,SlideNet1f,SlideBackA,SlideNet2,SlideBackB, SlideBackC, SlideBackD,SlideBackE, SlideBackF,
                             */
                             SlideBackCalc0,SlideBackCalc1,SlideBackCalc2,SlideBackCalc2b,SlideBackCalc3,SlideBackCalc3a,SlideBackCalc4,SlideBackCalc5,SlideBackCalc6,SlideBackCalc6a,
                             SlideBackCalc7,SlideBackCalc8,SlideBackCalc9,SlideBackCalc10,
-                            SlideSandbox);//SlideNet3);//SlideSandbox);// SlideSandbox);
+                            SlideSandbox,SlideCredit);//SlideNet3);//SlideSandbox);// SlideSandbox);
 
         /*TO DELETE*/
         for(var i=0; i<this.slideList.length;i++){
@@ -219,7 +227,7 @@ export class View{
 
 
 
-        this.currentSlide=34;
+        this.currentSlide=32;
 
 
 
@@ -250,25 +258,25 @@ export class View{
         this.startheight=window.innerHeight;
         this.startwidth=window.innerWidth;
 
+        this.app.stage.getChildAt(0).getChildAt(7).y=window.innerHeight-this.startheight_nochange;
+        this.app.stage.getChildAt(0).getChildAt(7).x=window.innerWidth-this.startwidth_nochange;
         this.app.stage.getChildAt(0).getChildAt(6).y=window.innerHeight-this.startheight_nochange;
         this.app.stage.getChildAt(0).getChildAt(6).x=window.innerWidth-this.startwidth_nochange;
-        //this.app.stage.getChildAt(0).getChildAt(5).y=window.innerHeight-this.startheight_nochange;
-        //this.app.stage.getChildAt(0).getChildAt(5).x=window.innerWidth-this.startwidth_nochange;
         
 
-        if(this.app.stage.getChildAt(0).getChildAt(9).getChildByName("actfnsbox") !== null){
-        //    this.app.stage.getChildAt(0).getChildAt(9).getChildByName("actfnsbox").y=window.innerHeight-this.startheight_nochange +(layout.BOTTOMBUFFER-100);
+        if(this.app.stage.getChildAt(0).getChildAt(2).getChildByName("actfnsbox") !== null){
+        //    this.app.stage.getChildAt(0).getChildAt(2).getChildByName("actfnsbox").y=window.innerHeight-this.startheight_nochange +(layout.BOTTOMBUFFER-100);
         }
 
-        if(this.app.stage.getChildAt(0).getChildAt(9).getChildByName("ratebox") !== null){
-         //   this.app.stage.getChildAt(0).getChildAt(9).getChildByName("ratebox").y=window.innerHeight-this.startheight_nochange +(layout.BOTTOMBUFFER-220);
+        if(this.app.stage.getChildAt(0).getChildAt(2).getChildByName("ratebox") !== null){
+         //   this.app.stage.getChildAt(0).getChildAt(2).getChildByName("ratebox").y=window.innerHeight-this.startheight_nochange +(layout.BOTTOMBUFFER-220);
         }
 
-        if(this.app.stage.getChildAt(0).getChildAt(9).getChildByName("databox") !== null){
-            this.app.stage.getChildAt(0).getChildAt(9).getChildByName("databox").x=window.innerWidth-260;
+        if(this.app.stage.getChildAt(0).getChildAt(2).getChildByName("databox") !== null){
+            this.app.stage.getChildAt(0).getChildAt(2).getChildByName("databox").x=window.innerWidth-260;
 
-           this.app.stage.getChildAt(0).getChildAt(5).getChildByName("costBox").x=window.innerWidth-80;
-           this.app.stage.getChildAt(0).getChildAt(5).getChildByName("epochbox").x=window.innerWidth-200;
+          // this.app.stage.getChildAt(0).getChildAt(6).getChildByName("costBox").x=window.innerWidth-80;
+          // this.app.stage.getChildAt(0).getChildAt(6).getChildByName("epochbox").x=window.innerWidth-200;
 
   
 
@@ -295,6 +303,7 @@ export class View{
         else if(this.slideList[this.currentSlide].leftnet){
             layout.NEURON_UPPERLIM=100;
             layout.NEURON_LEFTLIM=0;
+
         } else {
             layout.NEURON_LEFTLIM=layout.NEURON_LEFTLIM_INIT;
             layout.NEURON_UPPERLIM=layout.NEURON_UPPERLIM_INIT;
@@ -303,7 +312,7 @@ export class View{
         }
 
         if (this.currentSlide==0){
-            for(var i = 1; i<this.app.stage.children.length-1; i++){
+            for(var i = 1; i<this.app.stage.children.length; i++){
                 this.app.stage.getChildAt(i).visible=false;
             }      
 
@@ -311,18 +320,22 @@ export class View{
             this.app.stage.getChildAt(0).getChildByName("header").visible=false;
             this.app.stage.getChildByName("button_start").visible=true;
 
-       /* } else if(this.currentSlide==21){
-
-            this.slideList[this.currentSlide].slideNet.addLayer();
-            this.slideList[this.currentSlide].slideNet.update();
-
-            this.slideList[this.currentSlide].draw_init(this.slideList[this.currentSlide].slideNet)
-
-*/
         } else {
-            for(var i = 1; i<this.app.stage.children.length-1; i++){
+            for(var i = 1; i<this.app.stage.children.length; i++){
                 this.app.stage.getChildAt(i).visible=true;
             }
+
+            if(this.slideList[this.currentSlide].backfromcalc){
+                this.app.stage.getChildByName("button_prevslide").visible=false;
+            }
+
+            if(this.slideList[this.currentSlide].slidecredit){
+                this.app.stage.getChildByName("button_nextslide").visible=false;
+
+            }
+
+        
+        
 
             this.app.stage.getChildAt(0).getChildByName("footer").visible=true;
             this.app.stage.getChildAt(0).getChildByName("header").visible=true;
@@ -382,14 +395,14 @@ export class View{
                 vst.drawSlide();
             }
 
-            if(vst.slideList[vst.currentSlide].slideNet !== undefined && vst.slideList[vst.currentSlide].largenet==1){//&& vst.currentSlide == 9){
+            if(vst.slideList[vst.currentSlide].slideNet !== undefined && vst.slideList[vst.currentSlide].largenet==1  && !vst.slideList[vst.currentSlide].fakenet){//&& vst.currentSlide == 9){
             //    console.log(vst.slideList[vst.currentSlide].slideNet)
                 vst.slideList[vst.currentSlide].slideNet.update();
                 vst.slideList[vst.currentSlide].draw_update_large(vst.slideList[vst.currentSlide].slideNet)
                 vst.drawSlide();
             }
 
-            if(vst.slideList[vst.currentSlide].slideNet !== undefined && vst.slideList[vst.currentSlide].largenet!=1){//&& vst.currentSlide == 9){
+            if(vst.slideList[vst.currentSlide].slideNet !== undefined && vst.slideList[vst.currentSlide].largenet!=1 && !vst.slideList[vst.currentSlide].fakenet){//&& vst.currentSlide == 9){
             //    console.log(vst.slideList[vst.currentSlide].slideNet)
                 vst.slideList[vst.currentSlide].slideNet.update();
                 vst.slideList[vst.currentSlide].draw_update(vst.slideList[vst.currentSlide].slideNet)

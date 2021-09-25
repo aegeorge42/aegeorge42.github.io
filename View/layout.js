@@ -1,9 +1,10 @@
+
 export const layout = {
 
     HEADER_HEIGHT:50,
     FOOTER_HEIGHT:75,
 
-    LEFTBUFFER:window.innerWidth/10,
+    LEFTBUFFER:50,//window.innerWidth/10,
     //LEFTBUFFER: Math.max((window.innerWidth-1100)/2,15),
     BOTTOMBUFFER: window.innerHeight-80,
     TOPBUFFER: 80,
@@ -58,4 +59,8 @@ export const layout = {
    DADZ:50,
    DCDA:50,
 
+}
+
+if(window.innerWidth>1280){
+    layout.LEFTBUFFER=400;
 }
