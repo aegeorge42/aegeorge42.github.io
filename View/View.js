@@ -156,6 +156,11 @@ export class View{
                     app.stage.getChildAt(0).getChildAt(10).getChildByName("backfromcalc").x=window.innerWidth/2 -100;
                 }
 
+                if(vst.slideList[vst.currentSlide].calc2sand){
+                    app.stage.getChildAt(0).getChildAt(10).getChildByName("calc2sandbuttton").x=window.innerWidth/2 +100;
+                }
+
+
                 if(app.stage.getChildAt(0).getChildAt(2).getChildByName("actfnsbox") !== null && !vst.slideList[vst.currentSlide].sandbox){
                     app.stage.getChildAt(0).getChildAt(2).getChildByName("actfnsbox").y=window.innerHeight-win.startheight_nochange +(win.startheight_nochange-250);
                 }
@@ -181,16 +186,20 @@ export class View{
         this.slideList = [];
         this.slideList.push(SlideHome,SlideInstruct1, SlideInstruct2, //1
                             SlideIntro1,/*SlideIntro1a,SlideIntro1b,SlideIntro1c,*/SlideIntro2,SlideIntro3, SlideIntro1b, SlideIntro3a, SlideIntro4a, //9
-                            SlideNeuronA, SlideNeuronA2, SlideNeuron1,SlideNeuron1a,SlideNeuron1b,SlideNeuron2,SlideNeuron2b,/*SlideNeuron2b2,*/SlideNeuron2c,SlideNeuron2d,SlideNeuron2d2,SlideNeuron2e, //16
+                            SlideNeuronA, SlideNeuronA2, /*SlideNeuron1,SlideNeuron1a,*/SlideNeuron1b,SlideNeuron2,SlideNeuron2b,/*SlideNeuron2b2,*/SlideNeuron2c,SlideNeuron2d,SlideNeuron2d2,SlideNeuron2e, //16
                             SlideNet1, SlideNet1b, SlideNet1b2,SlideNet1c, SlideNet1d,SlideNet1d2,/*SlideNet1d3, */
                             
                             SlideError1,/*SlideError2,*/SlideNet1e,SlideError3,SlideError4,SlideError5,SlideError6,SlideError6a,SlideError7,SlideError6b,
                             /*SlideNet1d4,SlideNet1e,
                             SlideBack1,SlideBack2,SlideBack3,SlideNet1f,SlideBackA,SlideNet2,SlideBackB, SlideBackC, SlideBackD,SlideBackE, SlideBackF,
                             */
+              
+                            SlideSandbox,SlideCredit,
+                            
+                            
                             SlideBackCalc0,SlideBackCalc1,SlideBackCalc2,SlideBackCalc2b,SlideBackCalc3,SlideBackCalc3a,SlideBackCalc4,SlideBackCalc5,SlideBackCalc6,SlideBackCalc6a,
-                            SlideBackCalc7,SlideBackCalc8,SlideBackCalc9,SlideBackCalc10,
-                            SlideSandbox,SlideCredit);//SlideNet3);//SlideSandbox);// SlideSandbox);
+                            SlideBackCalc7,SlideBackCalc8,SlideBackCalc9,SlideBackCalc10,   
+                            );//SlideNet3);//SlideSandbox);// SlideSandbox);
 
         /*TO DELETE*/
         for(var i=0; i<this.slideList.length;i++){
@@ -227,7 +236,7 @@ export class View{
 
 
 
-        this.currentSlide=32;
+        this.currentSlide=48;
 
 
 
@@ -327,6 +336,11 @@ export class View{
 
             if(this.slideList[this.currentSlide].backfromcalc){
                 this.app.stage.getChildByName("button_prevslide").visible=false;
+            }
+
+            if(this.slideList[this.currentSlide].calc2sand){
+                this.app.stage.getChildByName("button_nextslide").visible=false;
+
             }
 
             if(this.slideList[this.currentSlide].slidecredit){

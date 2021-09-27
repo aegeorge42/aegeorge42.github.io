@@ -352,6 +352,8 @@ export class Slide{
         */
     }
 
+
+
     drawRateButtons(){
         var slide=this;
         var ratebox = new PIXI.Sprite(PIXI.Texture.from('images/buttons/ratebox.png'));
@@ -367,8 +369,8 @@ export class Slide{
 
         this.buttonContainer.addChild(ratebox);
         
-        ratebox.addChild(new Button("inc_rate",PIXI.Texture.from('images/buttons/plus.png'),60,95,true));
-        ratebox.addChild(new Button("dec_rate",PIXI.Texture.from('images/buttons/minus.png'),90,95,true));
+        ratebox.addChild(new Button("inc_rate",PIXI.Texture.from('images/buttons/plus.png'),60,98,true));
+        ratebox.addChild(new Button("dec_rate",PIXI.Texture.from('images/buttons/minus.png'),90,98,true));
 
         var rateback = new PIXI.Graphics();
             rateback.beginFill(0xFFFFFF)
@@ -383,7 +385,7 @@ export class Slide{
         ratebox.addChild(rateText);
 
         
-        var rates= [0.0001, 0.001, 0.01, 0.03, 0.1, 0.3, 0.5, 1.0, 10.0];
+        var rates= [0.0001, 0.001, 0.01, 0.03, 0.1, 0.3, 0.5, 1.0];
         var rate_start=0;
         for(var i = 0; i<rates.length; i++){
             if(rates[i] ==slide.slideNet.learnRate){
@@ -396,7 +398,6 @@ export class Slide{
             if(rates[rate_start+clickcount+1] !==undefined){
                 clickcount++;
                 slide.slideNet.setLearnRate(rates[rate_start+clickcount]);//slide.slideNet.learnRate*10);
-                console.log(slide.slideNet.learnRate);
                 ratebox.getChildByName("rateText").text=slide.slideNet.learnRate.toFixed(4)//"hi"//slide.slideNet.learnRate;
                 slide.drawWeights_update(slide.slideNet);
 
@@ -418,6 +419,7 @@ export class Slide{
 
     }
 
+  
 
     drawLearnButtons(graph){
 
@@ -462,6 +464,7 @@ export class Slide{
         learnbox.addChild(new Button("learn_stoch",PIXI.Texture.from('images/buttons/learn.png'),125,60,true));
         learnbox.getChildByName("learn_stoch").pressCount=0;
         learnbox.getChildByName("learn_stoch").on('click', async function(e){
+            
             this.pressCount++;
             pauselearn = 0;
 
@@ -470,26 +473,34 @@ export class Slide{
             }
 
             //no double clicks
-            if(this.pressCount==1){
+            if(this.pressCount==1){ 
             while(pauselearn==0){
                 slide.slideNet.learn();
                 slide.draw_update(slide.slideNet);
                 
                 if(graph){graph.updateGraph(slide.slideNet,graph);}
-                await slide.sleep(100); //pause to see updates - 100 seems good
+                await slide.sleep(10); //pause to see updates - 100 seems good
 
                 slide.loopcount=slide.loopcount+1;
 
                 if(slide.sandbox){
                 slide.costLabel.getChildByName("epochbox").getChildByName("epoch").text=slide.loopcount;
                 }
-                // so you cant do both at the same time
-              /*  if(slide.buttonContainer.getChildByName("stylebox").getChildByName("vanilla").press==true){
-                break;
-                }*/
+
+                if(slide.loopcount==slide.looplim){
+                    break;
+                }
+
 
             }
+
+            slide.looplim=slide.looplim+1000;
+            pauselearn=1;
+            learnbox.getChildByName("pause").visible=false;
+            this.pressCount=0;
+
         }
+        
         });
 
         learnbox.addChild(new Button("learn_van_step",PIXI.Texture.from('images/buttons/step.png'),212.5,60,true));
@@ -500,7 +511,7 @@ export class Slide{
             }
            
             slide.slideNet.learn_batch();
-            await slide.sleep(100);
+            await slide.sleep(10);
 
             slide.slideNet.update();
 
@@ -514,22 +525,23 @@ export class Slide{
         learnbox.addChild(new Button("learn_van",PIXI.Texture.from('images/buttons/learn.png'), 125,60,true));
         learnbox.getChildByName("learn_van").pressCount=0;
 
+        slide.looplim=1000;
         learnbox.getChildByName("learn_van").on('click', async function(e){
+            
             this.pressCount++;
             pauselearn=0;
 
             if(pauselearn==0){
                 learnbox.getChildByName("pause").visible=true;
-                console.log("pause should be vis")
             }
 
             if(this.pressCount==1){
+                console.log("here");
 
                 while(pauselearn==0){
 
-                    await slide.sleep(100);
+                    await slide.sleep(10);
                     slide.slideNet.learn_batch();
-                   // console.log(slide.slideNet.costTot);
 
                     slide.slideNet.setNetInput(slide.slideNet.data.points[slide.slideNet.dataIdx]);
 
@@ -541,18 +553,24 @@ export class Slide{
 
         
                     slide.loopcount=slide.loopcount+1;
+
                     if(slide.sandbox){
-                    slide.costLabel.getChildByName("epochbox").getChildByName("epoch").text=slide.loopcount;
+                        slide.costLabel.getChildByName("epochbox").getChildByName("epoch").text=slide.loopcount;
                     }
 
-                    //if(slide.buttonContainer.getChildByName("stylebox").getChildByName("stochastic").press==true){
-                     //   break;
-                   // }
-
-                   // this.slideNet.setNetInput(this.slideNet.data.points[this.slideNet.dataIdx]);
+                    if(slide.loopcount==slide.looplim){
+                        break;
+                    }
 
                 }
+
+                slide.looplim=slide.looplim+1000;
+                pauselearn=1;
+                learnbox.getChildByName("pause").visible=false;
+                this.pressCount=0;
+
             }
+            
         });
 
         learnbox.addChild(new Button("pause",PIXI.Texture.from('images/buttons/pause.png'),125,60,false));
@@ -572,7 +590,7 @@ export class Slide{
         learnbox.addChild(new Button("reset",PIXI.Texture.from('images/buttons/reset.png'),38,60,true));        
         learnbox.getChildByName("reset").on('click', function(e){
             slide.loopcount=0;
-
+            slide.looplim=1000;
             slide.costLabel.getChildByName("costBox").getChildByName("costText").text="-";
 
             if(slide.sandbox){
@@ -590,6 +608,8 @@ export class Slide{
                 var newnet = new Net();
                 newnet.setNetData(slide.slideNet.data);
                 newnet.setNetActFn(slide.slideNet.netActFn);
+                newnet.setLearnRate(slide.slideNet.learnRate);
+                  //  console.log("old: "+slide.slideNet.netActFn + "new: "+ newnet.netActFn);
                 newnet.getLayer(0).addNeuron();
                 newnet.getLayer(0).addNeuron();
                 newnet.setOutLayer();
@@ -599,6 +619,8 @@ export class Slide{
                 slide.slideNet.checkInit();
                 slide.slideNet.update();
                 slide.draw_init(newnet);
+                layout.NEURON_Y_DIF=125;
+
             } else {
                 layout.NEURON_X_DIF = 175;
                 layout.NEURON_Y_DIF = 175;
@@ -609,6 +631,8 @@ export class Slide{
                 var newnet = new Net();
                 newnet.setNetData(slide.slideNet.data);
                 newnet.setNetActFn(slide.slideNet.netActFn);
+                newnet.setLearnRate(slide.slideNet.learnRate);
+
                 newnet.setOutLayer();
                 newnet.update();
                 slide.slideNet=newnet;
@@ -619,6 +643,7 @@ export class Slide{
                 slide.draw_init(newnet);
                 slide.drawWeights_update(slide.slideNet);
 
+                layout.NEURON_Y_DIF=125;
 
             }
 
@@ -689,11 +714,12 @@ export class Slide{
 
         databox.addChild(new Button("newdata",PIXI.Texture.from('images/buttons/datalin.png'),100,60,true));   
         databox.getChildByName("newdata").on('click', function(e){
-            slide.costLabel.getChildByName("costBox").getChildByName("costText").text="-";
+            slide.looplim=1000;
+            slide.loopcount=0;
 
             graph.clearGraph_all(slide.slideNet.data);
-            slide.loopcount=0;
-            if(this.sandbox){
+            if(slide.sandbox){
+
             slide.costLabel.getChildByName("epochbox").getChildByName("epoch").text=slide.loopcount;
             }
 
@@ -722,16 +748,18 @@ export class Slide{
             slide.slideNet=newnet;
             slide.draw_init(newnet);
 
+            slide.costLabel.getChildByName("costBox").getChildByName("costText").text="-";
 
         });
 
         databox.addChild(new Button("newdata_circle",PIXI.Texture.from('images/buttons/datacircle.png'),195,60,true));   
         databox.getChildByName("newdata_circle").on('click', function(e){
-            slide.costLabel.getChildByName("costBox").getChildByName("costText").text="-";
+            slide.looplim=1000;
 
             graph.clearGraph_all(slide.slideNet.data);
             slide.loopcount=0;
-            if(this.sandbox){
+
+            if(slide.sandbox){
             slide.costLabel.getChildByName("epochbox").getChildByName("epoch").text=slide.loopcount;
             }
 
@@ -759,6 +787,9 @@ export class Slide{
             newnet.update();
             slide.slideNet=newnet;
             slide.draw_init(newnet);
+
+            slide.costLabel.getChildByName("costBox").getChildByName("costText").text="-";
+
 
         });
 
@@ -855,7 +886,7 @@ export class Slide{
                             hilite.lineStyle(20, 0x8fffd6);
                             hilite.alpha=0.5;
                             hilite.drawPolygon(startx, startyf, endx, endy);
-                            weightSprite.addChild(hilite);
+                            this.weightsContainer.addChild(hilite);
                         }
 
                         if(this.w1){
@@ -868,7 +899,7 @@ export class Slide{
                             hilite.lineStyle(20, 0x8fffd6);
                             hilite.alpha=0.5
                             hilite.drawPolygon(startx, starty, endx, endy0);
-                            weightSprite.addChild(hilite)
+                            this.weightsContainer.addChild(hilite)
 
                             }
                         }
@@ -884,7 +915,7 @@ export class Slide{
                             hilite.lineStyle(20, 0x8fffd6);
                             hilite.alpha=0.5
                             hilite.drawPolygon(startx, starty, endx, endy0);
-                            weightSprite.addChild(hilite)
+                            this.weightsContainer.addChild(hilite)
 
                             }
 
@@ -899,50 +930,10 @@ export class Slide{
                             hilite.lineStyle(20, 0x8fffd6);
                             hilite.alpha=0.5
                             hilite.drawPolygon(startx, startyf, endx, endy);
-                            weightSprite.addChild(hilite)
+                            this.weightsContainer.addChild(hilite)
 
                             }
                         }
-
-                            /*
-                            var hilitew13 = new PIXI.Graphics();
-                            hilitew13.lineStyle(hiliteWeight, hiliteColor);
-                    
-                            i=0;
-                            j=0;
-                            k=0;
-                            startx = layout.NEURON_LEFTLIM + (i*layout.NEURON_X_DIF);
-                            endx = layout.NEURON_LEFTLIM + (i*layout.NEURON_X_DIF) - layout.NEURON_X_DIF;
-                            hilitew13.drawPolygon(startx, starty, endx, endy0);
-                    
-                            i=1;
-                            j=0;
-                            k=0;
-                            startx = layout.NEURON_LEFTLIM + (i*layout.NEURON_X_DIF);
-                            startyf = layout.NEURON_UPPERLIM + (j*layout.NEURON_Y_DIF) + layout.NEURON_NUDGE;
-                            endx = layout.NEURON_LEFTLIM + (i*layout.NEURON_X_DIF) - layout.NEURON_X_DIF;
-                            endy =  layout.NEURON_UPPERLIM + (k*layout.NEURON_Y_DIF)+100;
-                    
-                            hilitew13.drawPolygon(startx, startyf, endx, endy);
-                    
-                            i=1;
-                            j=1;
-                            k=0;
-                            startx = layout.NEURON_LEFTLIM + (i*layout.NEURON_X_DIF);
-                            startyf = layout.NEURON_UPPERLIM + (j*layout.NEURON_Y_DIF) + layout.NEURON_NUDGE;
-                            endx = layout.NEURON_LEFTLIM + (i*layout.NEURON_X_DIF) - layout.NEURON_X_DIF;
-                            endy =  layout.NEURON_UPPERLIM + (k*layout.NEURON_Y_DIF)+100;
-                            hilitew13.drawPolygon(startx, startyf, endx, endy);
-                    */
-
-
-                        
-
-
-                
-                            
-                        
-
                     }
 
                     var hitbuffer = 10;
@@ -978,7 +969,7 @@ export class Slide{
                         var x= layout.NEURON_LEFTLIM -layout.NEURON_X_DIF/2 ;
                         var y= layout.NEURON_UPPERLIM;
             
-                        var w1=new PIXI.Sprite(PIXI.Texture.from('images/backprop/w1.png'));
+                        var w1=new PIXI.Sprite(PIXI.Texture.from('images/backprop/w1_teal.png'));
                             w1.anchor.set(0.5)
                             w1.x=x;
                             w1.y=y+50;
@@ -992,37 +983,36 @@ export class Slide{
                             w3.x=x +190;
                             w3.y=y+40;
 
-                            if(this.none==true){
-                                w3.tint=0x000000;
-                            }
-                        var w4=new PIXI.Sprite(PIXI.Texture.from('images/backprop/w4.png'));
+                        var w4=new PIXI.Sprite(PIXI.Texture.from('images/backprop/w4_teal.png'));
                             w4.anchor.set(0.5)
                             w4.x=x+190;
                             w4.y=y+140;
-                        
-                        /*var w5=new PIXI.Sprite(PIXI.Texture.from('images/backprop/w5.png'));
-                            w5.anchor.set(0.5)
-                            w5.x=x+180;
-                            w5.y=y+5;
 
-                            if(this.weight=="w5"){
-                                w5.texture=PIXI.Texture.from('images/backprop/w54.png');
+                            if(this.none==true){
+                                w1.tint=0x000000;
+                                w3.tint=0x000000;
+                                w4.tint=0x000000;
+
+                            } else if(this.w3==true){
+                                w1.tint=0x000000;
+                                w4.tint=0x000000;
+
+                            } else if(this.w1==true){
+                                w3.tint=0x000000;
+                                w4.tint=0x000000;
                             }
-                        var w6=new PIXI.Sprite(PIXI.Texture.from('images/backprop/w6.png'));
-                            w6.anchor.set(0.5)
-                            w6.x=x+175;
-                            w6.y=y+60;
-                        var w7=new PIXI.Sprite(PIXI.Texture.from('images/backprop/w7.png'));
-                            w7.anchor.set(0.5)
-                            w7.x=x+210;
-                            w7.y=y+140;
-                        var w8=new PIXI.Sprite(PIXI.Texture.from('images/backprop/w8.png'));
-                            w8.anchor.set(0.5)
-                            w8.x=x+180;
-                            w8.y=y+180;
-                        
-                        this.weightsContainer.addChild(w1,w2,w3,w4,w5,w6,w7,w8)
-                        */
+                        /*
+                            if(this.none==true){
+                                w1.tint=0x000000;
+                                w3.tint=0x000000;
+                            } else if(!this.w1==true){
+                                w1.tint=0x000000;
+
+                            } else if(this.w1==true){
+                                w3.tint=0x000000;
+                            } else if(this.w1_all==true){
+                            }
+*/
                         this.weightsContainer.addChild(w1,w2,w3,w4)
 
                     }                    
@@ -1241,6 +1231,7 @@ export class Slide{
                     net.getLayer(i).getNeuron(j).getWeight(k).toFixed(2);
 
                     if(this.backprop_steps){
+                        if(this.w3){
                         this.slideNet.backprop();
 
                         this.textContainer.getChildByName("dzdw_num").text="= "+this.slideNet.getLayer(this.layernum).getNeuron(this.neuronnum).dz_dw[this.weightsnum].toFixed(2);
@@ -1262,6 +1253,7 @@ export class Slide{
                             this.textContainer.getChildByName("w_new").text="= "+this.slideNet.getLayer(this.layernum).getNeuron(this.neuronnum).getWeight(this.weightsnum).toFixed(4)
                                 + " - ("+ this.slideNet.learnRate +" × "+ this.slideNet.getLayer(this.layernum).getNeuron(this.neuronnum).dc_dw[this.weightsnum].toFixed(5)+")"
                                 +'\n'+"   = "+newweight.toFixed(4);
+                        }
 
                     }
                 }
@@ -1881,11 +1873,26 @@ export class Slide{
             typeLabel1.x=targetLabel1.x;
             typeLabel1.y=targetLabel1.y+30;
 
+            if(this.backprop_steps){
+
+            var c1 = new PIXI.Sprite(PIXI.Texture.from('images/backprop/c1.png'));
+                c1.scale.set(0.55)
+                c1.x=-10;
+                c1.y=10;
+            targetLabel0.addChild(c1);
+
+            var c2 = new PIXI.Sprite(PIXI.Texture.from('images/backprop/c2.png'));
+                c2.scale.set(0.55)
+                c2.x=-10;
+                c2.y=10;
+            targetLabel1.addChild(c2);
+            }
+
             if(this.backprop_labels){
                 targetLabel0.text="     = target";
                 
                 var y1 = new PIXI.Sprite(PIXI.Texture.from('images/backprop/y1.png'));
-                var c1 = new PIXI.Sprite(PIXI.Texture.from('images/backprop/c1.png'));
+                var c1 = new PIXI.Sprite(PIXI.Texture.from('images/backprop/c1form.png'));
                 c1.scale.set(0.55)
                 c1.x=-10;
                 c1.y=10;
@@ -1894,7 +1901,7 @@ export class Slide{
                 targetLabel1.text="     = target";
 
                 var y2 = new PIXI.Sprite(PIXI.Texture.from('images/backprop/y2.png'));
-                var c2 = new PIXI.Sprite(PIXI.Texture.from('images/backprop/c2.png'));
+                var c2 = new PIXI.Sprite(PIXI.Texture.from('images/backprop/c2form.png'));
                 c2.scale.set(0.55)
                 c2.x=-10;
                 c2.y=10;
@@ -1902,10 +1909,6 @@ export class Slide{
 
                 typeLabel0.text="";
                 typeLabel1.text="";
-
-            } else if (this.backprop_labels1){
-                targetLabel0.text="";
-                targetLabel1.text="";
 
             }
             
@@ -2179,54 +2182,100 @@ export class Slide{
 
     drawBackprop(layernum,neuronnum,weightnum){
 
-        var x = 760;
+        var x = 700;
         var DZDW=100
         var DADZ=200;
         var DCDA=300;
-        var DCDW=380;
-        var W_NEW=450;
+        var DCDW=310;
+        var W_NEW=470;
 
         //dz_dw
+        var dzdw3_small= new PIXI.Sprite(PIXI.Texture.from('images/backprop/dzdw3.png'));
+            dzdw3_small.scale.set(0.85)
+            dzdw3_small.anchor.set(0.5)
+            dzdw3_small.isSprite=true;
+            dzdw3_small.x=x;
+            dzdw3_small.y=DZDW;
+        this.textContainer.addChild(dzdw3_small);
+
         var dzdw_num= new PIXI.Text("",textstyles.label_med);
             //dzdw_num.anchor.set(1,0)
             dzdw_num.name="dzdw_num";
-            dzdw_num.x=x;
-            dzdw_num.y=DZDW-15;
+            dzdw_num.x=dzdw3_small.x+40;
+            dzdw_num.y=dzdw3_small.y-15;
         this.textContainer.addChild(dzdw_num);
 
         //da_dz
+        var dadz21_small= new PIXI.Sprite(PIXI.Texture.from('images/backprop/dadz21.png'));
+            dadz21_small.scale.set(0.85)
+            dadz21_small.anchor.set(0.5)
+            dadz21_small.isSprite=true;
+            dadz21_small.x=x;
+            dadz21_small.y=DADZ;
+        this.textContainer.addChild(dadz21_small);
+
+
         var dadz_num= new PIXI.Text("",textstyles.label_med);
            // dadz_num.anchor.set(1,0)
             dadz_num.name="dadz_num";
-            dadz_num.x=x;
-            dadz_num.y=DADZ-20;
+            dadz_num.x=dadz21_small.x+40;
+            dadz_num.y=dadz21_small.y-15;
         this.textContainer.addChild(dadz_num);
 
         //dc_da
-        var dcda_num= new PIXI.Text("",textstyles.label_med);
-          //  dcda_num.anchor.set(1,0)
+        var dcda21_small= new PIXI.Sprite(PIXI.Texture.from('images/backprop/dcda21.png'));
+            dcda21_small.scale.set(0.85)
+            dcda21_small.anchor.set(0.5)
+            dcda21_small.isSprite=true;
+            dcda21_small.x=x;
+            dcda21_small.y=DCDA;
+        this.textContainer.addChild(dcda21_small);
 
+        var dcda_num= new PIXI.Text("",textstyles.label_med);
             dcda_num.name="dcda_num";
-            dcda_num.x=x;
-            dcda_num.y=DCDA-10;
+            dcda_num.x=dcda21_small.x+40;
+            dcda_num.y=dcda21_small.y-15;
         this.textContainer.addChild(dcda_num);
 
         //DC_DW
+        var dctot= new PIXI.Sprite(PIXI.Texture.from('images/backprop/dctot.png'));
+        dctot.isSprite=true;
+        dctot.scale.set(0.85)
+        dctot.x=x-90;
+        dctot.y=DCDW;
+        this.textContainer.addChild(dctot);
+
         var dcdw_num= new PIXI.Text("",textstyles.label_med);
          //   dcdw_num.anchor.set(1,0)
             dcdw_num.name="dcdw_num";
-            dcdw_num.x=x;
-            dcdw_num.y=DCDW;
+            dcdw_num.x=dctot.x+130;
+            dcdw_num.y=DCDW+65;
         this.textContainer.addChild(dcdw_num);
+
+        //W_NEW
+        var w3_new= new PIXI.Sprite(PIXI.Texture.from('images/backprop/w3_new.png'));
+        w3_new.scale.set(0.75)
+        w3_new.anchor.set(0.5)
+        w3_new.isSprite=true;
+        w3_new.x=x;
+        w3_new.y=W_NEW;
+        this.textContainer.addChild(w3_new);
 
         var w_new= new PIXI.Text("",textstyles.label_med);
            w_new.name="w_new";
-           w_new.x=x;
-           w_new.y=W_NEW;
+           w_new.x=x+70;
+           w_new.y=w3_new.y-10;
        this.textContainer.addChild(w_new);
+
+
 
         this.slideNet.backprop();
 
+        if(this.w1_all){
+            console.log("w1")
+
+        dctot.texture=PIXI.Texture.from('images/buttons/cat.png');
+        
         dzdw_num.text="= "+this.slideNet.getLayer(layernum).getNeuron(neuronnum).dz_dw[weightnum].toFixed(2);
         dadz_num.text="= "+this.slideNet.getLayer(layernum).getNeuron(neuronnum).output.toFixed(2) + 
               " × " + "(1 - " +this.slideNet.getLayer(layernum).getNeuron(neuronnum).output.toFixed(2) +")" +
@@ -2246,7 +2295,9 @@ export class Slide{
         w_new.text="= "+this.slideNet.getLayer(layernum).getNeuron(neuronnum).getWeight(weightnum).toFixed(4)
             + " - ("+ this.slideNet.learnRate +" × "+ this.slideNet.getLayer(layernum).getNeuron(neuronnum).dc_dw[weightnum].toFixed(5)+")"
             +'\n'+"   = "+newweight.toFixed(4);
-          
+        } else {
+
+        }
 
     }
 

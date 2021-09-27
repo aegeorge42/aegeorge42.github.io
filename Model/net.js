@@ -18,7 +18,7 @@ export const defaultActFn = actFns.LINEAR;
 export class Net{
 
     constructor(){
-        this.maxLayers=3;
+        this.maxLayers=4;
         this.maxNeurons=3;
 
         this.data=[];
@@ -116,6 +116,24 @@ export class Net{
         }
     }
 
+    //needed for single neuron net
+    update_single(){
+        this.lastLayer = this.getLayer(this.layers.length-1);
+        this.lastLayer.layerNumber=this.layers.length-1;
+
+        this.getLayer(0).setLayerIns(this.netInput);
+        var netfn = this.netActFn;
+
+        this.lastLayer.neurons.forEach(function(neuron){
+                        if(neuron.actFun != netfn){
+                            neuron.actFun = netfn;
+                        }
+                        neuron.calcOut();
+                    });
+            
+                    this.netOut=this.lastLayer.getLayerOuts();
+
+    }
 
     update(){
 
