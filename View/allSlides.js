@@ -1045,9 +1045,9 @@ export const SlideError6b = new Slide();
 
     var gotocalc=new Button("gotocalc",PIXI.Texture.from('images/buttons/calculus.png'), 200,300,true);
     gotocalc.on('click', function(e){
-        if (viewst.currentSlide!=37){
+        if (viewst.currentSlide!=35){
 
-            viewst.currentSlide=37;
+            viewst.currentSlide=35;
             viewst.drawSlide();
         }
     });
@@ -1130,8 +1130,8 @@ SlideError7.fakenet=true;
     SlideCredit.slidecredit=true;
     var textCredit = [
         [["Created by Allison George", textstyles.large_bold], [layout.LEFTBUFFER,layout.TOPBUFFER]],
-        [["any questions or comments? email me at aegeorge@udel.edu"+'\n'+
-        " or send me a tweet at @aegeorge42"], [layout.LEFTBUFFER,layout.TOPBUFFER+50]],
+        [["feel free to email me at aegeorge@udel.edu"+'\n'+
+        " or send me a tweet at @aegeorge42 !"], [layout.LEFTBUFFER,layout.TOPBUFFER+50]],
 
         [["Huge thanks to:"], [layout.LEFTBUFFER,layout.TOPBUFFER+150]],
         [["3blue1brown                                          " +'\n', textstyles.large_bold],
@@ -1555,6 +1555,16 @@ export const SlideBackF = new Slide();
 
 
 
+
+
+
+
+
+
+
+
+
+
 /*********     CALCULUS    *********** */   
 layout.NEURON_X_DIF = 175;
 layout.NEURON_Y_DIF = 175;
@@ -1612,11 +1622,12 @@ export const SlideBackCalc0 = new Slide();
 
     var backpropx= layout.LEFTBUFFER + layout.NEURON_LEFTLIM+layout.NEURON_X_DIF +50;
     SlideBackCalc0.backfromcalc=true;
-    SlideBackCalc0.textbuttonContainer.addChild(new Button("backfromcalc",PIXI.Texture.from('images/buttons/cat.png'),(window.innerWidth/2) -100,window.innerHeight-(75/2),true));
+    SlideBackCalc0.textbuttonContainer.addChild(new Button("backfromcalc",PIXI.Texture.from('images/buttons/treasure.png'),(window.innerWidth/2) -100,window.innerHeight-(75/2),true));
+    console.log(SlideBackCalc0.textbuttonContainer);
     SlideBackCalc0.textbuttonContainer.getChildByName("backfromcalc").on('click', function(e){
-        if (viewst.currentSlide!=34){
+        if (viewst.currentSlide!=32){
 
-            viewst.currentSlide=34;
+            viewst.currentSlide=32;
             viewst.drawSlide();
         }
     });
@@ -1684,10 +1695,10 @@ export const SlideBackCalc2 = new Slide();
     SlideBackCalc2.draw_init(netBack0);
     SlideBackCalc2.drawCost();
 
-    var wtocarrow= new PIXI.Sprite(PIXI.Texture.from('images/backprop/wtocarrow.png'));
-        wtocarrow.isSprite=true;
-        wtocarrow.x=layout.NEURON_LEFTLIM -layout.NEURON_X_DIF/2 +100;
-        wtocarrow.y=layout.NEURON_UPPERLIM-100;
+    var w3toc= new PIXI.Sprite(PIXI.Texture.from('images/backprop/arrows/w3toc.png'));
+        w3toc.isSprite=true;
+        w3toc.x=0;
+        w3toc.y=50;
 
     var dctot= new PIXI.Sprite(PIXI.Texture.from('images/backprop/dctot.png'));
         dctot.isSprite=true;
@@ -1706,7 +1717,7 @@ export const SlideBackCalc2 = new Slide();
 
 
     var textBackCalc2 = [
-        wtocarrow,
+        w3toc,
         [ ["What we want to know is:"],[backpropx_cost,layout.TOPBUFFER] ],
         [ ["How much does     "+'\n'+"influence the total cost?", textstyles.large_bold],[backpropx_cost,layout.TOPBUFFER+50] ],
         w3,
@@ -1730,10 +1741,10 @@ export const SlideBackCalc2b = new Slide();
     SlideBackCalc2b.draw_init(netBack0);
     SlideBackCalc2b.drawCost();
 
-    var wtocarrow= new PIXI.Sprite(PIXI.Texture.from('images/backprop/wtocarrow.png'));
-    wtocarrow.isSprite=true;
-    wtocarrow.x=layout.NEURON_LEFTLIM -layout.NEURON_X_DIF/2 +100;
-    wtocarrow.y=layout.NEURON_UPPERLIM-100;
+    var w3toc= new PIXI.Sprite(PIXI.Texture.from('images/backprop/arrows/w3toc.png'));
+        w3toc.isSprite=true;
+        w3toc.x=0;
+        w3toc.y=50;
 
     var w3= new PIXI.Sprite(PIXI.Texture.from('images/backprop/w3_teal.png'));
     w3.isSprite=true;
@@ -1780,8 +1791,7 @@ export const SlideBackCalc2b = new Slide();
     w3new.y=layout.TOPBUFFER+350;
 
     var textBackCalc2b = [
-        wtocarrow,
-        
+        w3toc,        
         [ ["To find our new   "],[backpropx_cost,layout.TOPBUFFER] ],
         w3,
         [ ["We'll calculate       for each of our datapoints." +'\n\n'+"then take the average to get   "],[backpropx_cost,layout.TOPBUFFER+50] ],
@@ -1810,6 +1820,11 @@ export const SlideBackCalc3 = new Slide();
     SlideBackCalc3.draw_init(netBack0);
     SlideBackCalc3.drawCost();
 
+    var w3all= new PIXI.Sprite(PIXI.Texture.from('images/backprop/arrows/w3all.png'));
+    w3all.isSprite=true;
+    w3all.x=0;
+    w3all.y=50;
+
 
     var arrows= new PIXI.Sprite(PIXI.Texture.from('images/backprop/arrows.png'));
         arrows.isSprite=true;
@@ -1822,7 +1837,7 @@ export const SlideBackCalc3 = new Slide();
         dctot_small.x=backpropx_cost+150;
         dctot_small.y=layout.TOPBUFFER-20;
 
-    var dzdw3_small= new PIXI.Sprite(PIXI.Texture.from('images/backprop/dzdw3.png'));
+    var dzdw3_small= new PIXI.Sprite(PIXI.Texture.from('images/backprop/dxdy/dzdw3.png'));
     dzdw3_small.scale.set(0.85)
     dzdw3_small.anchor.set(0.5)
     dzdw3_small.isSprite=true;
@@ -1886,7 +1901,8 @@ export const SlideBackCalc3 = new Slide();
         ctot.y=layout.TOPBUFFER+300;
 
     var textBackCalc3 = [
-        arrows,   
+        w3all,
+    //    arrows,   
     //    dcdw5,
         [ ["To calculate              we need:", textstyles.large_bold],[backpropx_cost,layout.TOPBUFFER+10] ],
         dctot_small,
@@ -1909,6 +1925,12 @@ export const SlideBackCalc3a = new Slide();
     SlideBackCalc3a.draw_init(netBack0);
     SlideBackCalc3a.drawCost();
 
+    var w3all= new PIXI.Sprite(PIXI.Texture.from('images/backprop/arrows/w3all.png'));
+    w3all.isSprite=true;
+    w3all.x=0;
+    w3all.y=50;
+
+
     var arrows= new PIXI.Sprite(PIXI.Texture.from('images/backprop/arrows.png'));
         arrows.isSprite=true;
         arrows.x=layout.NEURON_LEFTLIM -layout.NEURON_X_DIF/2 +90;
@@ -1927,7 +1949,7 @@ export const SlideBackCalc3a = new Slide();
     dcdw3.y=200;
 
     var textBackCalc3a = [
-        arrows,
+        w3all,
           dcdw3,    
           [ ["Using the calculus chain rule," +'\n'+"we multiply these values to get      "],[backpropx_cost,layout.TOPBUFFER] ],
           dctot_small,
@@ -1957,8 +1979,14 @@ export const SlideBackCalc4 = new Slide();
     dzdw3arrow.x=layout.NEURON_LEFTLIM -layout.NEURON_X_DIF/2 +90;
     dzdw3arrow.y=layout.NEURON_UPPERLIM-110;
 
+    var w3toz= new PIXI.Sprite(PIXI.Texture.from('images/backprop/arrows/w3toz.png'));
+    w3toz.isSprite=true;
+    w3toz.x=0;
+    w3toz.y=50;
+
     var textBackCalc4 = [
-        dzdw3arrow,dz21dw3_form,
+        w3toz,
+        dz21dw3_form,
        // [ ["slidebackcalc4"],[backpropx_cost-50,layout.TOPBUFFER+300] ],
     ];
     SlideBackCalc4.drawText(textBackCalc4);
@@ -1973,20 +2001,19 @@ export const SlideBackCalc5 = new Slide();
     SlideBackCalc5.draw_init(netBack0);
     SlideBackCalc5.drawCost();
 
+    var ztoa= new PIXI.Sprite(PIXI.Texture.from('images/backprop/arrows/ztoa.png'));
+    ztoa.isSprite=true;
+    ztoa.x=0;
+    ztoa.y=50;
+
     var da21dz_form= new PIXI.Sprite(PIXI.Texture.from('images/backprop/da21dz_form.png'));
     da21dz_form.isSprite=true;
     da21dz_form.scale.set(0.7)
     da21dz_form.x=backpropx_cost-50;
     da21dz_form.y=50;
 
-
-    var dadzarrow= new PIXI.Sprite(PIXI.Texture.from('images/backprop/da2dz2arrow.png'));
-        dadzarrow.isSprite=true;
-        dadzarrow.x=layout.NEURON_LEFTLIM -layout.NEURON_X_DIF/2 +90;
-        dadzarrow.y=layout.NEURON_UPPERLIM-110;
-
     var textBackCalc5 = [
-        da21dz_form,dadzarrow,//  dadzform,dadzarrow,a3form,
+        da21dz_form,ztoa,
         [ ["Note: this formula changes depending on the activation function."],[backpropx_cost,layout.TOPBUFFER] ],
     ];
     SlideBackCalc5.drawText(textBackCalc5);
@@ -2002,10 +2029,10 @@ export const SlideBackCalc6 = new Slide();
     SlideBackCalc6.drawCost();
 
 
-    var da21dc_arrow= new PIXI.Sprite(PIXI.Texture.from('images/backprop/da21dc_arrow.png'));
-    da21dc_arrow.isSprite=true;
-    da21dc_arrow.x=layout.NEURON_LEFTLIM -layout.NEURON_X_DIF/2 +90;
-    da21dc_arrow.y=layout.NEURON_UPPERLIM-110;
+    var a21toc= new PIXI.Sprite(PIXI.Texture.from('images/backprop/arrows/a21toc.png'));
+    a21toc.isSprite=true;
+    a21toc.x=0;
+    a21toc.y=50;
 
     var dcda12_form= new PIXI.Sprite(PIXI.Texture.from('images/backprop/dcda12_form.png'));
     dcda12_form.isSprite=true;
@@ -2014,7 +2041,8 @@ export const SlideBackCalc6 = new Slide();
     dcda12_form.y=100;
 
     var textBackCalc6 = [
-        da21dc_arrow,dcda12_form,
+        a21toc,
+        dcda12_form,
     ];
     SlideBackCalc6.drawText(textBackCalc6);
 
@@ -2029,21 +2057,20 @@ export const SlideBackCalc6a = new Slide();
         SlideBackCalc6a.drawCost();
     //    SlideBackCalc6a.drawCost_steps();
 
-    var arrows6a= new PIXI.Sprite(PIXI.Texture.from('images/backprop/arrows.png'));
-    arrows6a.isSprite=true;
-    arrows6a.x=layout.NEURON_LEFTLIM -layout.NEURON_X_DIF/2 +90;
-    arrows6a.y=layout.NEURON_UPPERLIM-110;
-    SlideBackCalc6a.labelsContainer.addChild(arrows6a);
-
     var dctotfinal_form= new PIXI.Sprite(PIXI.Texture.from('images/backprop/dctotfinal_form.png'));
     dctotfinal_form.isSprite=true;
     dctotfinal_form.scale.set(0.7)
     dctotfinal_form.x=backpropx_cost-50;
     dctotfinal_form.y=100;
 
+    var w3all= new PIXI.Sprite(PIXI.Texture.from('images/backprop/arrows/w3all.png'));
+    w3all.isSprite=true;
+    w3all.x=0;
+    w3all.y=50;
+
 
     var textBackCalc6a = [
-        dctotfinal_form,
+        dctotfinal_form, w3all,
         [ ["Next, we'll walk through an example with numbers."],[backpropx_cost,layout.TOPBUFFER] ],
         //[ ["it may help to write down or take a screenshot of this page."],[backpropx_cost,layout.TOPBUFFER] ],
 
@@ -2142,11 +2169,6 @@ export const SlideBackCalc8 = new Slide();
     w1.x=800;
     w1.y=100;
 
-    var w1arrows = new PIXI.Sprite(PIXI.Texture.from('images/backprop/w1arrows.png'));
-    w1arrows.isSprite=true;
-    w1arrows.x=0;
-    w1arrows.y=50;
-
     var dcdw1= new PIXI.Sprite(PIXI.Texture.from('images/backprop/dcdw1.png'));
     dcdw1.isSprite=true;
     dcdw1.scale.set(0.7)
@@ -2166,9 +2188,14 @@ export const SlideBackCalc8 = new Slide();
     da1dz1.x=backpropx_cost;
     da1dz1.y=400;
 
+    var w1all = new PIXI.Sprite(PIXI.Texture.from('images/backprop/arrows/w1all.png'));
+    w1all.isSprite=true;
+    w1all.x=0;
+    w1all.y=50;
+
     var textBackCalc8 = [
-        w1,w1arrows,dcdw1,
-   dz1dw1,da1dz1,
+        w1,dcdw1,
+        dz1dw1,da1dz1, w1all,
         [ ["For      , the process is similar."],[backpropx_cost,layout.TOPBUFFER] ],
     ];
 
@@ -2189,29 +2216,63 @@ export const SlideBackCalc9 = new Slide();
     SlideBackCalc9.backprop_labels=true;
     SlideBackCalc9.w1_all=true;
 
-    var w1arrows_all = new PIXI.Sprite(PIXI.Texture.from('images/backprop/w1arrows_all.png'));
-    w1arrows_all.isSprite=true;
-    w1arrows_all.x=0;
-    w1arrows_all.y=50;
-/*
-    var dcda1= new PIXI.Sprite(PIXI.Texture.from('images/backprop/dcda1.png'));
-        dcda1.isSprite=true;
-        dcda1.scale.set(0.35)
-        dcda1.x=backpropx_cost-100;
-        dcda1.y=20;
+    var w1all = new PIXI.Sprite(PIXI.Texture.from('images/backprop/arrows/w1all.png'));
+    w1all.isSprite=true;
+    w1all.x=0;
+    w1all.y=50;
 
-    var dcda1f= new PIXI.Sprite(PIXI.Texture.from('images/backprop/dcda1f.png'));
-    dcda1f.isSprite=true;
-    dcda1f.scale.set(0.35)
-    dcda1f.x=backpropx_cost-150;
-    dcda1f.y=370;
-*/
+    var dcda1= new PIXI.Sprite(PIXI.Texture.from('images/backprop/dcda11.png'));
+        dcda1.isSprite=true;
+        dcda1.x=700;
+        dcda1.y=0;
+
+    var a11 = new PIXI.Sprite(PIXI.Texture.from('images/backprop/a11.png'));
+        a11.isSprite=true;
+        a11.scale.set(0.6)
+        a11.x=700;
+        a11.y=120;
+
+    var a21 = new PIXI.Sprite(PIXI.Texture.from('images/backprop/a21.png'));
+    a21.isSprite=true;
+    a21.scale.set(0.6)
+    a21.x=850;
+    a21.y=120;
+
+    var a22 = new PIXI.Sprite(PIXI.Texture.from('images/backprop/a22.png'));
+    a22.isSprite=true;
+    a22.scale.set(0.6)
+    a22.x=900;
+    a22.y=120;
+
+    var c1 = new PIXI.Sprite(PIXI.Texture.from('images/backprop/c1.png'));
+    c1.isSprite=true;
+    c1.scale.set(0.6)
+    c1.x=850;
+    c1.y=150;
+
+    var c2 = new PIXI.Sprite(PIXI.Texture.from('images/backprop/c2.png'));
+    c2.isSprite=true;
+    c2.scale.set(0.6)
+    c2.x=900;
+    c2.y=150;
+
+    var w1toc = new PIXI.Sprite(PIXI.Texture.from('images/backprop/arrows/w1toc.png'));
+    w1toc.isSprite=true;
+    w1toc.x=0;
+    w1toc.y=50;
+
+    var dcda1_form1= new PIXI.Sprite(PIXI.Texture.from('images/backprop/dcda1_form1.png'));
+    dcda1_form1.isSprite=true;
+    dcda1_form1.scale.set(0.5)
+    dcda1_form1.x=backpropx_cost;
+    dcda1_form1.y=250;
+
+
     var textBackCalc9 = [
        // dcda1,dcda1f,
-       w1arrows_all,
-        [ ["However, a1 affects both a3 and a4" +'\n' +"so we need to break it down even further."],[backpropx_cost,layout.TOPBUFFER] ],
-        [ ["All this requires is tracing "],[backpropx_cost,layout.TOPBUFFER] ],
-
+       dcda1_form1,w1toc,
+       [ ["However, to find           , we need to break it down more"+'\n\n'+"since         affects both a1 and a2"+'\n\n'+"and therefore      and       "],[backpropx_cost,layout.TOPBUFFER] ],
+       dcda1,a11,a21,a22,c1,c2,
     ];
 
     SlideBackCalc9.drawText(textBackCalc9);
@@ -2219,24 +2280,150 @@ export const SlideBackCalc9 = new Slide();
     SlideBackCalc9.drawCost();
 
 
+export const SlideBackCalc9b = new Slide();
+    SlideBackCalc9b.slideNet=netBack0;
+    SlideBackCalc9b.backprop=true;
+    SlideBackCalc9b.backprop_labels=true;
+    SlideBackCalc9b.w1_all=true;
+
+    var w1toc_expand1 = new PIXI.Sprite(PIXI.Texture.from('images/backprop/arrows/w1toc_expand1.png'));
+    w1toc_expand1.isSprite=true;
+    w1toc_expand1.x=0;
+    w1toc_expand1.y=50;
+
+    var dcda_form2= new PIXI.Sprite(PIXI.Texture.from('images/backprop/dcda_form2.png'));
+    dcda_form2.isSprite=true;
+    dcda_form2.scale.set(0.5)
+    dcda_form2.x=backpropx_cost;
+    dcda_form2.y=50;
 
 
 
+    var textBackCalc9b = [
+      //  w1arrow2,
+      //  w1arrow1,//dcda1_form1,
+      w1toc_expand1, dcda_form2,
+        [ ["9b"],[backpropx_cost,layout.TOPBUFFER] ],
+    ];
+
+    SlideBackCalc9b.drawText(textBackCalc9b);
+    SlideBackCalc9b.draw_init(netBack0);
+    SlideBackCalc9b.drawCost();
+
+
+
+export const SlideBackCalc9a = new Slide();
+SlideBackCalc9a.slideNet=netBack0;
+SlideBackCalc9a.backprop=true;
+SlideBackCalc9a.backprop_labels=true;
+SlideBackCalc9a.w1_all=true;
+
+    var w1arrows_all = new PIXI.Sprite(PIXI.Texture.from('images/backprop/w1arrows_all.png'));
+    w1arrows_all.isSprite=true;
+    w1arrows_all.x=0;
+    w1arrows_all.y=50;
+
+    var dcda1= new PIXI.Sprite(PIXI.Texture.from('images/backprop/dcda1.png'));
+        dcda1.isSprite=true;
+        dcda1.scale.set(0.45)
+        dcda1.x=backpropx_cost-100;
+        dcda1.y=20;
+
+    var w1toc_expand2 = new PIXI.Sprite(PIXI.Texture.from('images/backprop/arrows/w1toc_expand2.png'));
+    w1toc_expand2.isSprite=true;
+    w1toc_expand2.x=0;
+    w1toc_expand2.y=50;
+
+    var dcda_form3= new PIXI.Sprite(PIXI.Texture.from('images/backprop/dcda_form3.png'));
+    dcda_form3.isSprite=true;
+    dcda_form3.scale.set(0.4)
+    dcda_form3.x=backpropx_cost;
+    dcda_form3.y=50;
+
+    var dcda1_full= new PIXI.Sprite(PIXI.Texture.from('images/backprop/formulas/dcda1_full.png'));
+    dcda1_full.isSprite=true;
+    dcda1_full.scale.set(0.4)
+    dcda1_full.x=backpropx_cost;
+    dcda1_full.y=380;
+
+/*
+    var dcda1f= new PIXI.Sprite(PIXI.Texture.from('images/backprop/dcda1f.png'));
+    dcda1f.isSprite=true;
+    dcda1f.scale.set(0.35)
+    dcda1f.x=backpropx_cost-150;
+    dcda1f.y=370;
+*/
+    var textBackCalc9a = [
+      //  dcda1,//dcda1f,
+     //  w1arrows_all,
+     w1toc_expand2,dcda_form3,dcda1_full,
+        [ ["49"],[backpropx_cost,layout.TOPBUFFER] ],
+    ];
+
+    SlideBackCalc9a.drawText(textBackCalc9a);
+    SlideBackCalc9a.draw_init(netBack0);
+    SlideBackCalc9a.drawCost();
+
+export const SlideBackCalc9a2 = new Slide();
+SlideBackCalc9a2.slideNet=netBack0;
+SlideBackCalc9a2.backprop=true;
+SlideBackCalc9a2.backprop_labels=true;
+SlideBackCalc9a2.w1_all=true;
+       
+    
+    var w1toc_expand2 = new PIXI.Sprite(PIXI.Texture.from('images/backprop/arrows/w1toc_expand2.png'));
+    w1toc_expand2.isSprite=true;
+    w1toc_expand2.x=0;
+    w1toc_expand2.y=50;
+
+    var dcda1_full2= new PIXI.Sprite(PIXI.Texture.from('images/backprop/formulas/dcda1_full2.png'));
+    dcda1_full2.isSprite=true;
+    dcda1_full2.scale.set(0.4)
+    dcda1_full2.x=backpropx_cost;
+    dcda1_full2.y=50;
+
+    
+    var textBackCalc9a2 = [
+        w1toc_expand2,dcda1_full2,
+        [ ["Notice how we found    and     on the previous"],[backpropx_cost,layout.TOPBUFFER] ],
+    ];
+        
+    SlideBackCalc9a2.drawText(textBackCalc9a2);
+    SlideBackCalc9a2.draw_init(netBack0);
+    SlideBackCalc9a2.drawCost();
+
+export const SlideBackCalc9c = new Slide();
+SlideBackCalc9c.slideNet=netBack0;
+SlideBackCalc9c.backprop=true;
+SlideBackCalc9c.backprop_labels=true;
+SlideBackCalc9c.w1_all=true;
+   
+
+var w1toc_expand3 = new PIXI.Sprite(PIXI.Texture.from('images/backprop/arrows/w1toc_expand3.png'));
+w1toc_expand3.isSprite=true;
+w1toc_expand3.x=0;
+w1toc_expand3.y=50;
+
+var dcdw1_full= new PIXI.Sprite(PIXI.Texture.from('images/backprop/formulas/dcdw1_full.png'));
+dcdw1_full.isSprite=true;
+dcdw1_full.scale.set(0.6)
+dcdw1_full.x=backpropx_cost-150;
+dcdw1_full.y=50;
+
+        var textBackCalc9c = [
+            w1toc_expand3,dcdw1_full,
+          //  [ [""],[backpropx_cost,layout.TOPBUFFER] ],
+        ];
+    
+        SlideBackCalc9c.drawText(textBackCalc9c);
+        SlideBackCalc9c.draw_init(netBack0);
+        SlideBackCalc9c.drawCost();
 
 
 // INTERACTIVE
 export const SlideBackCalc10 = new Slide();
 
-    SlideBackCalc10.calc2sand=true;
-    SlideBackCalc10.textbuttonContainer.addChild(new Button("calc2sandbuttton",PIXI.Texture.from('images/buttons/button_next.png'),(window.innerWidth/2) +100,window.innerHeight-(75/2),true));
-    SlideBackCalc10.textbuttonContainer.getChildByName("calc2sandbuttton").on('click', function(e){
-        if (viewst.currentSlide!=34){
-
-            viewst.currentSlide=34;
-            viewst.drawSlide();
-        }
-    });
-
+   
 
     SlideBackCalc10.slideNet=netBack0;
     SlideBackCalc10.backprop=true;
@@ -2246,43 +2433,19 @@ export const SlideBackCalc10 = new Slide();
     SlideBackCalc10.draw_init(netBack0);
     
     SlideBackCalc10.drawRateButtons();
-/*
-    var dctot_final= new PIXI.Sprite(PIXI.Texture.from('images/backprop/dctot_final.png'));
-    dctot_final.isSprite=true;
-    dctot_final.scale.set(0.5)
-    dctot_final.x=backpropx_cost;
-    dctot_final.y=100;
 
-    var DZDW=100
-    var DADZ=200;
-    var DCDA=300;
-   
-    var dzdw5_small= new PIXI.Sprite(PIXI.Texture.from('images/backprop/dzdw5.png'));
-        dzdw5_small.scale.set(0.45)
-        dzdw5_small.anchor.set(0.5)
-        dzdw5_small.isSprite=true;
-        dzdw5_small.x=backpropx_cost+10;
-        dzdw5_small.y=DZDW;
+    SlideBackCalc10.calc2sand=true;
+    SlideBackCalc10.textbuttonContainer.addChild(new Button("calc2sand",PIXI.Texture.from('images/buttons/treasure.png'),(window.innerWidth/2) +100,window.innerHeight-(75/2),true));
+    SlideBackCalc10.textbuttonContainer.getChildByName("calc2sand").on('click', function(e){
+        if (viewst.currentSlide!=33){
 
-    var dadz21_small= new PIXI.Sprite(PIXI.Texture.from('images/backprop/dadz21.png'));
-        dadz21_small.scale.set(0.45)
-        dadz21_small.anchor.set(0.5)
-        dadz21_small.isSprite=true;
-        dadz21_small.x=backpropx_cost+10;
-        dadz21_small.y=DADZ;
+            viewst.currentSlide=33;
+            viewst.drawSlide();
+        }
+    });
 
-    var dcda21_small= new PIXI.Sprite(PIXI.Texture.from('images/backprop/dcda21.png'));
-        dcda21_small.scale.set(0.45)
-        dcda21_small.anchor.set(0.5)
-        dcda21_small.isSprite=true;
-        dcda21_small.x=backpropx_cost+10;
-        dcda21_small.y=DCDA;
-
-
-*/
     var textBackCalc10 = [
-  //       dzdw5_small,dadz21_small,dcda21_small,
-  //      [ ["DCDA"],[backpropx_cost,layout.TOPBUFFER] ],
+
     ];
     SlideBackCalc10.drawText(textBackCalc10);
     SlideBackCalc10.layernum=0;
@@ -2291,6 +2454,12 @@ export const SlideBackCalc10 = new Slide();
     SlideBackCalc10.drawBackprop(0,0,0);
     SlideBackCalc10.drawLearnButtons();
     SlideBackCalc10.drawCost();
+
+    var clicknext = new PIXI.Text("click next to head to sandbox mode!", textstyles.default);
+        clicknext.x=(window.innerWidth/2) +150;
+        clicknext.y=window.innerHeight-(75/2);
+        SlideBackCalc10.textbuttonContainer.addChild(clicknext);
+
 
 
 

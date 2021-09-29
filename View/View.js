@@ -73,6 +73,10 @@ SlideBackCalc6a,
 SlideBackCalc7,
 SlideBackCalc8,
 SlideBackCalc9,
+SlideBackCalc9a,
+SlideBackCalc9a2,
+SlideBackCalc9b,
+SlideBackCalc9c,
 SlideBackCalc10,
 
 SlideSandbox,
@@ -157,7 +161,7 @@ export class View{
                 }
 
                 if(vst.slideList[vst.currentSlide].calc2sand){
-                    app.stage.getChildAt(0).getChildAt(10).getChildByName("calc2sandbuttton").x=window.innerWidth/2 +100;
+                   app.stage.getChildAt(0).getChildAt(10).getChildByName("calc2sand").x=window.innerWidth/2 +100;
                 }
 
 
@@ -198,7 +202,7 @@ export class View{
                             
                             
                             SlideBackCalc0,SlideBackCalc1,SlideBackCalc2,SlideBackCalc2b,SlideBackCalc3,SlideBackCalc3a,SlideBackCalc4,SlideBackCalc5,SlideBackCalc6,SlideBackCalc6a,
-                            SlideBackCalc7,SlideBackCalc8,SlideBackCalc9,SlideBackCalc10,   
+                            SlideBackCalc7,SlideBackCalc8,SlideBackCalc9,SlideBackCalc9b,SlideBackCalc9a,SlideBackCalc9a2,SlideBackCalc9c,SlideBackCalc10,   
                             );//SlideNet3);//SlideSandbox);// SlideSandbox);
 
         /*TO DELETE*/
@@ -236,7 +240,7 @@ export class View{
 
 
 
-        this.currentSlide=48;
+        this.currentSlide=51;
 
 
 

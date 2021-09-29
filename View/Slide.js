@@ -879,11 +879,11 @@ export class Slide{
 
                         starty= layout.NEURON_UPPERLIM + (j * layout.NEURON_Y_DIF)+100
                         endy =  layout.NEURON_UPPERLIM + (k*layout.NEURON_Y_DIF)+100;
-
+                        var hilitecolor=0xb7ff00;
                         
                         if(i==1 && j==0 && k==0 && !this.w1 && !this.none){
                         var hilite = new PIXI.Graphics();
-                            hilite.lineStyle(20, 0x8fffd6);
+                            hilite.lineStyle(20, hilitecolor);
                             hilite.alpha=0.5;
                             hilite.drawPolygon(startx, startyf, endx, endy);
                             this.weightsContainer.addChild(hilite);
@@ -896,7 +896,7 @@ export class Slide{
 
                             endx = layout.NEURON_LEFTLIM + (i*layout.NEURON_X_DIF) - layout.NEURON_X_DIF;
                                 var hilite = new PIXI.Graphics();
-                            hilite.lineStyle(20, 0x8fffd6);
+                            hilite.lineStyle(20, hilitecolor);
                             hilite.alpha=0.5
                             hilite.drawPolygon(startx, starty, endx, endy0);
                             this.weightsContainer.addChild(hilite)
@@ -912,7 +912,7 @@ export class Slide{
                             endx = layout.NEURON_LEFTLIM + (i*layout.NEURON_X_DIF) - layout.NEURON_X_DIF;
                             
                             var hilite = new PIXI.Graphics();
-                            hilite.lineStyle(20, 0x8fffd6);
+                            hilite.lineStyle(20, hilitecolor);
                             hilite.alpha=0.5
                             hilite.drawPolygon(startx, starty, endx, endy0);
                             this.weightsContainer.addChild(hilite)
@@ -927,7 +927,7 @@ export class Slide{
                             endy =  layout.NEURON_UPPERLIM + (k*layout.NEURON_Y_DIF)+100;
                             
                             var hilite = new PIXI.Graphics();
-                            hilite.lineStyle(20, 0x8fffd6);
+                            hilite.lineStyle(20, hilitecolor);
                             hilite.alpha=0.5
                             hilite.drawPolygon(startx, startyf, endx, endy);
                             this.weightsContainer.addChild(hilite)
@@ -1231,6 +1231,7 @@ export class Slide{
                     net.getLayer(i).getNeuron(j).getWeight(k).toFixed(2);
 
                     if(this.backprop_steps){
+
                         if(this.w3){
                         this.slideNet.backprop();
 
@@ -1250,6 +1251,38 @@ export class Slide{
                             var newweight=    this.slideNet.getLayer(this.layernum).getNeuron(this.neuronnum).getWeight(this.weightsnum)
                             -(this.slideNet.learnRate*this.slideNet.getLayer(this.layernum).getNeuron(this.neuronnum).dc_dw[this.weightsnum]);
         
+                            this.textContainer.getChildByName("w_new").text="= "+this.slideNet.getLayer(this.layernum).getNeuron(this.neuronnum).getWeight(this.weightsnum).toFixed(4)
+                                + " - ("+ this.slideNet.learnRate +" × "+ this.slideNet.getLayer(this.layernum).getNeuron(this.neuronnum).dc_dw[this.weightsnum].toFixed(5)+")"
+                                +'\n'+"   = "+newweight.toFixed(4);
+
+                        } else if(this.w1_all){
+
+                            this.slideNet.backprop();
+
+                            this.textContainer.getChildByName("dadz_num").text="= "+this.slideNet.getLayer(this.layernum).getNeuron(this.neuronnum).output.toFixed(2)+
+                            " × " + "(1 - " +this.slideNet.getLayer(this.layernum).getNeuron(this.neuronnum).output.toFixed(2) +")" +
+                            '\n'+"   = "+this.slideNet.getLayer(this.layernum).getNeuron(this.neuronnum).da_dz.toFixed(5);
+
+                            this.textContainer.getChildByName("dcda_num").text="= ("+this.slideNet.getLayer(1).getNeuron(0).output.toFixed(2)+
+                            " × " + "(1 - " +this.slideNet.getLayer(1).getNeuron(0).output.toFixed(2) +"))" +
+                            "("+this.slideNet.getLayer(1).getNeuron(0).output.toFixed(2)+"-"+this.slideNet.target[0]+")"
+                            +"("+this.slideNet.getLayer(1).getNeuron(0).weights[0].toFixed(2)+")"
+
+                            + '\n'+"  + ("+this.slideNet.getLayer(1).getNeuron(1).output.toFixed(2) + 
+                            " × " + "(1 - " +this.slideNet.getLayer(1).getNeuron(1).output.toFixed(2) +"))" 
+                          +"("+this.slideNet.getLayer(1).getNeuron(1).output.toFixed(2)+"-"+this.slideNet.target[1]+")"
+                          +"("+this.slideNet.getLayer(1).getNeuron(1).weights[0].toFixed(2)+")"
+                          +'\n'+"    = "+this.slideNet.getLayer(this.layernum).getNeuron(this.neuronnum).dc_da.toFixed(5);
+
+                         
+                          this.textContainer.getChildByName("dcdw_num").text="= "+this.slideNet.getLayer(this.layernum).getNeuron(this.neuronnum).dz_dw[this.weightsnum].toFixed(2)+" × "
+                            +this.slideNet.getLayer(this.layernum).getNeuron(this.neuronnum).da_dz.toFixed(5)+" × "
+                            +this.slideNet.getLayer(this.layernum).getNeuron(this.neuronnum).dc_da.toFixed(5)+" × "
+                            +'\n'+"   = "+ this.slideNet.getLayer(this.layernum).getNeuron(this.neuronnum).dc_dw[this.weightsnum].toFixed(5);
+
+                            var newweight=    this.slideNet.getLayer(this.layernum).getNeuron(this.neuronnum).getWeight(this.weightsnum)
+                            -(this.slideNet.learnRate*this.slideNet.getLayer(this.layernum).getNeuron(this.neuronnum).dc_dw[this.weightsnum]);
+                            
                             this.textContainer.getChildByName("w_new").text="= "+this.slideNet.getLayer(this.layernum).getNeuron(this.neuronnum).getWeight(this.weightsnum).toFixed(4)
                                 + " - ("+ this.slideNet.learnRate +" × "+ this.slideNet.getLayer(this.layernum).getNeuron(this.neuronnum).dc_dw[this.weightsnum].toFixed(5)+")"
                                 +'\n'+"   = "+newweight.toFixed(4);
@@ -2186,12 +2219,12 @@ export class Slide{
         var DZDW=100
         var DADZ=200;
         var DCDA=300;
-        var DCDW=310;
+        var DCDW=400;
         var W_NEW=470;
 
         //dz_dw
-        var dzdw3_small= new PIXI.Sprite(PIXI.Texture.from('images/backprop/dzdw3.png'));
-            dzdw3_small.scale.set(0.85)
+        var dzdw3_small= new PIXI.Sprite(PIXI.Texture.from('images/backprop/dxdy/dzdw3.png'));
+            dzdw3_small.scale.set(0.9)
             dzdw3_small.anchor.set(0.5)
             dzdw3_small.isSprite=true;
             dzdw3_small.x=x;
@@ -2206,8 +2239,8 @@ export class Slide{
         this.textContainer.addChild(dzdw_num);
 
         //da_dz
-        var dadz21_small= new PIXI.Sprite(PIXI.Texture.from('images/backprop/dadz21.png'));
-            dadz21_small.scale.set(0.85)
+        var dadz21_small= new PIXI.Sprite(PIXI.Texture.from('images/backprop/dxdy/dadz21.png'));
+            dadz21_small.scale.set(0.9)
             dadz21_small.anchor.set(0.5)
             dadz21_small.isSprite=true;
             dadz21_small.x=x;
@@ -2223,8 +2256,8 @@ export class Slide{
         this.textContainer.addChild(dadz_num);
 
         //dc_da
-        var dcda21_small= new PIXI.Sprite(PIXI.Texture.from('images/backprop/dcda21.png'));
-            dcda21_small.scale.set(0.85)
+        var dcda21_small= new PIXI.Sprite(PIXI.Texture.from('images/backprop/dxdy/dcda21.png'));
+            dcda21_small.scale.set(0.9);
             dcda21_small.anchor.set(0.5)
             dcda21_small.isSprite=true;
             dcda21_small.x=x;
@@ -2238,22 +2271,23 @@ export class Slide{
         this.textContainer.addChild(dcda_num);
 
         //DC_DW
-        var dctot= new PIXI.Sprite(PIXI.Texture.from('images/backprop/dctot.png'));
-        dctot.isSprite=true;
-        dctot.scale.set(0.85)
-        dctot.x=x-90;
-        dctot.y=DCDW;
-        this.textContainer.addChild(dctot);
+        var dcdw3_small= new PIXI.Sprite(PIXI.Texture.from('images/backprop/dxdy/dcdw3.png'));
+        dcdw3_small.scale.set(0.9);
+        dcdw3_small.anchor.set(0.5)
+        dcdw3_small.isSprite=true;
+        dcdw3_small.x=x;
+        dcdw3_small.y=DCDW;
+        this.textContainer.addChild(dcdw3_small);
 
         var dcdw_num= new PIXI.Text("",textstyles.label_med);
          //   dcdw_num.anchor.set(1,0)
             dcdw_num.name="dcdw_num";
-            dcdw_num.x=dctot.x+130;
-            dcdw_num.y=DCDW+65;
+            dcdw_num.x=dcdw3_small.x+50;
+            dcdw_num.y=DCDW-15;
         this.textContainer.addChild(dcdw_num);
 
         //W_NEW
-        var w3_new= new PIXI.Sprite(PIXI.Texture.from('images/backprop/w3_new.png'));
+        var w3_new= new PIXI.Sprite(PIXI.Texture.from('images/backprop/dxdy/w3_new.png'));
         w3_new.scale.set(0.75)
         w3_new.anchor.set(0.5)
         w3_new.isSprite=true;
@@ -2271,11 +2305,7 @@ export class Slide{
 
         this.slideNet.backprop();
 
-        if(this.w1_all){
-            console.log("w1")
 
-        dctot.texture=PIXI.Texture.from('images/buttons/cat.png');
-        
         dzdw_num.text="= "+this.slideNet.getLayer(layernum).getNeuron(neuronnum).dz_dw[weightnum].toFixed(2);
         dadz_num.text="= "+this.slideNet.getLayer(layernum).getNeuron(neuronnum).output.toFixed(2) + 
               " × " + "(1 - " +this.slideNet.getLayer(layernum).getNeuron(neuronnum).output.toFixed(2) +")" +
@@ -2295,8 +2325,29 @@ export class Slide{
         w_new.text="= "+this.slideNet.getLayer(layernum).getNeuron(neuronnum).getWeight(weightnum).toFixed(4)
             + " - ("+ this.slideNet.learnRate +" × "+ this.slideNet.getLayer(layernum).getNeuron(neuronnum).dc_dw[weightnum].toFixed(5)+")"
             +'\n'+"   = "+newweight.toFixed(4);
-        } else {
 
+        if(this.w1_all){
+            dzdw3_small.texture=PIXI.Texture.from('images/backprop/dxdy/dzdw1.png');
+            dadz21_small.texture=PIXI.Texture.from('images/backprop/dxdy/dadz11.png');
+            dcda21_small.texture=PIXI.Texture.from('images/backprop/dxdy/dcda11.png');
+            dcdw3_small.texture=PIXI.Texture.from('images/backprop/dxdy/dcdw1.png');
+            w3_new.texture=PIXI.Texture.from('images/backprop/dxdy/w1_new.png');
+
+            dcda_num.text="= ("+this.slideNet.getLayer(1).getNeuron(0).output.toFixed(2) + 
+              " × " + "(1 - " +this.slideNet.getLayer(1).getNeuron(0).output.toFixed(2) +"))" +
+              "("+this.slideNet.getLayer(1).getNeuron(0).output.toFixed(2)+"-"+this.slideNet.target[0]+")"
+              +"("+this.slideNet.getLayer(1).getNeuron(0).weights[0].toFixed(2)+")"
+
+             + '\n'+"  + ("+this.slideNet.getLayer(1).getNeuron(1).output.toFixed(2) + 
+              " × " + "(1 - " +this.slideNet.getLayer(1).getNeuron(1).output.toFixed(2) +"))" 
+            +"("+this.slideNet.getLayer(1).getNeuron(1).output.toFixed(2)+"-"+this.slideNet.target[1]+")"
+            +"("+this.slideNet.getLayer(1).getNeuron(1).weights[0].toFixed(2)+")"
+            +'\n'+"    = "+this.slideNet.getLayer(layernum).getNeuron(neuronnum).dc_da.toFixed(5);
+         
+            dcdw_num.text= "= "+this.slideNet.getLayer(layernum).getNeuron(neuronnum).dz_dw[weightnum].toFixed(2)+" × "
+            +this.slideNet.getLayer(layernum).getNeuron(neuronnum).da_dz.toFixed(5)+" × "
+            +this.slideNet.getLayer(layernum).getNeuron(neuronnum).dc_da.toFixed(5)+" × "
+            +'\n'+"   = "+ this.slideNet.getLayer(layernum).getNeuron(neuronnum).dc_dw[weightnum].toFixed(5);
         }
 
     }
