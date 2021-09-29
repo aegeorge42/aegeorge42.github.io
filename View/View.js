@@ -99,11 +99,6 @@ export class View{
           height: window.innerHeight,
           backgroundColor: 0xf5f6ff
         });
-
-        const loader = PIXI.loader;
-        loader.add("images/button_down.png")
-            .load(setup);
-
         
         this.app=app;
 
@@ -214,11 +209,8 @@ export class View{
         }
 
         //maybe come back to this to cutdown on startup time
-        function setup() {
-            const cat = new PIXI.Sprite(loader.resources["images/button_down.png"].texture);
-        }
            
-        const opener = new PIXI.Sprite(PIXI.Texture.from('images/opener.png'));
+        const opener = new PIXI.Sprite(PIXI.Texture.from('images/intro/opener.png'));
         opener.name="opener";
         opener.anchor.set(0.5);
         opener.x=((window.innerWidth)/2);
@@ -240,7 +232,7 @@ export class View{
 
 
 
-        this.currentSlide=51;
+        this.currentSlide=6;
 
 
 
@@ -490,10 +482,8 @@ export class View{
         this.app.stage.addChild(gotosand);
         this.app.stage.getChildByName("gotosand").on('click', function(e){ 
             
-            if (vst.currentSlide!=41){
-                //vst.app.stage.removeChild(vst.slideList[vst.currentSlide].textbuttonContainer);
-
-                vst.currentSlide=41;
+            if (vst.currentSlide!=33){
+                vst.currentSlide=33;
                 vst.drawSlide();
             }
         });

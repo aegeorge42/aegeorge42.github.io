@@ -173,7 +173,7 @@ export class Slide{
     }
 
     drawActFnButtons(){
-        var actfnsbox = new PIXI.Sprite(PIXI.Texture.from('images/buttons/actfnsbox.png'));
+        var actfnsbox = new PIXI.Sprite(PIXI.Texture.from('images/boxes/actfnsbox.png'));
         //actfnsbox.scale.set(0.9)
 
             actfnsbox.name="actfnsbox";
@@ -244,7 +244,7 @@ export class Slide{
         this.buttonContainer.addChild(buttonNeuronAddContainer,buttonNeuronRemContainer);
 
         //ADD LAYER
-        var layersbox = new PIXI.Sprite(PIXI.Texture.from('images/buttons/layersbox.png'));
+        var layersbox = new PIXI.Sprite(PIXI.Texture.from('images/boxes/layersbox.png'));
             layersbox.name="layersbox";
             layersbox.anchor.set(0.5)
             layersbox.x= window.innerWidth/2;//layout.NEURON_LEFTLIM-150;
@@ -307,7 +307,7 @@ export class Slide{
     drawStyleButtons(){
     /*
         var slide=this;
-        var stylebox = new PIXI.Sprite(PIXI.Texture.from('images/algorithmbox.png'));
+        var stylebox = new PIXI.Sprite(PIXI.Texture.from('images/boxes/algorithmbox.png'));
 
             stylebox.name="stylebox";
             stylebox.x= 0;
@@ -356,7 +356,7 @@ export class Slide{
 
     drawRateButtons(){
         var slide=this;
-        var ratebox = new PIXI.Sprite(PIXI.Texture.from('images/buttons/ratebox.png'));
+        var ratebox = new PIXI.Sprite(PIXI.Texture.from('images/boxes/ratebox.png'));
             ratebox.name="ratebox";
             if(this.sandbox){
             
@@ -428,7 +428,7 @@ export class Slide{
         var pauselearn=0;
         this.loopcount=0;
 
-        var learnbox = new PIXI.Sprite(PIXI.Texture.from('images/learnbox.png'));
+        var learnbox = new PIXI.Sprite(PIXI.Texture.from('images/boxes/learnbox.png'));
             learnbox.name="learnbox";
             learnbox.x= 6;
             learnbox.y= 50; 
@@ -441,7 +441,7 @@ export class Slide{
             epoch.x=0
             epoch.y=0
 
-        var epochbox = new PIXI.Sprite(PIXI.Texture.from('images/epochbox.png'));
+        var epochbox = new PIXI.Sprite(PIXI.Texture.from('images/boxes/epochbox.png'));
             epochbox.name="epochbox";
             epochbox.anchor.set(0.5)
             epochbox.x=window.innerWidth-200;
@@ -705,7 +705,7 @@ export class Slide{
         var newdatay= 50
         var slide=this;
         
-        var databox= new PIXI.Sprite(PIXI.Texture.from('images/buttons/databox.png'));
+        var databox= new PIXI.Sprite(PIXI.Texture.from('images/boxes/databox.png'));
         databox.name="databox";
             databox.x=newdatax
             databox.y=newdatay
@@ -724,7 +724,7 @@ export class Slide{
             }
 
             graph.posAxis();
-            graph.axis.texture=PIXI.Texture.from('images/axis.png');
+            graph.axis.texture=PIXI.Texture.from('images/graph/axis.png');
 
             
 
@@ -764,7 +764,7 @@ export class Slide{
             }
 
             graph.negAxis();
-            graph.axis.texture=PIXI.Texture.from('images/axis_neg.png');
+            graph.axis.texture=PIXI.Texture.from('images/graph/axis_neg.png');
 
             var newdata = new Data(0,["strawberry","blueberry"],["length", "roundness"]);
                 newdata.large=true;
@@ -1308,7 +1308,7 @@ export class Slide{
           for(var j = 0; j<net.getLayer(i).neurons.length; j++){
 
 
-                var neuronBase = new PIXI.Sprite(PIXI.Texture.from('images/neuron2.png'));
+                var neuronBase = new PIXI.Sprite(PIXI.Texture.from('images/net/neuron.png'));
             
                 neuronBase.anchor.set(0.5);
                 neuronBase.name = i.toString() + j.toString();
@@ -1406,7 +1406,7 @@ export class Slide{
             overText3.y=25;
             
 
-            var neuronOver = new PIXI.Sprite(PIXI.Texture.from('images/overneuron1.png'));
+            var neuronOver = new PIXI.Sprite(PIXI.Texture.from('images/net/overneuron.png'));
                 neuronOver.anchor.set(0.5);
                 neuronOver.scale.set(1.5);
                 neuronOver.name = neuronBase.name;
@@ -1423,7 +1423,7 @@ export class Slide{
 
       
               //detection for showing overneuron
-            var sensor= new PIXI.Sprite(PIXI.Texture.from('images/neuron_old.png'));
+            var sensor= new PIXI.Sprite(PIXI.Texture.from('images/net/neuron.png'));
                 sensor.anchor.set(0.5);
                 sensor.x=neuronBase.x;
                 sensor.y=neuronBase.y;
@@ -1446,7 +1446,7 @@ export class Slide{
 
             // backprop neuron bases have both z and a showing
             if(this.backprop){
-                neuronBase.texture=PIXI.Texture.from('images/neuron_backprop.png');
+                neuronBase.texture=PIXI.Texture.from('images/net/neuron_backprop.png');
 
                 if(this.backprop_steps){
                     neuronText.text=formatter.format(net.getLayer(i).neurons[j].output_nofn)+"  "+formatter.format(net.getLayer(i).neurons[j].output);
@@ -1530,7 +1530,7 @@ export class Slide{
       
         for(var i = 0; i<net.layers.length; i++){
           for(var j = 0; j<net.getLayer(i).neurons.length; j++){
-            var neuronBase = new PIXI.Sprite(PIXI.Texture.from('images/neuron_large1.png'));
+            var neuronBase = new PIXI.Sprite(PIXI.Texture.from('images/net/neuron_large.png'));
             
             neuronBase.anchor.set(0.5);
             neuronBase.name = i.toString() + j.toString();
@@ -1611,7 +1611,7 @@ export class Slide{
             neuronBase.addChild(overText_weights,overText_outnofn);
             neuronBase.addChild(overText_f,overText_paren,overText_actfn,overText_actfn_out);
 
-            var neuronOver_large=new PIXI.Sprite(PIXI.Texture.from('images/neuronovertest.png'));
+            var neuronOver_large=new PIXI.Sprite(PIXI.Texture.from('images/net/neuronOver_large.png'));
                 neuronOver_large.anchor.set(0.5);
 
                 neuronOver_large.x=layout.NEURON_LARGE_X;
@@ -1798,7 +1798,7 @@ export class Slide{
 
         for(var i = 0; i<net.netInput.length; i++){
 
-            var inputBase = new PIXI.Sprite(PIXI.Texture.from('images/inputbase.png'));
+            var inputBase = new PIXI.Sprite(PIXI.Texture.from('images/net/inputbase.png'));
                 inputBase.anchor.set(0.5);
                 inputBase.name = i.toString();
                 inputBase.x= layout.NEURON_LEFTLIM - layout.NEURON_X_DIF;//leftlim;
@@ -1831,7 +1831,7 @@ export class Slide{
 
         for(var i = 0; i<net.netInput.length; i++){
 
-            var inputBase = new PIXI.Sprite(PIXI.Texture.from('images/inputBase.png'));
+            var inputBase = new PIXI.Sprite(PIXI.Texture.from('images/net/inputBase.png'));
                 inputBase.scale.set(1.2);
                 inputBase.anchor.set(0.5);
                 inputBase.name = i.toString();
@@ -1963,15 +1963,15 @@ export class Slide{
 
         // data image
         
-        var target = new PIXI.Sprite(PIXI.Texture.from('images/strawberrycard.png'));
+        var target = new PIXI.Sprite(PIXI.Texture.from('images/net/strawberrycard.png'));
 
         target.anchor.set(0.5)
         target.name="target";
 
         if (net.targetText=="blueberry"){
-            target.texture=PIXI.Texture.from('images/blueberrycard.png');
+            target.texture=PIXI.Texture.from('images/net/blueberrycard.png');
         } else if (net.targetText=="strawberry"){
-            target.texture=PIXI.Texture.from('images/strawberrycard.png');
+            target.texture=PIXI.Texture.from('images/net/strawberrycard.png');
         }
             
         target.x = layout.NEURON_LEFTLIM- layout.NEURON_X_DIF -80;
@@ -2015,7 +2015,7 @@ export class Slide{
 
     drawCost_steps(){
         
-        var costBox = new PIXI.Sprite(PIXI.Texture.from('images/cost.png'));
+        var costBox = new PIXI.Sprite(PIXI.Texture.from('images/boxes/cost.png'));
             costBox.name= "costBox";
             costBox.anchor.set(0.5)
             costBox.x=window.innerWidth-80;
@@ -2112,7 +2112,7 @@ export class Slide{
     }
 
     drawCost(){
-        var costBox = new PIXI.Sprite(PIXI.Texture.from('images/cost.png'));
+        var costBox = new PIXI.Sprite(PIXI.Texture.from('images/boxes/cost.png'));
             costBox.name= "costBox";
             costBox.anchor.set(0.5)
 
@@ -2154,9 +2154,9 @@ export class Slide{
 
 
             if (net.targetText=="blueberry"){
-                targetimg.texture=PIXI.Texture.from('images/blueberrycard.png');
+                targetimg.texture=PIXI.Texture.from('images/net/blueberrycard.png');
             } else if (net.targetText=="strawberry"){
-            targetimg.texture=PIXI.Texture.from('images/strawberrycard.png');
+            targetimg.texture=PIXI.Texture.from('images/net/strawberrycard.png');
             }
 
 

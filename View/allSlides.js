@@ -34,13 +34,7 @@ export const SlideInstruct1 = new Slide();
         //rect.x=(window.innerWidth-1100)/2;
         //rect.y=60;
         SlideInstruct.slideContainer.addChild(rect);
-
-   /* var rect2 = new PIXI.Sprite(PIXI.Texture.from('images/button_down.png'));
-        rect2.anchor.set(0,1);
-        rect2.x=layout.LEFTBUFFER;
-        rect2.y=layout.BOTTOMBUFFER-100;
-    SlideInstruct.slideContainer.addChild(rect2);
-    */
+*/
 
 export const SlideInstruct2 = new Slide();
     var arrow1 =new PIXI.Sprite(PIXI.Texture.from('images/arrow1.png'));
@@ -108,7 +102,7 @@ export const SlideIntro1a = new Slide();
 
 // INTRO - example percep - INTERACTIVE
 export const SlideIntro1b = new Slide();
-    var percep_blank =new PIXI.Sprite(PIXI.Texture.from('images/percep_blank.png'));
+    var percep_blank =new PIXI.Sprite(PIXI.Texture.from('images/intro/percep_blank.png'));
         percep_blank.isSprite=true;
         percep_blank.x=layout.LEFTBUFFER + 300;
         percep_blank.y=100;
@@ -137,7 +131,7 @@ export const SlideIntro1b = new Slide();
     var inx= percep_blank.x;
     var iny = percep_blank.y+142;
 
-    var singleblue =new PIXI.Sprite(PIXI.Texture.from('images/singleblue.png'));
+    var singleblue =new PIXI.Sprite(PIXI.Texture.from('images/intro/singleblue.png'));
         singleblue.isSprite=true;
         singleblue.x=fruitx;
         singleblue.y=bluey;
@@ -151,11 +145,11 @@ export const SlideIntro1b = new Slide();
             singlestraw.y=strawy;
 
             await sleep(500);
-           percep_blank.texture=PIXI.Texture.from('images/percep_blueb.png')
+           percep_blank.texture=PIXI.Texture.from('images/intro/percep_blueb.png')
         });
 
 
-    var singlestraw =new PIXI.Sprite(PIXI.Texture.from('images/singlestraw.png'));
+    var singlestraw =new PIXI.Sprite(PIXI.Texture.from('images/intro/singlestraw.png'));
         singlestraw.isSprite=true;
         singlestraw.x=fruitx;
         singlestraw.y=strawy;
@@ -169,7 +163,7 @@ export const SlideIntro1b = new Slide();
             singleblue.y=bluey;
 
             await sleep(500);
-            percep_blank.texture=PIXI.Texture.from('images/percep_strawb.png')
+            percep_blank.texture=PIXI.Texture.from('images/intro/percep_strawb.png')
         });
 
     SlideIntro1b.inputContainer.addChild(singleblue,singlestraw);
@@ -194,7 +188,7 @@ export const SlideIntro1c = new Slide();
 
 export const SlideIntro2 = new Slide();
 
-    var examples_labels=new PIXI.Sprite(PIXI.Texture.from('images/examples_labels.png'));
+    var examples_labels=new PIXI.Sprite(PIXI.Texture.from('images/intro/examples_labels.png'));
         examples_labels.isSprite=true;
         examples_labels.scale.set(0.8);
         examples_labels.x=0;
@@ -216,7 +210,7 @@ export const SlideIntro2 = new Slide();
     SlideIntro2.drawTextButtons();
 
 export const SlideIntro3 = new Slide();
-    var captcha=new PIXI.Sprite(PIXI.Texture.from('images/captcha.png'));
+    var captcha=new PIXI.Sprite(PIXI.Texture.from('images/intro/captcha.png'));
     captcha.isSprite=true;
         captcha.x=layout.LEFTBUFFER+200;
         captcha.y=120;
@@ -232,6 +226,7 @@ export const SlideIntro3 = new Slide();
     SlideIntro3.drawTextButtons();
 
 export const SlideIntro4 = new Slide();
+/*
 
     var examples_qm=new PIXI.Sprite(PIXI.Texture.from('images/examples_qm.png'));
         examples_qm.isSprite=true;
@@ -254,7 +249,7 @@ export const SlideIntro4 = new Slide();
 
     SlideIntro4.drawText(textIntro4);
     SlideIntro4.drawTextButtons();
-
+*/
 export const SlideIntro3a = new Slide();
     var example_blue_no=new PIXI.Sprite(PIXI.Texture.from('images/intro/input_example.png'));
         example_blue_no.isSprite=true;
@@ -308,13 +303,13 @@ export const SlideIntro4a = new Slide();
 
 export const SlideNeuronA = new Slide();
 
-    var percep_blank2 =new PIXI.Sprite(PIXI.Texture.from('images/percep_blank.png'));
+    var percep_blank2 =new PIXI.Sprite(PIXI.Texture.from('images/intro/percep_blank.png'));
         percep_blank2.isSprite=true;
 
         percep_blank2.x=layout.LEFTBUFFER + 200;
         percep_blank2.y=110;
 
-    var percep_labels =new PIXI.Sprite(PIXI.Texture.from('images/percep_labels.png'));
+    var percep_labels =new PIXI.Sprite(PIXI.Texture.from('images/intro/percep_labels.png'));
         percep_labels.isSprite=true;
 
         percep_labels.x=percep_blank2.x;
@@ -331,7 +326,7 @@ export const SlideNeuronA = new Slide();
 
 export const SlideNeuronA2 = new Slide();
 
-    var percep_layers =new PIXI.Sprite(PIXI.Texture.from('images/percep_layers.png'));
+    var percep_layers =new PIXI.Sprite(PIXI.Texture.from('images/intro/percep_layers.png'));
         percep_layers.isSprite=true;
 
         percep_layers.x=layout.LEFTBUFFER + 200;
@@ -353,6 +348,7 @@ export const SlideNeuronA2 = new Slide();
     SlideNeuronA2.drawTextButtons();
 
 export const SlideNeuron1 = new Slide();
+/*
 
     var neuron_example_x=layout.LEFTBUFFER;
     var neuron_example_y=70;
@@ -397,8 +393,9 @@ export const SlideNeuron1 = new Slide();
 
     SlideNeuron1.drawText(textNeuron1);
     SlideNeuron1.drawTextButtons();
-
+*/
 export const SlideNeuron1a = new Slide();
+/*
     var textNeuron1a = [
         neuron_example2,
         [ ["Here's a neuron. ", textstyles.large_bold], [ layout.LEFTBUFFER, 120]],
@@ -409,8 +406,15 @@ export const SlideNeuron1a = new Slide();
 
     SlideNeuron1a.drawText(textNeuron1a);
     SlideNeuron1a.drawTextButtons();
-
+*/
 export const SlideNeuron1b = new Slide();
+
+var neuron_example3=new PIXI.Sprite(PIXI.Texture.from('images/intro/neuron_example3.png'));
+neuron_example3.scale.set(0.8);
+neuron_example3.isSprite=true;
+neuron_example3.x=layout.LEFTBUFFER;
+neuron_example3.y=70;
+
 var textNeuron1b = [
     [ ["Here's a neuron. ", textstyles.large_bold], [ layout.LEFTBUFFER, 120]],
         [ ["A neuron takes in some inputs... " ], [ layout.LEFTBUFFER, 200] ],
@@ -451,7 +455,7 @@ export const SlideNeuron2 = new Slide();
     SlideNeuron2.draw_init_large(SlideNeuron2.slideNet);
     SlideNeuron2.slideNet.getLayer(0).getNeuron(0).bias=0.21;
 
-    var neuron_large_over=new PIXI.Sprite(PIXI.Texture.from('images/neuron_large_over.png'));
+    var neuron_large_over=new PIXI.Sprite(PIXI.Texture.from('images/net/neuronOver_large.png'));
         neuron_large_over.isSprite=true;
         neuron_large_over.anchor.set(0.5);
         neuron_large_over.x=layout.NEURON_LARGE_X;
@@ -482,7 +486,7 @@ export const SlideNeuron2b = new Slide();
 
     SlideNeuron2b.draw_init_large(SlideNeuron2b.slideNet);
 
-    var neuron_large_actfncover=new PIXI.Sprite(PIXI.Texture.from('images/neuron_large_actfncover.png'));
+    var neuron_large_actfncover=new PIXI.Sprite(PIXI.Texture.from('images/net/neuron_large_actfncover.png'));
         neuron_large_actfncover.isSprite=true;
         neuron_large_actfncover.anchor.set(0.5);
         neuron_large_actfncover.x=layout.NEURON_LARGE_X;
@@ -533,7 +537,7 @@ export const SlideNeuron2b2 = new Slide();
 
     SlideNeuron2b2.draw_init_large(SlideNeuron2b2.slideNet);
 
-    var neuron_large_actfncover2=new PIXI.Sprite(PIXI.Texture.from('images/neuron_large_actfncover.png'));
+    var neuron_large_actfncover2=new PIXI.Sprite(PIXI.Texture.from('images/net/neuron_large_actfncover.png'));
     neuron_large_actfncover2.isSprite=true;
     neuron_large_actfncover2.anchor.set(0.5);
     neuron_large_actfncover2.x=layout.NEURON_LARGE_X;
@@ -560,7 +564,7 @@ export const SlideNeuron2c = new Slide();
     SlideNeuron2c.slideNet.update();
     SlideNeuron2c.draw_init_large(SlideNeuron2c.slideNet);
 
-    var sigmoid=new PIXI.Sprite(PIXI.Texture.from('images/sigmoid_graph.png'));
+    var sigmoid=new PIXI.Sprite(PIXI.Texture.from('images/intro/sigmoid_graph.png'));
     sigmoid.isSprite=true;
     sigmoid.x=layout.LEFTBUFFER;
     sigmoid.y=layout.TOPBUFFER+110;
@@ -580,7 +584,7 @@ export const SlideNeuron2d = new Slide();
     SlideNeuron2d.slideNet.update();
     SlideNeuron2d.draw_init_large(SlideNeuron2d.slideNet);
 
-    var relu=new PIXI.Sprite(PIXI.Texture.from('images/relu_graph.png'));
+    var relu=new PIXI.Sprite(PIXI.Texture.from('images/intro/relu_graph.png'));
     relu.isSprite=true;
     relu.x=layout.LEFTBUFFER;
     relu.y=layout.TOPBUFFER+100;
@@ -801,6 +805,7 @@ export const SlideNet1d2 = new Slide();
     SlideNet1d2.drawTextButtons();
 
 export const SlideNet1d3 = new Slide();
+/*
 
 var seformula=new PIXI.Sprite(PIXI.Texture.from('images/seformula.png'));
 seformula.isSprite=true;
@@ -819,8 +824,7 @@ var small_ital = new PIXI.TextStyle({
     fontStyle: 'italic'
 });
 
-
-
+*/
 
 
 
@@ -1030,7 +1034,7 @@ var textError6a = [
 SlideError6a.drawText(textError6a);
 
 export const SlideError6b = new Slide();
-    var fakelearnbox = new PIXI.Sprite(PIXI.Texture.from('images/learnbox.png'));
+    var fakelearnbox = new PIXI.Sprite(PIXI.Texture.from('images/boxes/learnbox.png'));
         fakelearnbox.isSprite=true;
         fakelearnbox.x= 6;
         fakelearnbox.y= 350; 
@@ -1207,7 +1211,7 @@ SlideError7.fakenet=true;
 
 
 
-
+/*
 
 
 
@@ -1226,8 +1230,9 @@ var textNet1d3 = [
 ];
 SlideNet1d3.drawText(textNet1d3);
 SlideNet1d3.drawTextButtons();
-
+*/
 export const SlideNet1d4 = new Slide();
+/*
     var seformula2=new PIXI.Sprite(PIXI.Texture.from('images/seformula.png'));
     seformula2.scale.set(0.6)
     seformula2.isSprite=true;
@@ -1247,7 +1252,7 @@ export const SlideNet1d4 = new Slide();
 
     ];
 SlideNet1d4.drawText(textNet1d4);
-
+*/
 export const SlideNet1e = new Slide();
     SlideNet1e.leftnet=true;
     layout.NEURON_LEFTLIM=350;
@@ -1294,7 +1299,7 @@ export const SlideBack1 = new Slide();
         costformula1.scale.set(0.7)
         costformula1.x=layout.LEFTBUFFER;
         costformula1.y=layout.TOPBUFFER+20;*/
-
+/*
     var outputformula=new PIXI.Sprite(PIXI.Texture.from('images/outputformula.png'));
         outputformula.isSprite=true;
         outputformula.scale.set(0.8)
@@ -1313,9 +1318,9 @@ export const SlideBack1 = new Slide();
    
     ];
     SlideBack1.drawText(textBack1);
-
+*/
 export const SlideBack2 = new Slide();
-
+/*
     var outputformula1=new PIXI.Sprite(PIXI.Texture.from('images/outputformula.png'));
         outputformula1.isSprite=true;
         outputformula1.scale.set(0.8)
@@ -1349,9 +1354,9 @@ export const SlideBack2 = new Slide();
       //  [ [" So, we know -the cost, - the actual w and b"],[layout.LEFTBUFFER,layout.TOPBUFFER+50] ],
        // [ [ " what we want to find i"]]
     ];
-    SlideBack2.drawText(textBack2);
+    SlideBack2.drawText(textBack2);*/
 
-export const SlideBack3 = new Slide();
+export const SlideBack3 = new Slide();/*
 var costgraph_new=new PIXI.Sprite(PIXI.Texture.from('images/costgraph_new.png'));
 costgraph_new.isSprite=true;
 costgraph_new.x=layout.LEFTBUFFER;
@@ -1362,7 +1367,7 @@ costgraph_new.y=layout.TOPBUFFER+80;
         costgraph_new,
         [ ["Now we can rewrite our cost function using these terms.",textstyles.large_bold],[layout.LEFTBUFFER,layout.TOPBUFFER+20] ],
            /*   [ ["We know the cost and current weights and biases." + '\n'
-            + " but we don't know the ideal weights and biases"],[layout.LEFTBUFFER+500,layout.TOPBUFFER+100] ],*/
+            + " but we don't know the ideal weights and biases"],[layout.LEFTBUFFER+500,layout.TOPBUFFER+100] ],
         [ ["To minimize our cost, we want to adjust our actual weights and biases" +'\n'+" to be equal to the ideal weights and biases."],[layout.LEFTBUFFER+470,layout.TOPBUFFER+100] ],
         [ ["Some values will have to be decreased, others will have to be increased",textstyles.medium],[layout.LEFTBUFFER+470,layout.TOPBUFFER+170] ],
 
@@ -1375,7 +1380,7 @@ costgraph_new.y=layout.TOPBUFFER+80;
 
     ];
     SlideBack3.drawText(textBack3);
-
+*/
 export const SlideNet1f = new Slide();
 
     var textNet1f = [
@@ -1407,7 +1412,7 @@ export const SlideBackA = new Slide();
     gd1.isSprite=true;
     gd1.x=layout.LEFTBUFFER;
     gd1.y=200;*/
-
+/*
     var mountainx=layout.LEFTBUFFER-30;
     var mountainy=layout.TOPBUFFER+50;
     var mountainscale=0.9;
@@ -1430,10 +1435,10 @@ export const SlideBackA = new Slide();
         [ [" Step 3: Update - Gradient Descent",textstyles.large_bold],[layout.LEFTBUFFER,layout.TOPBUFFER] ],
         [ [" Imagine our current cost as a ball resting on the cost function"],[layout.LEFTBUFFER,layout.TOPBUFFER+50] ],
         [ [" In order to find the minimum of the cost function, we can roll the ball down the hill." ], [layout.LEFTBUFFER+100,layout.TOPBUFFER+150]],
-    */
-    ];
+    
+    
 
-    SlideBackA.drawText(textBackA);
+    SlideBackA.drawText(textBackA);*/
 
 export const SlideNet2 = new Slide();
 /*
@@ -1453,6 +1458,7 @@ export const SlideNet2 = new Slide();
   //  SlideNet2.slideContainer.getChildAt(8).getChildByName("addlayer").visible=true;
     //SlideNet2.slideContainer.getChildAt(8).getChildByName("remlayer").visible=true;
 */
+/*
     var mountain=new PIXI.Sprite(PIXI.Texture.from('images/mountain0.png'));
         mountain.isSprite=true;
         mountain.x=mountainx;
@@ -1468,13 +1474,14 @@ export const SlideNet2 = new Slide();
     /*    [["In stochastic gradient descent, we feed in one piece of data, calculate the error, then update the net"], [layout.LEFTBUFFER,70]],
         [["In vanilla gradient descent, we feed in one piece of data and calculate the error, then continue to to this for each piece of data."+'\n'+
         " We take the average cost across all examples and update baesd on that"], [layout.LEFTBUFFER,270]],
-*/
+
+
     ];
     SlideNet2.drawText(textNet2);
     SlideNet2.drawTextButtons();
-
+*/
 export const SlideBackB = new Slide();
-
+/*
     var mountain1=new PIXI.Sprite(PIXI.Texture.from('images/mountain1.png'));
         mountain1.isSprite=true;
         mountain1.x=mountainx;
@@ -1485,13 +1492,13 @@ export const SlideBackB = new Slide();
         mountain1,
         [ [" By feeling the slope of the mountain at the point where you stand," +'\n'+"you can determine which way to walk to go downhill."],[layout.LEFTBUFFER,layout.TOPBUFFER] ],
     /*    [ [" Using calculus, we can find out how much each weight contributes to the overall cost"],[layout.LEFTBUFFER,layout.TOPBUFFER+50] ],
-        */
+        
     ];
 
     SlideBackB.drawText(textBackB);
-
+*/
 export const SlideBackC = new Slide();
-
+/*
     var mountain2=new PIXI.Sprite(PIXI.Texture.from('images/mountain2.png'));
         mountain2.isSprite=true;
         mountain2.x=mountainx;
@@ -1502,8 +1509,9 @@ export const SlideBackC = new Slide();
         mountain2,
     ];
     SlideBackC.drawText(textBackC);
-
+*/
 export const SlideBackD = new Slide();
+/*
 var mountain3=new PIXI.Sprite(PIXI.Texture.from('images/mountain3.png'));
         mountain3.isSprite=true;
         mountain3.x=mountainx;
@@ -1515,8 +1523,9 @@ var mountain3=new PIXI.Sprite(PIXI.Texture.from('images/mountain3.png'));
 
     ];
     SlideBackD.drawText(textBackD);
-
+*/
 export const SlideBackE = new Slide();
+/*
     var textBackE = [
        [ [" Gradient descent is just finding way to get to the minimum of our cost function."],[layout.LEFTBUFFER,layout.TOPBUFFER] ],
        [ [" Using calculus, we can find out exactly how much each weight and bias affects our cost at a certain point."],[layout.LEFTBUFFER,layout.TOPBUFFER+50] ],
@@ -1527,9 +1536,9 @@ export const SlideBackE = new Slide();
 
     ];
     SlideBackE.drawText(textBackE);
-
+*/
 export const SlideBackF = new Slide();
-
+/*
     var gotocalc=new Button("gotocalc",PIXI.Texture.from('images/buttons/calculus.png'), 200,200,true);
     gotocalc.on('click', function(e){
         if (viewst.currentSlide!=35){
@@ -1546,7 +1555,7 @@ export const SlideBackF = new Slide();
     ];
        
     SlideBackF.drawText(textBackF);
-
+*/
 
 
 
@@ -1622,7 +1631,7 @@ export const SlideBackCalc0 = new Slide();
 
     var backpropx= layout.LEFTBUFFER + layout.NEURON_LEFTLIM+layout.NEURON_X_DIF +50;
     SlideBackCalc0.backfromcalc=true;
-    SlideBackCalc0.textbuttonContainer.addChild(new Button("backfromcalc",PIXI.Texture.from('images/buttons/treasure.png'),(window.innerWidth/2) -100,window.innerHeight-(75/2),true));
+    SlideBackCalc0.textbuttonContainer.addChild(new Button("backfromcalc",PIXI.Texture.from('images/buttons/back.png'),(window.innerWidth/2) -100,window.innerHeight-(75/2),true));
     console.log(SlideBackCalc0.textbuttonContainer);
     SlideBackCalc0.textbuttonContainer.getChildByName("backfromcalc").on('click', function(e){
         if (viewst.currentSlide!=32){
@@ -2435,7 +2444,7 @@ export const SlideBackCalc10 = new Slide();
     SlideBackCalc10.drawRateButtons();
 
     SlideBackCalc10.calc2sand=true;
-    SlideBackCalc10.textbuttonContainer.addChild(new Button("calc2sand",PIXI.Texture.from('images/buttons/treasure.png'),(window.innerWidth/2) +100,window.innerHeight-(75/2),true));
+    SlideBackCalc10.textbuttonContainer.addChild(new Button("calc2sand",PIXI.Texture.from('images/buttons/next.png'),(window.innerWidth/2) +100,window.innerHeight-(75/2),true));
     SlideBackCalc10.textbuttonContainer.getChildByName("calc2sand").on('click', function(e){
         if (viewst.currentSlide!=33){
 
