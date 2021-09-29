@@ -128,7 +128,7 @@ export class Slide{
 
         var h=window.innerHeight;    
         function resize(){
-            header.x=0;
+            /*header.x=0;
             footer.width=window.innerWidth;
             footer.y=window.innerHeight-h;
             header.width=window.innerWidth;
@@ -143,6 +143,7 @@ export class Slide{
                 slide.textbuttonContainer.getChildByName("prevtext").y=window.innerHeight-(layout.FOOTER_HEIGHT/2);
 
             } catch {};
+            */
         }
     }
 

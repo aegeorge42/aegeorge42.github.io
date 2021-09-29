@@ -5,23 +5,16 @@ import {SlideHome,
     SlideInstruct1,
     SlideInstruct2,
     SlideIntro1,
-    SlideIntro1a,
     SlideIntro1b,
-    SlideIntro1c,
     SlideIntro2,
     SlideIntro3,
     SlideIntro3a,
-    SlideIntro4,
     SlideIntro4a,
     SlideNeuronA,
     SlideNeuronA2,
-    SlideNeuron1,
-    SlideNeuron1a,
     SlideNeuron1b,
-    SlideNeuron1c,
     SlideNeuron2,
     SlideNeuron2b,
-    SlideNeuron2b2,
     SlideNeuron2c,
     SlideNeuron2d,
     SlideNeuron2d2,
@@ -32,11 +25,7 @@ import {SlideHome,
     SlideNet1c,
     SlideNet1d,
     SlideNet1d2,
-    SlideNet1d3,
-
-
     SlideError1,
-    SlideError2,
     SlideError3,
     SlideError4,
     SlideError5,
@@ -44,44 +33,29 @@ import {SlideHome,
     SlideError6a,
     SlideError6b,
     SlideError7,
-
-
-
-    SlideNet1d4,
     SlideNet1e,
-    SlideBack1,
-    SlideBack2,
-    SlideBack3,
-    SlideNet1f,
-    SlideBackA,
-    SlideNet2,
-    SlideBackB,
-    SlideBackC,
-    SlideBackD,
-    SlideBackE,
-SlideBackF,
-SlideBackCalc0,
-SlideBackCalc1,
-SlideBackCalc2,
-SlideBackCalc2b,
-SlideBackCalc3,
-SlideBackCalc3a,
-SlideBackCalc4,
-SlideBackCalc5,
-SlideBackCalc6,
-SlideBackCalc6a,
-SlideBackCalc7,
-SlideBackCalc8,
-SlideBackCalc9,
-SlideBackCalc9a,
-SlideBackCalc9a2,
-SlideBackCalc9b,
-SlideBackCalc9c,
-SlideBackCalc10,
+    SlideBackCalc0,
+    SlideBackCalc1,
+    SlideBackCalc2,
+    SlideBackCalc2b,
+    SlideBackCalc3,
+    SlideBackCalc3a,
+    SlideBackCalc4,
+    SlideBackCalc5,
+    SlideBackCalc6,
+    SlideBackCalc6a,
+    SlideBackCalc7,
+    SlideBackCalc8,
+    SlideBackCalc9,
+    SlideBackCalc9a,
+    SlideBackCalc9a2,
+    SlideBackCalc9b,
+    SlideBackCalc9c,
+    SlideBackCalc10,
+    SlideSandbox,
+    SlideCredit,
 
-SlideSandbox,
-
-SlideCredit} from "./allSlides.js"
+} from "./allSlides.js"
 import { Slide } from "./Slide.js";
 
 
@@ -115,12 +89,23 @@ export class View{
         var win = this;
 
         function resize(){
-            
+            app.renderer.resize(window.innerWidth, window.innerHeight);
+
+            app.stage.getChildByName("button_nextslide").x=window.innerWidth/2 +100;
+            app.stage.getChildByName("button_nextslide").y=window.innerHeight-(75/2);
+
+            app.stage.getChildByName("button_prevslide").x=window.innerWidth/2 -100,
+            app.stage.getChildByName("button_prevslide").y=window.innerHeight-(75/2);
+
+
+
+
+
+            /*
 
             var resize_wid = (window.innerWidth-win.startwidth)/4;
             var resize_height = (window.innerHeight-win.startheight)/6;
 
-            app.renderer.resize(window.innerWidth, window.innerHeight);
 
             if(vst.currentSlide==0){
                 app.stage.getChildAt(0).getChildByName("opener").x=window.innerWidth/2;
@@ -163,11 +148,7 @@ export class View{
                 if(app.stage.getChildAt(0).getChildAt(2).getChildByName("actfnsbox") !== null && !vst.slideList[vst.currentSlide].sandbox){
                     app.stage.getChildAt(0).getChildAt(2).getChildByName("actfnsbox").y=window.innerHeight-win.startheight_nochange +(win.startheight_nochange-250);
                 }
-/*
-                if(app.stage.getChildAt(0).getChildAt(2).getChildByName("ratebox") !== null){
-                //    app.stage.getChildAt(0).getChildAt(2).getChildByName("ratebox").y=window.innerHeight-win.startheight_nochange +(layout.BOTTOMBUFFER-220);
-                }
-*/
+
                 if(app.stage.getChildAt(0).getChildAt(2).getChildByName("layersbox") !== null){
                     app.stage.getChildAt(0).getChildAt(2).getChildByName("layersbox").x=window.innerWidth/2//window.innerWidth-win.startwidth_nochange +(window.innerWidth/2-100);
                 }
@@ -176,7 +157,7 @@ export class View{
                     app.stage.getChildAt(0).getChildAt(2).getChildByName("databox").x=window.innerWidth-260;//window.innerWidth-win.startwidth_nochange +(window.innerWidth/2-100);
                 }
             }
-            
+            */  
         }
 
         document.body.appendChild(this.app.view);
@@ -184,21 +165,18 @@ export class View{
         //add premade slides
         this.slideList = [];
         this.slideList.push(SlideHome,SlideInstruct1, SlideInstruct2, //1
-                            SlideIntro1,/*SlideIntro1a,SlideIntro1b,SlideIntro1c,*/SlideIntro2,SlideIntro3, SlideIntro1b, SlideIntro3a, SlideIntro4a, //9
-                            SlideNeuronA, SlideNeuronA2, /*SlideNeuron1,SlideNeuron1a,*/SlideNeuron1b,SlideNeuron2,SlideNeuron2b,/*SlideNeuron2b2,*/SlideNeuron2c,SlideNeuron2d,SlideNeuron2d2,SlideNeuron2e, //16
-                            SlideNet1, SlideNet1b, SlideNet1b2,SlideNet1c, SlideNet1d,SlideNet1d2,/*SlideNet1d3, */
+                            SlideIntro1,SlideIntro2,SlideIntro3, SlideIntro1b, SlideIntro3a, SlideIntro4a,
+                            SlideNeuronA, SlideNeuronA2,SlideNeuron1b,SlideNeuron2,SlideNeuron2b,SlideNeuron2c,SlideNeuron2d,SlideNeuron2d2,SlideNeuron2e,
+                            SlideNet1, SlideNet1b, SlideNet1b2,SlideNet1c, SlideNet1d,SlideNet1d2,
                             
-                            SlideError1,/*SlideError2,*/SlideNet1e,SlideError3,SlideError4,SlideError5,SlideError6,SlideError6a,SlideError7,SlideError6b,
-                            /*SlideNet1d4,SlideNet1e,
-                            SlideBack1,SlideBack2,SlideBack3,SlideNet1f,SlideBackA,SlideNet2,SlideBackB, SlideBackC, SlideBackD,SlideBackE, SlideBackF,
-                            */
-              
+                            SlideError1,SlideNet1e,SlideError3,SlideError4,SlideError5,SlideError6,SlideError6a,SlideError7,SlideError6b,
+                            
                             SlideSandbox,SlideCredit,
                             
                             
                             SlideBackCalc0,SlideBackCalc1,SlideBackCalc2,SlideBackCalc2b,SlideBackCalc3,SlideBackCalc3a,SlideBackCalc4,SlideBackCalc5,SlideBackCalc6,SlideBackCalc6a,
                             SlideBackCalc7,SlideBackCalc8,SlideBackCalc9,SlideBackCalc9b,SlideBackCalc9a,SlideBackCalc9a2,SlideBackCalc9c,SlideBackCalc10,   
-                            );//SlideNet3);//SlideSandbox);// SlideSandbox);
+                            );
 
         /*TO DELETE*/
         for(var i=0; i<this.slideList.length;i++){
@@ -260,6 +238,8 @@ export class View{
     // when window is resized, gotta resize all the other slides
     // but only some stuff
     resize2(){
+
+        /*
         this.startheight=window.innerHeight;
         this.startwidth=window.innerWidth;
 
@@ -296,6 +276,8 @@ export class View{
                 this.app.stage.getChildByName("button_start").x=window.innerWidth/2;
                 this.app.stage.getChildByName("button_start").y=((window.innerHeight)/3) +350;
         }
+
+        */
     }
 
     // handle 1st and last slide diff formats
