@@ -84,12 +84,23 @@ export class View{
         this.startheight_nochange = window.innerHeight;
         this.startwidth_nochange = window.innerWidth;
 
-
-
         var win = this;
+        var minX=1000;
+        var minY=600;
 
         function resize(){
             app.renderer.resize(window.innerWidth, window.innerHeight);
+            var changeY=window.innerHeight-win.startheight;
+            var changeX=window.innerWidth-win.startwidth;
+
+            header.width=window.innerWidth;
+            footer.width=window.innerWidth;
+            footer.y=changeY;
+
+            console.log(changeX+", "+changeY)
+
+            app.stage.getChildByName("button_start").x=window.innerWidth/2;
+            app.stage.getChildByName("button_start").y=(window.innerHeight/3) +350;
 
             app.stage.getChildByName("button_nextslide").x=window.innerWidth/2 +100;
             app.stage.getChildByName("button_nextslide").y=window.innerHeight-(75/2);
@@ -97,67 +108,54 @@ export class View{
             app.stage.getChildByName("button_prevslide").x=window.innerWidth/2 -100,
             app.stage.getChildByName("button_prevslide").y=window.innerHeight-(75/2);
 
+            //GO TO BUTTONS
+            app.stage.getChildByName("gotosand").x=window.innerWidth-100;
+            app.stage.getChildByName("gotonet").x=window.innerWidth-250;
+            app.stage.getChildByName("gotoneuron").x=window.innerWidth-375;
 
 
+            if(vst.currentSlide!=33){
+                app.stage.getChildAt(0).x=changeX/2;
+                app.stage.getChildAt(0).y=changeY/2;
 
+                //BUTTONS
+                app.stage.getChildAt(0).getChildAt(2).x=-changeX/2;
+                app.stage.getChildAt(0).getChildAt(2).y=-changeY/2;
 
-            /*
+                if(app.stage.getChildAt(0).getChildAt(2).getChildByName("buttonNeuronAddContainer")){
+                    app.stage.getChildAt(0).getChildAt(2).getChildByName("buttonNeuronAddContainer").x=changeX/2;
+                    app.stage.getChildAt(0).getChildAt(2).getChildByName("buttonNeuronRemContainer").x=changeX/2;
 
-            var resize_wid = (window.innerWidth-win.startwidth)/4;
-            var resize_height = (window.innerHeight-win.startheight)/6;
+                    app.stage.getChildAt(0).getChildAt(2).getChildByName("buttonNeuronAddContainer").y=changeY/2;
+                    app.stage.getChildAt(0).getChildAt(2).getChildByName("buttonNeuronRemContainer").y=changeY/2;
+                }
 
+                //COST
+                app.stage.getChildAt(0).getChildAt(7).x=-changeX/2 +changeX;
+                app.stage.getChildAt(0).getChildAt(7).y=-changeY/2 + changeY;
 
-            if(vst.currentSlide==0){
-                app.stage.getChildAt(0).getChildByName("opener").x=window.innerWidth/2;
-                app.stage.getChildAt(0).getChildByName("opener").y=((window.innerHeight)/3)+50;
+                //GRAPH
+                app.stage.getChildAt(0).getChildAt(8).x=-changeX/2+changeX;;
+                app.stage.getChildAt(0).getChildAt(8).y=-changeY/2+changeY;
 
-                app.stage.getChildByName("button_start").x=window.innerWidth/2;
-                app.stage.getChildByName("button_start").y=((window.innerHeight)/3) +350;
+                //arrow
+                app.stage.getChildAt(0).getChildAt(4).x=-changeX/2+changeX;
 
             } else {
-                
-                //LOCKED
-                app.stage.getChildByName("button_nextslide").x=window.innerWidth/2 +100;
-                app.stage.getChildByName("button_nextslide").y=window.innerHeight-(75/2);
+                //BUTTONS
+                app.stage.getChildAt(0).getChildAt(2).getChildByName("databox").x=window.innerWidth-260;
+                app.stage.getChildAt(0).getChildAt(2).getChildByName("layersbox").x=window.innerWidth/2;
 
-                app.stage.getChildByName("button_prevslide").x=window.innerWidth/2 -100,
-                app.stage.getChildByName("button_prevslide").y=window.innerHeight-(75/2);
+                //COST
+                app.stage.getChildAt(0).getChildAt(7).x=changeX;
+                app.stage.getChildAt(0).getChildAt(7).y=changeY;
 
-                app.stage.getChildByName("gotosand").x=window.innerWidth -100,
-                
+                //GRAPH
+                app.stage.getChildAt(0).getChildAt(8).x=changeX;;
+                app.stage.getChildAt(0).getChildAt(8).y=changeY;
 
-                //graph
-                app.stage.getChildAt(0).getChildAt(7).y=window.innerHeight-win.startheight_nochange;
-                app.stage.getChildAt(0).getChildAt(7).x=window.innerWidth-win.startwidth_nochange;
-
-                //cost
-                if(app.stage.getChildAt(0).getChildAt(2).getChildByName("databox")){
-                    app.stage.getChildAt(0).getChildAt(6).y=window.innerHeight-win.startheight_nochange;
-                    app.stage.getChildAt(0).getChildAt(6).x=window.innerWidth-win.startwidth_nochange;
-                }
-
-                if(vst.slideList[vst.currentSlide].backfromcalc){
-                    app.stage.getChildAt(0).getChildAt(10).getChildByName("backfromcalc").x=window.innerWidth/2 -100;
-                }
-
-                if(vst.slideList[vst.currentSlide].calc2sand){
-                   app.stage.getChildAt(0).getChildAt(10).getChildByName("calc2sand").x=window.innerWidth/2 +100;
-                }
-
-
-                if(app.stage.getChildAt(0).getChildAt(2).getChildByName("actfnsbox") !== null && !vst.slideList[vst.currentSlide].sandbox){
-                    app.stage.getChildAt(0).getChildAt(2).getChildByName("actfnsbox").y=window.innerHeight-win.startheight_nochange +(win.startheight_nochange-250);
-                }
-
-                if(app.stage.getChildAt(0).getChildAt(2).getChildByName("layersbox") !== null){
-                    app.stage.getChildAt(0).getChildAt(2).getChildByName("layersbox").x=window.innerWidth/2//window.innerWidth-win.startwidth_nochange +(window.innerWidth/2-100);
-                }
-
-                if(app.stage.getChildAt(0).getChildAt(2).getChildByName("databox") !== null){
-                    app.stage.getChildAt(0).getChildAt(2).getChildByName("databox").x=window.innerWidth-260;//window.innerWidth-win.startwidth_nochange +(window.innerWidth/2-100);
-                }
+                console.log(app.stage.getChildAt(0).getChildAt(8))
             }
-            */  
         }
 
         document.body.appendChild(this.app.view);
@@ -181,14 +179,14 @@ export class View{
         /*TO DELETE*/
         for(var i=0; i<this.slideList.length;i++){
             var currText=new PIXI.Text(i);
-            currText.x=80;
-                currText.y=25;
+            currText.x=0;
+                currText.y=45;
             this.slideList[i].slideContainer.addChild(currText);
         }
 
         //maybe come back to this to cutdown on startup time
            
-        const opener = new PIXI.Sprite(PIXI.Texture.from('images/intro/opener.png'));
+        var opener = new PIXI.Sprite(PIXI.Texture.from('images/intro/opener.png'));
         opener.name="opener";
         opener.anchor.set(0.5);
         opener.x=((window.innerWidth)/2);
@@ -210,8 +208,7 @@ export class View{
 
 
 
-        this.currentSlide=6;
-
+        this.currentSlide=33;
 
 
 
@@ -230,14 +227,40 @@ export class View{
 
 
         this.drawSlide_init();
+
+        var header = new PIXI.Graphics();
+        header.name="header";
+        header.beginFill(0xbfbfbf);
+        header.drawRect(0,0,window.innerWidth,layout.HEADER_HEIGHT);
+        app.stage.addChild(header);
+
+        var footer=new PIXI.Graphics();
+        footer.name="footer";
+        footer.beginFill(0xbfbfbf);
+        footer.drawRect(0,window.innerHeight,window.innerWidth,-layout.FOOTER_HEIGHT);
+        app.stage.addChild(footer);
+
         this.createButtons();
         this.app.stage.addChild(this.slideList[this.currentSlide].textbuttonContainer);
         this.caveats();
+        
     }
 
     // when window is resized, gotta resize all the other slides
     // but only some stuff
     resize2(){
+
+        layout.CX= window.innerWidth/2;
+        layout.CY= window.innerHeight/2 -50;
+
+        var changeY=window.innerHeight-this.startheight_nochange;
+        var changeX=window.innerWidth-this.startwidth_nochange;
+
+        this.app.stage.getChildAt(0).x=changeX/2;
+        this.app.stage.getChildAt(0).y=changeY/2;
+
+        this.app.stage.getChildAt(0).getChildAt(4).x=changeX/2;
+
 
         /*
         this.startheight=window.innerHeight;
@@ -281,7 +304,30 @@ export class View{
     }
 
     // handle 1st and last slide diff formats
+
+
+
     caveats(){
+
+        if (this.currentSlide==0){
+            for(var i = 1; i<this.app.stage.children.length; i++){
+                this.app.stage.getChildAt(i).visible=false;
+            }    
+            this.app.stage.getChildByName("button_start").visible=true;
+
+        } else {
+            for(var i = 1; i<this.app.stage.children.length; i++){
+                this.app.stage.getChildAt(i).visible=true;
+                this.app.stage.getChildByName("button_start").visible=false;
+
+            }            
+
+        }
+
+
+
+
+        /*
         if(this.slideList[this.currentSlide].sandbox){
             layout.NEURON_LEFTLIM=layout.NEURON_LEFTLIM_SANDBOX;
             layout.NEURON_UPPERLIM=layout.NEURON_UPPERLIM_SANDBOX;
@@ -329,10 +375,11 @@ export class View{
         
         
 
-            this.app.stage.getChildAt(0).getChildByName("footer").visible=true;
-            this.app.stage.getChildAt(0).getChildByName("header").visible=true;
+           // this.app.stage.getChildAt(0).getChildByName("footer").visible=true;
+          //  this.app.stage.getChildAt(0).getChildByName("header").visible=true;
             this.app.stage.getChildByName("button_start").visible=false;
         }
+        */
     }
 
 
@@ -359,10 +406,15 @@ export class View{
     }
 
     createButtons(){
+
+  //      ((window.innerWidth)/2);
+//        opener.y=((window.innerHeight)/3)+50;
+
+
         var vst=this;
 
         var startx=window.innerWidth/2;
-        var starty=((window.innerHeight)/3) +350;
+        var starty=(window.innerHeight/3) +350;
 
         var button_nextslide = new Button("button_nextslide",PIXI.Texture.from('images/buttons/next.png'),layout.NEXTSLIDE_X,layout.NEXTSLIDE_Y,true);
         var button_prevslide = new Button("button_prevslide",PIXI.Texture.from('images/buttons/back.png'),layout.PREVSLIDE_X,layout.NEXTSLIDE_Y,true);
@@ -424,19 +476,7 @@ export class View{
                 
         });
 
-        var gotointro = new Button("gotointro",PIXI.Texture.from('images/buttons/gotointro.png'),250,layout.HEADER_HEIGHT/2,false)
-        this.app.stage.addChild(gotointro);
-        this.app.stage.getChildByName("gotointro").on('click', function(e){ 
-            
-            if (vst.currentSlide!=2){
-                vst.app.stage.removeChild(vst.slideList[vst.currentSlide].textbuttonContainer);
-
-                vst.currentSlide=2;
-                vst.drawSlide();
-            }
-        });
-
-        var gotoneuron = new Button("gotoneuron",PIXI.Texture.from('images/buttons/gotoneuron.png'),375,layout.HEADER_HEIGHT/2,false)
+        var gotoneuron = new Button("gotoneuron",PIXI.Texture.from('images/buttons/gotoneuron.png'),window.innerWidth-375,layout.HEADER_HEIGHT/2,false)
         this.app.stage.addChild(gotoneuron);
         this.app.stage.getChildByName("gotoneuron").on('click', function(e){ 
             
@@ -448,7 +488,7 @@ export class View{
             }
         });
 
-        var gotonet = new Button("gotonet",PIXI.Texture.from('images/buttons/gotoneuron.png'),500,layout.HEADER_HEIGHT/2,false)
+        var gotonet = new Button("gotonet",PIXI.Texture.from('images/buttons/gotoneuron.png'),window.innerWidth-250,layout.HEADER_HEIGHT/2,false)
         this.app.stage.addChild(gotonet);
         this.app.stage.getChildByName("gotonet").on('click', function(e){ 
             
@@ -460,7 +500,7 @@ export class View{
             }
         });
 
-        var gotosand = new Button("gotosand",PIXI.Texture.from('images/buttons/sand.png'),window.innerWidth-100,layout.HEADER_HEIGHT/2 +2,false)
+        var gotosand = new Button("gotosand",PIXI.Texture.from('images/buttons/sand.png'),window.innerWidth-100,layout.HEADER_HEIGHT/2 +1,false)
         this.app.stage.addChild(gotosand);
         this.app.stage.getChildByName("gotosand").on('click', function(e){ 
             

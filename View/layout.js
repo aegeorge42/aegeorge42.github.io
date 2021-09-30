@@ -1,6 +1,38 @@
 
 export const layout = {
 
+    CX: window.innerWidth/2,
+    CY: window.innerHeight/2 -50,
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     HEADER_HEIGHT:50,
     FOOTER_HEIGHT:75,
 

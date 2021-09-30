@@ -49,6 +49,8 @@ export class Slide{
         this.weightsContainer = new PIXI.Container();
         
         this.labelsContainer = new PIXI.Container();
+        this.arrowContainer = new PIXI.Container();
+
 
         this.costLabel = new PIXI.Container();
     
@@ -103,28 +105,17 @@ export class Slide{
                  
                                       this.weightsContainer,
                                       this.labelsContainer,
-
                                       this.buttonContainer,
-
                                       this.neuronContainer,
+                                      this.arrowContainer,
                                       this.textContainer,
-
                                       this.inputContainer, 
-                                    //  this.neuronContainer,
-                                   //  this.cardContainer,
-                                   //   this.textContainer,
-                                      //this.labelsContainer,
-
                                       this.costLabel,
                                       this.graphContainer,
-
-                                   //   this.imagesContainer,
-                                      footer,
-                                      header,
                                       this.textbuttonContainer,
                                       );
 
-        window.addEventListener('resize', resize);    
+        //window.addEventListener('resize', resize);    
 
         var h=window.innerHeight;    
         function resize(){
@@ -512,6 +503,8 @@ export class Slide{
             }
            
             slide.slideNet.learn_batch();
+            slide.slideNet.setNetInput(slide.slideNet.data.points[slide.slideNet.dataIdx]);
+
             await slide.sleep(10);
 
             slide.slideNet.update();
@@ -1377,14 +1370,14 @@ export class Slide{
             var overneuron_small =   new PIXI.TextStyle({
                 fontFamily: 'Helvetica',
                 fontWeight: 400,
-                fontSize: 14,
+                fontSize: 15,
                 fill:  0x00ad09
             });
 
             var overneuron_large=   new PIXI.TextStyle({
                 fontFamily: 'Helvetica',
                 fontWeight: 400,
-                fontSize: 24,
+                fontSize: 22,
                 fill:  0x7c00ad
             });
 
@@ -1393,18 +1386,18 @@ export class Slide{
             overText1.x=-50;
             overText1.y=35;
 
-            var overText15 = new PIXI.Text("𝑓(      )=",textstyles.default);
+            var overText15 = new PIXI.Text("𝑓(       )",textstyles.default);
             overText15.anchor.set(0,0.5);
             overText15.x=2;
               
             var overText2 = new PIXI.Text(formatter.format(net.getLayer(i).neurons[j].output_nofn),overneuron_small);
-            overText2.anchor.set(0,0.5);
-            overText2.x=20;
+            overText2.anchor.set(0.5);
+            overText2.x=40;
 
             var overText3 = new PIXI.Text(formatter.format(net.getLayer(i).neurons[j].output),overneuron_large)
-            overText3.anchor.set(0,0.5);
-            overText3.x=10;
-            overText3.y=25;
+            overText3.anchor.set(0.5);
+            overText3.x=30;
+            overText3.y=30;
             
 
             var neuronOver = new PIXI.Sprite(PIXI.Texture.from('images/net/overneuron.png'));
@@ -1581,7 +1574,7 @@ export class Slide{
             overText_f.x=10;
             overText_f.y=-50;
 
-            var overText_paren= new PIXI.Text("(           ) =", new PIXI.TextStyle({
+            var overText_paren= new PIXI.Text("(             ) =", new PIXI.TextStyle({
                 fontFamily: 'Helvetica',
                 fontWeight: 500,
                 fontSize: 25,
@@ -1595,9 +1588,9 @@ export class Slide{
                 fontSize: 30,
                 fill:  0x00ad09
             }));
-            overText_actfn.anchor.set(1,0.5);
-            overText_actfn.x=115;
-            overText_actfn.y=-5;
+            overText_actfn.anchor.set(0.5);
+            overText_actfn.x=90;
+            overText_actfn.y=-2;
 
             var overText_actfn_out = new PIXI.Text(formatter.format(net.getLayer(i).neurons[j].output), new PIXI.TextStyle({
                 fontFamily: 'Helvetica',

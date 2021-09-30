@@ -55,24 +55,6 @@ export class Graph extends PIXI.Sprite{
                 bgp.name= i.toString()+j.toString();
 
                 this.bg.addChild(bgp);
-
-
-                // TO DELETE
-                /*var xname=i
-                var yname=j;
-
-                var text = new PIXI.Text(xname,
-                                    
-                    new PIXI.TextStyle({
-                        fontFamily: 'Helvetica',
-                        fontWeight: 400,
-                        fontSize: 12,
-                        fill: 0x0000FF
-                    }));
-
-                    text.anchor.set(0.5)
-                     bgp.addChild(text)
-                */
                 }
             }
             
@@ -93,23 +75,6 @@ export class Graph extends PIXI.Sprite{
                 bgp.name= i.toString()+j.toString();
 
                 this.bg.addChild(bgp);
-
-                var xname=i
-                var yname=j;
-
-                /*
-                var text = new PIXI.Text(yname,
-                                    
-                    new PIXI.TextStyle({
-                        fontFamily: 'Helvetica',
-                        fontWeight: 400,
-                        fontSize: 12,
-                        fill: 0x0000FF
-                    }));
-
-                    text.anchor.set(0.5)
-                  bgp.addChild(text)
-                */
             }
         }
     }

@@ -21,7 +21,7 @@ export const SlideInstruct1 = new Slide();
     var textInstruct1 = [    
         [ ["Here is the tool that I needed to learn about neural networks." + '\n' +
            "                                                          I hope it helps you! "], 
-          [layout.LEFTBUFFER, layout.BOTTOMBUFFER-100]],
+          [layout.CX-400, layout.CY+100]],
     ];    
     SlideInstruct1.drawText(textInstruct1);
     SlideInstruct1.drawTextButtons();
@@ -37,25 +37,22 @@ export const SlideInstruct1 = new Slide();
 */
 
 export const SlideInstruct2 = new Slide();
-    var arrow1 =new PIXI.Sprite(PIXI.Texture.from('images/arrow1.png'));
+    var arrow1 =new PIXI.Sprite(PIXI.Texture.from('images/arrows/arrow1.png'));
     arrow1.isSprite=true;
-    arrow1.scale.set(0.4);
+    arrow1.scale.set(0.5);
 
-    arrow1.x=layout.LEFTBUFFER + 800;
+    arrow1.x=window.innerWidth-350;
     arrow1.y=80;
-
-
+    SlideInstruct2.arrowContainer.addChild(arrow1)
 
     var textInstruct2 = [    
-        arrow1,
         [ ["Here is the tool that I needed to learn about neural networks." + '\n' +
-        "                                                          I hope it helps you! "], [layout.LEFTBUFFER, layout.BOTTOMBUFFER-100]],
-        [ ["use these buttons to jump ahead to different sections"], [layout.LEFTBUFFER+300, layout.TOPBUFFER+100]],
-        [ ["just want to play with a pre-built neural network? click here"], [layout.LEFTBUFFER+400, layout.TOPBUFFER+150]],
+        "                                                          I hope it helps you! "], [layout.CX-400, layout.CY+100]],
+        [ ["use these buttons to jump ahead to different sections"], [layout.CX-250, 150]],
+        [ ["just want to play with a pre-built neural network? click SANDBOX"], [layout.CX-150, 200]],
 
     ];    
     SlideInstruct2.drawText(textInstruct2);
-    SlideInstruct2.drawTextButtons();
 
 /****************     
  * 
@@ -87,14 +84,13 @@ export const SlideIntro1b = new Slide();
         percep_blank.y=100;
 
     var textIntro1b= [percep_blank,
-      //  [ ["Once our net is finished learning, "+'\n'+ "we'll give it some unlabeled data"+'\n'+
-       // "to test if it works."],[layout.LEFTBUFFER,200]],
+        [ ["Once our net is finished training, it will be able to sort unlabeled data."],[layout.LEFTBUFFER,50]],
         [["Here's a neural network that has learned to classify"+'\n'],
         ["     strawberries ", textstyles.default_red],
         ["and                               "],
         [" blueberries", textstyles.default_blue],
-        [layout.LEFTBUFFER,layout.TOPBUFFER]],
-        [["Click on an image to feed it into the neural network. "], [layout.LEFTBUFFER, layout.TOPBUFFER+80] ],
+        [layout.LEFTBUFFER,layout.TOPBUFFER+50]],
+        [["Click on an image to feed it into the net."], [layout.LEFTBUFFER, layout.TOPBUFFER+150] ],
     ];
 
     var textwid= 0
@@ -145,9 +141,10 @@ export const SlideIntro1b = new Slide();
             percep_blank.texture=PIXI.Texture.from('images/intro/percep_strawb.png')
         });
 
-    SlideIntro1b.inputContainer.addChild(singleblue,singlestraw);
 
     SlideIntro1b.drawText(textIntro1b);
+    SlideIntro1b.textContainer.addChild(singleblue,singlestraw);
+
     SlideIntro1b.drawTextButtons();
 
 export const SlideIntro2 = new Slide();
@@ -876,7 +873,7 @@ export const SlideError6b = new Slide();
     [["A neural network's 'learning' is just the process of updating its weights and biases to minimize the cost."], [layout.LEFTBUFFER,layout.TOPBUFFER+50]],
     [["If you're interested in walking through the calculus behind gradient descent, click here"], [layout.LEFTBUFFER,layout.TOPBUFFER+100]],
     [["You've finished with the tutorial!"], [layout.LEFTBUFFER,layout.TOPBUFFER+100]],
-    [["Click next to enter sandbox mode!"], [layout.LEFTBUFFER,layout.TOPBUFFER+100]],
+    [["On the next slide is sandbox mode. Click this button to backpropogate for one epoch."+'/n'+" Click this button to continueously backpropogate. Click this button to reset the weights and biases."], [layout.LEFTBUFFER,layout.TOPBUFFER+200]],
 
 
     ];
@@ -2061,7 +2058,6 @@ export const SlideSandbox = new Slide();
 
     var SlideNet2Graph = new Graph(netSand.data);
     SlideSandbox.graphContainer.addChild(SlideNet2Graph.getGraph());
-    SlideSandbox.setVis(SlideSandbox.slideContainer.getChildAt(8),false);
 
     SlideSandbox.drawActFnButtons();
     SlideSandbox.drawLayerButtons();
@@ -2073,5 +2069,3 @@ export const SlideSandbox = new Slide();
 
     SlideSandbox.drawCost();
     SlideSandbox.drawDataButtons(SlideNet2Graph);
-
-
