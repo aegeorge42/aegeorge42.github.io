@@ -57,6 +57,7 @@ import {SlideHome,
 
 } from "./allSlides.js"
 import { Slide } from "./Slide.js";
+import { textstyles } from "./textstyles.js";
 
 
 
@@ -97,72 +98,76 @@ export class View{
             footer.width=window.innerWidth;
             footer.y=changeY;
 
-            console.log(changeX+", "+changeY)
-
             app.stage.getChildByName("button_start").x=window.innerWidth/2;
             app.stage.getChildByName("button_start").y=(window.innerHeight/3) +350;
 
             app.stage.getChildByName("button_nextslide").x=window.innerWidth/2 +100;
             app.stage.getChildByName("button_nextslide").y=window.innerHeight-(75/2);
 
-            app.stage.getChildByName("button_prevslide").x=window.innerWidth/2 -100,
+            app.stage.getChildByName("button_calc2sand").x=window.innerWidth/2 +100;
+            app.stage.getChildByName("button_calc2sand").y=window.innerHeight-(75/2);
+
+            app.stage.getChildByName("button_prevslide").x=window.innerWidth/2 -100;
             app.stage.getChildByName("button_prevslide").y=window.innerHeight-(75/2);
+
+            app.stage.getChildByName("button_backfromcalc").x=window.innerWidth/2 -100;
+            app.stage.getChildByName("button_backfromcalc").y=window.innerHeight-(75/2);
+
+            app.stage.getChildByName("text_calc2sand").x=window.innerWidth/2 +100+100;
+            app.stage.getChildByName("text_calc2sand").y=window.innerHeight-(75/2) -20;
 
             //GO TO BUTTONS
             app.stage.getChildByName("gotosand").x=window.innerWidth-100;
             app.stage.getChildByName("gotonet").x=window.innerWidth-250;
             app.stage.getChildByName("gotoneuron").x=window.innerWidth-375;
 
-
             if(vst.currentSlide!=33){
+
                 app.stage.getChildAt(0).x=changeX/2;
                 app.stage.getChildAt(0).y=changeY/2;
+                app.stage.getChildAt(0).getChildAt(4).x=changeX/2;
 
-                //BUTTONS
-                app.stage.getChildAt(0).getChildAt(2).x=-changeX/2;
-                app.stage.getChildAt(0).getChildAt(2).y=-changeY/2;
 
-                if(app.stage.getChildAt(0).getChildAt(2).getChildByName("buttonNeuronAddContainer")){
-                    app.stage.getChildAt(0).getChildAt(2).getChildByName("buttonNeuronAddContainer").x=changeX/2;
-                    app.stage.getChildAt(0).getChildAt(2).getChildByName("buttonNeuronRemContainer").x=changeX/2;
-
-                    app.stage.getChildAt(0).getChildAt(2).getChildByName("buttonNeuronAddContainer").y=changeY/2;
-                    app.stage.getChildAt(0).getChildAt(2).getChildByName("buttonNeuronRemContainer").y=changeY/2;
-                }
-
-                //COST
-                app.stage.getChildAt(0).getChildAt(7).x=-changeX/2 +changeX;
-                app.stage.getChildAt(0).getChildAt(7).y=-changeY/2 + changeY;
-
-                //GRAPH
-                app.stage.getChildAt(0).getChildAt(8).x=-changeX/2+changeX;;
-                app.stage.getChildAt(0).getChildAt(8).y=-changeY/2+changeY;
-
-                //arrow
-                app.stage.getChildAt(0).getChildAt(4).x=-changeX/2+changeX;
 
             } else {
-                //BUTTONS
+                app.stage.getChildAt(0).y=changeY/2;
+
                 app.stage.getChildAt(0).getChildAt(2).getChildByName("databox").x=window.innerWidth-260;
-                app.stage.getChildAt(0).getChildAt(2).getChildByName("layersbox").x=window.innerWidth/2;
+                app.stage.getChildAt(0).getChildAt(2).getChildByName("databox").y=50 - changeY/2;
 
-                //COST
+                app.stage.getChildAt(0).getChildAt(2).getChildByName("learnbox").y=50-changeY/2;
+                app.stage.getChildAt(0).getChildAt(2).getChildByName("actfnsbox").y=155-changeY/2;
+                app.stage.getChildAt(0).getChildAt(2).getChildByName("ratebox").y=315-changeY/2;
+
+
+
                 app.stage.getChildAt(0).getChildAt(7).x=changeX;
-                app.stage.getChildAt(0).getChildAt(7).y=changeY;
+                app.stage.getChildAt(0).getChildAt(7).y=-changeY/2 + changeY;
 
-                //GRAPH
-                app.stage.getChildAt(0).getChildAt(8).x=changeX;;
-                app.stage.getChildAt(0).getChildAt(8).y=changeY;
+                app.stage.getChildAt(0).getChildAt(8).x=changeX;
+                app.stage.getChildAt(0).getChildAt(8).y=-changeY/2+changeY;
 
-                console.log(app.stage.getChildAt(0).getChildAt(8))
-            }
+
+                if(window.innerWidth>1280) {
+                    app.stage.getChildAt(0).getChildAt(0).x=(window.innerWidth-1280)/2;
+                    app.stage.getChildAt(0).getChildAt(1).x=(window.innerWidth-1280)/2;
+                    app.stage.getChildAt(0).getChildAt(3).x=(window.innerWidth-1280)/2;
+                    app.stage.getChildAt(0).getChildAt(6).x=(window.innerWidth-1280)/2;
+
+                    app.stage.getChildAt(0).getChildAt(2).getChildByName("buttonNeuronAddContainer").x=(window.innerWidth-1280)/2;
+                    app.stage.getChildAt(0).getChildAt(2).getChildByName("buttonNeuronRemContainer").x=(window.innerWidth-1280)/2;
+                
+                }
+            }   
         }
+        
 
         document.body.appendChild(this.app.view);
 
         //add premade slides
         this.slideList = [];
-        this.slideList.push(SlideHome,SlideInstruct1, SlideInstruct2, //1
+        this.slideList.push(SlideHome,SlideInstruct1, SlideInstruct2,
+
                             SlideIntro1,SlideIntro2,SlideIntro3, SlideIntro1b, SlideIntro3a, SlideIntro4a,
                             SlideNeuronA, SlideNeuronA2,SlideNeuron1b,SlideNeuron2,SlideNeuron2b,SlideNeuron2c,SlideNeuron2d,SlideNeuron2d2,SlideNeuron2e,
                             SlideNet1, SlideNet1b, SlideNet1b2,SlideNet1c, SlideNet1d,SlideNet1d2,
@@ -208,7 +213,7 @@ export class View{
 
 
 
-        this.currentSlide=33;
+        this.currentSlide=21;
 
 
 
@@ -256,131 +261,86 @@ export class View{
         var changeY=window.innerHeight-this.startheight_nochange;
         var changeX=window.innerWidth-this.startwidth_nochange;
 
-        this.app.stage.getChildAt(0).x=changeX/2;
-        this.app.stage.getChildAt(0).y=changeY/2;
+        if(this.currentSlide!=33){
 
-        this.app.stage.getChildAt(0).getChildAt(4).x=changeX/2;
+            this.app.stage.getChildAt(0).x=changeX/2;
+            this.app.stage.getChildAt(0).y=changeY/2;
+            this.app.stage.getChildAt(0).getChildAt(4).x=changeX/2;
+        } else {
+            this.app.stage.getChildAt(0).y=changeY/2;
 
-
-        /*
-        this.startheight=window.innerHeight;
-        this.startwidth=window.innerWidth;
-
-        this.app.stage.getChildAt(0).getChildAt(7).y=window.innerHeight-this.startheight_nochange;
-        this.app.stage.getChildAt(0).getChildAt(7).x=window.innerWidth-this.startwidth_nochange;
-        this.app.stage.getChildAt(0).getChildAt(6).y=window.innerHeight-this.startheight_nochange;
-        this.app.stage.getChildAt(0).getChildAt(6).x=window.innerWidth-this.startwidth_nochange;
-        
-
-        if(this.app.stage.getChildAt(0).getChildAt(2).getChildByName("actfnsbox") !== null){
-        //    this.app.stage.getChildAt(0).getChildAt(2).getChildByName("actfnsbox").y=window.innerHeight-this.startheight_nochange +(layout.BOTTOMBUFFER-100);
-        }
-
-        if(this.app.stage.getChildAt(0).getChildAt(2).getChildByName("ratebox") !== null){
-         //   this.app.stage.getChildAt(0).getChildAt(2).getChildByName("ratebox").y=window.innerHeight-this.startheight_nochange +(layout.BOTTOMBUFFER-220);
-        }
-
-        if(this.app.stage.getChildAt(0).getChildAt(2).getChildByName("databox") !== null){
             this.app.stage.getChildAt(0).getChildAt(2).getChildByName("databox").x=window.innerWidth-260;
+            this.app.stage.getChildAt(0).getChildAt(2).getChildByName("databox").y=50 - changeY/2;
 
-          // this.app.stage.getChildAt(0).getChildAt(6).getChildByName("costBox").x=window.innerWidth-80;
-          // this.app.stage.getChildAt(0).getChildAt(6).getChildByName("epochbox").x=window.innerWidth-200;
+            this.app.stage.getChildAt(0).getChildAt(2).getChildByName("learnbox").y=50-changeY/2;
+            this.app.stage.getChildAt(0).getChildAt(2).getChildByName("actfnsbox").y=155-changeY/2;
+            this.app.stage.getChildAt(0).getChildAt(2).getChildByName("ratebox").y=315-changeY/2;
 
-  
+            this.app.stage.getChildAt(0).getChildAt(7).x=changeX;
+            this.app.stage.getChildAt(0).getChildAt(7).y=-changeY/2 + changeY;
 
+            this.app.stage.getChildAt(0).getChildAt(8).x=changeX;
+            this.app.stage.getChildAt(0).getChildAt(8).y=-changeY/2+changeY;
+/*
+
+            if(window.innerWidth>1280) {
+                app.stage.getChildAt(0).getChildAt(0).x=(window.innerWidth-1280)/2;
+                app.stage.getChildAt(0).getChildAt(1).x=(window.innerWidth-1280)/2;
+                app.stage.getChildAt(0).getChildAt(3).x=(window.innerWidth-1280)/2;
+                app.stage.getChildAt(0).getChildAt(6).x=(window.innerWidth-1280)/2;
+
+                app.stage.getChildAt(0).getChildAt(2).getChildByName("buttonNeuronAddContainer").x=(window.innerWidth-1280)/2;
+                app.stage.getChildAt(0).getChildAt(2).getChildByName("buttonNeuronRemContainer").x=(window.innerWidth-1280)/2;
+            
+            }
+            */
         }
-
-        
-       
-        if(this.currentSlide==0){
-        this.app.stage.getChildAt(0).getChildByName("opener").x=window.innerWidth/2;
-                this.app.stage.getChildAt(0).getChildByName("opener").y=((window.innerHeight)/3)+50;
-
-                this.app.stage.getChildByName("button_start").x=window.innerWidth/2;
-                this.app.stage.getChildByName("button_start").y=((window.innerHeight)/3) +350;
-        }
-
-        */
     }
 
-    // handle 1st and last slide diff formats
 
 
 
     caveats(){
 
         if (this.currentSlide==0){
+            console.log(this.app.stage.children)
             for(var i = 1; i<this.app.stage.children.length; i++){
                 this.app.stage.getChildAt(i).visible=false;
             }    
+
             this.app.stage.getChildByName("button_start").visible=true;
 
         } else {
             for(var i = 1; i<this.app.stage.children.length; i++){
                 this.app.stage.getChildAt(i).visible=true;
                 this.app.stage.getChildByName("button_start").visible=false;
-
-            }            
-
-        }
-
-
-
-
-        /*
-        if(this.slideList[this.currentSlide].sandbox){
-            layout.NEURON_LEFTLIM=layout.NEURON_LEFTLIM_SANDBOX;
-            layout.NEURON_UPPERLIM=layout.NEURON_UPPERLIM_SANDBOX;
-
-        }
-        else if(this.slideList[this.currentSlide].leftnet){
-            layout.NEURON_UPPERLIM=100;
-            layout.NEURON_LEFTLIM=0;
-
-        } else {
-            layout.NEURON_LEFTLIM=layout.NEURON_LEFTLIM_INIT;
-            layout.NEURON_UPPERLIM=layout.NEURON_UPPERLIM_INIT;
-
-
-        }
-
-        if (this.currentSlide==0){
-            for(var i = 1; i<this.app.stage.children.length; i++){
-                this.app.stage.getChildAt(i).visible=false;
-            }      
-
-            this.app.stage.getChildAt(0).getChildByName("footer").visible=false;
-            this.app.stage.getChildAt(0).getChildByName("header").visible=false;
-            this.app.stage.getChildByName("button_start").visible=true;
-
-        } else {
-            for(var i = 1; i<this.app.stage.children.length; i++){
-                this.app.stage.getChildAt(i).visible=true;
             }
-
+            
             if(this.slideList[this.currentSlide].backfromcalc){
-                this.app.stage.getChildByName("button_prevslide").visible=false;
+                this.app.stage.getChildByName("button_backfromcalc").visible=true;
+            } else {
+                this.app.stage.getChildByName("button_backfromcalc").visible=false;
             }
-
+    
             if(this.slideList[this.currentSlide].calc2sand){
-                this.app.stage.getChildByName("button_nextslide").visible=false;
+                this.app.stage.getChildByName("button_calc2sand").visible=true;
+                this.app.stage.getChildByName("text_calc2sand").visible=true;
+    
+            } else {
+                this.app.stage.getChildByName("button_calc2sand").visible=false;
+                this.app.stage.getChildByName("text_calc2sand").visible=false;
 
+    
             }
-
+    
             if(this.slideList[this.currentSlide].slidecredit){
                 this.app.stage.getChildByName("button_nextslide").visible=false;
-
+            } else {
+                this.app.stage.getChildByName("button_nextslide").visible=true;
             }
-
-        
-        
-
-           // this.app.stage.getChildAt(0).getChildByName("footer").visible=true;
-          //  this.app.stage.getChildAt(0).getChildByName("header").visible=true;
-            this.app.stage.getChildByName("button_start").visible=false;
         }
-        */
     }
+
 
 
     setVis(idx,bool){
@@ -391,7 +351,6 @@ export class View{
     drawSlide_init(){
         
         this.app.stage.addChild(this.slideList[this.currentSlide].slideContainer);
-
     }
 
     drawSlide_init_test(){
@@ -410,7 +369,6 @@ export class View{
   //      ((window.innerWidth)/2);
 //        opener.y=((window.innerHeight)/3)+50;
 
-
         var vst=this;
 
         var startx=window.innerWidth/2;
@@ -419,7 +377,17 @@ export class View{
         var button_nextslide = new Button("button_nextslide",PIXI.Texture.from('images/buttons/next.png'),layout.NEXTSLIDE_X,layout.NEXTSLIDE_Y,true);
         var button_prevslide = new Button("button_prevslide",PIXI.Texture.from('images/buttons/back.png'),layout.PREVSLIDE_X,layout.NEXTSLIDE_Y,true);
         var button_start = new Button("button_start",PIXI.Texture.from('images/buttons/start.png'),startx,starty,true,0xFFFFFF);
-        this.app.stage.addChild(button_nextslide,button_prevslide,button_start);
+        
+        var button_backfromcalc = new Button("button_backfromcalc",PIXI.Texture.from('images/buttons/back.png'),layout.PREVSLIDE_X,layout.NEXTSLIDE_Y,true);
+        var button_calc2sand = new Button("button_calc2sand",PIXI.Texture.from('images/buttons/next.png'),layout.NEXTSLIDE_X,layout.NEXTSLIDE_Y,true);
+
+        var text_calc2sand = new PIXI.Text("Click next"+'\n'+"to go to sandbox mode!", textstyles.default)
+        text_calc2sand.name="text_calc2sand";
+        text_calc2sand.x=layout.NEXTSLIDE_X+100;
+        text_calc2sand.y=layout.NEXTSLIDE_Y-20;
+
+
+        this.app.stage.addChild(button_nextslide,button_prevslide,button_start,button_backfromcalc,button_calc2sand, text_calc2sand);
 
         this.app.stage.getChildByName("button_start").on('click', function(e){ 
             vst.app.stage.removeChild(vst.slideList[vst.currentSlide].textbuttonContainer);
@@ -440,14 +408,12 @@ export class View{
             }
 
             if(vst.slideList[vst.currentSlide].slideNet !== undefined && vst.slideList[vst.currentSlide].largenet==1  && !vst.slideList[vst.currentSlide].fakenet){//&& vst.currentSlide == 9){
-            //    console.log(vst.slideList[vst.currentSlide].slideNet)
                 vst.slideList[vst.currentSlide].slideNet.update();
                 vst.slideList[vst.currentSlide].draw_update_large(vst.slideList[vst.currentSlide].slideNet)
                 vst.drawSlide();
             }
 
             if(vst.slideList[vst.currentSlide].slideNet !== undefined && vst.slideList[vst.currentSlide].largenet!=1 && !vst.slideList[vst.currentSlide].fakenet){//&& vst.currentSlide == 9){
-            //    console.log(vst.slideList[vst.currentSlide].slideNet)
                 vst.slideList[vst.currentSlide].slideNet.update();
                 vst.slideList[vst.currentSlide].draw_update(vst.slideList[vst.currentSlide].slideNet)
                 vst.drawSlide();
@@ -465,25 +431,31 @@ export class View{
             }
         });
 
+        this.app.stage.getChildByName("button_backfromcalc").on('click', function(e){ 
+            vst.currentSlide=32;
+            vst.drawSlide();
+        });
+
+        this.app.stage.getChildByName("button_calc2sand").on('click', function(e){ 
+            vst.currentSlide=33;
+            vst.drawSlide();
+        });
+
         //GO TO BUTTONS
         var homebutton = new Button("homebutton",PIXI.Texture.from('images/home.png'),30,layout.HEADER_HEIGHT/2,false)
         this.app.stage.addChild(homebutton);
         this.app.stage.getChildByName("homebutton").on('click', function(e){ 
-            vst.app.stage.removeChild(vst.slideList[vst.currentSlide].textbuttonContainer);
 
-                vst.currentSlide=0;
-                vst.drawSlide();
+            vst.currentSlide=0;
+            vst.drawSlide();
                 
         });
 
         var gotoneuron = new Button("gotoneuron",PIXI.Texture.from('images/buttons/gotoneuron.png'),window.innerWidth-375,layout.HEADER_HEIGHT/2,false)
         this.app.stage.addChild(gotoneuron);
         this.app.stage.getChildByName("gotoneuron").on('click', function(e){ 
-            
-            if (vst.currentSlide!=13){
-                vst.app.stage.removeChild(vst.slideList[vst.currentSlide].textbuttonContainer);
-
-                vst.currentSlide=13;
+            if (vst.currentSlide!=11){
+                vst.currentSlide=11;
                 vst.drawSlide();
             }
         });
@@ -493,9 +465,37 @@ export class View{
         this.app.stage.getChildByName("gotonet").on('click', function(e){ 
             
             if (vst.currentSlide!=23){
-                vst.app.stage.removeChild(vst.slideList[vst.currentSlide].textbuttonContainer);
-
                 vst.currentSlide=23;
+                vst.drawSlide();
+            }
+        });
+
+        var gotoforward = new Button("gotoforward",PIXI.Texture.from('images/buttons/gotoneuron.png'),window.innerWidth-550,layout.HEADER_HEIGHT/2,false)
+        this.app.stage.addChild(gotoforward);
+        this.app.stage.getChildByName("gotoforward").on('click', function(e){ 
+            
+            if (vst.currentSlide!=18){
+                vst.currentSlide=18;
+                vst.drawSlide();
+            }
+        });
+
+        var gotobackprop = new Button("gotobackprop",PIXI.Texture.from('images/buttons/gotoneuron.png'),window.innerWidth-650,layout.HEADER_HEIGHT/2,false)
+        this.app.stage.addChild(gotobackprop);
+        this.app.stage.getChildByName("gotobackprop").on('click', function(e){ 
+            
+            if (vst.currentSlide!=24){
+                vst.currentSlide=24;
+                vst.drawSlide();
+            }
+        });
+
+        var gotocalc = new Button("gotocalc",PIXI.Texture.from('images/buttons/gotoneuron.png'),window.innerWidth-850,layout.HEADER_HEIGHT/2,false)
+        this.app.stage.addChild(gotocalc);
+        this.app.stage.getChildByName("gotocalc").on('click', function(e){ 
+            
+            if (vst.currentSlide!=35){
+                vst.currentSlide=35;
                 vst.drawSlide();
             }
         });
@@ -503,14 +503,10 @@ export class View{
         var gotosand = new Button("gotosand",PIXI.Texture.from('images/buttons/sand.png'),window.innerWidth-100,layout.HEADER_HEIGHT/2 +1,false)
         this.app.stage.addChild(gotosand);
         this.app.stage.getChildByName("gotosand").on('click', function(e){ 
-            
             if (vst.currentSlide!=33){
                 vst.currentSlide=33;
                 vst.drawSlide();
             }
         });
-        
-
-
     }
 }

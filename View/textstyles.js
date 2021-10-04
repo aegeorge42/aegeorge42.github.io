@@ -11,6 +11,28 @@ export const textstyles = {
     fontSize: 18
   }),
 
+  label_med: new PIXI.TextStyle({
+    fontFamily: 'Helvetica',
+    fontWeight: 500,
+    fontSize: 20,
+  }),
+
+  label_large: new PIXI.TextStyle({
+    fontFamily: 'Helvetica',
+    fontWeight: 550,
+    fontSize: 23,
+  }),
+
+
+
+
+
+
+
+
+
+
+  
   small: new PIXI.TextStyle({
     fontFamily: 'Helvetica',
     fontWeight: 400,
@@ -71,16 +93,5 @@ export const textstyles = {
     fill: 0xa3001e
   }),
 
-  label_large: new PIXI.TextStyle({
-    fontFamily: 'Helvetica',
-    fontWeight: 500,
-    fontSize: 25,
-  }),
-
-  label_med: new PIXI.TextStyle({
-    fontFamily: 'Helvetica',
-    fontWeight: 500,
-    fontSize: 20,
-  }),
 
 }
