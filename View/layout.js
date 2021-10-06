@@ -12,7 +12,9 @@ export const layout = {
 
     NEURON_LEFTLIM_INIT: window.innerWidth/2 - 200,
     NEURON_LEFTLIM_SANDBOX: 440,
-    NEURON_LEFTLIM_BACKPROP: window.innerWidth/2 - 310,
+    NEURON_LEFTLIM_BACKPROP: window.innerWidth/2 - 340,
+    NEURON_LEFTLIM_LARGE: window.innerWidth/2 + 300,
+
 
 
 
@@ -70,7 +72,7 @@ export const layout = {
     //NEURON_LEFTLIM: Math.max((window.innerWidth-1100)/2,15) +440,
 
     //NEURON_LEFTLIM_BACKPROP: Math.max((window.innerWidth-1100)/2,15) +250,
-    NEURON_LARGE_LEFTLIM: Math.max((window.innerWidth-1100)/2,20)+525,
+    //NEURON_LARGE_LEFTLIM: Math.max((window.innerWidth-1100)/2,20)+525,
     //NEURON_LEFTLIM_SANDBOX: 440,//Math.max((window.innerWidth-1100)/2,15) +350,
 
     //NEURON_UPPERLIM_INIT: 240,

@@ -374,7 +374,7 @@ export class Slide{
             } else {
                 ratebox.x= layout.CX-265;
                 
-                ratebox.y= layout.CY-240;//layout.BOTTOMBUFFER-220; 
+                ratebox.y= layout.CY-215;//layout.BOTTOMBUFFER-220; 
             }
 
         this.buttonContainer.addChild(ratebox);
@@ -447,7 +447,7 @@ export class Slide{
 
         if(!slide.sandbox){
             learnbox.x=layout.CX-510;
-            learnbox.y=layout.CY-235;
+            learnbox.y=layout.CY-210;
 
         }
 
@@ -1089,11 +1089,9 @@ export class Slide{
                                         
                     weightSprite.on('mouseover', function(e){
 
+                        if(!slide.backprop_labels){
                         var xbuffer=(window.innerWidth-viewst.startwidth)/2;
                         var ybuffer=(window.innerHeight-viewst.startheight)/2;
-
-                       // var xbuffer=Math.max(0,(window.innerWidth-viewst.startwidth)/6);
-                      //  var ybuffer=Math.max(0,(window.innerHeight-viewst.startheight)/4);
 
                         this.getChildByName("weightTextBox").visible=true;
                         this.getChildByName("weightTextBox").x=e.data.global.x-xbuffer;
@@ -1109,6 +1107,7 @@ export class Slide{
 
                         this.getChildByName("+").visible=true;
                         this.getChildByName("-").visible=true;
+                        }
                     });
                     
                     weightSprite.on('mouseout', function(e){
@@ -1214,8 +1213,10 @@ export class Slide{
                     weightSprite.addChild(addweight,loseweight);
                                         
                     weightSprite.on('mouseover', function(e){
-                        var xbuffer=Math.max(0,(window.innerWidth-viewst.startwidth)/6);
-                        var ybuffer=Math.max(0,(window.innerHeight-viewst.startheight)/4);
+
+                        if (!slide.large_nointeract){
+                        var xbuffer=(window.innerWidth-viewst.startwidth)/2;
+                        var ybuffer=(window.innerHeight-viewst.startheight)/2;
 
                         this.getChildByName("weightTextBox").visible=true;
                         this.getChildByName("weightTextBox").x=e.data.global.x-xbuffer;
@@ -1231,6 +1232,7 @@ export class Slide{
 
                         this.getChildByName("+").visible=true;
                         this.getChildByName("-").visible=true;
+                        }
                     });
                     
                     weightSprite.on('mouseout', function(e){
@@ -1356,6 +1358,8 @@ export class Slide{
         this.neuronBases.removeChildren();
         this.neuronOvers.removeChildren();
         this.neuronSensors.removeChildren();
+
+        var slide=this;
       
         for(var i = 0; i<net.layers.length; i++){
           for(var j = 0; j<net.getLayer(i).neurons.length; j++){
@@ -1424,7 +1428,7 @@ export class Slide{
 
             var overText0 = new PIXI.Text(str,textstyles.small);
             overText0.anchor.set(0,0.5);
-            overText0.x=-69;
+            overText0.x=-71;
 
             var overneuron_small =   new PIXI.TextStyle({
                 fontFamily: 'Helvetica',
@@ -1447,7 +1451,7 @@ export class Slide{
 
             var overText15 = new PIXI.Text("𝑓(       )",textstyles.default);
             overText15.anchor.set(0,0.5);
-            overText15.x=2;
+            overText15.x=4;
               
             var overText2 = new PIXI.Text(formatter.format(net.getLayer(i).neurons[j].output_nofn),overneuron_small);
             overText2.anchor.set(0.5);
@@ -1459,7 +1463,7 @@ export class Slide{
             overText3.y=30;
             
 
-            var neuronOver = new PIXI.Sprite(PIXI.Texture.from('images/net/overneuron.png'));
+            var neuronOver = new PIXI.Sprite(PIXI.Texture.from('images/net/overneuron2.png'));
                 neuronOver.anchor.set(0.5);
                 neuronOver.scale.set(1.5);
                 neuronOver.name = neuronBase.name;
@@ -1486,7 +1490,9 @@ export class Slide{
       
                 var self = this;
                 sensor.on('mouseover', function(e){
-                  self.neuronOvers.getChildAt(this.parent.getChildIndex(this)).alpha=1;
+                    if(!slide.backprop_labels ){
+                        self.neuronOvers.getChildAt(this.parent.getChildIndex(this)).alpha=1;
+                    }
                 });
       
                 sensor.on('mouseout', function(e){
@@ -1588,7 +1594,7 @@ export class Slide{
             neuronBase.anchor.set(0.5);
             neuronBase.name = i.toString() + j.toString();
 
-            neuronBase.x = layout.CX+320;//layout.NEURON_LARGE_X;
+            neuronBase.x = layout.NEURON_LEFTLIM_LARGE;//layout.NEURON_LARGE_X;
             neuronBase.y = layout.CY;//layout.NEURON_LARGE_Y;
 
             var ins=[];
@@ -1657,9 +1663,11 @@ export class Slide{
                 fontSize: 40,
                 fill: 0x7c00ad,
             }));
-            overText_actfn_out.anchor.set(1,0.5);
-            overText_actfn_out.x=105;
-            overText_actfn_out.y=50;
+
+            overText_actfn_out.anchor.set(0.5);
+
+            overText_actfn_out.x=75;
+            overText_actfn_out.y=60;
                
             neuronBase.addChild(overText_weights,overText_outnofn);
             neuronBase.addChild(overText_f,overText_paren,overText_actfn,overText_actfn_out);
@@ -1888,7 +1896,7 @@ export class Slide{
                 inputBase.scale.set(1.2);
                 inputBase.anchor.set(0.5);
                 inputBase.name = i.toString();
-                inputBase.x= layout.CX;//layout.NEURON_LARGE_LEFTLIM //- layout.NEURON_X_DIF;//leftlim;
+                inputBase.x= layout.CX-20;//layout.NEURON_LARGE_LEFTLIM //- layout.NEURON_X_DIF;//leftlim;
                 inputBase.y= (i * layout.NEURON_LARGE_Y_DIF) + layout.CY-120; //+ layout.NEURON_NUDGE;//(i*(inputHeight+buffer))+upperlim+buffer;
             this.inputContainer.addChild(inputBase);
 
@@ -2059,7 +2067,7 @@ export class Slide{
             // input types ex. length, roundness
             var inputLabel = new PIXI.Text(net.data.labels[i],textstyles.default);
                 inputLabel.anchor.set(0.5);
-                inputLabel.x = layout.CX;
+                inputLabel.x = layout.CX-20;
                 inputLabel.y = layout.CY-120 + (i*layout.NEURON_LARGE_Y_DIF) +50;
             this.labelsContainer.addChild(inputLabel);
         }
@@ -2228,25 +2236,24 @@ export class Slide{
 
     drawBackprop(layernum,neuronnum,weightnum){
 
-        var x = 700;
-        var DZDW_X=layout.CX+80;
-        var DZDW_Y=layout.CY-180;
+        var DZDW_X=layout.CX;
+        var DZDW_Y=layout.CY-150;
 
-        var DADZ_X=layout.CX+250;
-        var DADZ_Y=layout.CY-180;
+        var DADZ_X=layout.CX+180;
+        var DADZ_Y=layout.CY-150;
 
         if(layernum==1){
-            var DCDA_X=layout.CX+150;
-            var DCDA_Y=layout.CY-75;
-        } else {
             var DCDA_X=layout.CX+100;
-            var DCDA_Y=layout.CY-75;
+            var DCDA_Y=layout.CY-50;
+        } else {
+            var DCDA_X=layout.CX+80;
+            var DCDA_Y=layout.CY-50;
         }
         var DCDW_X=layout.CX+140;
-        var DCDW_Y=layout.CY+40;
+        var DCDW_Y=layout.CY+70;
 
         var W_NEWX=layout.CX+140;
-        var W_NEWY=layout.CY+150;
+        var W_NEWY=layout.CY+180;
 
 
         //dz_dw
@@ -2596,5 +2603,13 @@ export class Slide{
         center.drawRect(layout.CX,layout.CY, 10,10)
         this.textContainer.addChild(center);   
             */
+    }
+
+    drawInteractive(){
+        var interactive = new PIXI.Sprite(PIXI.Texture.from('images/interactive.png'));
+            interactive.x=layout.CX+420;
+            interactive.y=layout.CY-220;
+        this.textContainer.addChild(interactive);
+
     }
 }

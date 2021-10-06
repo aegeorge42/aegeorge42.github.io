@@ -23,6 +23,13 @@ export const textstyles = {
     fontSize: 23,
   }),
 
+  instruct: new PIXI.TextStyle({
+    fontFamily: 'Helvetica',
+    fontWeight: 400,
+    fontSize: 18,
+    fill: 0xa3001e
+  }),
+
 
 
 
@@ -85,13 +92,6 @@ export const textstyles = {
     fontSize: 24,
   }),
 
-
-  instruct: new PIXI.TextStyle({
-    fontFamily: 'Helvetica',
-    fontWeight: 400,
-    fontSize: 18,
-    fill: 0xa3001e
-  }),
 
 
 }
