@@ -1861,7 +1861,6 @@ SlideBackCalc9a.w1_all=true;
      w1toc_expand2,
      dcda_form3,
      dcda1_full,
-        [ ["49"],[backpropx_cost,layout.CY] ],
     ];
 
     SlideBackCalc9a.drawText(textBackCalc9a);
