@@ -1,7 +1,7 @@
 import {Button, tintDown, tintOver} from "./Button.js"
 import {layout} from "./layout.js"
 import {actFns} from "../../Model/actfns.js"
-import {Data} from "../Model/data.js"
+import {data} from "../Model/data.js"
 import {viewst} from "../Controller.js"
 import {textstyles} from "./textstyles.js"
 import { Net } from "../Model/net.js"

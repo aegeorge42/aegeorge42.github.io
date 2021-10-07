@@ -1,9 +1,9 @@
-import {Data} from "../Model/data.js";
+import {data} from "../Model/data.js";
 import { layout } from "./layout.js";
 
 export class Graph extends PIXI.Sprite{
 
-    constructor(data){
+    constructor(datap){
         super();
 
         this.axis=new PIXI.Sprite(PIXI.Texture.from('images/graph/axis.png'));
@@ -19,12 +19,12 @@ export class Graph extends PIXI.Sprite{
         this.bg.x=67;
         this.bg.y=15;
         
-        this.pointslength = data.points.length;
+        this.pointslength = datap.points.length;
         
 
         this.axis.addChild(this.bg)
 
-        this.fakedata=new Data(0, ["strawberry","blueberry"],["length","roundness"]);
+        this.fakedata=new data(0, ["strawberry","blueberry"],["length","roundness"]);
 
         this.bgpointsize = 20;
         this.numbgpoints = 200/this.bgpointsize;
@@ -32,7 +32,7 @@ export class Graph extends PIXI.Sprite{
 
         this.posAxis()
 
-        this.populateGraph(data);
+        this.populateGraph(datap);
     }
 
     getGraph(){
@@ -41,7 +41,7 @@ export class Graph extends PIXI.Sprite{
 
     posAxis(){
 
-        this.fakedata=new Data(0, ["strawberry","blueberry"],["length","roundness"]);
+        this.fakedata=new data(0, ["strawberry","blueberry"],["length","roundness"]);
 
         for(var i =1; i<this.numbgpoints+1;i++){
             for(var j =1; j<this.numbgpoints+1;j++){        
