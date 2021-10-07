@@ -283,7 +283,6 @@ export class View{
     caveats(){
 
         if (this.currentSlide==0){
-            console.log(this.app.stage.children)
             for(var i = 1; i<this.app.stage.children.length; i++){
                 this.app.stage.getChildAt(i).visible=false;
             }    
