@@ -14,23 +14,12 @@ export const defaultActFn = actFns.SIGMOID;
 
 
 export class Neuron{
-    neuronNumber;
-    bias;   //dont forget each layer has same bias
-    inputs;
-    weights;
-    weights_new; //used in backprop
-    output_nofn; //output before activation fn (same as using linear)
-    output; // output after activation fn
-    actFun;
-
-
 
     constructor(){
         this.bias = 0//Math.random() * 2 - 1 //bias between -1 and 1
         this.inputs = [];
         this.actFun = [];
         this.weights = [];
-//        this.weights_new=[];
 
         //for backpropgation
         this.dc_dw=[]; //partial derivative of cost wrt weight (layer l)
@@ -69,12 +58,7 @@ export class Neuron{
             this.weights=[];
             for(var i =0; i<this.inputs.length; i++){
             this.weights[i]=
-             //(Math.random());
-
-            // (Math.random() * (0.5- -0.5)) + -0.5;    
              (Math.random() * (0.5- -0.5)) + -0.5;    
-
-            //Math.random() * 2 - 1;
            }
         }
 
@@ -83,19 +67,13 @@ export class Neuron{
         if(this.weights.length < v.length){
             for(var i=this.weights.length; i<v.length; i++){
               this.weights[i]= 
-              //Math.random() * 2 - 1;
               (Math.random() * (0.5- -0.5)) + -0.5;  
-           // Math.random()
-
-//                this.weights[i]= 0; 
             }
         }
 
         if(this.weights.length > v.length){
             this.weights.splice(v.length, this.weights.length - v.length);
         }
-
-    //this.weights_new=this.weights;
 
     }
 
@@ -124,15 +102,7 @@ export class Neuron{
             case(actFns.LINEAR):
                 this.output = outsum;
             break;
-/*            case(actFns.BINSTEP):
-                if(outsum <= 0){
-                    this.output = 0;
-                } else{
-                    this.output= 1;
-                }
 
-            break;
-*/
             case(actFns.SIGMOID):
                 this.output=1/(1+(Math.E ** -outsum));
                 break;
@@ -147,6 +117,7 @@ export class Neuron{
         }
     }
 
+    /* 4 testing
     printNeuron(){
         var ins = "";
         var ws = "";
@@ -161,5 +132,5 @@ export class Neuron{
         os = this.output_nofn.toFixed(5) + " ";
         o = this.output.toFixed(5) + " ";
         console.log("inputs " + ins + "weights " + ws + "outsum: " + os + "out: " + o);
-    }
+    }*/
 }

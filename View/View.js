@@ -4,49 +4,58 @@ import {layout} from "./layout.js"
 import {SlideHome,
     SlideInstruct1,
     SlideInstruct2,
+
     SlideIntro1,
-    SlideIntro1b,
     SlideIntro2,
     SlideIntro3,
-    SlideIntro3a,
-    SlideIntro4a,
-    SlideNeuronA,
-    SlideNeuronA2,
-    SlideNeuron1b,
+    SlideIntro4,
+    SlideIntro5,
+    SlideIntro6,
+    SlideIntro7,
+    SlideIntro8,
+
+    SlideNeuron1,
     SlideNeuron2,
-    SlideNeuron2b,
-    SlideNeuron2c,
-    SlideNeuron2d,
-    SlideNeuron2d2,
-    SlideNeuron2e,
+    SlideNeuron3,
+    SlideNeuron4,
+    SlideNeuron5,
+    SlideNeuron6,
+    SlideNeuron7,
+
     SlideNet1,
-    SlideNet1b,
-    SlideNet1b2,
-    SlideNet1c,
-    SlideNet1d,
-    SlideNet1d2,
-    SlideError1,
-    SlideError3,
-    SlideError4,
-    SlideError5,
-    SlideError6,
-    SlideError6a,
-    SlideError6b,
-    SlideError7,
-    SlideError8,
-    SlideNet1e,
-    SlideBackCalc0,
-    SlideBackCalc1,
-    SlideBackCalc2,
-    SlideBackCalc2b,
-    SlideBackCalc3,
-    SlideBackCalc3a,
-    SlideBackCalc4,
-    SlideBackCalc5,
-    SlideBackCalc6,
-    SlideBackCalc6a,
-    SlideBackCalcInstruct,
-    SlideBackCalc7,
+    SlideNet2,
+    SlideNet3,
+    SlideNet4,
+
+    SlideBackIntro1,
+    SlideBackIntro2,
+
+    SlideCost1,
+    SlideCost2,
+    SlideCost3,
+    SlideCost4,
+    SlideCost5,
+    SlideCost6,
+    SlideCost7,
+
+
+    SlideCost10,
+    SlideCost8,
+    SlideCost9,
+
+    SlideBack1,
+    SlideBack2,
+    SlideBack3,
+    SlideBack4,
+    SlideBack5,
+    SlideBack6,
+    SlideBack7,
+    SlideBack8,
+    SlideBack9,
+    SlideBack10,
+    SlideBack11,
+    SlideBack12,
+    SlideBack12b_bias,
     SlideBackCalc8,
     SlideBackCalc9,
     SlideBackCalc9a,
@@ -173,20 +182,29 @@ export class View{
         this.slideList = [];
         this.slideList.push(SlideHome,SlideInstruct1, SlideInstruct2,
 
-                            SlideIntro1,SlideIntro2,SlideIntro3, SlideIntro1b, SlideIntro3a, SlideIntro4a,
-                            SlideNeuronA, SlideNeuronA2,SlideNeuron1b,SlideNeuron2,SlideNeuron2b,SlideNeuron2c,SlideNeuron2d,SlideNeuron2d2,SlideNeuron2e,
-                            SlideNet1, SlideNet1b, SlideNet1b2,SlideNet1c, SlideNet1d,SlideNet1d2,
+                            SlideIntro1,SlideIntro2,SlideIntro3, SlideIntro4,
+                            SlideIntro5, SlideIntro6,SlideIntro7, SlideIntro8,
                             
-                            SlideError1,SlideNet1e,SlideError3,SlideError4,SlideError5,SlideError6,SlideError6a,SlideError7,SlideError8,SlideError6b,
+                            SlideNeuron1,SlideNeuron2,SlideNeuron3,
+                            SlideNeuron4,SlideNeuron5,SlideNeuron6,SlideNeuron7,
+                            
+                            SlideNet1, SlideNet2, SlideNet3, SlideNet4, 
+                            
+                            SlideBackIntro1,SlideBackIntro2,
+                            
+                            SlideCost1,SlideCost2,SlideCost3,SlideCost4,SlideCost5,
+                            SlideCost6,SlideCost7,SlideCost8,SlideCost9,SlideCost10,
                             
                             SlideSandbox,SlideCredit,
                             
+                            SlideBack1,SlideBack2,SlideBack3,SlideBack4,SlideBack5,
+                            SlideBack6,SlideBack7,SlideBack8,SlideBack9,SlideBack10,
                             
-                            SlideBackCalc0,SlideBackCalc1,SlideBackCalc2,SlideBackCalc2b,SlideBackCalc3,SlideBackCalc3a,SlideBackCalc4,SlideBackCalc5,SlideBackCalc6,SlideBackCalc6a,SlideBackCalcInstruct,
-                            SlideBackCalc7,SlideBackCalc8,SlideBackCalc9,SlideBackCalc9b,SlideBackCalc9a,SlideBackCalc9a2,SlideBackCalc9c,SlideBackCalc10,   
+                            SlideBack11,
+                            SlideBack12,SlideBack12b_bias,SlideBackCalc8,SlideBackCalc9,SlideBackCalc9b,SlideBackCalc9a,SlideBackCalc9a2,SlideBackCalc9c,SlideBackCalc10,   
                             );
 
-        /*TO DELETE*/
+        /* if I need to number slides later */
         /*
         for(var i=0; i<this.slideList.length;i++){
             var currText=new PIXI.Text(i);
@@ -195,47 +213,15 @@ export class View{
             this.slideList[i].slideContainer.addChild(currText);
         }
         */
-        //maybe come back to this to cutdown on startup time
            
         var opener = new PIXI.Sprite(PIXI.Texture.from('images/opener.png'));
         opener.name="opener";
         opener.anchor.set(0.5);
-        opener.x=layout.CX;//((window.innerWidth)/2);
-        opener.y=layout.CY;//((window.innerHeight)/3)+100;
+        opener.x=layout.CX;
+        opener.y=layout.CY;
         this.slideList[0].slideContainer.addChild(opener);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         this.currentSlide=0;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         this.drawSlide_init();
 
@@ -267,7 +253,7 @@ export class View{
         var changeY=window.innerHeight-this.startheight_nochange;
         var changeX=window.innerWidth-this.startwidth_nochange;
 
-        if(this.currentSlide!=33){
+        if(this.currentSlide!=34){
 
             this.app.stage.getChildAt(0).x=changeX/2;
             this.app.stage.getChildAt(0).y=changeY/2;
@@ -287,19 +273,7 @@ export class View{
 
             this.app.stage.getChildAt(0).getChildAt(8).x=changeX;
             this.app.stage.getChildAt(0).getChildAt(8).y=-changeY/2+changeY;
-/*
 
-            if(window.innerWidth>1280) {
-                app.stage.getChildAt(0).getChildAt(0).x=(window.innerWidth-1280)/2;
-                app.stage.getChildAt(0).getChildAt(1).x=(window.innerWidth-1280)/2;
-                app.stage.getChildAt(0).getChildAt(3).x=(window.innerWidth-1280)/2;
-                app.stage.getChildAt(0).getChildAt(6).x=(window.innerWidth-1280)/2;
-
-                app.stage.getChildAt(0).getChildAt(2).getChildByName("buttonNeuronAddContainer").x=(window.innerWidth-1280)/2;
-                app.stage.getChildAt(0).getChildAt(2).getChildByName("buttonNeuronRemContainer").x=(window.innerWidth-1280)/2;
-            
-            }
-            */
         }
     }
 
@@ -372,13 +346,10 @@ export class View{
 
     createButtons(){
 
-  //      ((window.innerWidth)/2);
-//        opener.y=((window.innerHeight)/3)+50;
-
         var vst=this;
 
-        var startx=layout.CX;//window.innerWidth/2;
-        var starty=layout.CY+250;//(window.innerHeight/3) +350;
+        var startx=layout.CX;
+        var starty=layout.CY+250;
 
         var button_nextslide = new Button("button_nextslide",PIXI.Texture.from('images/buttons/next.png'),layout.NEXTSLIDE_X,layout.NEXTSLIDE_Y,true);
         var button_prevslide = new Button("button_prevslide",PIXI.Texture.from('images/buttons/back.png'),layout.PREVSLIDE_X,layout.NEXTSLIDE_Y,true);
@@ -387,7 +358,7 @@ export class View{
         var button_backfromcalc = new Button("button_backfromcalc",PIXI.Texture.from('images/buttons/back.png'),layout.PREVSLIDE_X,layout.NEXTSLIDE_Y,true);
         var button_calc2sand = new Button("button_calc2sand",PIXI.Texture.from('images/buttons/next.png'),layout.NEXTSLIDE_X,layout.NEXTSLIDE_Y,true);
 
-        var text_calc2sand = new PIXI.Text("Click next"+'\n'+"to go to sandbox mode!", textstyles.default)
+        var text_calc2sand = new PIXI.Text("Click next to go"+'\n'+ "to sandbox mode!", textstyles.default)
         text_calc2sand.name="text_calc2sand";
         text_calc2sand.x=layout.NEXTSLIDE_X+100;
         text_calc2sand.y=layout.NEXTSLIDE_Y-20;

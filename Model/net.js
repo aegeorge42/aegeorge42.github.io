@@ -135,8 +135,9 @@ export class Net{
 
     }
 
+    // FORWARD PROPOGATION
+    // the output from each layer becomes the input of the next
     update(){
-
         this.lastLayer = this.getLayer(this.layers.length-1);
         this.lastLayer.layerNumber=this.layers.length-1;
 
@@ -161,7 +162,7 @@ export class Net{
         }
 
         // get outputs from last layer
-        // NOTE: last layer only uses sigmoid
+        // NOTE: last layer only uses sigmoid!
         this.lastLayer.neurons.forEach(function(neuron){
             neuron.actFun = actFns.SIGMOID;
             neuron.calcOut();
@@ -171,6 +172,7 @@ export class Net{
         this.calcCost();
     }
 
+    // stochastic gradient descent - update net after each data point 
     learn(){
         this.dataIdx=(this.dataIdx+1)%this.data.points.length;
         this.setNetInput(this.data.points[this.dataIdx]);
@@ -180,6 +182,7 @@ export class Net{
         this.update_backprop();
     }
 
+    // "vanilla" gradient descent - update net after AVERAGING data points
     learn_batch(){
         this.backprop_batch();
         this.update_backprop();

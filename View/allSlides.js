@@ -86,7 +86,7 @@ export const SlideIntro2 = new Slide();
 
     var textIntro2 = [
         [["In order to train our network, "+'\n'+"we need to give it some examples "+'\n'+"of data we want to classify."], [layout.CX-450, layout.CY-150]],
-        [["Using our big human brains,"+'\n'+"we label these examples"+'\n'+" with the right answers. " ], [layout.CX-425, layout.CY-30]],
+        [["Using our big human brains,"+'\n'+"we label these examples"+'\n'+"with the right answers. " ], [layout.CX-425, layout.CY-30]],
         [["The neural network uses these examples" +'\n'+ "to learn how to separate the data."],[layout.CX-480,layout.CY+100]],
         examples_labels
     ];
@@ -109,7 +109,7 @@ export const SlideIntro3 = new Slide();
     SlideIntro3.drawText(textIntro3);
     SlideIntro3.drawTextButtons();
 
-export const SlideIntro1b = new Slide();
+export const SlideIntro4 = new Slide();
     var percep_blank =new PIXI.Sprite(PIXI.Texture.from('images/intro/percep_blank1.png'));
         percep_blank.isSprite=true;
         percep_blank.x=layout.CX-120;
@@ -180,12 +180,12 @@ export const SlideIntro1b = new Slide();
         });
 
 
-    SlideIntro1b.drawText(textIntro1b);
-    SlideIntro1b.textContainer.addChild(singleblue,singleblue2,singlestraw,singlestraw2);
-    SlideIntro1b.drawInteractive();
+    SlideIntro4.drawText(textIntro1b);
+    SlideIntro4.textContainer.addChild(singleblue,singleblue2,singlestraw,singlestraw2);
+    SlideIntro4.drawInteractive();
 
 
-export const SlideIntro3a = new Slide();
+export const SlideIntro5 = new Slide();
     var example_blue=new PIXI.Sprite(PIXI.Texture.from('images/intro/input_example.png'));
         example_blue.isSprite=true;
         example_blue.scale.set(0.9);
@@ -200,15 +200,15 @@ export const SlideIntro3a = new Slide();
         [ ["For our neural network, we are going to assign " +'\n'+"some attributes that we think are important."], [layout.CX-380,layout.CY+125]],
     ];
 
-    SlideIntro3a.drawText(textIntro3a);
+    SlideIntro5.drawText(textIntro3a);
 
-export const SlideIntro4a = new Slide();
+export const SlideIntro6 = new Slide();
     var SlideIntroGraph = new Graph(fruits);
-    SlideIntro4a.labelsContainer.addChild(SlideIntroGraph.getGraph());
-    SlideIntro4a.labelsContainer.getChildByName("axis").scale.set(1.2);
+    SlideIntro6.labelsContainer.addChild(SlideIntroGraph.getGraph());
+    SlideIntro6.labelsContainer.getChildByName("axis").scale.set(1.2);
 
-    SlideIntro4a.labelsContainer.getChildByName("axis").x=layout.CX-460;
-    SlideIntro4a.labelsContainer.getChildByName("axis").y=layout.CY-130;
+    SlideIntro6.labelsContainer.getChildByName("axis").x=layout.CX-460;
+    SlideIntro6.labelsContainer.getChildByName("axis").y=layout.CY-130;
 
       var textIntro4a = [
         [["Here's a graph of all our data. ",textstyles.large_bold], [layout.CX-470,layout.CY-190]],
@@ -216,13 +216,13 @@ export const SlideIntro4a = new Slide();
         [["The neural network is going to try to find the line" +'\n'+"that best separates the two classes."], [layout.CX-70,layout.CY-55]],
         [["If we have more than 2 inputs, the neural network " +'\n'+"will find the"], [" hyperplane                 ",textstyles.ital], 
             [" that separates them."], [layout.CX-70,layout.CY+20]],
-        [["(though we can't visualize it with a graph.)", textstyles.medium], [layout.CX+80,layout.CY+80]],
+        [["(though we can't visualize it with a graph.)", textstyles.medium], [layout.CX+40,layout.CY+80]],
         [["Now, we can start building our neural network.", textstyles.large_bold], [layout.CX-70,layout.CY+160]],
 
     ];
-    SlideIntro4a.drawText(textIntro4a);
+    SlideIntro6.drawText(textIntro4a);
 
-export const SlideNeuronA = new Slide();
+export const SlideIntro7 = new Slide();
 
     var percep_labels =new PIXI.Sprite(PIXI.Texture.from('images/intro/percep_labels.png'));
         percep_labels.isSprite=true;
@@ -237,10 +237,10 @@ export const SlideNeuronA = new Slide();
 
     ];
 
-    SlideNeuronA.drawText(textNeuronA);
-    SlideNeuronA.drawTextButtons();
+    SlideIntro7.drawText(textNeuronA);
+    SlideIntro7.drawTextButtons();
 
-export const SlideNeuronA2 = new Slide();
+export const SlideIntro8 = new Slide();
 
     var percep_layers =new PIXI.Sprite(PIXI.Texture.from('images/intro/percep_layers.png'));
         percep_layers.isSprite=true;
@@ -261,8 +261,8 @@ export const SlideNeuronA2 = new Slide();
 
     ];
 
-    SlideNeuronA2.drawText(textNeuronA2);
-    SlideNeuronA2.drawTextButtons();
+    SlideIntro8.drawText(textNeuronA2);
+    SlideIntro8.drawTextButtons();
 
 
 /****************     
@@ -272,7 +272,7 @@ export const SlideNeuronA2 = new Slide();
  * 
  * **************/
 
-export const SlideNeuron1b = new Slide();
+export const SlideNeuron1 = new Slide();
     var neuron_example3=new PIXI.Sprite(PIXI.Texture.from('images/intro/neuron_example3.png'));
         neuron_example3.scale.set(0.65);
         neuron_example3.anchor.set(0.5);
@@ -289,7 +289,7 @@ export const SlideNeuron1b = new Slide();
             [ ["...some math happens... " ], [ neuron_example3.x-125, neuron_example3.y+150]],
             [ neuron_example3,["...and spits out a single output. " ], [ neuron_example3.x+110, layout.CY+60]],
     ];
-    SlideNeuron1b.drawText(textNeuron1b);
+    SlideNeuron1.drawText(textNeuron1b);
 
 //INTERACTIVE NEURON
 export const SlideNeuron2 = new Slide();
@@ -343,11 +343,11 @@ export const SlideNeuron2 = new Slide();
 
 
 //INTERACTIVE NEURON with WEIGHTS ONLY
-export const SlideNeuron2b = new Slide();
-    SlideNeuron2b.largenet=1;
-    SlideNeuron2b.slideNet=net_neuron;
-    SlideNeuron2b.slideNet.update();
-    SlideNeuron2b.draw_init_large(SlideNeuron2b.slideNet);
+export const SlideNeuron3 = new Slide();
+    SlideNeuron3.largenet=1;
+    SlideNeuron3.slideNet=net_neuron;
+    SlideNeuron3.slideNet.update();
+    SlideNeuron3.draw_init_large(SlideNeuron3.slideNet);
 
     var neuron_large_actfncover=new PIXI.Sprite(PIXI.Texture.from('images/net/neuron_large_actfncover.png'));
         neuron_large_actfncover.isSprite=true;
@@ -389,19 +389,19 @@ export const SlideNeuron2b = new Slide();
     
     ];
 
-   // SlideNeuron2b.slideContainer.addChild(biascover);
-    SlideNeuron2b.drawText(textNeuron2b);
-    SlideNeuron2b.drawTextButtons();
-    SlideNeuron2b.drawInteractive();
+   // SlideNeuron3.slideContainer.addChild(biascover);
+    SlideNeuron3.drawText(textNeuron2b);
+    SlideNeuron3.drawTextButtons();
+    SlideNeuron3.drawInteractive();
 
 
 //INTERACTIVE NEURON with ACTFN
-export const SlideNeuron2c = new Slide();
-    SlideNeuron2c.largenet=1;
+export const SlideNeuron4 = new Slide();
+    SlideNeuron4.largenet=1;
 
-    SlideNeuron2c.slideNet=net_neuron;
-    SlideNeuron2c.slideNet.update();
-    SlideNeuron2c.draw_init_large(SlideNeuron2c.slideNet);
+    SlideNeuron4.slideNet=net_neuron;
+    SlideNeuron4.slideNet.update();
+    SlideNeuron4.draw_init_large(SlideNeuron4.slideNet);
 
     var sigmoid=new PIXI.Sprite(PIXI.Texture.from('images/intro/sigmoid_graph.png'));
     sigmoid.isSprite=true;
@@ -414,17 +414,17 @@ export const SlideNeuron2c = new Slide();
         [ ["Right now, we're using the sigmoid function: "], [layout.CX-480,layout.CY-120]],
         [ ["This squishes our output between 0 and 1. "], [layout.CX-480,layout.CY+170]],
     ];
-    SlideNeuron2c.drawText(textNeuron2c);
-    SlideNeuron2c.drawTextButtons();  
-    SlideNeuron2c.drawInteractive();
+    SlideNeuron4.drawText(textNeuron2c);
+    SlideNeuron4.drawTextButtons();  
+    SlideNeuron4.drawInteractive();
 
 
-export const SlideNeuron2d = new Slide();
-    SlideNeuron2d.largenet=1;
+export const SlideNeuron5 = new Slide();
+    SlideNeuron5.largenet=1;
 
-    SlideNeuron2d.slideNet=net_neuron;
-    SlideNeuron2d.slideNet.update();
-    SlideNeuron2d.draw_init_large(SlideNeuron2d.slideNet);
+    SlideNeuron5.slideNet=net_neuron;
+    SlideNeuron5.slideNet.update();
+    SlideNeuron5.draw_init_large(SlideNeuron5.slideNet);
 
     var relu=new PIXI.Sprite(PIXI.Texture.from('images/intro/relu_graph.png'));
     relu.isSprite=true;
@@ -441,23 +441,23 @@ export const SlideNeuron2d = new Slide();
           [" U",textstyles.large_bold],
           ["nit                     "],
           [layout.CX-470,layout.CY-170]],
-          [ ["Or"], [" ReLU ", textstyles.large_bold], ["for short"], [layout.CX-400,layout.CY-135]],
+          [ ["Or"], [" ReLU ", textstyles.large_bold], ["for short."], [layout.CX-400,layout.CY-135]],
 
         relu,
     
     ];
-    SlideNeuron2d.drawText(textNeuron2d);
-    SlideNeuron2d.drawInteractive();
+    SlideNeuron5.drawText(textNeuron2d);
+    SlideNeuron5.drawInteractive();
 
 
-export const SlideNeuron2d2 = new Slide();
-    SlideNeuron2d2.largenet=1;
+export const SlideNeuron6 = new Slide();
+    SlideNeuron6.largenet=1;
 
-    SlideNeuron2d2.slideNet=net_neuron;
-    SlideNeuron2d2.slideNet.update();
-    SlideNeuron2d2.draw_init_large(SlideNeuron2d2.slideNet);
-    SlideNeuron2d2.largefn=true;
-    SlideNeuron2d2.drawActFnButtons();
+    SlideNeuron6.slideNet=net_neuron;
+    SlideNeuron6.slideNet.update();
+    SlideNeuron6.draw_init_large(SlideNeuron6.slideNet);
+    SlideNeuron6.largefn=true;
+    SlideNeuron6.drawActFnButtons();
 
     var textNeuron2d2 = [
         [ ["The activation function is important because"+'\n'+ "it makes the network"],[" non-linear.  ",textstyles.ital], [layout.CX-470,layout.CY-200]],
@@ -465,19 +465,19 @@ export const SlideNeuron2d2 = new Slide();
 
         [ ["Use these buttons to change"+'\n'+ "the activation function.",textstyles.instruct], [layout.CX-420,layout.CY-20]],   
     ];
-    SlideNeuron2d2.drawText(textNeuron2d2);
-    SlideNeuron2d2.drawInteractive();
+    SlideNeuron6.drawText(textNeuron2d2);
+    SlideNeuron6.drawInteractive();
 
 
     //INTERACTIVE NEURON with ACTFN - COVER
-export const SlideNeuron2e = new Slide();
-    SlideNeuron2e.largenet=1;
+export const SlideNeuron7 = new Slide();
+    SlideNeuron7.largenet=1;
 
-    SlideNeuron2e.slideNet=net_neuron;
-    SlideNeuron2e.slideNet.update();
-    SlideNeuron2e.draw_init_large(SlideNeuron2c.slideNet);
+    SlideNeuron7.slideNet=net_neuron;
+    SlideNeuron7.slideNet.update();
+    SlideNeuron7.draw_init_large(SlideNeuron4.slideNet);
 
-    SlideNeuron2e.neuronContainer.getChildAt(1).getChildAt(0).visible=true;
+    SlideNeuron7.neuronContainer.getChildAt(1).getChildAt(0).visible=true;
 
     var textNeuron2e = [
         [["The value we get" +'\n'+"after applying the activation function"+'\n'+"is the neuron's final output - "+'\n'],[layout.CX-450,layout.CY-170]],
@@ -487,10 +487,10 @@ export const SlideNeuron2e = new Slide();
         +"through its color - more active neurons" +'\n'+ "are a brighter yellow.", textstyles.instruct], [layout.CX-450,layout.CY]],
         [["Hover your mouse over the neuron" +'\n'+"to view its formula.",textstyles.instruct], [layout.CX-450,layout.CY+100]],
         ];
-    SlideNeuron2e.drawText(textNeuron2e);
-    SlideNeuron2e.drawTextButtons();
-    SlideNeuron2e.drawActFnButtons();
-    SlideNeuron2e.drawInteractive();
+    SlideNeuron7.drawText(textNeuron2e);
+    SlideNeuron7.drawTextButtons();
+    SlideNeuron7.drawActFnButtons();
+    SlideNeuron7.drawInteractive();
 
     
 
@@ -538,29 +538,29 @@ SlideNet1.drawActFnButtons(SlideNet1.slideNet);
 SlideNet1.drawInteractive();
 
 
-export const SlideNet1b = new Slide();
-    SlideNet1b.leftnet=true;
+export const SlideNet2 = new Slide();
+    SlideNet2.leftnet=true;
     var net2 = new Net();
 
-    SlideNet1b.slideNet=net2;
+    SlideNet2.slideNet=net2;
     net2.setNetData(net1.data);
     net2.setOutLayer();
     net2.update();
-    SlideNet1b.draw_init(net2);    
+    SlideNet2.draw_init(net2);    
 
     var textNet1b = [
         [["We can add hidden layers..."], [layout.CX+25,layout.CY-150]],
     ];
-    SlideNet1b.drawText(textNet1b);
-    SlideNet1b.drawTextButtons();
-    SlideNet1b.drawActFnButtons();
-    SlideNet1b.drawInteractive();
+    SlideNet2.drawText(textNet1b);
+    SlideNet2.drawTextButtons();
+    SlideNet2.drawActFnButtons();
+    SlideNet2.drawInteractive();
 
     
 
 
-export const SlideNet1b2 = new Slide();
-    SlideNet1b2.leftnet=1;
+export const SlideNet3 = new Slide();
+    SlideNet3.leftnet=1;
 
     var net3 = new Net();
 
@@ -587,11 +587,11 @@ export const SlideNet1b2 = new Slide();
 
     net3.update();
 
-    SlideNet1b2.slideNet=net3;
-    SlideNet1b2.draw_init(net3);    
-    SlideNet1b2.slideNet.getLayer(0).addNeuron();
-    SlideNet1b2.slideNet.update();
-    SlideNet1b2.draw_init(net3);    
+    SlideNet3.slideNet=net3;
+    SlideNet3.draw_init(net3);    
+    SlideNet3.slideNet.getLayer(0).addNeuron();
+    SlideNet3.slideNet.update();
+    SlideNet3.draw_init(net3);    
 
     var textNet1b2 = [
         [["We can add hidden layers..."], [layout.CX+25,layout.CY-150]],
@@ -601,47 +601,42 @@ export const SlideNet1b2 = new Slide();
         [["This process of going from"+'\n'+ "input to final output is called "],[layout.CX+140,layout.CY+100]],
         [["forward propogation.",textstyles.large_bold], [layout.CX+140,layout.CY+160]],
     ];
-    SlideNet1b2.drawText(textNet1b2);
-    SlideNet1b2.drawTextButtons();
-    SlideNet1b2.drawActFnButtons();
-    SlideNet1b2.drawInteractive();
+    SlideNet3.drawText(textNet1b2);
+    SlideNet3.drawTextButtons();
+    SlideNet3.drawActFnButtons();
+    SlideNet3.drawInteractive();
 
 
-export const SlideNet1c = new Slide();
-//    layout.NEURON_LEFTLIM=layout.NEURON_LEFTLIM_INIT;
-//    layout.NEURON_UPPERLIM=layout.NEURON_UPPERLIM_INIT;
+export const SlideNet4 = new Slide();
 
-    SlideNet1c.slideNet=net3;
-    SlideNet1c.draw_init(net3);    
+    SlideNet4.slideNet=net3;
+    SlideNet4.draw_init(net3);    
     var textNet1c = [
         [["Use these buttons to add layers.", textstyles.instruct], [layout.CX-420,layout.CY-210]],
         [["Use these buttons" +'\n'+"to add neurons.", textstyles.instruct], [layout.CX-410,layout.CY-150]],
 
 
     ];
-    SlideNet1c.drawText(textNet1c);
-    SlideNet1c.drawTextButtons();
-    SlideNet1c.drawActFnButtons();
+    SlideNet4.drawText(textNet1c);
+    SlideNet4.drawTextButtons();
+    SlideNet4.drawActFnButtons();
 
-    SlideNet1c.drawLayerButtons();
-    SlideNet1c.buttonContainer.getChildByName("buttonNeuronAddContainer").getChildAt(0).visible=true;
-    SlideNet1c.buttonContainer.getChildByName("buttonNeuronRemContainer").getChildAt(0).visible=true;
-    SlideNet1c.drawInteractive();
+    SlideNet4.drawLayerButtons();
+    SlideNet4.buttonContainer.getChildByName("buttonNeuronAddContainer").getChildAt(0).visible=true;
+    SlideNet4.buttonContainer.getChildByName("buttonNeuronRemContainer").getChildAt(0).visible=true;
+    SlideNet4.drawInteractive();
 
-
-   // SlideNet1c.drawResetButton();
-
-export const SlideNet1d = new Slide();
+export const SlideBackIntro1 = new Slide();
     var textNet1d = [
         [["Now that we've built our network, we can begin training it."], [layout.CX-250,layout.CY-120]],
         [["This is the stage where the neural network learns how to separate the data."], [layout.CX-350,layout.CY-70]],
         [["In order to learn, the network uses an algorithm called"], [" backpropogation.",textstyles.large_bold], [layout.CX-320,layout.CY-20]],
 
     ];
-    SlideNet1d.drawText(textNet1d);
-    SlideNet1d.drawTextButtons();
+    SlideBackIntro1.drawText(textNet1d);
+    SlideBackIntro1.drawTextButtons();
 
-export const SlideNet1d2 = new Slide();
+export const SlideBackIntro2 = new Slide();
 
 var check=new PIXI.Sprite(PIXI.Texture.from('images/cost/check.png'));
 check.isSprite=true;
@@ -673,7 +668,7 @@ percep_update.y=layout.CY+160;
 
     var textNet1d2 = [
         percep_forward,percep_cost,percep_update,
-        [["Backpropogation has 3 steps:"], [layout.CX-450,layout.CY-200]],
+        [["Backpropogation has 3 steps:"], [layout.CX-450,layout.CY-180]],
         [["1. Forward propogation                                           " +'\n', textstyles.large_bold],
          [     "like we did before - give the net an input and calculate the output.  "], [layout.CX-420,layout.CY-120]],
         [["2. Error calculation                                                  " +'\n', textstyles.large_bold],
@@ -684,8 +679,8 @@ percep_update.y=layout.CY+160;
 
 
     ];
-    SlideNet1d2.drawText(textNet1d2);
-    SlideNet1d2.drawTextButtons();
+    SlideBackIntro2.drawText(textNet1d2);
+    SlideBackIntro2.drawTextButtons();
 
 
 
@@ -695,14 +690,14 @@ percep_update.y=layout.CY+160;
 
 
 
-export const SlideError1 = new Slide();
+export const SlideCost1 = new Slide();
     var costform = new PIXI.Sprite(PIXI.Texture.from('images/cost/costformwb2.png'));
         costform.scale.set(0.8)
         costform.anchor.set(0.5)
 
         costform.isSprite=true;
         costform.x=layout.CX;
-        costform.y=layout.CY-40;
+        costform.y=layout.CY-30;
 
         var ital_sm= new PIXI.TextStyle({
             fontFamily: 'Helvetica',
@@ -714,17 +709,57 @@ export const SlideError1 = new Slide();
 
     var textError1 = [
         costform,
-        [["We want to know how how far off the output of our net is from our target values."], [layout.CX-450,layout.CY-200]],
-        [["To do this, we use a"],[" cost function.",textstyles.large_bold], [layout.CX-350,layout.CY-150]],
+        [["We want to know how how far off the output of our net is from our target values."], [layout.CX-450,layout.CY-190]],
+        [["To do this, we use a"],[" cost function.",textstyles.large_bold], [layout.CX-350,layout.CY-140]],
 
         [[" n = number of data points"+'\n'+" x = for each output neuron ",ital_sm], [layout.CX -300,layout.CY+40]],
         [["The activation of the output neurons depends on the current weights and biases of the network."], [layout.CX-450,layout.CY+120]],
         [["So, we can think of our cost function as a function of the weights and biases of the network. "], [layout.CX-450,layout.CY+170]],
     ];
-    SlideError1.drawText(textError1);
+    SlideCost1.drawText(textError1);
 
 
-export const SlideError3 = new Slide();
+export const SlideCost2 = new Slide();
+    SlideCost2.leftnet=true;
+    layout.NEURON_UPPERLIM = window.innerHeight/2 -140;
+
+
+    var nete = new Net();
+    SlideCost2.slideNet=nete;
+    nete.setNetData(net1.data);
+    nete.setOutLayer();
+    nete.update();
+    nete.removeLayer();
+    nete.update();
+    SlideCost2.draw_init(nete);
+
+    SlideCost2.drawStyleButtons();
+    SlideCost2.drawRateButtons();
+
+    SlideCost2.buttonContainer.visible=false;
+    
+
+    var textNet1e = [
+        [ [" Here's how the cost is calculated for one example."],[layout.CX-470,layout.CY-180] ],
+        [ [" Reminder: click weights to change,"+'\n'+ " click image to see a new example",textstyles.instruct],[layout.CX-450,layout.CY+120] ],
+        [ [" Notice how                    "+'\n'],[" changing the"],[" weights ",textstyles.large_bold],[layout.NEURON_LEFTLIM+450,layout.CY-60] ],
+        [ [" changes the"],[" output   ",textstyles.large_bold],[layout.NEURON_LEFTLIM+450,layout.CY] ],
+        [ [" which changes the"],[" cost. ",textstyles.large_bold],[layout.NEURON_LEFTLIM+450,layout.CY+40] ],
+
+
+       /*[ ["Notice how changing the weights " +'\n'+"of the neural network "+
+            '\n'+"changes the output" +'\n'+"which changes the cost."],[layout.NEURON_LEFTLIM+470,layout.TOPBUFFER+100] ],
+        */
+    ];
+   
+    SlideCost2.drawText(textNet1e);
+    SlideCost2.costSteps=true;
+    SlideCost2.drawCost_steps();
+    SlideCost2.drawInteractive();
+
+    layout.NEURON_UPPERLIM = window.innerHeight/2 -80;
+
+export const SlideCost3 = new Slide();
     var costgraph = new PIXI.Sprite(PIXI.Texture.from('images/cost/costgraph.png'));
     costgraph.anchor.set(0.5)
     costgraph.isSprite=true;
@@ -744,9 +779,9 @@ export const SlideError3 = new Slide();
             +'\n'+"and therefore more than one variable affecting the cost.", textstyles.medium], [layout.CX+40,layout.CY]],
         [["(We just quickly run out of dimensions to visualize it in.)", textstyles.medium], [layout.CX+40,layout.CY+90]],
     ];
-    SlideError3.drawText(textError3);
+    SlideCost3.drawText(textError3);
 
-export const SlideError4 = new Slide();
+export const SlideCost4 = new Slide();
     var costgraph_point = new PIXI.Sprite(PIXI.Texture.from('images/cost/costgraph_point.png'));
     costgraph_point.anchor.set(0.5)
     costgraph_point.isSprite=true;
@@ -772,9 +807,9 @@ export const SlideError4 = new Slide();
 
 
     ];
-    SlideError4.drawText(textError4);
+    SlideCost4.drawText(textError4);
 
-export const SlideError5 = new Slide();
+export const SlideCost5 = new Slide();
     var costgraph_slope = new PIXI.Sprite(PIXI.Texture.from('images/cost/costgraph_slope1.png'));
         costgraph_slope.anchor.set(0.5)
         costgraph_slope.isSprite=true;
@@ -788,7 +823,7 @@ export const SlideError5 = new Slide();
 
             minnablaC.isSprite=true;
             minnablaC.x=layout.CX+445;
-            minnablaC.y=layout.CY-210+13;
+            minnablaC.y=layout.CY-190+13;
 
         var minnablaC2 = new PIXI.Sprite(PIXI.Texture.from('images/cost/minnablaC.png'));
             minnablaC2.anchor.set(0.5)
@@ -796,7 +831,7 @@ export const SlideError5 = new Slide();
 
             minnablaC2.isSprite=true;
             minnablaC2.x=layout.CX+40+165;
-            minnablaC2.y=layout.CY-115+13;
+            minnablaC2.y=layout.CY-95+13;
 
         var lr = new PIXI.Sprite(PIXI.Texture.from('images/cost/lr.png'));
             lr.anchor.set(0.5)
@@ -804,7 +839,7 @@ export const SlideError5 = new Slide();
 
             lr.isSprite=true;
             lr.x=layout.CX+195+165;
-            lr.y=layout.CY-68+13
+            lr.y=layout.CY-48+13
 
         var wnewform = new PIXI.Sprite(PIXI.Texture.from('images/cost/wnewform.png'));
             wnewform.anchor.set(0.5)
@@ -812,26 +847,26 @@ export const SlideError5 = new Slide();
 
             wnewform.isSprite=true;
             wnewform.x=layout.CX+220;
-            wnewform.y=layout.CY+160;
+            wnewform.y=layout.CY+170;
 
     var textError5 = [
         costgraph_slope,
 
-        [["We want to move in the downhill direction, so              "], [layout.CX,layout.CY-210]],
+        [["We want to move in the downhill direction, so              "], [layout.CX,layout.CY-190]],
         minnablaC,
 
         [["We find the magnitude of change           "
-            +'\n\n'+ "by multiplying"+'\n\n'+ "by a value called the learning rate"], [layout.CX+40,layout.CY-160]],
+            +'\n\n'+ "by multiplying"+'\n\n'+ "by a value called the learning rate"], [layout.CX+40,layout.CY-140]],
         minnablaC2,
-        [["This is a number we set beforehand -" +'\n'+"usually between 0 and 1.",textstyles.medium], [layout.CX+80,layout.CY-15]],
+        [["This is a number we set beforehand -" +'\n'+"usually between 0 and 1.",textstyles.medium], [layout.CX+60,layout.CY+5]],
         lr,
-        [["The final formula for updating our weight is:"], [layout.CX+40,layout.CY+65]],
+        [["The final formula for updating our weight is:"], [layout.CX+40,layout.CY+80]],
         wnewform
 
     ];
-    SlideError5.drawText(textError5);
+    SlideCost5.drawText(textError5);
 
-export const SlideError6 = new Slide();
+export const SlideCost6 = new Slide();
     var costgraph_slope2 = new PIXI.Sprite(PIXI.Texture.from('images/cost/costgraph_slope2.png'));
         costgraph_slope2.anchor.set(0.5)
         costgraph_slope2.isSprite=true;
@@ -842,9 +877,9 @@ export const SlideError6 = new Slide();
         [["We keep repeating these steps until our slope is 0."], [layout.CX+20,layout.CY-60]],
         [["Each time we calculate the cost and update our net"+'\n'+" is called an"],[" epoch.", textstyles.large_bold], [layout.CX+20,layout.CY]],
     ];
-    SlideError6.drawText(textError6);
+    SlideCost6.drawText(textError6);
 
-export const SlideError6a = new Slide();
+export const SlideCost7 = new Slide();
     var costgraph_lrsmall = new PIXI.Sprite(PIXI.Texture.from('images/cost/costgraph_lrsmall.png'));
         costgraph_lrsmall.anchor.set(0.5)
         costgraph_lrsmall.scale.set(0.8)
@@ -866,9 +901,9 @@ var textError6a = [
     [["Too small, and it will take "+'\n'+ "a long time to reach the minimum."], [layout.CX-350,layout.CY+150]],
     [["Too large, and we may end up"+'\n'+ " jumping past the minimum."], [layout.CX+50,layout.CY+150]]
 ];
-SlideError6a.drawText(textError6a);
+SlideCost7.drawText(textError6a);
 
-export const SlideError8 = new Slide();
+export const SlideCost9 = new Slide();
 
     var gotocalcarrow = new PIXI.Sprite(PIXI.Texture.from('images/arrows/gotocalcarrow.png'));
         gotocalcarrow.anchor.set(0.5);
@@ -879,13 +914,13 @@ export const SlideError8 = new Slide();
 
     var textError8 = [
     [["Want to see the calculus behind gradient descent?", textstyles.large_bold], [layout.CX-300,layout.CY-150]],
-    [["Click here", ], [layout.CX-50,layout.CY-100]],
+    [["Click here", ], [layout.CX-50,layout.CY-90]],
     [["Otherwise, click next.", ], [layout.CX-100,layout.CY+150]],
 
     gotocalcarrow,
 
 ];
-    SlideError8.drawText(textError8);
+    SlideCost9.drawText(textError8);
 
     var gotocalcx=layout.CX;
     var gotocalcy=layout.CY+50;
@@ -896,9 +931,9 @@ export const SlideError8 = new Slide();
             viewst.drawSlide();
         
     });
-    SlideError8.buttonContainer.addChild(gotocalc);
+    SlideCost9.buttonContainer.addChild(gotocalc);
 
-export const SlideError6b = new Slide();
+export const SlideCost10 = new Slide();
     var fakelearnbox = new PIXI.Sprite(PIXI.Texture.from('images/boxes/learnbox.png'));
         fakelearnbox.isSprite=true;
         fakelearnbox.x= layout.CX-200;
@@ -927,15 +962,15 @@ export const SlideError6b = new Slide();
 
 
     ];
-    SlideError6b.drawText(textError6b);
+    SlideCost10.drawText(textError6b);
 
 
 
-export const SlideError7 = new Slide();
-SlideError7.fakenet=true;
+export const SlideCost8 = new Slide();
+SlideCost8.fakenet=true;
 
     var netFin=new Net();
-    SlideError7.slideNet=netFin;
+    SlideCost8.slideNet=netFin;
     netFin.setNetData(fruits);
     netFin.setOutLayer();
     netFin.update();
@@ -954,8 +989,8 @@ SlideError7.fakenet=true;
 
     netFin.update();
 
-    SlideError7.slideNet.setNetActFn(actFns.RELU);
-    SlideError7.slideNet.update();
+    SlideCost8.slideNet.setNetActFn(actFns.RELU);
+    SlideCost8.slideNet.update();
 
     var SlideErrorGraph = new Graph(fruits);
         SlideErrorGraph.axis.scale.set(1.2);
@@ -963,12 +998,12 @@ SlideError7.fakenet=true;
         SlideErrorGraph.axis.x=layout.CX-380;
         SlideErrorGraph.axis.y=layout.CY-130;
 
-    SlideError7.labelsContainer.addChild(SlideErrorGraph.getGraph());
+    SlideCost8.labelsContainer.addChild(SlideErrorGraph.getGraph());
 
     for(var i=0;i<100;i++){
-        SlideError7.slideNet.learn_batch();
-        SlideError7.slideNet.update();
-        SlideErrorGraph.updateGraph(SlideError7.slideNet,SlideErrorGraph);
+        SlideCost8.slideNet.learn_batch();
+        SlideCost8.slideNet.update();
+        SlideErrorGraph.updateGraph(SlideCost8.slideNet,SlideErrorGraph);
     }
 
     var textError7 = [        
@@ -977,7 +1012,7 @@ SlideError7.fakenet=true;
         [[" A red square means the same for strawberries."], [layout.CX,layout.CY-20]],
         [[" Darker colors mean the net is"+'\n'+" more confident in its classification."], [layout.CX,layout.CY+60]],
     ];
-    SlideError7.drawText(textError7);
+    SlideCost8.drawText(textError7);
 
 
 
@@ -988,174 +1023,43 @@ SlideError7.fakenet=true;
             [["feel free to email me at aegeorge@udel.edu"+'\n'+
             " or send me a tweet at @aegeorge42 "], [layout.CX-180,layout.CY-100]],
 
-            [["Huge thanks to:"], [layout.CX-220,layout.CY]],
-            [["3blue1brown                                             " +'\n', textstyles.large_bold],
+            [["Huge thanks to:"], [layout.CX-180,layout.CY]],
+            [["3blue1brown                                      " +'\n', textstyles.large_bold],
             [     "    3blue1brown.com/lessons/neural-networks  "], [layout.CX-180,layout.CY+50]],
-            [["Michael Nielsen                                        " +'\n', textstyles.large_bold],
+            [["Michael Nielsen                                  " +'\n', textstyles.large_bold],
             [     "    neuralnetworksanddeeplearning.com  "], [layout.CX-180,layout.CY+125]],
 
-        ];
-        SlideCredit.drawText(textCredit);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-
-
-
-var textNet1d3 = [
-    
-
-    [ [" Step 2: Error calculation",textstyles.large_bold],[layout.LEFTBUFFER,layout.TOPBUFFER] ],
-    [ ["For each piece of data we give the net, we want to know"+'\n'+ "how far off the output is from being correct."],[layout.LEFTBUFFER,layout.TOPBUFFER+50] ],
-
-    [ seformula,["To do this, we use a"],[" cost formula: ",textstyles.ital],[layout.LEFTBUFFER,layout.TOPBUFFER+120] ],
-    [ ["For each neuron in the output layer,"+'\n'+" subtract the target value from the actual output value", small_ital], [layout.LEFTBUFFER,layout.TOPBUFFER+350]],
-  //  [ [" Our cost formula is a function that takes in the output and target values and returns the cost. "],[layout.LEFTBUFFER,layout.TOPBUFFER+350] ],
-    //[ costgraph,["when we graph this formula, we can see that our output is minimized when actual and target are the same value"],[layout.LEFTBUFFER,layout.TOPBUFFER+200] ]
-
-
-];
-SlideNet1d3.drawText(textNet1d3);
-SlideNet1d3.drawTextButtons();
-*/
-
-export const SlideNet1e = new Slide();
-    SlideNet1e.leftnet=true;
-    layout.NEURON_UPPERLIM = window.innerHeight/2 -160;
-
-
-    var nete = new Net();
-    SlideNet1e.slideNet=nete;
-    nete.setNetData(net1.data);
-    nete.setOutLayer();
-    nete.update();
-    nete.removeLayer();
-    nete.update();
-    SlideNet1e.draw_init(nete);
-
-    SlideNet1e.drawStyleButtons();
-    SlideNet1e.drawRateButtons();
-
-    SlideNet1e.buttonContainer.visible=false;
-    
-
-    var textNet1e = [
-        [ [" Here's how the cost is calculated for one example."],[layout.CX-470,layout.CY-200] ],
-        [ [" Reminder: click weights to change,"+'\n'+ " click image to see a new example",textstyles.instruct],[layout.CX-450,layout.CY+120] ],
-        [ [" Notice how                    "+'\n'],[" changing the"],[" weights ",textstyles.large_bold],[layout.NEURON_LEFTLIM+450,layout.CY-60] ],
-        [ [" changes the"],[" output   ",textstyles.large_bold],[layout.NEURON_LEFTLIM+450,layout.CY] ],
-        [ [" which changes the"],[" cost ",textstyles.large_bold],[layout.NEURON_LEFTLIM+450,layout.CY+40] ],
-
-
-       /*[ ["Notice how changing the weights " +'\n'+"of the neural network "+
-            '\n'+"changes the output" +'\n'+"which changes the cost."],[layout.NEURON_LEFTLIM+470,layout.TOPBUFFER+100] ],
-        */
     ];
-   
-    SlideNet1e.drawText(textNet1e);
-    SlideNet1e.costSteps=true;
-    SlideNet1e.drawCost_steps();
-    SlideNet1e.drawInteractive();
-
-    layout.NEURON_UPPERLIM = window.innerHeight/2 -80;
-
-
+    SlideCredit.drawText(textCredit);
 
 
 
 /*********     CALCULUS    *********** */   
-//layout.NEURON_X_DIF = 175;
-//layout.NEURON_Y_DIF = 175;
-//layout.NEURON_UPPERLIM = 190//window.innerHeight/2 -120   //150//window.innerHeight/2 -50 -100;
+
 layout.NEURON_LEFTLIM = layout.NEURON_LEFTLIM_BACKPROP;
 layout.NEURON_Y_DIF = 175;
 
-//layout.NEURON_LEFTLIM = Math.max((window.innerWidth-1100)/2,15) +150;
 
-
-
-
-export const SlideBackCalc0 = new Slide();
+export const SlideBack1 = new Slide();
 
     var netBack0 = new Net();
-    SlideBackCalc0.slideNet=netBack0;
+    SlideBack1.slideNet=netBack0;
     netBack0.setNetData(fruits_single);
     netBack0.setOutLayer();
     netBack0.checkInit();
 
     netBack0.update();
 
-    SlideBackCalc0.backprop=true;
-    SlideBackCalc0.backprop_init=true;
-    SlideBackCalc0.backprop_labels=true;
-    SlideBackCalc0.none=true;
+    SlideBack1.backprop=true;
+    SlideBack1.backprop_init=true;
+    SlideBack1.backprop_labels=true;
+    SlideBack1.none=true;
 
 
-    SlideBackCalc0.draw_init(netBack0);
+    SlideBack1.draw_init(netBack0);
 
-    SlideBackCalc0.slideContainer.getChildAt(1).getChildByName("targetLabel0").visible=false;
-    SlideBackCalc0.slideContainer.getChildAt(1).getChildByName("targetLabel1").visible=false;
+    SlideBack1.slideContainer.getChildAt(1).getChildByName("targetLabel0").visible=false;
+    SlideBack1.slideContainer.getChildAt(1).getChildByName("targetLabel1").visible=false;
 
     var a = new PIXI.TextStyle({
         fontFamily: 'Helvetica',
@@ -1176,37 +1080,37 @@ export const SlideBackCalc0 = new Slide();
         a21example.tint=0x000000;
         a21example.scale.set(1.4);
         a21example.x=layout.CX-70;
-        a21example.y=layout.CY+60;
+        a21example.y=layout.CY+90;
 
     var backpropx= layout.CX-40;
 
-    SlideBackCalc0.backfromcalc=true;
+    SlideBack1.backfromcalc=true;
 
     var textBackCalc0 = [
         a21example,
-        [ ["First, we need to label each component of our net."],[backpropx,layout.CY-200] ],
-        [ ["The output, or activation, of each neuron"+'\n'+ "is notated as"], [" a", a],[backpropx,layout.CY-150] ],
-        [ ["However, we also need the value of the neuron" +'\n'+"prior to applying the activation function"], [backpropx,layout.CY-70] ],
-        [ ["                            This value is "],[" z                ",z], [backpropx,layout.CY-12] ],
-        [ ["The superscript denotes the layer number "], [backpropx+80,layout.CY+55] ],
-        [ ["While the subscript denotes the neuron number "], [backpropx+80,layout.CY+120] ],
+        [ ["First, we need to label each component of our net."],[backpropx,layout.CY-170] ],
+        [ ["The output, or activation, of each neuron"+'\n'+ "is notated as"], [" a", a],[backpropx,layout.CY-120] ],
+        [ ["However, we also need the value of the neuron" +'\n'+"prior to applying the activation function"], [backpropx,layout.CY-40] ],
+        [ ["                            This value is "],[" z                ",z], [backpropx,layout.CY+22] ],
+        [ ["The superscript denotes the layer number "], [backpropx+80,layout.CY+85] ],
+        [ ["While the subscript denotes the neuron number "], [backpropx+80,layout.CY+150] ],
 
 
     ];    
-    SlideBackCalc0.drawText(textBackCalc0);
+    SlideBack1.drawText(textBackCalc0);
     
-export const SlideBackCalc1 = new Slide();
+export const SlideBack2 = new Slide();
    
-    SlideBackCalc1.slideNet=netBack0;
+    SlideBack2.slideNet=netBack0;
 
-    SlideBackCalc1.backprop=true;
-    SlideBackCalc1.backprop_labels=true;
-    SlideBackCalc1.none=true;
+    SlideBack2.backprop=true;
+    SlideBack2.backprop_labels=true;
+    SlideBack2.none=true;
 
-    SlideBackCalc1.draw_init(netBack0);
+    SlideBack2.draw_init(netBack0);
 
- //   SlideBackCalc1.costSteps=true;
-    SlideBackCalc1.drawCost();
+ //   SlideBack2.costSteps=true;
+    SlideBack2.drawCost();
 
 
     var backpropx_cost= layout.CX+60;
@@ -1214,35 +1118,35 @@ export const SlideBackCalc1 = new Slide();
     var yimg=new PIXI.Sprite(PIXI.Texture.from('images/backprop/y.png'));
     yimg.isSprite=true;
     yimg.x=backpropx_cost-15;
-    yimg.y=layout.CY-153;
+    yimg.y=layout.CY-103;
 
     var C=new PIXI.Sprite(PIXI.Texture.from('images/backprop/C.png'));
     C.isSprite=true;
     C.scale.set(0.8);
     C.x=backpropx_cost-12;
-    C.y=layout.CY-70;
+    C.y=layout.CY-20;
 
 
 
     var textBackCalc1 = [
-        [ ["We'll also need:"],[backpropx_cost,layout.CY-200] ],
-        [ ["       : the target value"+'\n'+" for each output neuron"],[backpropx_cost,layout.CY-130] ],
+        [ ["We'll also need:"],[backpropx_cost,layout.CY-150] ],
+        [ ["       : the target value"+'\n'+" for each output neuron"],[backpropx_cost,layout.CY-80] ],
         yimg,
-        [ ["       : the cost for each output neuron," +'\n'+ "and the total cost of the net."],[backpropx_cost,layout.CY-50] ],
+        [ ["       : the cost for each output neuron," +'\n'+ "and the total cost of the net."],[backpropx_cost,layout.CY] ],
         C,
 
     ];    
-    SlideBackCalc1.drawText(textBackCalc1);
+    SlideBack2.drawText(textBackCalc1);
 
-export const SlideBackCalc2 = new Slide();
+export const SlideBack3 = new Slide();
 
-    SlideBackCalc2.slideNet=netBack0;
-    SlideBackCalc2.backprop=true;
-    SlideBackCalc2.backprop_labels=true;
-    SlideBackCalc2.w3=true;
+    SlideBack3.slideNet=netBack0;
+    SlideBack3.backprop=true;
+    SlideBack3.backprop_labels=true;
+    SlideBack3.w3=true;
 
-    SlideBackCalc2.draw_init(netBack0);
-    SlideBackCalc2.drawCost();
+    SlideBack3.draw_init(netBack0);
+    SlideBack3.drawCost();
 
     var arrowx=layout.CX-548;
     var arrowy=layout.CY-238;
@@ -1260,22 +1164,22 @@ export const SlideBackCalc2 = new Slide();
     var w3= new PIXI.Sprite(PIXI.Texture.from('images/backprop/w3_teal.png'));
         w3.isSprite=true;
         w3.x=backpropx_cost+190;
-        w3.y=layout.CY-180;
+        w3.y=layout.CY-125;
 
     var w32= new PIXI.Sprite(PIXI.Texture.from('images/backprop/w3_teal.png'));
         w32.isSprite=true;
         w32.x=backpropx_cost+155;
-        w32.y=layout.CY+5;
+        w32.y=layout.CY+25;
 
 
     var textBackCalc2 = [
         w3toc,
-        [ ["What we want to know is:"],[backpropx_cost,layout.CY-200] ],
-        [ ["How much does     "+'\n'+"influence the total cost?", textstyles.large_bold],[backpropx_cost,layout.CY-150] ],
+        [ ["What we want to know is:"],[backpropx_cost,layout.CY-170] ],
+        [ ["How much does     "+'\n'+"influence the total cost?", textstyles.large_bold],[backpropx_cost,layout.CY-100] ],
         w3,
-        [ ["This value is"], [backpropx_cost+20,layout.CY-50] ],
+        [ ["This value is"], [backpropx_cost+20,layout.CY-10] ],
 
-        [ ["the partial derivative of the cost "+'\n'+"with respect to   ",textstyles.ital],[backpropx_cost+20,layout.CY] ],
+        [ ["the partial derivative of the cost "+'\n'+"with respect to   ",textstyles.ital],[backpropx_cost+20,layout.CY+20] ],
         w32,
         [ ["This is written as                "],[backpropx_cost,layout.CY+120] ],
         dctot,
@@ -1283,17 +1187,17 @@ export const SlideBackCalc2 = new Slide();
 
        // [ ["Since w5 doesnt /directly/ affect cost, we need to break down this formula"],[backpropx_cost,layout.TOPBUFFER+150] ],
     ];    
-    SlideBackCalc2.drawText(textBackCalc2);
+    SlideBack3.drawText(textBackCalc2);
 
-export const SlideBackCalc2b = new Slide();
-    SlideBackCalc2b.slideNet=netBack0;
-    SlideBackCalc2b.backprop=true;
-    SlideBackCalc2b.backprop_labels=true;
-    SlideBackCalc2b.w3=true;
+export const SlideBack4 = new Slide();
+    SlideBack4.slideNet=netBack0;
+    SlideBack4.backprop=true;
+    SlideBack4.backprop_labels=true;
+    SlideBack4.w3=true;
 
 
-    SlideBackCalc2b.draw_init(netBack0);
-    SlideBackCalc2b.drawCost();
+    SlideBack4.draw_init(netBack0);
+    SlideBack4.drawCost();
 
     var w3toc= new PIXI.Sprite(PIXI.Texture.from('images/backprop/arrows/w3toc.png'));
         w3toc.isSprite=true;
@@ -1358,18 +1262,18 @@ export const SlideBackCalc2b = new Slide();
 
      
     ];    
-    SlideBackCalc2b.drawText(textBackCalc2b);
+    SlideBack4.drawText(textBackCalc2b);
 
 
-export const SlideBackCalc3 = new Slide();
-    SlideBackCalc3.slideNet=netBack0;
-    SlideBackCalc3.backprop=true;
-    SlideBackCalc3.backprop_labels=true;
-    SlideBackCalc3.w3=true;
+export const SlideBack5 = new Slide();
+    SlideBack5.slideNet=netBack0;
+    SlideBack5.backprop=true;
+    SlideBack5.backprop_labels=true;
+    SlideBack5.w3=true;
 
 
-    SlideBackCalc3.draw_init(netBack0);
-    SlideBackCalc3.drawCost();
+    SlideBack5.draw_init(netBack0);
+    SlideBack5.drawCost();
 
     var w3all= new PIXI.Sprite(PIXI.Texture.from('images/backprop/arrows/w3all.png'));
     w3all.isSprite=true;
@@ -1385,95 +1289,95 @@ export const SlideBackCalc3 = new Slide();
     var dctot_small= new PIXI.Sprite(PIXI.Texture.from('images/backprop/dctot.png'));
         dctot_small.isSprite=true;
         dctot_small.x=backpropx_cost+90;
-        dctot_small.y=layout.CY-200-85;
+        dctot_small.y=layout.CY-200-55;
 
     var dzdw3_small= new PIXI.Sprite(PIXI.Texture.from('images/backprop/dxdy/dzdw3.png'));
         dzdw3_small.scale.set(0.85)
         dzdw3_small.anchor.set(0.5)
         dzdw3_small.isSprite=true;
         dzdw3_small.x=backpropx_cost+70;
-        dzdw3_small.y=layout.CY-100+10;
+        dzdw3_small.y=layout.CY-100+40;
 
     var w3=new PIXI.Sprite(PIXI.Texture.from('images/backprop/w3_teal.png'));
         w3.isSprite=true;
         w3.anchor.set(0.5)
         w3.scale.set(0.8);
         w3.x=backpropx_cost +270;
-        w3.y=layout.CY-100+15;
+        w3.y=layout.CY-100+45;
 
     var z21=new PIXI.Sprite(PIXI.Texture.from('images/backprop/z21.png'));
         z21.isSprite=true;
         z21.scale.set(0.6)
         z21.anchor.set(0.5)
         z21.x=backpropx_cost +355;
-        z21.y=layout.CY-100+15;
+        z21.y=layout.CY-100+45;
 
     var dadz21_small= new PIXI.Sprite(PIXI.Texture.from('images/backprop/dadz21.png'));
         dadz21_small.scale.set(0.85)
         dadz21_small.anchor.set(0.5)
         dadz21_small.isSprite=true;
         dadz21_small.x=backpropx_cost+70;
-        dadz21_small.y=layout.CY+10;
+        dadz21_small.y=layout.CY+40;
 
     var a21=new PIXI.Sprite(PIXI.Texture.from('images/backprop/a21.png'));
         a21.isSprite=true;
         a21.scale.set(0.6)
         a21.anchor.set(0.5)
         a21.x=backpropx_cost +270;
-        a21.y=layout.CY+15;
+        a21.y=layout.CY+45;
 
     var z212=new PIXI.Sprite(PIXI.Texture.from('images/backprop/z21.png'));
         z212.isSprite=true;
         z212.scale.set(0.6)
         z212.anchor.set(0.5)
         z212.x=backpropx_cost +355;
-        z212.y=layout.CY+15;
+        z212.y=layout.CY+45;
 
     var dcda21_small= new PIXI.Sprite(PIXI.Texture.from('images/backprop/dcda21.png'));
         dcda21_small.scale.set(0.85)
         dcda21_small.anchor.set(0.5)
         dcda21_small.isSprite=true;
         dcda21_small.x=backpropx_cost+70;
-        dcda21_small.y=layout.CY+100+10;
+        dcda21_small.y=layout.CY+100+40;
 
         var a212=new PIXI.Sprite(PIXI.Texture.from('images/backprop/a21.png'));
         a212.isSprite=true;
         a212.scale.set(0.6)
         a212.anchor.set(0.5)
         a212.x=backpropx_cost +270;
-        a212.y=layout.CY+100+10;
+        a212.y=layout.CY+100+45;
 
         var ctot=new PIXI.Sprite(PIXI.Texture.from('images/backprop/ctot.png'));
         ctot.isSprite=true;
         ctot.scale.set(0.6)
         ctot.anchor.set(0.5)
         ctot.x=backpropx_cost +355;
-        ctot.y=layout.CY+100+10;
+        ctot.y=layout.CY+100+40;
 
     var textBackCalc3 = [
         w3all,
     //    arrows,   
     //    dcdw5,
-        [ ["To calculate              we need:", textstyles.large_bold],[backpropx_cost,layout.CY-200] ],
+        [ ["To calculate              we need:", textstyles.large_bold],[backpropx_cost,layout.CY-170] ],
         dctot_small,
-        [ ["         (how much does       affect       ?)"],[backpropx_cost+50,layout.CY-100] ],
+        [ ["         (how much does       affect       ?)"],[backpropx_cost+50,layout.CY-70] ],
         dzdw3_small, w3,z21,
-        [ ["         (how much does       affect       ?"],[backpropx_cost+50,layout.CY] ],
+        [ ["         (how much does       affect       ?"],[backpropx_cost+50,layout.CY+30] ],
         dadz21_small, z212, a21,
-        [ ["         (how much does       affect       ?)"],[backpropx_cost+50,layout.CY+100] ],
+        [ ["         (how much does       affect       ?)"],[backpropx_cost+50,layout.CY+130] ],
         dcda21_small, a212,ctot
     ];    
-    SlideBackCalc3.drawText(textBackCalc3);
+    SlideBack5.drawText(textBackCalc3);
 
-export const SlideBackCalc3a = new Slide();
-    SlideBackCalc3a.slideNet=netBack0;
-    SlideBackCalc3a.backprop=true;
-    SlideBackCalc3a.backprop_labels=true;
-    SlideBackCalc3a.w3=true;
+export const SlideBack6 = new Slide();
+    SlideBack6.slideNet=netBack0;
+    SlideBack6.backprop=true;
+    SlideBack6.backprop_labels=true;
+    SlideBack6.w3=true;
 
 
-    SlideBackCalc3a.draw_init(netBack0);
-    SlideBackCalc3a.drawCost();
+    SlideBack6.draw_init(netBack0);
+    SlideBack6.drawCost();
 
     var w3all= new PIXI.Sprite(PIXI.Texture.from('images/backprop/arrows/w3all.png'));
     w3all.isSprite=true;
@@ -1490,44 +1394,46 @@ export const SlideBackCalc3a = new Slide();
       //  dctot_small.scale.set(0.5)
         dctot_small.isSprite=true;
         dctot_small.x=backpropx_cost+220;
-        dctot_small.y=layout.CY-260;
+        dctot_small.y=layout.CY-200;
 
     var dcdw3= new PIXI.Sprite(PIXI.Texture.from('images/backprop/dcdw3.png'));
     dcdw3.isSprite=true;
     dcdw3.scale.set(0.6)
     dcdw3.x=backpropx_cost+30;
-    dcdw3.y=layout.CY-70;
+    dcdw3.y=layout.CY-30;
 
     var textBackCalc3a = [
         w3all,
           dcdw3,    
-          [ ["Using the calculus chain rule," +'\n'+"we multiply these values to get      "],[backpropx_cost,layout.CY-200] ],
+          [ ["Using the calculus chain rule," +'\n'+"we multiply these values to get      "],[backpropx_cost,layout.CY-140] ],
           dctot_small,
-          [ ["Now we can calculate "+'\n'+"each of these components."],[backpropx_cost+50,layout.CY+100] ],
+          [ ["Now we can calculate "+'\n'+"each of these components."],[backpropx_cost+50,layout.CY+130] ],
 
       ];    
-      SlideBackCalc3a.drawText(textBackCalc3a);
+      SlideBack6.drawText(textBackCalc3a);
 
-export const SlideBackCalc4 = new Slide();
-    SlideBackCalc4.slideNet=netBack0;
-    SlideBackCalc4.backprop=true;
-    SlideBackCalc4.backprop_labels=true;
-    SlideBackCalc4.w3=true;
+export const SlideBack7 = new Slide();
+    SlideBack7.slideNet=netBack0;
+    SlideBack7.backprop=true;
+    SlideBack7.backprop_labels=true;
+    SlideBack7.w3=true;
 
 
-    SlideBackCalc4.draw_init(netBack0);
-    SlideBackCalc4.drawCost();
+    SlideBack7.draw_init(netBack0);
+    SlideBack7.drawCost();
 
     var dz21dw3_form= new PIXI.Sprite(PIXI.Texture.from('images/backprop/dz21dw3_form.png'));
     dz21dw3_form.isSprite=true;
     dz21dw3_form.scale.set(0.7)
-    dz21dw3_form.x=backpropx_cost;
-    dz21dw3_form.y=layout.CY-150;
+    dz21dw3_form.x=backpropx_cost-20;
+    dz21dw3_form.y=layout.CY-120;
 
-    var dzdw3arrow= new PIXI.Sprite(PIXI.Texture.from('images/backprop/dzdw3arrow.png'));
-    dzdw3arrow.isSprite=true;
-    dzdw3arrow.x=layout.NEURON_LEFTLIM -layout.NEURON_X_DIF/2 +90;
-    dzdw3arrow.y=layout.NEURON_UPPERLIM-110;
+    var b21= new PIXI.Sprite(PIXI.Texture.from('images/backprop/b21.png'));
+    b21.isSprite=true;
+    b21.scale.set(0.6)
+    b21.anchor.set(0.5)
+    b21.x=backpropx_cost+115;
+    b21.y=layout.CY-150;
 
     var w3toz= new PIXI.Sprite(PIXI.Texture.from('images/backprop/arrows/w3toz.png'));
     w3toz.isSprite=true;
@@ -1535,20 +1441,23 @@ export const SlideBackCalc4 = new Slide();
     w3toz.y=arrowy;
 
     var textBackCalc4 = [
+        [ ["       is the neuron's bias."],[backpropx_cost+100,layout.CY-160] ],
+
         w3toz,
         dz21dw3_form,
+        b21,
     ];
-    SlideBackCalc4.drawText(textBackCalc4);
+    SlideBack7.drawText(textBackCalc4);
 
-export const SlideBackCalc5 = new Slide();
-    SlideBackCalc5.slideNet=netBack0;
-    SlideBackCalc5.backprop=true;
-    SlideBackCalc5.backprop_labels=true;
-    SlideBackCalc5.w3=true;
+export const SlideBack8 = new Slide();
+    SlideBack8.slideNet=netBack0;
+    SlideBack8.backprop=true;
+    SlideBack8.backprop_labels=true;
+    SlideBack8.w3=true;
 
 
-    SlideBackCalc5.draw_init(netBack0);
-    SlideBackCalc5.drawCost();
+    SlideBack8.draw_init(netBack0);
+    SlideBack8.drawCost();
 
     var ztoa= new PIXI.Sprite(PIXI.Texture.from('images/backprop/arrows/ztoa.png'));
     ztoa.isSprite=true;
@@ -1565,17 +1474,17 @@ export const SlideBackCalc5 = new Slide();
         da21dz_form,ztoa,
         [ ["Note: this formula changes"+'\n'+"depending on the activation function."],[backpropx_cost,layout.CY+160] ],
     ];
-    SlideBackCalc5.drawText(textBackCalc5);
+    SlideBack8.drawText(textBackCalc5);
 
-export const SlideBackCalc6 = new Slide();
-    SlideBackCalc6.slideNet=netBack0;
-    SlideBackCalc6.backprop=true;
-    SlideBackCalc6.backprop_labels=true;
-    SlideBackCalc6.w3=true;
+export const SlideBack9 = new Slide();
+    SlideBack9.slideNet=netBack0;
+    SlideBack9.backprop=true;
+    SlideBack9.backprop_labels=true;
+    SlideBack9.w3=true;
 
 
-    SlideBackCalc6.draw_init(netBack0);
-    SlideBackCalc6.drawCost();
+    SlideBack9.draw_init(netBack0);
+    SlideBack9.drawCost();
 
 
     var a21toc= new PIXI.Sprite(PIXI.Texture.from('images/backprop/arrows/a21toc.png'));
@@ -1593,18 +1502,18 @@ export const SlideBackCalc6 = new Slide();
         a21toc,
         dcda12_form,
     ];
-    SlideBackCalc6.drawText(textBackCalc6);
+    SlideBack9.drawText(textBackCalc6);
 
-export const SlideBackCalc6a = new Slide();
-    SlideBackCalc6a.slideNet=netBack0;
-    SlideBackCalc6a.backprop=true;
-    SlideBackCalc6a.backprop_labels=true;
-    SlideBackCalc6a.w3=true;
+export const SlideBack10 = new Slide();
+    SlideBack10.slideNet=netBack0;
+    SlideBack10.backprop=true;
+    SlideBack10.backprop_labels=true;
+    SlideBack10.w3=true;
 
 
-    SlideBackCalc6a.draw_init(netBack0);
-        SlideBackCalc6a.drawCost();
-    //    SlideBackCalc6a.drawCost_steps();
+    SlideBack10.draw_init(netBack0);
+        SlideBack10.drawCost();
+    //    SlideBack10.drawCost_steps();
 
     var dctotfinal_form= new PIXI.Sprite(PIXI.Texture.from('images/backprop/dctotfinal_form.png'));
     dctotfinal_form.isSprite=true;
@@ -1620,14 +1529,14 @@ export const SlideBackCalc6a = new Slide();
 
     var textBackCalc6a = [
         dctotfinal_form, w3all,
-        [ ["Next, we'll see this example with numbers."],[backpropx_cost-10,layout.CY+170] ],
+        [ ["Next, we'll go through this example with numbers."],[backpropx_cost-10,layout.CY+170] ],
     ];
-    SlideBackCalc6a.drawText(textBackCalc6a);
+    SlideBack10.drawText(textBackCalc6a);
     
 
 
 
-export const SlideBackCalcInstruct = new Slide();
+export const SlideBack11 = new Slide();
 
 var fakelearnbox = new PIXI.Sprite(PIXI.Texture.from('images/boxes/learnbox.png'));
 fakelearnbox.isSprite=true;
@@ -1655,32 +1564,89 @@ learnboxarrow.y=layout.CY-115;
         [["Click this button to"+'\n'+ " backpropogate 1 epoch.",textstyles.medium], [layout.CX+190,layout.CY+20]],
         learnboxarrow,
     ];
-    SlideBackCalcInstruct.drawText(texteBackCalcInstruct);
+    SlideBack11.drawText(texteBackCalcInstruct);
 
 //INTERACTVE BACKPROP
 //layout.NEURON_LEFTLIM =  Math.max((window.innerWidth-1100)/2,15) +250;
-export const SlideBackCalc7 = new Slide();
-    SlideBackCalc7.slideNet=netBack0;
-    SlideBackCalc7.backprop=true;
-    SlideBackCalc7.backprop_steps=true;
+export const SlideBack12 = new Slide();
+    SlideBack12.slideNet=netBack0;
+    SlideBack12.backprop=true;
+    SlideBack12.backprop_steps=true;
 
-    SlideBackCalc7.w3=true;
+    SlideBack12.w3=true;
 
 
-    SlideBackCalc7.draw_init(netBack0);
-    SlideBackCalc7.drawRateButtons();
-    SlideBackCalc7.drawCost();
+    SlideBack12.draw_init(netBack0);
+    SlideBack12.drawRateButtons();
+    SlideBack12.drawCost();
 
     var textBackCalc7 = [
     ];
 
-    SlideBackCalc7.drawText(textBackCalc7);
-    SlideBackCalc7.layernum=1;
-    SlideBackCalc7.neuronnum=0;
-    SlideBackCalc7.weightsnum=0;
-    SlideBackCalc7.drawBackprop(1,0,0);
-    SlideBackCalc7.drawLearnButtons();
-    SlideBackCalc7.drawInteractive();
+    SlideBack12.drawText(textBackCalc7);
+    SlideBack12.layernum=1;
+    SlideBack12.neuronnum=0;
+    SlideBack12.weightsnum=0;
+    SlideBack12.drawBackprop(1,0,0);
+    SlideBack12.drawLearnButtons();
+    SlideBack12.drawInteractive();
+
+
+export const SlideBack12b_bias = new Slide();
+SlideBack12b_bias.slideNet=netBack0;
+SlideBack12b_bias.backprop=true;
+SlideBack12b_bias.backprop_labels=true;
+SlideBack12b_bias.none=true;
+
+var ztoa= new PIXI.Sprite(PIXI.Texture.from('images/backprop/arrows/ztoa.png'));
+    ztoa.isSprite=true;
+    ztoa.x=arrowx;
+    ztoa.y=arrowy;
+
+var a21toc= new PIXI.Sprite(PIXI.Texture.from('images/backprop/arrows/a21toc.png'));
+    a21toc.isSprite=true;
+    a21toc.x=arrowx;
+    a21toc.y=arrowy;
+
+var biasarrow= new PIXI.Sprite(PIXI.Texture.from('images/backprop/arrows/biasarrow.png'));
+    biasarrow.isSprite=true;
+    biasarrow.x=arrowx;
+    biasarrow.y=arrowy;
+
+var dcdb= new PIXI.Sprite(PIXI.Texture.from('images/backprop/dcdb.png'));
+    dcdb.isSprite=true;
+    dcdb.scale.set(0.5)
+    dcdb.x=backpropx_cost;
+    dcdb.y=layout.CY-140;
+
+var dcdb_final= new PIXI.Sprite(PIXI.Texture.from('images/backprop/dcdb_final.png'));
+    dcdb_final.isSprite=true;
+    dcdb_final.scale.set(0.5)
+    dcdb_final.x=backpropx_cost+20;
+    dcdb_final.y=layout.CY+110;    
+
+var dzdb= new PIXI.Sprite(PIXI.Texture.from('images/backprop/dzdb.png'));
+dzdb.isSprite=true;
+dzdb.scale.set(0.5)
+dzdb.x=backpropx_cost+180;
+dzdb.y=layout.CY-33;    
+    
+var textBackCalc7b_bias = [
+    ztoa,a21toc,
+    [ ["We also need to update the bias." +'\n'+"The overall formula is nearly the same."],[backpropx_cost,layout.CY-200] ],
+    biasarrow,dcdb,
+    [ ["However:                        "],[backpropx_cost+100,layout.CY] ],
+    [ ["So, our final formula is: "],[backpropx_cost+20,layout.CY+80] ],
+
+    dzdb,
+    dcdb_final,
+
+ //   [ ["bias = dcda *dadz"],[backpropx_cost,layout.CY-200] ],
+];
+
+SlideBack12b_bias.drawText(textBackCalc7b_bias);
+SlideBack12b_bias.draw_init(netBack0);
+SlideBack12b_bias.drawCost();
 
 
 // WEIGHT W1
@@ -1694,7 +1660,12 @@ export const SlideBackCalc8 = new Slide();
     var w1 = new PIXI.Sprite(PIXI.Texture.from('images/backprop/w1_teal.png'));
         w1.isSprite=true;
         w1.x=backpropx_cost+20;
-        w1.y=layout.CY-225;
+        w1.y=layout.CY-203;
+
+        var w3= new PIXI.Sprite(PIXI.Texture.from('images/backprop/w3_teal.png'));
+        w3.isSprite=true;
+        w3.x=backpropx_cost+335;
+        w3.y=layout.CY-203;
 
     var dcdw1= new PIXI.Sprite(PIXI.Texture.from('images/backprop/dcdw1.png'));
         dcdw1.isSprite=true;
@@ -1723,8 +1694,8 @@ export const SlideBackCalc8 = new Slide();
     var textBackCalc8 = [
         dcdw1,
         dz1dw1,da1dz1, w1all,
-        [ ["For        , the process is similar."],[backpropx_cost,layout.CY-200] ],
-        w1,
+        [ ["For        , the initial process is similar to        ."],[backpropx_cost,layout.CY-180] ],
+        w1,w3,
     ];
 
     SlideBackCalc8.drawText(textBackCalc8);
@@ -1753,39 +1724,38 @@ export const SlideBackCalc9 = new Slide();
         dcda1.isSprite=true;
         dcda1.anchor.set(0.5);
         dcda1.scale.set(0.8);
-
         dcda1.x=backpropx_cost+180;
-        dcda1.y=layout.CY-190;
+        dcda1.y=layout.CY-160;
 
     var a11 = new PIXI.Sprite(PIXI.Texture.from('images/backprop/a11.png'));
         a11.isSprite=true;
         a11.scale.set(0.6)
         a11.x=backpropx_cost+50;
-        a11.y=layout.CY-160;
+        a11.y=layout.CY-130;
 
     var a21 = new PIXI.Sprite(PIXI.Texture.from('images/backprop/a21.png'));
         a21.isSprite=true;
         a21.scale.set(0.6)
         a21.x=backpropx_cost+200;
-        a21.y=layout.CY-160;
+        a21.y=layout.CY-130;
 
     var a22 = new PIXI.Sprite(PIXI.Texture.from('images/backprop/a22.png'));
         a22.isSprite=true;
         a22.scale.set(0.6)
         a22.x=backpropx_cost+280;
-        a22.y=layout.CY-160;
+        a22.y=layout.CY-130;
 
     var c1 = new PIXI.Sprite(PIXI.Texture.from('images/backprop/c1.png'));
         c1.isSprite=true;
         c1.scale.set(0.6)
         c1.x=backpropx_cost+120;
-        c1.y=layout.CY-135;
+        c1.y=layout.CY-105;
 
     var c2 = new PIXI.Sprite(PIXI.Texture.from('images/backprop/c2.png'));
         c2.isSprite=true;
         c2.scale.set(0.6)
         c2.x=backpropx_cost+200;
-        c2.y=layout.CY-135;
+        c2.y=layout.CY-105;
 
     var w1toc = new PIXI.Sprite(PIXI.Texture.from('images/backprop/arrows/w1toc2.png'));
     w1toc.isSprite=true;
@@ -1795,14 +1765,14 @@ export const SlideBackCalc9 = new Slide();
     var dcda1_form1= new PIXI.Sprite(PIXI.Texture.from('images/backprop/dcda1_form1.png'));
         dcda1_form1.isSprite=true;
         dcda1_form1.scale.set(0.5)
-        dcda1_form1.x=backpropx_cost-100;
-        dcda1_form1.y=layout.CY-50;
+        dcda1_form1.x=backpropx_cost-70;
+        dcda1_form1.y=layout.CY-20;
 
 
     var textBackCalc9 = [
        [ ["However, to find           , we need to break it down "
             +'\n\n'+"since         affects both        and     "
-            +'\n\n'+"and therefore        and       ."],[backpropx_cost,layout.CY-200] ],
+            +'\n\n'+"and therefore        and       ."],[backpropx_cost,layout.CY-170] ],
        dcda1_form1,w1toc,
         dcda1,a11,a21,a22,c1,c2,
     ];
