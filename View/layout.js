@@ -100,7 +100,3 @@ export const layout = {
    DCDA:50,
 
 }
-
-if(window.innerWidth>1280){
-  //  layout.LEFTBUFFER=400;
-}
