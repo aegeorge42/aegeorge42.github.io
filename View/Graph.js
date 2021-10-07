@@ -62,7 +62,7 @@ export class Graph extends PIXI.Sprite{
     }
 
     negAxis(){
-        this.fakedata=new Data(0, ["strawberry","blueberry"],["length","roundness"]);
+        this.fakedata=new data(0, ["strawberry","blueberry"],["length","roundness"]);
 
         for(var i =-4; i<(this.numbgpoints/2)+1;i++){
             for(var j =-4; j<(this.numbgpoints/2)+1;j++){        
