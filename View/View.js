@@ -65,16 +65,389 @@ import {SlideHome,
     SlideBackCalc10,
     SlideSandbox,
     SlideCredit,
-
+    makeSlides,
 } from "./allSlides.js"
 import { Slide } from "./Slide.js";
 import { textstyles } from "./textstyles.js";
 
-
+export var openerloader = PIXI.loader;
+export var loader = PIXI.loader;
 
 export class View{
-    slideList;
-    currentSlide;
+    constructor(){
+        
+        var vst=this;
+        const app = new PIXI.Application({
+          autoResize: true,
+          width: window.innerWidth,
+          height: window.innerHeight,
+          backgroundColor: 0xf5f6ff
+        });
+
+        this.app=app;
+        document.body.appendChild(this.app.view);
+
+        var opener = new PIXI.Sprite(PIXI.Texture.from('images/opener.png'));
+            opener.name="opener";
+            opener.anchor.set(0.5);
+            opener.x=window.innerWidth/2;
+            opener.y=window.innerHeight/2;
+        this.app.stage.addChild(opener);
+
+        var loading = new PIXI.Sprite(PIXI.Texture.from('images/buttons/datalin.png'));
+        loading.name="loading";
+        loading.anchor.set(0.5);
+        loading.x=window.innerWidth/2;
+        loading.y=window.innerHeight/2+250;
+        this.app.stage.addChild(loading );
+
+        loader
+            .add([
+
+                //buttons
+                "images/buttons/back.png",
+                "images/buttons/next.png",
+                "images/buttons/start.png",
+                "images/buttons/gotoneuron.png",
+                "images/buttons/gotoforward.png",
+                "images/buttons/gotobackprop.png",
+                "images/buttons/gotocalc.png",
+                "images/buttons/sand.png",
+                "images/buttons/home.png",
+
+                //intro
+                "images/arrows/arrow1.png",
+                "images/intro/sandbox.png",
+                "images/intro/sorter.png",
+
+
+
+            ])
+        .load(setup);
+
+        function setup() {
+            vst.currentSlide=0;
+            makeSlides();
+            vst.slideList = [];
+            vst.slideList.push(SlideHome, SlideInstruct1, SlideInstruct2, SlideIntro1);
+            vst.drawSlide_init();
+
+            var header = new PIXI.Graphics();
+                header.name="header";
+                header.beginFill(0xbfbfbf);
+                header.drawRect(0,0,window.innerWidth,layout.HEADER_HEIGHT);
+            app.stage.addChild(header);
+
+            var footer=new PIXI.Graphics();
+                footer.name="footer";
+                footer.beginFill(0xbfbfbf);
+                footer.drawRect(0,window.innerHeight,window.innerWidth,-layout.FOOTER_HEIGHT);
+            app.stage.addChild(footer);
+
+
+            vst.createButtons();
+
+            vst.caveats();
+            app.stage.getChildByName("button_start").visible=true;
+            app.stage.getChildByName("loading").visible=false;
+
+
+
+            
+        }
+
+        window.addEventListener('resize', resize);
+
+
+        this.startwidth = window.innerWidth;
+        this.startheight = window.innerHeight;
+        this.startheight_nochange = window.innerHeight;
+        this.startwidth_nochange = window.innerWidth;
+
+        var win = this;
+
+        function resize(){
+            app.renderer.resize(window.innerWidth, window.innerHeight);
+            var changeY=window.innerHeight-win.startheight;
+            var changeX=window.innerWidth-win.startwidth;
+
+            app.stage.getChildByName("opener").x=window.innerWidth/2;
+            app.stage.getChildByName("opener").y=window.innerHeight/2;
+
+            app.stage.getChildByName("header").width=window.innerWidth;
+            app.stage.getChildByName("footer").width=window.innerWidth;
+            app.stage.getChildByName("footer").y=changeY;
+
+            app.stage.getChildByName("button_start").x=window.innerWidth/2;
+            app.stage.getChildByName("button_start").y=window.innerHeight/2 -20 +250,
+
+            app.stage.getChildByName("button_nextslide").x=window.innerWidth/2 +100;
+            app.stage.getChildByName("button_nextslide").y=window.innerHeight-(75/2);
+
+            app.stage.getChildByName("button_calc2sand").x=window.innerWidth/2 +100;
+            app.stage.getChildByName("button_calc2sand").y=window.innerHeight-(75/2);
+
+            app.stage.getChildByName("button_prevslide").x=window.innerWidth/2 -100;
+            app.stage.getChildByName("button_prevslide").y=window.innerHeight-(75/2);
+
+            app.stage.getChildByName("button_backfromcalc").x=window.innerWidth/2 -100;
+            app.stage.getChildByName("button_backfromcalc").y=window.innerHeight-(75/2);
+
+            app.stage.getChildByName("text_calc2sand").x=window.innerWidth/2 +100+100;
+            app.stage.getChildByName("text_calc2sand").y=window.innerHeight-(75/2) -20;
+
+            //GO TO BUTTONS
+            app.stage.getChildByName("gotoneuron").x=window.innerWidth-720;
+            app.stage.getChildByName("gotoforward").x=window.innerWidth-570;
+            app.stage.getChildByName("gotobackprop").x=window.innerWidth-420;
+            app.stage.getChildByName("gotocalc").x=window.innerWidth-270;
+            app.stage.getChildByName("gotosand").x=window.innerWidth-100;
+
+
+            if(vst.currentSlide!=34){
+
+                app.stage.getChildAt(0).x=changeX/2;
+                app.stage.getChildAt(0).y=changeY/2;
+                app.stage.getChildAt(0).getChildAt(4).x=changeX/2;
+
+
+
+            } else {
+                app.stage.getChildAt(0).y=changeY/2;
+
+                app.stage.getChildAt(0).getChildAt(2).getChildByName("databox").x=window.innerWidth-260;
+                app.stage.getChildAt(0).getChildAt(2).getChildByName("databox").y=50 - changeY/2;
+
+                app.stage.getChildAt(0).getChildAt(2).getChildByName("learnbox").y=50-changeY/2;
+                app.stage.getChildAt(0).getChildAt(2).getChildByName("actfnsbox").y=155-changeY/2;
+                app.stage.getChildAt(0).getChildAt(2).getChildByName("ratebox").y=315-changeY/2;
+
+
+
+                app.stage.getChildAt(0).getChildAt(7).x=changeX;
+                app.stage.getChildAt(0).getChildAt(7).y=-changeY/2 + changeY;
+
+                app.stage.getChildAt(0).getChildAt(8).x=changeX;
+                app.stage.getChildAt(0).getChildAt(8).y=-changeY/2+changeY;
+
+
+                if(window.innerWidth>1280) {
+                    app.stage.getChildAt(0).getChildAt(0).x=(window.innerWidth-1280)/2;
+                    app.stage.getChildAt(0).getChildAt(1).x=(window.innerWidth-1280)/2;
+                    app.stage.getChildAt(0).getChildAt(3).x=(window.innerWidth-1280)/2;
+                    app.stage.getChildAt(0).getChildAt(6).x=(window.innerWidth-1280)/2;
+
+                    app.stage.getChildAt(0).getChildAt(2).getChildByName("buttonNeuronAddContainer").x=(window.innerWidth-1280)/2;
+                    app.stage.getChildAt(0).getChildAt(2).getChildByName("buttonNeuronRemContainer").x=(window.innerWidth-1280)/2;
+                
+                }
+            }   
+        }
+    }
+
+
+    createButtons2(){
+    var button_nextslide = new Button("button_nextslide",loader.resources["images/buttons/next.png"].texture,layout.NEXTSLIDE_X,layout.NEXTSLIDE_Y,true);
+    var button_prevslide = new Button("button_prevslide",loader.resources["images/buttons/back.png"].texture,layout.PREVSLIDE_X,layout.NEXTSLIDE_Y,true);
+
+    this.app.stage.addChild(button_nextslide,button_prevslide);
+    this.app.stage.getChildByName("button_nextslide").on('click', function(e){ 
+        console.log("next")
+    });
+
+    this.app.stage.getChildByName("button_prevslide").on('click', function(e){ 
+        console.log("prev")
+    });
+
+    }
+
+
+
+
+
+
+
+
+
+    createButtons(){
+        var vst=this;
+
+        var startx=layout.CX;
+        var starty=layout.CY+250;
+
+        var button_nextslide = new Button("button_nextslide",loader.resources["images/buttons/next.png"].texture,layout.NEXTSLIDE_X,layout.NEXTSLIDE_Y,true);
+        var button_prevslide = new Button("button_prevslide",loader.resources["images/buttons/back.png"].texture,layout.PREVSLIDE_X,layout.NEXTSLIDE_Y,true);
+        var button_start = new Button("button_start",loader.resources["images/buttons/start.png"].texture,startx,starty,true,0xFFFFFF);
+  
+        var button_backfromcalc = new Button("button_backfromcalc",loader.resources["images/buttons/back.png"].texture,layout.PREVSLIDE_X,layout.NEXTSLIDE_Y,true);
+        var button_calc2sand = new Button("button_calc2sand",loader.resources["images/buttons/next.png"].texture,layout.NEXTSLIDE_X,layout.NEXTSLIDE_Y,true);
+        var text_calc2sand = new PIXI.Text("Click next to go"+'\n'+ "to sandbox mode!", textstyles.default)
+            text_calc2sand.name="text_calc2sand";
+            text_calc2sand.x=layout.NEXTSLIDE_X+100;
+            text_calc2sand.y=layout.NEXTSLIDE_Y-20;
+
+        var homebutton = new Button("homebutton",loader.resources["images/buttons/home.png"].texture,30,layout.HEADER_HEIGHT/2,false)
+        var gotoneuron = new Button("gotoneuron",loader.resources["images/buttons/gotoneuron.png"].texture,window.innerWidth-720,layout.HEADER_HEIGHT/2,false)
+        var gotoforward = new Button("gotoforward",loader.resources["images/buttons/gotoforward.png"].texture,window.innerWidth-570,layout.HEADER_HEIGHT/2,false)
+        var gotobackprop = new Button("gotobackprop",loader.resources["images/buttons/gotobackprop.png"].texture,window.innerWidth-420,layout.HEADER_HEIGHT/2,false)
+        var gotocalc = new Button("gotocalc",loader.resources["images/buttons/gotocalc.png"].texture,window.innerWidth-270,layout.HEADER_HEIGHT/2,false)
+        var gotosand = new Button("gotosand",loader.resources["images/buttons/sand.png"].texture,window.innerWidth-100,layout.HEADER_HEIGHT/2 +1,false,0xcdff94)
+
+
+
+        this.app.stage.addChild(button_nextslide, button_prevslide, button_start, button_backfromcalc,button_calc2sand,
+             text_calc2sand, homebutton,gotoneuron,gotoforward,gotobackprop,gotocalc,gotosand);
+
+        this.app.stage.getChildByName("homebutton").on('click', function(e){ 
+                vst.currentSlide=0;
+                vst.drawSlide();
+                    
+        });
+
+        this.app.stage.getChildByName("button_start").on('click', function(e){ 
+            if(vst.currentSlide+1<vst.slideList.length){
+                vst.currentSlide=vst.currentSlide+1;
+                vst.drawSlide();
+            }
+        });
+
+        this.app.stage.getChildByName("button_nextslide").on('click', function(e){ 
+
+            if(vst.currentSlide+1<vst.slideList.length){
+                vst.currentSlide=vst.currentSlide+1;
+                vst.drawSlide();
+            }
+
+            if(vst.slideList[vst.currentSlide].slideNet !== undefined && vst.slideList[vst.currentSlide].largenet==1  && !vst.slideList[vst.currentSlide].fakenet){//&& vst.currentSlide == 9){
+                vst.slideList[vst.currentSlide].slideNet.update();
+                vst.slideList[vst.currentSlide].draw_update_large(vst.slideList[vst.currentSlide].slideNet)
+                vst.drawSlide();
+            }
+
+            if(vst.slideList[vst.currentSlide].slideNet !== undefined && vst.slideList[vst.currentSlide].largenet!=1 && !vst.slideList[vst.currentSlide].fakenet){//&& vst.currentSlide == 9){
+                vst.slideList[vst.currentSlide].slideNet.update();
+                vst.slideList[vst.currentSlide].draw_update(vst.slideList[vst.currentSlide].slideNet)
+                vst.drawSlide();
+            }
+            
+        });
+
+        this.app.stage.getChildByName("button_prevslide").on('click', function(e){ 
+            if(vst.currentSlide>0){
+
+                vst.currentSlide=vst.currentSlide-1;
+                vst.drawSlide();
+            }
+        });
+    }
+
+    caveats(){
+
+        
+        if (this.currentSlide==0){
+           for(var i = 0; i<this.app.stage.children.length; i++){
+                this.app.stage.getChildAt(i).visible=false;
+            }    
+        
+            this.app.stage.getChildByName("button_start").visible=true;
+            this.app.stage.getChildByName("opener").visible=true;
+
+        } else {
+            for(var i = 0; i<this.app.stage.children.length; i++){
+                this.app.stage.getChildAt(i).visible=true;
+            }                
+
+            this.app.stage.getChildByName("button_start").visible=false;
+            this.app.stage.getChildByName("opener").visible=false;
+            this.app.stage.getChildByName("loading").visible=false;
+            
+            if(this.slideList[this.currentSlide].backfromcalc){
+                this.app.stage.getChildByName("button_backfromcalc").visible=true;
+            } else {
+                this.app.stage.getChildByName("button_backfromcalc").visible=false;
+            }
+
+            if(this.slideList[this.currentSlide].calc2sand){
+                this.app.stage.getChildByName("button_calc2sand").visible=true;
+                this.app.stage.getChildByName("text_calc2sand").visible=true;
+    
+            } else {
+                this.app.stage.getChildByName("button_calc2sand").visible=false;
+                this.app.stage.getChildByName("text_calc2sand").visible=false;
+
+    
+            }
+    
+            if(this.slideList[this.currentSlide].slidecredit){
+                this.app.stage.getChildByName("button_nextslide").visible=false;
+            } else {
+                this.app.stage.getChildByName("button_nextslide").visible=true;
+            }
+
+        }
+    }  
+    
+    drawSlide_init(){
+        this.app.stage.addChildAt(this.slideList[this.currentSlide].slideContainer,0);
+    }
+
+    drawSlide(){
+        this.app.stage.removeChildAt(0);
+        this.app.stage.addChildAt(this.slideList[this.currentSlide].slideContainer,0);
+        this.caveats();
+        //this.resize2();
+    }
+
+
+    // when window is resized, gotta resize all the other slides
+    // but only some stuff
+    resize2(){
+
+        layout.CX= window.innerWidth/2;
+        layout.CY= window.innerHeight/2 -50;
+
+        var changeY=window.innerHeight-this.startheight_nochange;
+        var changeX=window.innerWidth-this.startwidth_nochange;
+
+        app.stage.getChildByName("opener").x=window.innerWidth/2;
+        app.stage.getChildByName("opener").y=window.innerHeight/2;
+
+        if(this.currentSlide!=34){
+
+            this.app.stage.getChildAt(0).x=changeX/2;
+            this.app.stage.getChildAt(0).y=changeY/2;
+            this.app.stage.getChildAt(0).getChildAt(4).x=changeX/2;
+        } else {
+            this.app.stage.getChildAt(0).y=changeY/2;
+
+            this.app.stage.getChildAt(0).getChildAt(2).getChildByName("databox").x=window.innerWidth-260;
+            this.app.stage.getChildAt(0).getChildAt(2).getChildByName("databox").y=50 - changeY/2;
+
+            this.app.stage.getChildAt(0).getChildAt(2).getChildByName("learnbox").y=50-changeY/2;
+            this.app.stage.getChildAt(0).getChildAt(2).getChildByName("actfnsbox").y=155-changeY/2;
+            this.app.stage.getChildAt(0).getChildAt(2).getChildByName("ratebox").y=315-changeY/2;
+
+            this.app.stage.getChildAt(0).getChildAt(7).x=changeX;
+            this.app.stage.getChildAt(0).getChildAt(7).y=-changeY/2 + changeY;
+
+            this.app.stage.getChildAt(0).getChildAt(8).x=changeX;
+            this.app.stage.getChildAt(0).getChildAt(8).y=-changeY/2+changeY;
+
+        }
+    }
+
+}
+
+
+
+
+
+
+
+
+
+/*
+export class View{
 
     constructor(){
         
@@ -85,7 +458,29 @@ export class View{
           height: window.innerHeight,
           backgroundColor: 0xf5f6ff
         });
-        
+
+       // export var loader = PIXI.loader;
+        loader
+            .add([
+
+                //buttons
+                "images/buttons/back.png",
+                "images/buttons/next.png",
+
+                "images/arrows/arrow1.png",
+            ])
+        .load(setup);
+
+        function setup() {
+            
+           makeSlides();
+           vst.currentSlide=0;
+           vst.createButtons();
+           vst.caveats();
+           vst.drawSlide_init();
+
+        }
+
         this.app=app;
 
         window.addEventListener('resize', resize);
@@ -204,15 +599,15 @@ export class View{
                             SlideBack12,SlideBack12b_bias,SlideBackCalc8,SlideBackCalc9,SlideBackCalc9b,SlideBackCalc9a,SlideBackCalc9a2,SlideBackCalc9c,SlideBackCalc10,   
                             );
 
-        /* if I need to number slides later */
-        /*
+        // if I need to number slides later 
+        
         for(var i=0; i<this.slideList.length;i++){
             var currText=new PIXI.Text(i);
             currText.x=0;
                 currText.y=45;
             this.slideList[i].slideContainer.addChild(currText);
         }
-        */
+        
            
         var opener = new PIXI.Sprite(PIXI.Texture.from('images/opener.png'));
         opener.name="opener";
@@ -223,7 +618,7 @@ export class View{
 
         this.currentSlide=0;
 
-        this.drawSlide_init();
+        //this.drawSlide_init();
 
         var header = new PIXI.Graphics();
         header.name="header";
@@ -237,9 +632,9 @@ export class View{
         footer.drawRect(0,window.innerHeight,window.innerWidth,-layout.FOOTER_HEIGHT);
         app.stage.addChild(footer);
 
-        this.createButtons();
+    //    this.createButtons();
         this.app.stage.addChild(this.slideList[this.currentSlide].textbuttonContainer);
-        this.caveats();
+        //this.caveats();
         
     }
 
@@ -350,7 +745,7 @@ export class View{
         var startx=layout.CX;
         var starty=layout.CY+250;
 
-        var button_nextslide = new Button("button_nextslide",PIXI.Texture.from('images/buttons/next.png'),layout.NEXTSLIDE_X,layout.NEXTSLIDE_Y,true);
+        var button_nextslide = new Button("button_nextslide",loader.resources["images/buttons/next.png"].texture,layout.NEXTSLIDE_X,layout.NEXTSLIDE_Y,true);
         var button_prevslide = new Button("button_prevslide",PIXI.Texture.from('images/buttons/back.png'),layout.PREVSLIDE_X,layout.NEXTSLIDE_Y,true);
         var button_start = new Button("button_start",PIXI.Texture.from('images/buttons/start.png'),startx,starty,true,0xFFFFFF);
         
@@ -480,3 +875,4 @@ export class View{
         
     }
 }
+*/

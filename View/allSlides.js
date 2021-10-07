@@ -8,16 +8,28 @@ import {textstyles} from "./textstyles.js"
 import { Button } from "./Button.js";
 import {viewst} from "../Controller.js"
 
+import { loader } from "./View.js";
+
+
 
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 // HOME
-export const SlideHome = new Slide();
+export var SlideHome = new Slide();
+export var SlideInstruct1 = new Slide();
+export var SlideInstruct2 = new Slide();
+export var SlideIntro1 = new Slide();
 
-// INSTRUCTIONS
-export const SlideInstruct1 = new Slide();
+
+
+export function makeSlides(){
+    SlideHome = new Slide();
+
+    /*  ------- INSTRUCTIONS --------*/ 
+
+    // INSTRUCT 1
     var textInstruct1 = [    
         [ ["Here is the tool that I needed to learn about neural networks."], [layout.CX-400, layout.CY+100]],
         [ ["I hope it helps you!"], [layout.CX, layout.CY+150]],
@@ -25,15 +37,16 @@ export const SlideInstruct1 = new Slide();
     ];    
     SlideInstruct1.drawText(textInstruct1);
 
-export const SlideInstruct2 = new Slide();
-    var arrow1 =new PIXI.Sprite(PIXI.Texture.from('images/arrows/arrow1.png'));
+
+    // INSTRUCT 2
+    var arrow1 =new PIXI.Sprite(loader.resources["images/arrows/arrow1.png"].texture);
         arrow1.isSprite=true;
         arrow1.scale.set(0.5);
         arrow1.x = window.innerWidth-350;
         arrow1.y = 80;
     SlideInstruct2.arrowContainer.addChild(arrow1);
 
-    var sandbox =new PIXI.Sprite(PIXI.Texture.from('images/intro/sandbox.png'));
+    var sandbox =new PIXI.Sprite(loader.resources["images/intro/sandbox.png"].texture);
         sandbox.isSprite=true;
         sandbox.anchor.set(0.5);
         sandbox.x = layout.CX+340;
@@ -58,9 +71,7 @@ export const SlideInstruct2 = new Slide();
  *    INTRO
  * 
  * **************/
-export const SlideIntro1 = new Slide();
-
-    var sorter =new PIXI.Sprite(PIXI.Texture.from('images/intro/sorter.png'));
+    var sorter =new PIXI.Sprite(loader.resources["images/intro/sorter.png"].texture);
         sorter.isSprite=true;
         sorter.anchor.set(0.5)
         sorter.x=layout.CX;
@@ -73,6 +84,12 @@ export const SlideIntro1 = new Slide();
         [ ["Some neural networks are trained to identify and classify data. "],[layout.CX-300, layout.CY-50] ],
     ];
     SlideIntro1.drawText(textIntro1);
+
+}
+
+
+
+
 
 
 export const SlideIntro2 = new Slide();

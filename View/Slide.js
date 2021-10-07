@@ -56,50 +56,8 @@ export class Slide{
     
         this.textcount = 0; 
         this.textContainer = new PIXI.Container();
-        //this.textContainer.position.set(0,0);
-
-        //this.textContainer.pivot.set(0,0);
-        //this.textContainer.pivot.set(this.textContainer.width,this.textContainer.height)
-
         this.graphContainer = new PIXI.Container();
-
-     //   this.cardContainer = new PIXI.Container(); 
-     //   this.miscContainer=new PIXI.Container();
         this.slideContainer=new PIXI.Container();
-        
-        const footer=new PIXI.Graphics();
-        footer.name="footer";
-        footer.beginFill(0xbfbfbf);
-        footer.drawRect(0,window.innerHeight,window.innerWidth,-layout.FOOTER_HEIGHT);
-
-        const header = new PIXI.Graphics();
-        header.name="header";
-        header.beginFill(0xbfbfbf);
-        header.drawRect(0,0,window.innerWidth,layout.HEADER_HEIGHT);
-
-        /*let text = new PIXI.MultiStyleText("Let's make some <ml>multiline</ml>\nand <ms>multistyle</ms> text for\n<pixi>Pixi.js!</pixi>",
-        {
-            "default": {
-                fontFamily: "Arial",
-                fontSize: "24px",
-                fill: "#cccccc",
-                align: "center"
-            },
-            "ml": {
-                fontStyle: "italic",
-                fill: "#ff8888"
-            },
-            "ms": {
-                fontStyle: "italic",
-                fill: "#4488ff"
-            },
-            "pixi": {
-                fontSize: "64px",
-                fill: "#efefef"
-            }
-        });
-
-        */
 
         this.slideContainer.addChild(                     
                  
@@ -114,28 +72,7 @@ export class Slide{
                                       this.graphContainer,
                                       this.textbuttonContainer,
                                       );
-
-        //window.addEventListener('resize', resize);    
-
-        var h=window.innerHeight;    
-        function resize(){
-            /*header.x=0;
-            footer.width=window.innerWidth;
-            footer.y=window.innerHeight-h;
-            header.width=window.innerWidth;
-
-            // shrug
-            try{
-
-                slide.textbuttonContainer.getChildByName("nexttext").x=window.innerWidth/2 +100;
-                slide.textbuttonContainer.getChildByName("nexttext").y=window.innerHeight-(layout.FOOTER_HEIGHT/2);
-
-                slide.textbuttonContainer.getChildByName("prevtext").x=window.innerWidth/2 -100;
-                slide.textbuttonContainer.getChildByName("prevtext").y=window.innerHeight-(layout.FOOTER_HEIGHT/2);
-
-            } catch {};
-            */
-        }
+       
     }
 
 
