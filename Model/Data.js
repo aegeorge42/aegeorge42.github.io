@@ -4,7 +4,7 @@ export const datatypes = {
     BLUEBERRY: "blueberry", 
 }
 
-export class Data{
+export class data{
     
     constructor(size, type, labels){
         this.points=new Array(size);
