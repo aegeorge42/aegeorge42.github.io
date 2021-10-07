@@ -1892,7 +1892,7 @@ export class Slide{
 
         for(var i = 0; i<net.netInput.length; i++){
 
-            var inputBase = new PIXI.Sprite(PIXI.Texture.from('images/net/inputBase.png'));
+            var inputBase = new PIXI.Sprite(PIXI.Texture.from('images/net/inputbase.png'));
                 inputBase.scale.set(1.2);
                 inputBase.anchor.set(0.5);
                 inputBase.name = i.toString();
