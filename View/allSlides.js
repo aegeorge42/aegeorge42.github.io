@@ -1977,54 +1977,6 @@ export const SlideBackCalc10 = new Slide();
         SlideBackCalc10.textbuttonContainer.addChild(clicknext);
     */
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 export const SlideSandbox = new Slide();
 
     var netSand=new Net();

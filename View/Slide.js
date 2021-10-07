@@ -756,7 +756,7 @@ export class Slide{
                 slide.buttonContainer.getChildByName("buttonNeuronRemContainer").getChildAt(i).visible=false;
             }            
 
-            var newdata = new Data(0,["strawberry","blueberry"],["length", "roundness"]);
+            var newdata = new data(0,["strawberry","blueberry"],["length", "roundness"]);
             newdata.makefruits_linear();
             newdata.shuffle();
             slide.slideNet.setNetData(newdata);
@@ -801,7 +801,7 @@ export class Slide{
                 slide.buttonContainer.getChildByName("buttonNeuronRemContainer").getChildAt(i).visible=false;
             }
 
-            var newdata = new Data(0,["strawberry","blueberry"],["length", "roundness"]);
+            var newdata = new data(0,["strawberry","blueberry"],["length", "roundness"]);
                 newdata.large=true;
 
             newdata.makefruits_circle_newaxis();
