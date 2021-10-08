@@ -1802,7 +1802,6 @@ SlideInstruct2.arrowContainer.addChild(arrow2);
 
       w1toc_expand1, 
       dcda_form2,
-        [ [""],[backpropx_cost,layout.CY] ],
     ];
 
     SlideBackCalc9b.drawText(textBackCalc9b);
