@@ -1335,14 +1335,14 @@ SlideInstruct2.arrowContainer.addChild(arrow2);
         a21.isSprite=true;
         a21.scale.set(0.6)
         a21.anchor.set(0.5)
-        a21.x=backpropx_cost +270;
+        a21.x=backpropx_cost +355;
         a21.y=layout.CY+45;
 
     var z212=new PIXI.Sprite(loader.resources["images/backprop/z21.png"].texture);
         z212.isSprite=true;
         z212.scale.set(0.6)
         z212.anchor.set(0.5)
-        z212.x=backpropx_cost +355;
+        z212.x=backpropx_cost +270;
         z212.y=layout.CY+45;
 
     var dcda21_small= new PIXI.Sprite(loader.resources["images/backprop/dcda21.png"].texture);
