@@ -94,11 +94,11 @@ export class View{
             opener.y=window.innerHeight/2;
         this.app.stage.addChild(opener);
 
-        var loading = new PIXI.Sprite(PIXI.Texture.from('images/buttons/datalin.png'));
+        var loading = new PIXI.Sprite(PIXI.Texture.from('images/loading.png'));
         loading.name="loading";
         loading.anchor.set(0.5);
         loading.x=window.innerWidth/2;
-        loading.y=window.innerHeight/2+250;
+        loading.y=window.innerHeight/2+250 -30;
         this.app.stage.addChild(loading );
 
         //lol
@@ -438,7 +438,7 @@ export class View{
 
         var button_nextslide = new Button("button_nextslide",loader.resources["images/buttons/next.png"].texture,layout.NEXTSLIDE_X,layout.NEXTSLIDE_Y,true);
         var button_prevslide = new Button("button_prevslide",loader.resources["images/buttons/back.png"].texture,layout.PREVSLIDE_X,layout.NEXTSLIDE_Y,true);
-        var button_start = new Button("button_start",loader.resources["images/buttons/start.png"].texture,startx,starty,true,0xFFFFFF);
+        var button_start = new Button("button_start",loader.resources["images/buttons/start.png"].texture,startx,starty,true);
   
         var button_backfromcalc = new Button("button_backfromcalc",loader.resources["images/buttons/back.png"].texture,layout.PREVSLIDE_X,layout.NEXTSLIDE_Y,true);
         var button_calc2sand = new Button("button_calc2sand",loader.resources["images/buttons/next.png"].texture,layout.NEXTSLIDE_X,layout.NEXTSLIDE_Y,true);
