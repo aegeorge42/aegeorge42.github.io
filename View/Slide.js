@@ -906,9 +906,18 @@ export class Slide{
                                         
                     weightSprite.on('mouseover', function(e){
 
+                       // if(!slide.backprop_labels){
+                           var xbuffer=0;
+                           var ybuffer=(window.innerHeight-viewst.startheight)/2;
+                           if(slide.sandbox){
+                               if (window.innerWidth>1280){
+                                var xbuffer=-(window.innerWidth-1280)/2;
+                               }
+                           } else {
+                                var xbuffer=(window.innerWidth-viewst.startwidth)/2;
+                                var ybuffer=(window.innerHeight-viewst.startheight)/2;
+                           }
                         if(!slide.backprop_labels){
-                        var xbuffer=(window.innerWidth-viewst.startwidth)/2;
-                        var ybuffer=(window.innerHeight-viewst.startheight)/2;
 
                         this.getChildByName("weightTextBox").visible=true;
                         this.getChildByName("weightTextBox").x=e.data.global.x-xbuffer;
