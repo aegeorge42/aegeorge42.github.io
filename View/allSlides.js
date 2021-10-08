@@ -1670,20 +1670,20 @@ SlideInstruct2.arrowContainer.addChild(arrow2);
         dcdw1.isSprite=true;
         dcdw1.scale.set(0.6);
         dcdw1.x=backpropx_cost;
-        dcdw1.y=150;
+        dcdw1.y=layout.CY-140;
 
 
     var dz1dw1= new PIXI.Sprite(loader.resources["images/backprop/dz1dw1.png"].texture);
         dz1dw1.isSprite=true;
         dz1dw1.scale.set(0.5)
         dz1dw1.x=backpropx_cost+60;
-        dz1dw1.y=300;
+        dz1dw1.y=layout.CY;
 
     var da1dz1= new PIXI.Sprite(loader.resources["images/backprop/da1dz1.png"].texture);
     da1dz1.isSprite=true;
     da1dz1.scale.set(0.5)
     da1dz1.x=backpropx_cost+60;
-    da1dz1.y=400;
+    da1dz1.y=layout.CY+100;
 
     var w1all = new PIXI.Sprite(loader.resources["images/backprop/arrows/w1all.png"].texture);
     w1all.isSprite=true;
