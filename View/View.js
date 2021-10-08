@@ -136,6 +136,7 @@ export class View{
                 "images/buttons/sand.png",
                 "images/buttons/home.png",
 
+
                 //slide buttons
                 "images/boxes/learnbox.png",
                 "images/boxes/actfnsbox.png",
@@ -172,6 +173,7 @@ export class View{
 
                 //intro
                 "images/arrows/arrow1.png",
+
                 "images/intro/sandbox.png",
                 "images/intro/sorter.png",
                 "images/intro/examples_labels.png",

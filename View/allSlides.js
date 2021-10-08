@@ -107,6 +107,15 @@ export function makeSlides(){
         arrow1.y = 80;
     SlideInstruct2.arrowContainer.addChild(arrow1);
 
+    var arrow2 =new PIXI.Sprite(loader.resources["images/arrows/arrow1.png"].texture);
+    arrow2.isSprite=true;
+    arrow2.scale.set(0.5);
+    arrow2.x = window.innerWidth-750;
+    arrow2.y = 70;
+    arrow2.height = 110;
+
+SlideInstruct2.arrowContainer.addChild(arrow2);
+
     var sandbox =new PIXI.Sprite(loader.resources["images/intro/sandbox.png"].texture);
         sandbox.isSprite=true;
         sandbox.anchor.set(0.5);
@@ -1014,7 +1023,7 @@ export function makeSlides(){
     learnboxarrow.anchor.set(0.5);
     learnboxarrow.isSprite=true;
     learnboxarrow.x=layout.CX-30;
-    learnboxarrow.y=layout.CY+15;
+    learnboxarrow.y=layout.CY+10;
 
     var textError6b = [
     fakelearnbox,
@@ -1023,9 +1032,9 @@ export function makeSlides(){
 
     [["You've finished the tutorial!", textstyles.large_bold], [layout.CX-170,layout.CY-90]],
     [["On the next slide is sandbox mode - where we'll get to put all this to the test."], [layout.CX-350,layout.CY-40]],
-    [["Click this button" +'\n'+ "to reset the net.",textstyles.medium], [layout.CX-350,layout.CY+50]],
-    [["Click this button to"+'\n'+ "continuously backpropogate.",textstyles.medium], [layout.CX+150,layout.CY+30]],
-    [["Click this button to"+'\n'+ " backpropogate 1 epoch.",textstyles.medium], [layout.CX+190,layout.CY+110]],
+    [["Click this button" +'\n'+ "to reset the net.",textstyles.medium], [layout.CX-350,layout.CY+90]],
+    [["Click this button to"+'\n'+ "continuously backpropogate.",textstyles.medium], [layout.CX+150,layout.CY+70]],
+    [["Click this button to"+'\n'+ " backpropogate 1 epoch.",textstyles.medium], [layout.CX+190,layout.CY+150]],
     learnboxarrow,
     // [["On the next slide is sandbox mode. Click this button to backpropogate for one epoch."+'/n'+" Click this button to continueously backpropogate. Click this button to reset the weights and biases."], [layout.CX-460,layout.CY+40]],
 
