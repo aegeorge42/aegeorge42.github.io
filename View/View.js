@@ -331,13 +331,14 @@ export class View{
             app.stage.getChildByName("button_start").visible=true;
             app.stage.getChildByName("loading").visible=false;
 
+            /* numbers slides - helpful for debugging
             for(var i=0; i<vst.slideList.length;i++){
                 var currText=new PIXI.Text(i);
                 currText.x=0;
                     currText.y=45;
                 vst.slideList[i].slideContainer.addChild(currText);
             }
-            
+            */
 
         }
 

@@ -113,7 +113,7 @@ export class Slide{
 
             } else if(this.largefn){
                 actfnsbox.x=layout.CX-380;
-                actfnsbox.y=layout.CY+35;
+                actfnsbox.y=layout.CY+55;
                 this.textContainer.addChild(actfnsbox);
 
             }

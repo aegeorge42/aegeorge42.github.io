@@ -510,10 +510,10 @@ export function makeSlides(){
     SlideNeuron6.drawActFnButtons();
 
     var textNeuron2d2 = [
-        [ ["The activation function is important because"+'\n'+ "it makes the network"],[" non-linear.  ",textstyles.ital], [layout.CX-470,layout.CY-200]],
-        [ ["This allows us to classify data" +'\n'+"that we can't separate with a straight line"], [layout.CX-470,layout.CY-120]],   
+        [ ["The activation function is important because"+'\n'+ "it makes the network"],[" non-linear.  ",textstyles.ital], [layout.CX-470,layout.CY-170]],
+        [ ["This allows us to classify data" +'\n'+"that we can't separate with a straight line."], [layout.CX-470,layout.CY-90]],   
 
-        [ ["Use these buttons to change"+'\n'+ "the activation function.",textstyles.instruct], [layout.CX-420,layout.CY-20]],   
+        [ ["Use these buttons to change"+'\n'+ "the activation function.",textstyles.instruct], [layout.CX-420,layout.CY-10]],   
     ];
     SlideNeuron6.drawText(textNeuron2d2);
     SlideNeuron6.drawInteractive();
@@ -525,20 +525,27 @@ export function makeSlides(){
     SlideNeuron7.slideNet=net_neuron;
     SlideNeuron7.slideNet.update();
     SlideNeuron7.draw_init_large(SlideNeuron4.slideNet);
-
     SlideNeuron7.neuronContainer.getChildAt(1).getChildAt(0).visible=true;
 
     var textNeuron2e = [
-        [["The value we get" +'\n'+"after applying the activation function"+'\n'+"is the neuron's final output - "+'\n'],[layout.CX-450,layout.CY-170]],
-       [["         also called its"], [" activation.  ", textstyles.large_bold],[layout.CX-450,layout.CY-85]],
-        [["We can show a neuron's activation "+'\n'
+        [["The value we get" +'\n'+"after applying the activation function"+'\n'+"is the neuron's final output - "+'\n'],[layout.CX-450,layout.CY-190]],
+       [["         also called its"], [" activation.  ", textstyles.large_bold],[layout.CX-450,layout.CY-105]],
+       [["Here, more active neurons are a brighter yellow.",textstyles.instruct], [layout.CX-465,layout.CY-50]],
+       [["Hover your mouse over the neuron" +'\n'+"to view its formula.",textstyles.instruct], [layout.CX-450,layout.CY]],
+
+    
+       /*  [["We can show a neuron's activation "+'\n'
         +"through its color - more active neurons" +'\n'+ "are a brighter yellow.", textstyles.instruct], [layout.CX-450,layout.CY]],
         [["Hover your mouse over the neuron" +'\n'+"to view its formula.",textstyles.instruct], [layout.CX-450,layout.CY+100]],
-        ];
+        */    
+    ];
     SlideNeuron7.drawText(textNeuron2e);
     SlideNeuron7.drawTextButtons();
-    SlideNeuron7.drawActFnButtons();
     SlideNeuron7.drawInteractive(); 
+    SlideNeuron7.largefn=true;
+
+    SlideNeuron7.drawActFnButtons();
+
 
     //NET 1
     SlideNet1.leftnet=true;
@@ -996,7 +1003,7 @@ export function makeSlides(){
     var fakelearnbox = new PIXI.Sprite(loader.resources["images/boxes/learnbox.png"].texture);
         fakelearnbox.isSprite=true;
         fakelearnbox.x= layout.CX-200;
-        fakelearnbox.y= layout.CY+40; 
+        fakelearnbox.y= layout.CY+75; 
         fakelearnbox.scale.set(1.2);
 
     fakelearnbox.addChild(new Button("fakestep",loader.resources["images/buttons/step.png"].texture,212.5,60,true));
@@ -1007,12 +1014,15 @@ export function makeSlides(){
     learnboxarrow.anchor.set(0.5);
     learnboxarrow.isSprite=true;
     learnboxarrow.x=layout.CX-30;
-    learnboxarrow.y=layout.CY-25;
+    learnboxarrow.y=layout.CY+15;
 
     var textError6b = [
     fakelearnbox,
-    [["You've finished the tutorial!", textstyles.large_bold], [layout.CX-170,layout.CY-150]],
-    [["On the next slide is sandbox mode - where we'll get to put all this to the test."], [layout.CX-350,layout.CY-100]],
+    [["And that's it!",textstyles.large_bold],[" A neural network's 'learning' is just the process"], [layout.CX-300,layout.CY-200]],
+    [["of updating its weights and biases to minimize the cost.               "], [layout.CX-300,layout.CY-160]],
+
+    [["You've finished the tutorial!", textstyles.large_bold], [layout.CX-170,layout.CY-90]],
+    [["On the next slide is sandbox mode - where we'll get to put all this to the test."], [layout.CX-350,layout.CY-40]],
     [["Click this button" +'\n'+ "to reset the net.",textstyles.medium], [layout.CX-350,layout.CY+50]],
     [["Click this button to"+'\n'+ "continuously backpropogate.",textstyles.medium], [layout.CX+150,layout.CY+30]],
     [["Click this button to"+'\n'+ " backpropogate 1 epoch.",textstyles.medium], [layout.CX+190,layout.CY+110]],
@@ -1504,7 +1514,7 @@ export function makeSlides(){
     dctotfinal_form.isSprite=true;
     dctotfinal_form.scale.set(0.65)
     dctotfinal_form.x=backpropx_cost-10;
-    dctotfinal_form.y=layout.CY-180;
+    dctotfinal_form.y=layout.CY-150;
 
     var w3all= new PIXI.Sprite(loader.resources["images/backprop/arrows/w3all.png"].texture);
     w3all.isSprite=true;
@@ -1513,6 +1523,8 @@ export function makeSlides(){
 
 
     var textBackCalc6a = [
+        [ ["And so, all together: "],[backpropx_cost-10,layout.CY-170] ],
+
         dctotfinal_form, w3all,
         [ ["Next, we'll go through this example with numbers."],[backpropx_cost-10,layout.CY+170] ],
     ];
@@ -1697,7 +1709,7 @@ export function makeSlides(){
         w1all.x=0;
         w1all.y=50;
 
-    var dcda1= new PIXI.Sprite(loader.resources["images/backprop/dcda1.png"].texture);
+    var dcda1= new PIXI.Sprite(loader.resources["images/backprop/dcda11.png"].texture);
         dcda1.isSprite=true;
         dcda1.anchor.set(0.5);
         dcda1.scale.set(0.8);
