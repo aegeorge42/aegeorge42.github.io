@@ -1475,32 +1475,6 @@ export class Slide{
                         this.getChildByName("-").visible=true;
                         }
                     });
-
-                    weightSprite.tapped=0;
-                    weightSprite.on('tap', function(e){
-
-                        if (!slide.large_nointeract){
-                        var xbuffer=(window.innerWidth-viewst.startwidth)/2;
-                        var ybuffer=(window.innerHeight-viewst.startheight)/2;
-
-                        this.getChildByName("weightTextBox").visible=true;
-                        this.getChildByName("weightTextBox").x=e.data.global.x-xbuffer;
-                        this.getChildByName("weightTextBox").y=e.data.global.y-10-ybuffer;
-
-                        this.getChildByName("weightTextBox").getChildByName("weightText").visible=true;
-                        if(weightSprite.tapped==0){
-                            weightSprite.tapped=1;
-                        this.getChildByName("+").x=e.data.global.x+15-xbuffer;
-                        this.getChildByName("+").y=e.data.global.y-ybuffer;
-
-                        this.getChildByName("-").x=e.data.global.x-15-xbuffer;
-                        this.getChildByName("-").y=e.data.global.y-ybuffer;
-
-                        this.getChildByName("+").visible=true;
-                        this.getChildByName("-").visible=true;
-                        }
-                    }
-                    });
                     
                     weightSprite.on('mouseout', function(e){
                         this.getChildByName("weightTextBox").visible=false;
