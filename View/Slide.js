@@ -1478,8 +1478,7 @@ export class Slide{
 
                     weightSprite.tapped=0;
                     weightSprite.on('tap', function(e){
-                        if(weightSprite.tapped==0){
-                            weightSprite.tapped=1;
+
                         if (!slide.large_nointeract){
                         var xbuffer=(window.innerWidth-viewst.startwidth)/2;
                         var ybuffer=(window.innerHeight-viewst.startheight)/2;
@@ -1489,7 +1488,8 @@ export class Slide{
                         this.getChildByName("weightTextBox").y=e.data.global.y-10-ybuffer;
 
                         this.getChildByName("weightTextBox").getChildByName("weightText").visible=true;
-
+                        if(weightSprite.tapped==0){
+                            weightSprite.tapped=1;
                         this.getChildByName("+").x=e.data.global.x+15-xbuffer;
                         this.getChildByName("+").y=e.data.global.y-ybuffer;
 
