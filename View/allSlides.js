@@ -743,7 +743,7 @@ SlideInstruct2.arrowContainer.addChild(arrow2);
 
     var textError1 = [
         costform,
-        [["We want to know how how far off the output of our net is from our target values."], [layout.CX-450,layout.CY-190]],
+        [["We want to know how far off the output of our net is from our target values."], [layout.CX-450,layout.CY-190]],
         [["To do this, we use a"],[" cost function.",textstyles.large_bold], [layout.CX-350,layout.CY-140]],
 
         [[" n = number of data points"+'\n'+" x = for each output neuron ",ital_sm], [layout.CX -300,layout.CY+40]],

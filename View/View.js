@@ -475,6 +475,13 @@ export class View{
             }
         });
 
+        this.app.stage.getChildByName("button_start").on('tap', function(e){ 
+            if(vst.currentSlide+1<vst.slideList.length){
+                vst.currentSlide=vst.currentSlide+1;
+                vst.drawSlide();
+            }
+        });
+
         this.app.stage.getChildByName("button_nextslide").on('click', function(e){ 
 
             if(vst.currentSlide+1<vst.slideList.length){
