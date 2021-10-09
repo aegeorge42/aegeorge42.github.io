@@ -468,14 +468,14 @@ export class View{
                     
         });
 
-        this.app.stage.getChildByName("button_start").on('click', function(e){ 
+        this.app.stage.getChildByName("button_start").on('pointerdown', function(e){ 
             if(vst.currentSlide+1<vst.slideList.length){
                 vst.currentSlide=vst.currentSlide+1;
                 vst.drawSlide();
             }
         });
 
-        this.app.stage.getChildByName("button_start").on('tap', function(e){ 
+       this.app.stage.getChildByName("button_start").on('tap', function(e){ 
             if(vst.currentSlide+1<vst.slideList.length){
                 vst.currentSlide=vst.currentSlide+1;
                 vst.drawSlide();
@@ -483,6 +483,27 @@ export class View{
         });
 
         this.app.stage.getChildByName("button_nextslide").on('click', function(e){ 
+
+            if(vst.currentSlide+1<vst.slideList.length){
+                vst.currentSlide=vst.currentSlide+1;
+                vst.drawSlide();
+            }
+
+            if(vst.slideList[vst.currentSlide].slideNet !== undefined && vst.slideList[vst.currentSlide].largenet==1  && !vst.slideList[vst.currentSlide].fakenet){//&& vst.currentSlide == 9){
+                vst.slideList[vst.currentSlide].slideNet.update();
+                vst.slideList[vst.currentSlide].draw_update_large(vst.slideList[vst.currentSlide].slideNet)
+                vst.drawSlide();
+            }
+
+            if(vst.slideList[vst.currentSlide].slideNet !== undefined && vst.slideList[vst.currentSlide].largenet!=1 && !vst.slideList[vst.currentSlide].fakenet){//&& vst.currentSlide == 9){
+                vst.slideList[vst.currentSlide].slideNet.update();
+                vst.slideList[vst.currentSlide].draw_update(vst.slideList[vst.currentSlide].slideNet)
+                vst.drawSlide();
+            }
+            
+        });
+
+        this.app.stage.getChildByName("button_nextslide").on('tap', function(e){ 
 
             if(vst.currentSlide+1<vst.slideList.length){
                 vst.currentSlide=vst.currentSlide+1;
@@ -511,7 +532,21 @@ export class View{
             }
         });
 
+        this.app.stage.getChildByName("button_prevslide").on('tap', function(e){ 
+            if(vst.currentSlide>0){
+
+                vst.currentSlide=vst.currentSlide-1;
+                vst.drawSlide();
+            }
+        });
+
         this.app.stage.getChildByName("button_backfromcalc").on('click', function(e){ 
+            vst.currentSlide=32;
+            vst.drawSlide();
+        
+        });
+
+        this.app.stage.getChildByName("button_backfromcalc").on('tap', function(e){ 
             vst.currentSlide=32;
             vst.drawSlide();
         
@@ -522,8 +557,20 @@ export class View{
             vst.drawSlide();
         });
 
+        this.app.stage.getChildByName("button_calc2sand").on('tap', function(e){ 
+            vst.currentSlide=34;
+            vst.drawSlide();
+        });
+
 
         this.app.stage.getChildByName("gotoforward").on('click', function(e){ 
+            if (vst.currentSlide!=18){
+                vst.currentSlide=18;
+                vst.drawSlide();
+            }
+        });
+
+        this.app.stage.getChildByName("gotoforward").on('tap', function(e){ 
             if (vst.currentSlide!=18){
                 vst.currentSlide=18;
                 vst.drawSlide();
@@ -537,12 +584,27 @@ export class View{
             }
         });
 
+        this.app.stage.getChildByName("gotoneuron").on('tap', function(e){ 
+            if (vst.currentSlide!=11){
+                vst.currentSlide=11;
+                vst.drawSlide();
+            }
+        });
+
         this.app.stage.getChildByName("gotobackprop").on('click', function(e){ 
             if (vst.currentSlide!=23){
                 vst.currentSlide=23;
                 vst.drawSlide();
             }
         });
+
+        this.app.stage.getChildByName("gotobackprop").on('tap', function(e){ 
+            if (vst.currentSlide!=23){
+                vst.currentSlide=23;
+                vst.drawSlide();
+            }
+        });
+
 
         this.app.stage.getChildByName("gotocalc").on('click', function(e){ 
             if (vst.currentSlide!=36){
@@ -551,7 +613,21 @@ export class View{
             }
         });
 
+        this.app.stage.getChildByName("gotocalc").on('tap', function(e){ 
+            if (vst.currentSlide!=36){
+                vst.currentSlide=36;
+                vst.drawSlide();
+            }
+        });
+
         this.app.stage.getChildByName("gotosand").on('click', function(e){ 
+            if (vst.currentSlide!=34){
+                vst.currentSlide=34;
+                vst.drawSlide();
+            }
+        });
+
+        this.app.stage.getChildByName("gotosand").on('tap', function(e){ 
             if (vst.currentSlide!=34){
                 vst.currentSlide=34;
                 vst.drawSlide();

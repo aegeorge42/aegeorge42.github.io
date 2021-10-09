@@ -140,8 +140,46 @@ export class Slide{
 
         });
 
+        actfnsbox.getChildByName("sigmoid").on('tap', function(e){
+
+            this.setTint(tintDown);
+            actfnsbox.getChildByName("relu").tint=0xFFFFFF;
+            actfnsbox.getChildByName("relu").tintDefault();
+
+
+            if(slide.largenet==1){
+                slide.slideNet.setNetActFn(actFns.SIGMOID);
+                slide.slideNet.update_single();
+                slide.draw_update_large(slide.slideNet);
+            } else {
+                slide.slideNet.setNetActFn(actFns.SIGMOID);
+                slide.slideNet.update();
+                slide.draw_update(slide.slideNet);
+            }
+
+        });
+
         actfnsbox.addChild(new Button("relu",loader.resources["images/buttons/relu.png"].texture, 75, 135,true));
         actfnsbox.getChildByName("relu").on('click', function(e){
+
+            this.setTint(tintDown);
+            actfnsbox.getChildByName("sigmoid").tint=0xFFFFFF;
+            actfnsbox.getChildByName("sigmoid").tintDefault();
+
+            this.isclick=true
+            if(slide.largenet==1){
+                slide.slideNet.setNetActFn(actFns.RELU);
+                slide.slideNet.update_single();
+                slide.draw_update_large(slide.slideNet);
+            } else {
+                slide.slideNet.setNetActFn(actFns.RELU);
+                slide.slideNet.update();
+                slide.draw_update(slide.slideNet);
+            }
+            
+        });
+
+        actfnsbox.getChildByName("relu").on('tap', function(e){
 
             this.setTint(tintDown);
             actfnsbox.getChildByName("sigmoid").tint=0xFFFFFF;
@@ -196,10 +234,27 @@ export class Slide{
             slide.draw_init(slide.slideNet);
             }
         });
+
+        layersbox.getChildByName("addlayer").on('tap', function(e){
+            if(slide.slideNet.layers.length<slide.slideNet.maxLayers){
+
+            slide.slideNet.addLayer();
+            slide.slideNet.update();
+            slide.draw_init(slide.slideNet);
+            }
+        });
         
 
         // REMOVE LAYER
         layersbox.getChildByName("remlayer").on('click', function(e){
+            if(slide.slideNet.layers.length>1){
+                slide.slideNet.removeLayer();
+                slide.slideNet.update();
+                slide.draw_init(slide.slideNet);
+            }
+        });
+
+        layersbox.getChildByName("remlayer").on('tap', function(e){
             if(slide.slideNet.layers.length>1){
                 slide.slideNet.removeLayer();
                 slide.slideNet.update();
@@ -226,7 +281,24 @@ export class Slide{
           }
         });
     
+        this.buttonContainer.getChildByName("buttonNeuronAddContainer").getChildAt(layernum).on('tap', function(e){
+            if(slide.slideNet.getLayer(layernum).neurons.length<slide.slideNet.maxNeurons){
+              slide.slideNet.getLayer(layernum).addNeuron();
+              slide.slideNet.update();
+              slide.draw_init(slide.slideNet);
+            }
+          });
+
         this.buttonContainer.getChildByName("buttonNeuronRemContainer").getChildAt(layernum).on('click', function(e){
+            if(slide.slideNet.getLayer(layernum).neurons.length>1){
+
+                slide.slideNet.getLayer(layernum).removeNeuron();
+                slide.slideNet.update();
+                slide.draw_init(slide.slideNet);
+            }
+        });
+
+        this.buttonContainer.getChildByName("buttonNeuronRemContainer").getChildAt(layernum).on('tap', function(e){
             if(slide.slideNet.getLayer(layernum).neurons.length>1){
 
                 slide.slideNet.getLayer(layernum).removeNeuron();
@@ -282,8 +354,18 @@ export class Slide{
         ratebox.getChildByName("inc_rate").on('click', function(e){
             if(rates[rate_start+clickcount+1] !==undefined){
                 clickcount++;
-                slide.slideNet.setLearnRate(rates[rate_start+clickcount]);//slide.slideNet.learnRate*10);
-                ratebox.getChildByName("rateText").text=slide.slideNet.learnRate.toFixed(4)//"hi"//slide.slideNet.learnRate;
+                slide.slideNet.setLearnRate(rates[rate_start+clickcount]);
+                ratebox.getChildByName("rateText").text=slide.slideNet.learnRate.toFixed(4);
+                slide.drawWeights_update(slide.slideNet);
+
+            }
+        });
+
+        ratebox.getChildByName("inc_rate").on('tap', function(e){
+            if(rates[rate_start+clickcount+1] !==undefined){
+                clickcount++;
+                slide.slideNet.setLearnRate(rates[rate_start+clickcount]);
+                ratebox.getChildByName("rateText").text=slide.slideNet.learnRate.toFixed(4);
                 slide.drawWeights_update(slide.slideNet);
 
             }
@@ -301,7 +383,17 @@ export class Slide{
             }
                 });
 
+        ratebox.getChildByName("dec_rate").on('tap', function(e){
+            if(rates[rate_start+clickcount-1] !==undefined){
+                clickcount--;
 
+                slide.slideNet.setLearnRate(rates[rate_start+clickcount]);//slide.slideNet.learnRate*10)
+                console.log(slide.slideNet.learnRate);
+
+                ratebox.getChildByName("rateText").text=slide.slideNet.learnRate.toFixed(4)//"hi"//slide.slideNet.learnRate;
+                slide.drawWeights_update(slide.slideNet);
+            }
+        });
     }
 
   
@@ -352,6 +444,12 @@ export class Slide{
 
         });
         
+        learnbox.getChildByName("learn_stoch_step").on('tap', function(e){
+            slide.slideNet.learn();
+            slide.draw_update(slide.slideNet);
+            if(graph){graph.updateGraph(slide.slideNet,graph);}
+
+        });
 
         learnbox.addChild(new Button("learn_stoch",loader.resources["images/buttons/learn.png"].texture,125,60,true));
         learnbox.getChildByName("learn_stoch").pressCount=0;
@@ -395,8 +493,68 @@ export class Slide{
         
         });
 
+        learnbox.getChildByName("learn_stoch").on('tap', async function(e){
+            
+            this.pressCount++;
+            slide.pauselearn = 0;
+
+            if(slide.pauselearn==0){
+                learnbox.getChildByName("pause").visible=true;
+            }
+
+            //no double clicks
+            if(this.pressCount==1){ 
+            while(slide.pauselearn==0){
+                slide.slideNet.learn();
+                slide.draw_update(slide.slideNet);
+                
+                if(graph){graph.updateGraph(slide.slideNet,graph);}
+                await slide.sleep(10); //pause to see updates - 10 seems good
+
+                slide.loopcount=slide.loopcount+1;
+
+                if(slide.sandbox){
+                slide.costLabel.getChildByName("epochbox").getChildByName("epoch").text=slide.loopcount;
+                }
+
+                if(slide.loopcount==slide.looplim){
+                    break;
+                }
+
+
+            }
+
+            slide.looplim=slide.looplim+1000;
+            slide.pauselearn=1;
+            learnbox.getChildByName("pause").visible=false;
+            this.pressCount=0;
+
+        }
+        
+        });
+
         learnbox.addChild(new Button("learn_van_step",loader.resources["images/buttons/step.png"].texture,212.5,60,true));
         learnbox.getChildByName("learn_van_step").on('click', async function(e){
+            slide.loopcount=slide.loopcount+1;
+            if(slide.sandbox){
+            slide.costLabel.getChildByName("epochbox").getChildByName("epoch").text=slide.loopcount;
+            }
+           
+            slide.slideNet.learn_batch();
+            slide.slideNet.setNetInput(slide.slideNet.data.points[slide.slideNet.dataIdx]);
+
+            await slide.sleep(10);
+
+            slide.slideNet.update();
+
+            slide.draw_update(slide.slideNet);
+            if(graph){graph.updateGraph(slide.slideNet,graph);}
+
+            
+
+        });
+
+        learnbox.getChildByName("learn_van_step").on('tap', async function(e){
             slide.loopcount=slide.loopcount+1;
             if(slide.sandbox){
             slide.costLabel.getChildByName("epochbox").getChildByName("epoch").text=slide.loopcount;
@@ -469,9 +627,65 @@ export class Slide{
             
         });
 
+        learnbox.getChildByName("learn_van").on('tap', async function(e){
+            
+            this.pressCount++;
+            slide.pauselearn=0;
+
+            if(slide.pauselearn==0){
+                learnbox.getChildByName("pause").visible=true;
+            }
+
+            if(this.pressCount==1){
+                console.log("here");
+                console.log(slide.pauselearn)
+
+                while(slide.pauselearn==0){
+
+                    await slide.sleep(10);
+                    slide.slideNet.learn_batch();
+
+                    slide.slideNet.setNetInput(slide.slideNet.data.points[slide.slideNet.dataIdx]);
+
+
+                    slide.slideNet.update();
+                    slide.draw_update(slide.slideNet);   
+            
+                    if(graph){graph.updateGraph(slide.slideNet,graph);}
+
+        
+                    slide.loopcount=slide.loopcount+1;
+
+                    if(slide.sandbox){
+                        slide.costLabel.getChildByName("epochbox").getChildByName("epoch").text=slide.loopcount;
+                    }
+
+                    if(slide.loopcount==slide.looplim){
+                        break;
+                    }
+
+                }
+
+                slide.looplim=slide.looplim+1000;
+                slide.pauselearn=1;
+                learnbox.getChildByName("pause").visible=false;
+                this.pressCount=0;
+
+            
+        }
+            
+        });
+
         learnbox.addChild(new Button("pause",loader.resources["images/buttons/pause.png"].texture,125,60,false));
         slide.pauselearn=0;
         learnbox.getChildByName("pause").on('click', function(e){
+            slide.buttonContainer.getChildByName("learnbox").getChildByName("learn_stoch").pressCount=0;
+            slide.buttonContainer.getChildByName("learnbox").getChildByName("learn_van").pressCount=0;
+
+            slide.pauselearn=1;
+            this.visible=false;
+        });
+        learnbox.getChildByName("pause").on('tap', function(e){
             slide.buttonContainer.getChildByName("learnbox").getChildByName("learn_stoch").pressCount=0;
             slide.buttonContainer.getChildByName("learnbox").getChildByName("learn_van").pressCount=0;
 
@@ -485,6 +699,67 @@ export class Slide{
 
         learnbox.addChild(new Button("reset",loader.resources["images/buttons/reset.png"].texture,38,60,true));        
         learnbox.getChildByName("reset").on('click', function(e){
+            slide.loopcount=0;
+            slide.looplim=1000;
+            slide.costLabel.getChildByName("costBox").getChildByName("costText").text="-";
+
+            if(slide.sandbox){
+
+                layout.NEURON_Y_DIF=125;
+                layout.NEURON_LEFTLIM= layout.NEURON_LEFTLIM_SANDBOX;
+
+                slide.costLabel.getChildByName("epochbox").getChildByName("epoch").text=slide.loopcount;
+                graph.clearGraphBg();
+
+                for(var i=0;i<slide.slideNet.layers.length;i++){
+                    slide.buttonContainer.getChildByName("buttonNeuronAddContainer").getChildAt(i).visible=false;
+                    slide.buttonContainer.getChildByName("buttonNeuronRemContainer").getChildAt(i).visible=false;
+                }
+
+                var newnet = new Net();
+                newnet.setNetData(slide.slideNet.data);
+                newnet.setNetActFn(slide.slideNet.netActFn);
+                newnet.setLearnRate(slide.slideNet.learnRate);
+                  //  console.log("old: "+slide.slideNet.netActFn + "new: "+ newnet.netActFn);
+                newnet.getLayer(0).addNeuron();
+                newnet.getLayer(0).addNeuron();
+                newnet.setOutLayer();
+                newnet.update();
+                slide.slideNet=newnet;
+
+                slide.slideNet.checkInit();
+                slide.slideNet.update();
+                slide.draw_init(newnet);
+                layout.NEURON_Y_DIF=125;
+
+            } else {
+                layout.NEURON_Y_DIF = 175;
+                layout.NEURON_LEFTLIM = window.innerWidth/2 - 310;
+
+                var backpropx_cost= layout.LEFTBUFFER + layout.NEURON_LEFTLIM+layout.NEURON_X_DIF +200;
+
+                var newnet = new Net();
+                newnet.setNetData(slide.slideNet.data);
+                newnet.setNetActFn(slide.slideNet.netActFn);
+                newnet.setLearnRate(slide.slideNet.learnRate);
+
+                newnet.setOutLayer();
+                newnet.update();
+                slide.slideNet=newnet;
+
+
+                slide.slideNet.checkInit();
+                slide.slideNet.update();
+                slide.draw_init(newnet);
+                slide.drawWeights_update(slide.slideNet);
+
+                layout.NEURON_Y_DIF=125;
+
+            }
+
+        });
+
+        learnbox.getChildByName("reset").on('tap', function(e){
             slide.loopcount=0;
             slide.looplim=1000;
             slide.costLabel.getChildByName("costBox").getChildByName("costText").text="-";
@@ -613,8 +888,98 @@ export class Slide{
 
         });
 
+        databox.getChildByName("newdata").on('tap', function(e){
+
+            slide.looplim=1000;
+            slide.loopcount=0;
+
+            graph.clearGraph_all(slide.slideNet.data);
+            if(slide.sandbox){
+
+            slide.costLabel.getChildByName("epochbox").getChildByName("epoch").text=slide.loopcount;
+            }
+
+            graph.posAxis();
+            graph.axis.texture=(loader.resources["images/graph/axis.png"].texture);
+
+            for(var i=0;i<slide.slideNet.layers.length;i++){
+                slide.buttonContainer.getChildByName("buttonNeuronAddContainer").getChildAt(i).visible=false;
+                slide.buttonContainer.getChildByName("buttonNeuronRemContainer").getChildAt(i).visible=false;
+            }            
+
+            var newdata = new data(0,["strawberry","blueberry"],["length", "roundness"]);
+            newdata.makefruits_linear();
+            newdata.shuffle();
+            slide.slideNet.setNetData(newdata);
+            slide.slideNet.setNetInput(newdata.points[0]);
+            slide.slideNet.update();
+            slide.draw_update(slide.slideNet);
+            graph.populateGraph(newdata);
+
+            var newnet = new Net();
+            
+            newnet.setNetData(slide.slideNet.data);
+            newnet.setNetActFn(slide.slideNet.netActFn);
+            newnet.getLayer(0).addNeuron();
+            newnet.getLayer(0).addNeuron();
+            newnet.setOutLayer();
+            newnet.update();
+            slide.slideNet=newnet;
+            slide.draw_init(newnet);
+
+            slide.costLabel.getChildByName("costBox").getChildByName("costText").text="-";
+
+
+
+        });
+
         databox.addChild(new Button("newdata_circle",loader.resources["images/buttons/datacircle.png"].texture,195,60,true));   
         databox.getChildByName("newdata_circle").on('click', function(e){
+            slide.looplim=1000;
+
+            graph.clearGraph_all(slide.slideNet.data);
+            slide.loopcount=0;
+
+            if(slide.sandbox){
+            slide.costLabel.getChildByName("epochbox").getChildByName("epoch").text=slide.loopcount;
+            }
+
+            graph.negAxis();
+            graph.axis.texture=loader.resources["images/graph/axis_neg.png"].texture;
+
+            for(var i=0;i<slide.slideNet.layers.length;i++){
+                slide.buttonContainer.getChildByName("buttonNeuronAddContainer").getChildAt(i).visible=false;
+                slide.buttonContainer.getChildByName("buttonNeuronRemContainer").getChildAt(i).visible=false;
+            }
+
+            var newdata = new data(0,["strawberry","blueberry"],["length", "roundness"]);
+                newdata.large=true;
+
+            newdata.makefruits_circle_newaxis();
+            newdata.shuffle();
+            slide.slideNet.setNetData(newdata);
+            slide.slideNet.setNetInput(newdata.points[0]);
+            slide.slideNet.update();
+            slide.draw_update(slide.slideNet);
+            graph.populateGraph(newdata);
+
+            var newnet = new Net();
+            
+            newnet.setNetData(slide.slideNet.data);
+            newnet.setNetActFn(slide.slideNet.netActFn);
+            newnet.getLayer(0).addNeuron();
+            newnet.getLayer(0).addNeuron();
+            newnet.setOutLayer();
+            newnet.update();
+            slide.slideNet=newnet;
+            slide.draw_init(newnet);
+
+            slide.costLabel.getChildByName("costBox").getChildByName("costText").text="-";
+
+
+        });
+
+        databox.getChildByName("newdata_circle").on('tap', function(e){
             slide.looplim=1000;
 
             graph.clearGraph_all(slide.slideNet.data);
@@ -935,6 +1300,38 @@ export class Slide{
                         this.getChildByName("-").visible=true;
                         }
                     });
+
+                    weightSprite.on('tap', function(e){
+
+                        // if(!slide.backprop_labels){
+                            var xbuffer=0;
+                            var ybuffer=(window.innerHeight-viewst.startheight)/2;
+                            if(slide.sandbox){
+                                if (window.innerWidth>1280){
+                                 var xbuffer=-(window.innerWidth-1280)/2;
+                                }
+                            } else {
+                                 var xbuffer=(window.innerWidth-viewst.startwidth)/2;
+                                 var ybuffer=(window.innerHeight-viewst.startheight)/2;
+                            }
+                         if(!slide.backprop_labels){
+ 
+                         this.getChildByName("weightTextBox").visible=true;
+                         this.getChildByName("weightTextBox").x=e.data.global.x-xbuffer;
+                         this.getChildByName("weightTextBox").y=e.data.global.y-10-ybuffer;
+ 
+                         this.getChildByName("weightTextBox").getChildByName("weightText").visible=true;
+ 
+                         this.getChildByName("+").x=e.data.global.x+15-xbuffer;
+                         this.getChildByName("+").y=e.data.global.y-ybuffer;
+ 
+                         this.getChildByName("-").x=e.data.global.x-15-xbuffer;
+                         this.getChildByName("-").y=e.data.global.y-ybuffer;
+ 
+                         this.getChildByName("+").visible=true;
+                         this.getChildByName("-").visible=true;
+                         }
+                     });
                     
                     weightSprite.on('mouseout', function(e){
                         this.getChildByName("weightTextBox").visible=false;
@@ -950,6 +1347,14 @@ export class Slide{
 
                     });
 
+                    addweight.on('tap', function(e){
+                        var currWeight = net.getLayer(this.parent.idx[0]).getNeuron(this.parent.idx[1]).getWeight(this.parent.idx[2]);
+                        net.getLayer(this.parent.idx[0]).getNeuron(this.parent.idx[1]).setWeight(this.parent.idx[2],currWeight+0.1);
+                        net.update();
+                        slide.draw_update(net);
+  
+                      });
+
                     loseweight.on('click', function(e){
                       var currWeight = net.getLayer(this.parent.idx[0]).getNeuron(this.parent.idx[1]).getWeight(this.parent.idx[2]);
 
@@ -957,6 +1362,14 @@ export class Slide{
                       net.update();
                       slide.draw_update(net);
                     });
+
+                    loseweight.on('tap', function(e){
+                        var currWeight = net.getLayer(this.parent.idx[0]).getNeuron(this.parent.idx[1]).getWeight(this.parent.idx[2]);
+  
+                        net.getLayer(this.parent.idx[0]).getNeuron(this.parent.idx[1]).setWeight(this.parent.idx[2],currWeight-0.1);
+                        net.update();
+                        slide.draw_update(net);
+                      });
 
                     this.weightsContainer.addChild(weightSprite);
                 }
@@ -1060,6 +1473,29 @@ export class Slide{
                         this.getChildByName("-").visible=true;
                         }
                     });
+
+                    weightSprite.on('tap', function(e){
+
+                        if (!slide.large_nointeract){
+                        var xbuffer=(window.innerWidth-viewst.startwidth)/2;
+                        var ybuffer=(window.innerHeight-viewst.startheight)/2;
+
+                        this.getChildByName("weightTextBox").visible=true;
+                        this.getChildByName("weightTextBox").x=e.data.global.x-xbuffer;
+                        this.getChildByName("weightTextBox").y=e.data.global.y-10-ybuffer;
+
+                        this.getChildByName("weightTextBox").getChildByName("weightText").visible=true;
+
+                        this.getChildByName("+").x=e.data.global.x+15-xbuffer;
+                        this.getChildByName("+").y=e.data.global.y-ybuffer;
+
+                        this.getChildByName("-").x=e.data.global.x-15-xbuffer;
+                        this.getChildByName("-").y=e.data.global.y-ybuffer;
+
+                        this.getChildByName("+").visible=true;
+                        this.getChildByName("-").visible=true;
+                        }
+                    });
                     
                     weightSprite.on('mouseout', function(e){
                         this.getChildByName("weightTextBox").visible=false;
@@ -1071,9 +1507,14 @@ export class Slide{
                         var currWeight = net.getLayer(this.parent.idx[0]).getNeuron(this.parent.idx[1]).getWeight(this.parent.idx[2]);
                         net.getLayer(this.parent.idx[0]).getNeuron(this.parent.idx[1]).setWeight(this.parent.idx[2],currWeight+0.1);
                         net.update_single();
-                        slide.draw_update_large(net);
-                    ///    console.log(this);
-                  
+                        slide.draw_update_large(net);                  
+                    });
+
+                    addweight.on('tap', function(e){
+                        var currWeight = net.getLayer(this.parent.idx[0]).getNeuron(this.parent.idx[1]).getWeight(this.parent.idx[2]);
+                        net.getLayer(this.parent.idx[0]).getNeuron(this.parent.idx[1]).setWeight(this.parent.idx[2],currWeight+0.1);
+                        net.update_single();
+                        slide.draw_update_large(net);                  
                     });
   
                     loseweight.on('click', function(e){
@@ -1082,6 +1523,14 @@ export class Slide{
                         net.update_single();
                         slide.draw_update_large(net);
                     });
+
+                    loseweight.on('tap', function(e){
+                        var currWeight = net.getLayer(this.parent.idx[0]).getNeuron(this.parent.idx[1]).getWeight(this.parent.idx[2]);
+                        net.getLayer(this.parent.idx[0]).getNeuron(this.parent.idx[1]).setWeight(this.parent.idx[2],currWeight-0.1);
+                        net.update_single();
+                        slide.draw_update_large(net);
+                    });
+
 
                     this.weightsContainer.addChild(weightSprite);
                 }
@@ -1860,6 +2309,17 @@ export class Slide{
             console.log(net.netInput);
             slide.draw_update(net);
         });
+
+        target.on('tap', function(e){ 
+            net.dataIdx=(net.dataIdx+1)%net.data.points.length;
+            console.log(net.dataIdx);
+
+            net.setNetInput(net.data.points[net.dataIdx]);
+            net.update();
+            console.log(net.netInput);
+            slide.draw_update(net);
+        });
+
         this.labelsContainer.addChild(target);
 
         if(this.backprop){
