@@ -468,7 +468,13 @@ export class View{
                     
         });
 
-        this.app.stage.getChildByName("button_start").on('pointerdown', function(e){ 
+        this.app.stage.getChildByName("homebutton").on('tap', function(e){ 
+            vst.currentSlide=0;
+            vst.drawSlide();
+                
+    });
+
+        this.app.stage.getChildByName("button_start").on('click', function(e){ 
             if(vst.currentSlide+1<vst.slideList.length){
                 vst.currentSlide=vst.currentSlide+1;
                 vst.drawSlide();

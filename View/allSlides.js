@@ -239,6 +239,18 @@ SlideInstruct2.arrowContainer.addChild(arrow2);
            
         });
 
+        singleblue.on('tap', async function(e){
+
+            singleblue2.visible=true;
+            singlestraw2.visible=false;
+
+
+            await sleep(500);
+           percep_blank.texture=loader.resources["images/intro/percep_blue1.png"].texture;
+           
+        });
+
+
     var singlestraw =new PIXI.Sprite(loader.resources["images/intro/singlestraw.png"].texture);
         singlestraw.isSprite=true;
         singlestraw.x=strawx;
@@ -246,6 +258,16 @@ SlideInstruct2.arrowContainer.addChild(arrow2);
         singlestraw.interactive=true;
         singlestraw.buttonMode=true;
         singlestraw.on('click', async function(e){
+
+            singlestraw2.visible=true;
+            singleblue2.visible=false;
+
+            await sleep(500);
+            percep_blank.texture=loader.resources["images/intro/percep_straw1.png"].texture;
+            
+        });
+
+        singlestraw.on('tap', async function(e){
 
             singlestraw2.visible=true;
             singleblue2.visible=false;
@@ -1004,6 +1026,13 @@ SlideInstruct2.arrowContainer.addChild(arrow2);
             viewst.currentSlide=36;
             viewst.drawSlide();
         
+    });
+
+    gotocalc.on('tap', function(e){
+
+        viewst.currentSlide=36;
+        viewst.drawSlide();
+    
     });
     SlideCost9.buttonContainer.addChild(gotocalc);
 
