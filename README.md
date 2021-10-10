@@ -1,5 +1,5 @@
 # Neural Networks from Scratch
-Playable at [aegeorge42.github.io](https://aegeorge.github.io/)
+Playable at [aegeorge42.github.io](https://aegeorge42.github.io/)
 
 The goal of this project was to create an interactive guide to neural networks for beginners. It's covered under a Creative Commons Zero license, so feel free to share or use wherever! (if this made its way into a classroom, I'd be so thrilled) 
 
