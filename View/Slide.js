@@ -1271,7 +1271,6 @@ export class Slide{
                                         
                     weightSprite.on('mouseover', function(e){
 
-                       // if(!slide.backprop_labels){
                            var xbuffer=0;
                            var ybuffer=(window.innerHeight-viewst.startheight)/2;
                            if(slide.sandbox){
@@ -1301,40 +1300,40 @@ export class Slide{
                         }
                     });
 
-                    weightSprite.tapped=0;
                     weightSprite.on('tap', function(e){
-                         if(weightSprite.tapped==0){
-                            weightSprite.tapped=1;
-                            var xbuffer=0;
-                            var ybuffer=(window.innerHeight-viewst.startheight)/2;
-                            if(slide.sandbox){
-                                if (window.innerWidth>1280){
-                                 var xbuffer=-(window.innerWidth-1280)/2;
-                                }
-                            } else {
-                                 var xbuffer=(window.innerWidth-viewst.startwidth)/2;
-                                 var ybuffer=(window.innerHeight-viewst.startheight)/2;
+
+                        var xbuffer=0;
+                        var ybuffer=(window.innerHeight-viewst.startheight)/2;
+                        if(slide.sandbox){
+                            if (window.innerWidth>1280){
+                             var xbuffer=-(window.innerWidth-1280)/2;
                             }
-                         if(!slide.backprop_labels){
- 
-                         this.getChildByName("weightTextBox").visible=true;
-                         this.getChildByName("weightTextBox").x=e.data.global.x-xbuffer;
-                         this.getChildByName("weightTextBox").y=e.data.global.y-10-ybuffer;
- 
-                         this.getChildByName("weightTextBox").getChildByName("weightText").visible=true;
- 
-                         this.getChildByName("+").x=e.data.global.x+15-xbuffer;
-                         this.getChildByName("+").y=e.data.global.y-ybuffer;
- 
-                         this.getChildByName("-").x=e.data.global.x-15-xbuffer;
-                         this.getChildByName("-").y=e.data.global.y-ybuffer;
- 
-                         this.getChildByName("+").visible=true;
-                         this.getChildByName("-").visible=true;
-                         }
+                        } else {
+                             var xbuffer=(window.innerWidth-viewst.startwidth)/2;
+                             var ybuffer=(window.innerHeight-viewst.startheight)/2;
                         }
-                     });
+                     if(!slide.backprop_labels){
                     
+                        if(!this.tapped){
+                     this.getChildByName("weightTextBox").visible=true;
+                     this.getChildByName("weightTextBox").x=e.data.global.x-xbuffer;
+                     this.getChildByName("weightTextBox").y=e.data.global.y-10-ybuffer;
+
+                     this.getChildByName("weightTextBox").getChildByName("weightText").visible=true;
+
+                     this.getChildByName("+").x=e.data.global.x+15-xbuffer;
+                     this.getChildByName("+").y=e.data.global.y-ybuffer;
+
+                     this.getChildByName("-").x=e.data.global.x-15-xbuffer;
+                     this.getChildByName("-").y=e.data.global.y-ybuffer;
+
+                     this.getChildByName("+").visible=true;
+                     this.getChildByName("-").visible=true;
+                     this.tapped=true;
+                        }
+                     }
+                 });
+
                     weightSprite.on('mouseout', function(e){
                         this.getChildByName("weightTextBox").visible=false;
                         this.getChildByName("+").visible=false;
@@ -1473,6 +1472,42 @@ export class Slide{
 
                         this.getChildByName("+").visible=true;
                         this.getChildByName("-").visible=true;
+                        }
+                    });
+
+                    weightSprite.on('tap', function(e){
+                        this.tapped=true;
+
+                        if (!slide.large_nointeract){
+                        var xbuffer=(window.innerWidth-viewst.startwidth)/2;
+                        var ybuffer=(window.innerHeight-viewst.startheight)/2;
+
+                        this.getChildByName("weightTextBox").visible=true;
+                        this.getChildByName("+").visible=true;
+                        this.getChildByName("-").visible=true;
+                        this.getChildByName("weightTextBox").getChildByName("weightText").visible=true;
+
+                        if(this.name=="000"){
+                            this.getChildByName("weightTextBox").x=layout.CX+80;
+                            this.getChildByName("weightTextBox").y=layout.CY-100;
+                            this.getChildByName("+").x=layout.CX+80+15;
+                            this.getChildByName("+").y=layout.CY-100+10;
+    
+                            this.getChildByName("-").x=layout.CX+80-15;
+                            this.getChildByName("-").y=layout.CY-100+10;
+                        }
+
+                        if(this.name=="001"){
+                            this.getChildByName("weightTextBox").x=layout.CX+80;
+                            this.getChildByName("weightTextBox").y=layout.CY+100;
+
+                            this.getChildByName("+").x=layout.CX+80+15;
+                            this.getChildByName("+").y=layout.CY+100+10;
+    
+                            this.getChildByName("-").x=layout.CX+80-15;
+                            this.getChildByName("-").y=layout.CY+100+10;
+                        }
+
                         }
                     });
                     
