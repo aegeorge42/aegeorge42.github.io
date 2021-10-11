@@ -1417,7 +1417,7 @@ export class Slide{
                     var endy = layout.CY-120 +(k*layout.NEURON_LARGE_Y_DIF)
 
                     
-                    var hitbuffer = 10;
+                    var hitbuffer = 30;
                     weightSprite.interactive=true;
 
                     var weightTextBox = new PIXI.Graphics();
