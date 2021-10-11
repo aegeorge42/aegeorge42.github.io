@@ -1476,7 +1476,6 @@ export class Slide{
                     });
 
                     weightSprite.on('tap', function(e){
-                        this.tapped=true;
 
                         if (!slide.large_nointeract){
                         var xbuffer=(window.innerWidth-viewst.startwidth)/2;
@@ -1487,26 +1486,23 @@ export class Slide{
                         this.getChildByName("-").visible=true;
                         this.getChildByName("weightTextBox").getChildByName("weightText").visible=true;
 
-                        if(this.name=="000"){
-                            this.getChildByName("weightTextBox").x=layout.CX+80;
-                            this.getChildByName("weightTextBox").y=layout.CY-100;
-                            this.getChildByName("+").x=layout.CX+80+15;
-                            this.getChildByName("+").y=layout.CY-100+10;
-    
-                            this.getChildByName("-").x=layout.CX+80-15;
-                            this.getChildByName("-").y=layout.CY-100+10;
-                        }
-
-                        if(this.name=="001"){
-                            this.getChildByName("weightTextBox").x=layout.CX+80;
-                            this.getChildByName("weightTextBox").y=layout.CY+100;
-
-                            this.getChildByName("+").x=layout.CX+80+15;
-                            this.getChildByName("+").y=layout.CY+100+10;
-    
-                            this.getChildByName("-").x=layout.CX+80-15;
-                            this.getChildByName("-").y=layout.CY+100+10;
-                        }
+                        if(!this.tapped){
+                            this.getChildByName("weightTextBox").visible=true;
+                            this.getChildByName("weightTextBox").x=e.data.global.x//-xbuffer-50;
+                            this.getChildByName("weightTextBox").y=e.data.global.y//-10-ybuffer;
+       
+                            this.getChildByName("weightTextBox").getChildByName("weightText").visible=true;
+       
+                            this.getChildByName("+").x=e.data.global.x+15-xbuffer;
+                            this.getChildByName("+").y=e.data.global.y-ybuffer;
+       
+                            this.getChildByName("-").x=e.data.global.x-15-xbuffer;
+                            this.getChildByName("-").y=e.data.global.y-ybuffer;
+       
+                            this.getChildByName("+").visible=true;
+                            this.getChildByName("-").visible=true;
+                            this.tapped=true;
+                            }
 
                         }
                     });
