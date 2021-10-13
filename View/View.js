@@ -285,7 +285,7 @@ export class View{
         .load(setup);
 
         function setup() {
-            vst.currentSlide=52;
+            vst.currentSlide=0;
             makeSlides();
 
             vst.slideList = [];
