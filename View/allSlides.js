@@ -1093,6 +1093,8 @@ SlideInstruct2.arrowContainer.addChild(arrow2);
     /*********     CALCULUS    *********** */   
 
     layout.NEURON_LEFTLIM = layout.NEURON_LEFTLIM_BACKPROP;
+    layout.NEURON_X_DIF = 135;
+
     layout.NEURON_Y_DIF = 175;
 
 
@@ -1432,7 +1434,7 @@ SlideInstruct2.arrowContainer.addChild(arrow2);
     var dcdw3= new PIXI.Sprite(loader.resources["images/backprop/dcdw3.png"].texture);
     dcdw3.isSprite=true;
     dcdw3.scale.set(0.6)
-    dcdw3.x=backpropx_cost+30;
+    dcdw3.x=backpropx_cost;
     dcdw3.y=layout.CY-30;
 
     var textBackCalc3a = [
@@ -1564,7 +1566,7 @@ SlideInstruct2.arrowContainer.addChild(arrow2);
         [ ["And so, all together: "],[backpropx_cost-10,layout.CY-170] ],
 
         dctotfinal_form, w3all,
-        [ ["Next, we'll go through this example with numbers."],[backpropx_cost-10,layout.CY+170] ],
+        [ ["Next, we'll go through this example with numbers."],[backpropx_cost-30,layout.CY+170] ],
     ];
     SlideBack10.drawText(textBackCalc6a);
     
@@ -1630,7 +1632,7 @@ SlideInstruct2.arrowContainer.addChild(arrow2);
 
     var ztoa= new PIXI.Sprite(loader.resources["images/backprop/arrows/ztoa.png"].texture);
         ztoa.isSprite=true;
-        ztoa.x=arrowx;
+        ztoa.x=arrowx+10;
         ztoa.y=arrowy;
 
     var a21toc= new PIXI.Sprite(loader.resources["images/backprop/arrows/a21toc.png"].texture);
@@ -1698,7 +1700,7 @@ SlideInstruct2.arrowContainer.addChild(arrow2);
     var dcdw1= new PIXI.Sprite(loader.resources["images/backprop/dcdw1.png"].texture);
         dcdw1.isSprite=true;
         dcdw1.scale.set(0.6);
-        dcdw1.x=backpropx_cost;
+        dcdw1.x=backpropx_cost-10;
         dcdw1.y=layout.CY-140;
 
 
@@ -1751,37 +1753,37 @@ SlideInstruct2.arrowContainer.addChild(arrow2);
         dcda1.isSprite=true;
         dcda1.anchor.set(0.5);
         dcda1.scale.set(0.8);
-        dcda1.x=backpropx_cost+180;
+        dcda1.x=backpropx_cost+170;
         dcda1.y=layout.CY-160;
 
     var a11 = new PIXI.Sprite(loader.resources["images/backprop/a11.png"].texture);
         a11.isSprite=true;
         a11.scale.set(0.6)
-        a11.x=backpropx_cost+50;
+        a11.x=backpropx_cost+115;
         a11.y=layout.CY-130;
 
     var a21 = new PIXI.Sprite(loader.resources["images/backprop/a21.png"].texture);
         a21.isSprite=true;
         a21.scale.set(0.6)
-        a21.x=backpropx_cost+200;
+        a21.x=backpropx_cost+265;
         a21.y=layout.CY-130;
 
     var a22 = new PIXI.Sprite(loader.resources["images/backprop/a22.png"].texture);
         a22.isSprite=true;
         a22.scale.set(0.6)
-        a22.x=backpropx_cost+280;
+        a22.x=backpropx_cost+345;
         a22.y=layout.CY-130;
 
     var c1 = new PIXI.Sprite(loader.resources["images/backprop/c1.png"].texture);
         c1.isSprite=true;
         c1.scale.set(0.6)
-        c1.x=backpropx_cost+120;
+        c1.x=backpropx_cost+110;
         c1.y=layout.CY-105;
 
     var c2 = new PIXI.Sprite(loader.resources["images/backprop/c2.png"].texture);
         c2.isSprite=true;
         c2.scale.set(0.6)
-        c2.x=backpropx_cost+200;
+        c2.x=backpropx_cost+190;
         c2.y=layout.CY-105;
 
     var w1toc = new PIXI.Sprite(loader.resources["images/backprop/arrows/w1toc2.png"].texture);
@@ -1797,9 +1799,9 @@ SlideInstruct2.arrowContainer.addChild(arrow2);
 
 
     var textBackCalc9 = [
-       [ ["However, to find           , we need to break it down "
-            +'\n\n'+"since         affects both        and     "
-            +'\n\n'+"and therefore        and       ."],[backpropx_cost,layout.CY-170] ],
+       [ ["However, to find           , we need to break    "
+            +'\n\n'+"it down, since         affects both        and     "
+            +'\n\n'+"and therefore        and       ."],[backpropx_cost-10,layout.CY-170] ],
        dcda1_form1,w1toc,
         dcda1,a11,a21,a22,c1,c2,
     ];
@@ -1821,7 +1823,7 @@ SlideInstruct2.arrowContainer.addChild(arrow2);
 
     var dcda_form2= new PIXI.Sprite(loader.resources["images/backprop/dcda_form2.png"].texture);
         dcda_form2.isSprite=true;
-        dcda_form2.scale.set(0.38)
+        dcda_form2.scale.set(0.35,0.38)
         dcda_form2.x=backpropx_cost-45;
         dcda_form2.y=layout.CY-200;
 
@@ -1862,14 +1864,14 @@ SlideInstruct2.arrowContainer.addChild(arrow2);
 
     var dcda_form3= new PIXI.Sprite(loader.resources["images/backprop/dcda_form3.png"].texture);
     dcda_form3.isSprite=true;
-    dcda_form3.scale.set(0.38)
+    dcda_form3.scale.set(0.35,0.38)
     dcda_form3.x=backpropx_cost-45;
     dcda_form3.y=layout.CY-200;
 
     var dcda1_full= new PIXI.Sprite(loader.resources["images/backprop/formulas/dcda1_full.png"].texture);
     dcda1_full.isSprite=true;
-    dcda1_full.scale.set(0.36)
-    dcda1_full.x=backpropx_cost-15;
+    dcda1_full.scale.set(0.33)
+    dcda1_full.x=backpropx_cost-30;
     dcda1_full.y=layout.CY+100;
 
     var textBackCalc9a = [
@@ -1898,7 +1900,7 @@ SlideInstruct2.arrowContainer.addChild(arrow2);
     var dcda1_full2= new PIXI.Sprite(loader.resources["images/backprop/formulas/dcda1_full2.png"].texture);
     dcda1_full2.isSprite=true;
     dcda1_full2.scale.set(0.38)
-    dcda1_full2.x=backpropx_cost-90;
+    dcda1_full2.x=backpropx_cost-100;
     dcda1_full2.y=layout.CY-200;
 
     var dadz21_small= new PIXI.Sprite(loader.resources["images/backprop/dadz21.png"].texture);
@@ -1941,7 +1943,7 @@ SlideInstruct2.arrowContainer.addChild(arrow2);
     var dcdw1_full= new PIXI.Sprite(loader.resources["images/backprop/formulas/dcdw1_full.png"].texture);
     dcdw1_full.isSprite=true;
     dcdw1_full.scale.set(0.5)
-    dcdw1_full.x=backpropx_cost-160;
+    dcdw1_full.x=backpropx_cost-165;
     dcdw1_full.y=layout.CY-140;
 
         var textBackCalc9c = [
@@ -1991,6 +1993,7 @@ SlideInstruct2.arrowContainer.addChild(arrow2);
 
 
     /**----------------- SANDBOX-------------- */
+
     var netSand=new Net();
     SlideSandbox.sandbox=true;
     SlideSandbox.slideNet=netSand;

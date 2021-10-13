@@ -222,7 +222,6 @@ export class Slide{
             layersbox.y= layout.NEURON_UPPERLIM-130;
             this.buttonContainer.addChild(layersbox);
 
-
         layersbox.addChild(new Button("addlayer",loader.resources["images/buttons/button_layer.png"].texture, -30, 0,true));
         layersbox.addChild(new Button("remlayer",loader.resources["images/buttons/button_removelayer.png"].texture, 80, 0, true));
 
@@ -319,7 +318,7 @@ export class Slide{
             ratebox.x= 0;
             ratebox.y= 315;
             } else {
-                ratebox.x= layout.CX-265;
+                ratebox.x= layout.CX-225;
                 
                 ratebox.y= layout.CY-215;
             }
@@ -413,7 +412,7 @@ export class Slide{
         this.buttonContainer.addChild(learnbox);
 
         if(!slide.sandbox){
-            learnbox.x=layout.CX-510;
+            learnbox.x=layout.CX-480;
             learnbox.y=layout.CY-210;
 
         }
@@ -1031,6 +1030,7 @@ export class Slide{
 
         if(this.sandbox){
             layout.NEURON_LEFTLIM=layout.NEURON_LEFTLIM_SANDBOX;
+
         } else if(this.backprop){
             layout.NEURON_LEFTLIM= layout.NEURON_LEFTLIM_BACKPROP;
         } else {
@@ -1209,21 +1209,21 @@ export class Slide{
             
                         var w1=new PIXI.Sprite(loader.resources["images/backprop/w1_teal.png"].texture);
                             w1.anchor.set(0.5)
-                            w1.x=x+20;
-                            w1.y=y+50;
+                            w1.x=x+10;
+                            w1.y=y+40;
                             
                         var w2=new PIXI.Sprite(loader.resources["images/backprop/w2.png"].texture);
                             w2.anchor.set(0.5)
-                            w2.x=x+12;
+                            w2.x=x+5;
                             w2.y=y+120;
                         var w3=new PIXI.Sprite(loader.resources["images/backprop/w3_teal.png"].texture);
                             w3.anchor.set(0.5)
-                            w3.x=x +160;
-                            w3.y=y+40;
+                            w3.x=x +135;
+                            w3.y=y+45;
 
                         var w4=new PIXI.Sprite(loader.resources["images/backprop/w4_teal.png"].texture);
                             w4.anchor.set(0.5)
-                            w4.x=x+180;
+                            w4.x=x+160;
                             w4.y=y+145;
 
                             if(this.none==true){
@@ -2869,7 +2869,7 @@ export class Slide{
 
     drawInteractive(){
         var interactive = new PIXI.Sprite(PIXI.Texture.from('images/interactive.png'));
-            interactive.x=layout.CX+420;
+            interactive.x=layout.CX+400;
             interactive.y=layout.CY-220;
         this.textContainer.addChild(interactive);
 
