@@ -218,8 +218,8 @@ export class Slide{
         var layersbox = new PIXI.Sprite(loader.resources["images/boxes/layersbox.png"].texture);
             layersbox.name="layersbox";
             layersbox.anchor.set(0.5)
-            layersbox.x= layout.NEURON_LEFTLIM+200;
-            layersbox.y= layout.NEURON_UPPERLIM-130;
+            layersbox.x= layout.NEURON_LEFTLIM;
+            layersbox.y= layout.NEURON_UPPERLIM-135;
             this.buttonContainer.addChild(layersbox);
 
         layersbox.addChild(new Button("addlayer",loader.resources["images/buttons/button_layer.png"].texture, -30, 0,true));
@@ -636,8 +636,6 @@ export class Slide{
             }
 
             if(this.pressCount==1){
-                console.log("here");
-                console.log(slide.pauselearn)
 
                 while(slide.pauselearn==0){
 
@@ -733,6 +731,9 @@ export class Slide{
 
             } else {
                 layout.NEURON_Y_DIF = 175;
+                layout.NEURON_X_DIF = 135;
+
+
                 layout.NEURON_LEFTLIM = window.innerWidth/2 - 310;
 
                 var backpropx_cost= layout.LEFTBUFFER + layout.NEURON_LEFTLIM+layout.NEURON_X_DIF +200;
@@ -766,6 +767,7 @@ export class Slide{
             if(slide.sandbox){
 
                 layout.NEURON_Y_DIF=125;
+                layout.NEURON_X_DIF=150;
                 layout.NEURON_LEFTLIM= layout.NEURON_LEFTLIM_SANDBOX;
 
                 slide.costLabel.getChildByName("epochbox").getChildByName("epoch").text=slide.loopcount;
@@ -795,8 +797,7 @@ export class Slide{
             } else {
                 layout.NEURON_Y_DIF = 175;
                 layout.NEURON_LEFTLIM = window.innerWidth/2 - 310;
-
-                var backpropx_cost= layout.LEFTBUFFER + layout.NEURON_LEFTLIM+layout.NEURON_X_DIF +200;
+                layout.NEURON_X_DIF=150;
 
                 var newnet = new Net();
                 newnet.setNetData(slide.slideNet.data);
@@ -1030,11 +1031,15 @@ export class Slide{
 
         if(this.sandbox){
             layout.NEURON_LEFTLIM=layout.NEURON_LEFTLIM_SANDBOX;
+            layout.NEURON_X_DIF=150;
+
 
         } else if(this.backprop){
             layout.NEURON_LEFTLIM= layout.NEURON_LEFTLIM_BACKPROP;
         } else {
             layout.NEURON_LEFTLIM=layout.NEURON_LEFTLIM_INIT;
+            layout.NEURON_X_DIF=150;
+
 
         }
         this.drawWeights_init(net);

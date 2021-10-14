@@ -694,6 +694,9 @@ SlideInstruct2.arrowContainer.addChild(arrow2);
     SlideNet4.drawLayerButtons();
     SlideNet4.buttonContainer.getChildByName("buttonNeuronAddContainer").getChildAt(0).visible=true;
     SlideNet4.buttonContainer.getChildByName("buttonNeuronRemContainer").getChildAt(0).visible=true;
+    SlideNet4.buttonContainer.getChildByName("layersbox").x= layout.NEURON_LEFTLIM+200;
+
+
     SlideNet4.drawInteractive();
 
 

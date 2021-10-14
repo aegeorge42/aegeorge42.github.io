@@ -11,7 +11,7 @@ export const layout = {
     NEURON_UPPERLIM: window.innerHeight/2 -80,
 
     NEURON_LEFTLIM_INIT: window.innerWidth/2 - 200,
-    NEURON_LEFTLIM_SANDBOX: 440,
+    NEURON_LEFTLIM_SANDBOX: 430,
     NEURON_LEFTLIM_BACKPROP: window.innerWidth/2 - 318,
     NEURON_LEFTLIM_LARGE: window.innerWidth/2 + 300,
 
