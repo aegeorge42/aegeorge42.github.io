@@ -759,6 +759,7 @@ export class Slide{
 
         });
 
+        learnbox.addChild(new Button("reset",loader.resources["images/buttons/reset.png"].texture,38,60,true));        
         learnbox.getChildByName("reset").on('tap', function(e){
             slide.loopcount=0;
             slide.looplim=1000;
@@ -767,7 +768,6 @@ export class Slide{
             if(slide.sandbox){
 
                 layout.NEURON_Y_DIF=125;
-                layout.NEURON_X_DIF=150;
                 layout.NEURON_LEFTLIM= layout.NEURON_LEFTLIM_SANDBOX;
 
                 slide.costLabel.getChildByName("epochbox").getChildByName("epoch").text=slide.loopcount;
@@ -796,8 +796,12 @@ export class Slide{
 
             } else {
                 layout.NEURON_Y_DIF = 175;
+                layout.NEURON_X_DIF = 135;
+
+
                 layout.NEURON_LEFTLIM = window.innerWidth/2 - 310;
-                layout.NEURON_X_DIF=150;
+
+                var backpropx_cost= layout.LEFTBUFFER + layout.NEURON_LEFTLIM+layout.NEURON_X_DIF +200;
 
                 var newnet = new Net();
                 newnet.setNetData(slide.slideNet.data);
