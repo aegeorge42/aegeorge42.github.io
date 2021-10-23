@@ -1243,7 +1243,7 @@ export class Slide{
                                 w1.tint=0x000000;
                                 w4.tint=0x000000;
 
-                            } else if(this.w1==true){
+                            } else if(this.w1==true || this.w1_all==true){
                                 w3.tint=0x000000;
                                 w4.tint=0x000000;
                             }
@@ -2581,7 +2581,7 @@ export class Slide{
         dcdw3_small.y=DCDW_Y;
         this.textContainer.addChild(dcdw3_small);
 
-        var dcdw_num= new PIXI.Text("",textstyles.label_med);
+        var dcdw_num= new PIXI.Text("",textstyles.label_large);
             dcdw_num.name="dcdw_num";
             dcdw_num.x=dcdw3_small.x+70;
             dcdw_num.y=DCDW_Y-25;
