@@ -103,12 +103,10 @@ export class Slide{
 
     drawActFnButtons(){
         var actfnsbox = new PIXI.Sprite(loader.resources["images/boxes/actfnsbox.png"].texture);
-        //actfnsbox.scale.set(0.9)
-
             actfnsbox.name="actfnsbox";
             if(this.sandbox){
-            actfnsbox.x=0//5;
-            actfnsbox.y=155;//layout.BOTTOMBUFFER-100;
+            actfnsbox.x=0;
+            actfnsbox.y=155;
             this.buttonContainer.addChild(actfnsbox);
 
             } else if(this.largefn){
@@ -117,7 +115,6 @@ export class Slide{
                 this.textContainer.addChild(actfnsbox);
 
             }
-        //this.buttonContainer.addChild(actfnsbox);
 
         var slide=this;
         actfnsbox.addChild(new Button("sigmoid",loader.resources["images/buttons/sigmoid.png"].texture, 75,90,true));
@@ -845,7 +842,7 @@ export class Slide{
             databox.y=newdatay
         this.buttonContainer.addChild(databox);
 
-        databox.addChild(new Button("newdata",loader.resources["images/buttons/datalin.png"].texture,100,60,true));   
+        databox.addChild(new Button("newdata",loader.resources["images/buttons/datalin.png"].texture,100,88,true));   
         databox.getChildByName("newdata").on('click', function(e){
 
             slide.looplim=1000;
@@ -936,7 +933,7 @@ export class Slide{
 
         });
 
-        databox.addChild(new Button("newdata_circle",loader.resources["images/buttons/datacircle.png"].texture,195,60,true));   
+        databox.addChild(new Button("newdata_circle",loader.resources["images/buttons/datacircle.png"].texture,195,88,true));   
         databox.getChildByName("newdata_circle").on('click', function(e){
             slide.looplim=1000;
 
@@ -1104,9 +1101,9 @@ export class Slide{
 
                     //positive weight = blue, negative = orange
                     if(net.getLayer(i).neurons[j].weights[k] < 0){
-                        color = 0xFF5733;
+                        color = 0xFF8000;;
                     } else if(net.getLayer(i).neurons[j].weights[k] > 0){
-                        color = 0x344EE8;
+                        color = 0x0080e8;
                     } else if(net.getLayer(i).neurons[j].weights[k] == 0){
                         color = 0xAAADB3;
                     }
@@ -1404,9 +1401,9 @@ export class Slide{
 
                     //positive weight = blue, neagtive = orange
                     if(net.getLayer(i).neurons[j].weights[k] < 0){
-                        color = 0xFF5733;
+                        color = 0xFF8000;
                     } else if(net.getLayer(i).neurons[j].weights[k] > 0){
-                        color = 0x344EE8;
+                        color = 0x0080e8;
                     } else if(net.getLayer(i).neurons[j].weights[k] == 0){
                         color = 0xAAADB3;
                     }
@@ -1569,9 +1566,9 @@ export class Slide{
 
                     //positive weight = blue, neagtive = orange
                     if(net.getLayer(i).neurons[j].weights[k] <= 0){
-                        color = 0xFF5733;
+                        color = 0xFF8000;
                     } else if(net.getLayer(i).neurons[j].weights[k] > 0){
-                        color = 0x344EE8;
+                        color = 0x0080e8;
                     }
 
                     this.weightsContainer.getChildByName(name).updateLineStyle(thickness, color, 1);
@@ -2081,8 +2078,6 @@ export class Slide{
                 var name = i.toString() + j.toString();
 
                 var currBase = this.neuronContainer.getChildByName("neuronBases").getChildByName(name);
-//                currBase.getChildAt(0).text="hi";
-                // currBase.text="hi";
                 var ins=[];
                 
                 for (var ii=0;ii<net.getLayer(i).neurons[j].inputs.length;ii++){
@@ -2101,7 +2096,7 @@ export class Slide{
                 currBase.getChildAt(5).text=formatter.format(net.getLayer(i).neurons[j].output);
 
                 var currOver = this.neuronContainer.getChildByName("neuronOvers").getChildAt(0);
-                currOver.getChildAt(0).text=formatter.format(net.getLayer(i).neurons[j].output)//formatter.format(net.getLayer(i).neurons[j].output);
+                currOver.getChildAt(0).text=formatter.format(net.getLayer(i).neurons[j].output);
 
                 var out = net.getLayer(i).neurons[j].output;
                   if(out>=0.9){
@@ -2225,7 +2220,7 @@ export class Slide{
             typeLabel0.style=targetLabel0.style;
 
             targetLabel0.x=layout.NEURON_LEFTLIM + (net.layers.length-1)*layout.NEURON_X_DIF +60;
-            targetLabel0.y=layout.NEURON_UPPERLIM //+ (layout.NEURON_Y_DIF);
+            targetLabel0.y=layout.NEURON_UPPERLIM;
             typeLabel0.x=targetLabel0.x;
             typeLabel0.y=targetLabel0.y+30;
 
@@ -2345,10 +2340,6 @@ export class Slide{
         }
 
     }
-/*
-    this.dataIdx=(this.dataIdx+1)%this.data.points.length;
-        this.setNetInput(this.data.points[this.dataIdx]);
-        this.update();*/
 
     drawLabels_init_large(net){
         for(var i=0; i<net.data.labels.length; i++){
