@@ -671,7 +671,7 @@ SlideInstruct2.arrowContainer.addChild(arrow2);
         [["Notice how the"], [" output ",textstyles.large_bold], ["of one layer "], [layout.CX+120,layout.CY-50]],
         [["becomes the"], [" input ",textstyles.large_bold], ["of the next. "], [layout.CX+130,layout.CY]],
         [["This process of going from"+'\n'+ "input to final output is called "],[layout.CX+140,layout.CY+100]],
-        [["forward propogation.",textstyles.large_bold], [layout.CX+140,layout.CY+160]],
+        [["forward propagation.",textstyles.large_bold], [layout.CX+140,layout.CY+160]],
     ];
     SlideNet3.drawText(textNet1b2);
     SlideNet3.drawTextButtons();
@@ -704,7 +704,7 @@ SlideInstruct2.arrowContainer.addChild(arrow2);
     var textNet1d = [
         [["Now that we've built our network, we can begin training it."], [layout.CX-250,layout.CY-120]],
         [["This is the stage where the neural network learns how to separate the data."], [layout.CX-350,layout.CY-70]],
-        [["In order to learn, the network uses an algorithm called"], [" backpropogation.",textstyles.large_bold], [layout.CX-320,layout.CY-20]],
+        [["In order to learn, the network uses an algorithm called"], [" backpropagation.",textstyles.large_bold], [layout.CX-320,layout.CY-20]],
 
     ];
     SlideBackIntro1.drawText(textNet1d);
@@ -735,8 +735,8 @@ SlideInstruct2.arrowContainer.addChild(arrow2);
 
     var textNet1d2 = [
         percep_forward,percep_cost,percep_update,
-        [["Backpropogation has 3 steps:"], [layout.CX-450,layout.CY-180]],
-        [["1. Forward propogation                                           " +'\n', textstyles.large_bold],
+        [["Backpropagation has 3 steps:"], [layout.CX-450,layout.CY-180]],
+        [["1. Forward propagation                                           " +'\n', textstyles.large_bold],
          [     "like we did before - give the net an input and calculate the output.  "], [layout.CX-420,layout.CY-120]],
         [["2. Error calculation                                                  " +'\n', textstyles.large_bold],
          [     "how far off were my actual output values from my target values?"], [layout.CX-420,layout.CY]],
@@ -1065,8 +1065,8 @@ SlideInstruct2.arrowContainer.addChild(arrow2);
     [["You've finished the tutorial!", textstyles.large_bold], [layout.CX-170,layout.CY-90]],
     [["On the next slide is sandbox mode - where we'll get to put all this to the test."], [layout.CX-350,layout.CY-40]],
     [["Click this button" +'\n'+ "to reset the net.",textstyles.medium], [layout.CX-350,layout.CY+90]],
-    [["Click this button to"+'\n'+ "continuously backpropogate.",textstyles.medium], [layout.CX+150,layout.CY+70]],
-    [["Click this button to"+'\n'+ " backpropogate 1 epoch.",textstyles.medium], [layout.CX+190,layout.CY+150]],
+    [["Click this button to"+'\n'+ "continuously backpropagate.",textstyles.medium], [layout.CX+150,layout.CY+70]],
+    [["Click this button to"+'\n'+ " backpropagate 1 epoch.",textstyles.medium], [layout.CX+190,layout.CY+150]],
     learnboxarrow,
     // [["On the next slide is sandbox mode. Click this button to backpropogate for one epoch."+'/n'+" Click this button to continueously backpropogate. Click this button to reset the weights and biases."], [layout.CX-460,layout.CY+40]],
 
@@ -1597,8 +1597,8 @@ SlideInstruct2.arrowContainer.addChild(arrow2);
         [["On the next slide...",textstyles.large_bold], [layout.CX-350,layout.CY-130]],
 
         [["Click this button" +'\n'+ "to reset the net.",textstyles.medium], [layout.CX-350,layout.CY-40]],
-        [["Click this button to"+'\n'+ "continuously backpropogate.",textstyles.medium], [layout.CX+150,layout.CY-60]],
-        [["Click this button to"+'\n'+ " backpropogate 1 epoch.",textstyles.medium], [layout.CX+190,layout.CY+20]],
+        [["Click this button to"+'\n'+ "continuously backpropagate.",textstyles.medium], [layout.CX+150,layout.CY-60]],
+        [["Click this button to"+'\n'+ " backpropagate 1 epoch.",textstyles.medium], [layout.CX+190,layout.CY+20]],
         learnboxarrow,
     ];
     SlideBack11.drawText(texteBackCalcInstruct);
